@@ -95,7 +95,10 @@ void XIIlib::Bishop::Action()
 	{
 		Move();
 	}
-
+	if (UnitManager::GetInstance()->GetIntervalTimer()==0)
+	{
+		notAttackflag = TRUE;
+	}
 
 	if (isAttack == TRUE && notAttackflag == TRUE)
 	{
@@ -103,7 +106,6 @@ void XIIlib::Bishop::Action()
 		UnitManager::GetInstance()->ChangeAttackValidTile(point_attack, (int)type);
 		Attack();
 	}
-
 	else
 	{
 		isAttack = false;
