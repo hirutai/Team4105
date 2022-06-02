@@ -93,6 +93,8 @@ void GameApp::Initialize()
 	Sprite::LoadTexture(debugJISTextTexNumber, L"Resources/JIS_Code_ver.1.02.png");
 	Sprite::LoadTexture(texind, L"Resources/digitalNum.png");					texind++;
 	Sprite::LoadTexture(texind, L"Resources/effect1.png");						texind++;
+	Sprite::LoadTexture(texind, L"Resources/timer.png"); texind++;
+	Sprite::LoadTexture(texind, L"Resources/timer_bar.png"); texind++;
 
 	debugJIS = DebugJISText::GetInstance();
 	debugJIS->Initialize(debugJISTextTexNumber);
