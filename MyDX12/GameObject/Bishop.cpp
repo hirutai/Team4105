@@ -96,17 +96,17 @@ void XIIlib::Bishop::Action()
 		Move();
 	}
 
-	if (isAttack == TRUE)
+
+	if (isAttack == TRUE && notAttackflag == TRUE)
 	{
 		point_attack = preElement_stock;
 		UnitManager::GetInstance()->ChangeAttackValidTile(point_attack, (int)type);
 		Attack();
-		flag = FALSE;
 	}
+
 	else
 	{
-		//移動範囲の色付け
-		AttackAreaDraw();
+		isAttack = false;
 	}
 }
 
@@ -114,7 +114,7 @@ void XIIlib::Bishop::Attack()
 {
 	// カウントを減らす
 	attackInterval--;
-	//色を変える  
+	//色を変える
 	collCapsule->SetColor(1, 0, 0, 1);
 	if (attackInterval == 0)
 	{
@@ -140,22 +140,17 @@ void XIIlib::Bishop::Attack()
 		// 攻撃
 		element_stock = preElement_stock;
 		IniState();
+		notAttackflag = FALSE;
 	}
 }
 
 void XIIlib::Bishop::Move()
 {
-	//なんか追加
 
-	if (flag == TRUE)
-	{
-		if (isAttack == true)return;
-	}
+	if (isAttack == true)return;
+	if (UnitManager::GetInstance()->GetIntervalTimer() > 0)return;
 
-	if (UnitManager::GetInstance()->GetIntervalTimer() > 0)
-	{
-		return;
-	}
+	notAttackflag = TRUE;
 
 	collCapsule->SetColor(0, 1, 0, 1);
 	Math::Point2 dif = kingPos - element_stock;
@@ -289,7 +284,6 @@ void XIIlib::Bishop::Move()
 		}
 		element_stock = temp;
 	}
-	flag = TRUE;
 }
 
 bool XIIlib::Bishop::AttackAreaExists()
@@ -306,58 +300,6 @@ bool XIIlib::Bishop::AttackAreaExists()
 	// xとzの絶対値が一緒だったら攻撃範囲にいる範囲
 	if (abs(dif.a) == abs(dif.b))return true;
 	return false;
-}
-
-void XIIlib::Bishop::AttackAreaDraw()
-{
-	//左下
-	for (int i = 1; i < 8; i++)
-	{
-		if (UnitManager::GetInstance()->AllOnUnit(Math::Point2(element_stock.a - i, element_stock.b-i)) || element_stock.a - i < 0|| element_stock.b - i < 0)
-		{
-			break;
-		}
-		else
-		{
-			UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(element_stock.a - i, element_stock.b - i), 3);
-		}
-	}
-	//右上
-	for (int i = 1; i < 8; i++)
-	{
-		if (UnitManager::GetInstance()->AllOnUnit(Math::Point2(element_stock.a + i, element_stock.b + i)) || element_stock.a + i > 7 || element_stock.b + i > 7)
-		{
-			break;
-		}
-		else
-		{
-			UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(element_stock.a + i, element_stock.b + i), 3);
-		}
-	}
-	//右下
-	for (int i = 1; i < 8; i++)
-	{
-		if (UnitManager::GetInstance()->AllOnUnit(Math::Point2(element_stock.a + i, element_stock.b - i)) || element_stock.a + i > 7 || element_stock.b - i < 0)
-		{
-			break;
-		}
-		else
-		{
-			UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(element_stock.a + i, element_stock.b - i), 3);
-		}
-	}
-	//左上
-	for (int i = 1; i < 8; i++)
-	{
-		if (UnitManager::GetInstance()->AllOnUnit(Math::Point2(element_stock.a - i, element_stock.b + i)) || element_stock.a - i < 0 || element_stock.b + i > 7)
-		{
-			break;
-		}
-		else
-		{
-			UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(element_stock.a - i, element_stock.b + i), 3);
-		}
-	}
 }
 
 void XIIlib::Bishop::IniState()
