@@ -9,7 +9,8 @@ namespace XIIlib {
 	public:
 		Knight();
 		~Knight();
-
+		//çUåÇflag
+		bool notAttackflag = true;
 		// ê∂ê¨ä÷êî
 		static std::shared_ptr<Knight> Create(int point_x, int point_z);
 
@@ -20,7 +21,6 @@ namespace XIIlib {
 		void SetStartElement(int x, int z)override;
 		void Action()override;
 		void Attack()override;
-		void AttackAreaDraw();
 		void Move()override;
 		bool AttackAreaExists()override;
 		void IniState()override;

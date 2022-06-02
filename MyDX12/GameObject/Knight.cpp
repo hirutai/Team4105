@@ -99,7 +99,7 @@ void XIIlib::Knight::Action()
 		Move();
 	}
 
-	if (isAttack == true)
+	if (isAttack == true && notAttackflag == TRUE)
 	{
 		point_attack = preElement_stock;
 		UnitManager::GetInstance()->ChangeAttackValidTile(point_attack, (int)type);
@@ -107,8 +107,7 @@ void XIIlib::Knight::Action()
 	}
 	else
 	{
-		//移動範囲の色付け
-		AttackAreaDraw();
+		isAttack = false;
 	}
 }
 
@@ -124,6 +123,7 @@ void XIIlib::Knight::Attack()
 		// 攻撃
 		element_stock = preElement_stock;
 		IniState();
+		notAttackflag = FALSE;
 	}
 }
 
@@ -131,6 +131,7 @@ void XIIlib::Knight::Move()
 {
 	if (isAttack == true)return;
 	if (UnitManager::GetInstance()->GetIntervalTimer() > 0)return;
+	notAttackflag = true;
 
 	collCapsule->SetColor(1, 1, 0, 1);
 	Math::Point2 dif = kingPos - element_stock;
@@ -148,7 +149,7 @@ void XIIlib::Knight::Move()
 			temp = element_stock + Math::Point2(1, 2);
 			if (UnitManager::GetInstance()->AllOnUnit(temp)
 				|| Common::GetExceptionPoint(temp.a)
-				|| Common::GetExceptionPoint(temp.b)) 
+				|| Common::GetExceptionPoint(temp.b))
 			{
 				// 右上方向
 				temp = element_stock + Math::Point2(2, 1);
@@ -215,79 +216,29 @@ bool XIIlib::Knight::AttackAreaExists()
 		kingPos = p_king->GetElementStock();
 	}
 	// 範囲に入ってるかのチェック
-	Math::Point2 temp(0,0);
-	// 上方向
-	temp = element_stock + Math::Point2(1,2);
-	if (kingPos.a == temp.a && kingPos.b == temp.b)return true;
-	temp = element_stock + Math::Point2(-1, 2);
-	if (kingPos.a == temp.a && kingPos.b == temp.b)return true;
-	// 右方向
-	temp = element_stock + Math::Point2(2, 1);
-	if (kingPos.a == temp.a && kingPos.b == temp.b)return true;
-	temp = element_stock + Math::Point2(2, -1);
-	if (kingPos.a == temp.a && kingPos.b == temp.b)return true;
-	// 左方向
-	temp = element_stock + Math::Point2(-2, 1);
-	if (kingPos.a == temp.a && kingPos.b == temp.b)return true;
-	temp = element_stock + Math::Point2(-2, -1);
-	if (kingPos.a == temp.a && kingPos.b == temp.b)return true;
-	// 下方向
-	temp = element_stock + Math::Point2(1, -2);
-	if (kingPos.a == temp.a && kingPos.b == temp.b)return true;
-	temp = element_stock + Math::Point2(-1, -2);
-	if (kingPos.a == temp.a && kingPos.b == temp.b)return true;
-	
-	return false;
-}
-
-void XIIlib::Knight::AttackAreaDraw()
-{
-	// 範囲に入ってるかのチェック
 	Math::Point2 temp(0, 0);
 	// 上方向
 	temp = element_stock + Math::Point2(1, 2);
-	if (temp.a <= 7 && temp.a >= 0 && temp.b <= 7 && temp.b >= 0)
-	{
-		UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(temp), 3);
-	}
+	if (kingPos.a == temp.a && kingPos.b == temp.b)return true;
 	temp = element_stock + Math::Point2(-1, 2);
-	if (temp.a <= 7 && temp.a >= 0 && temp.b <= 7 && temp.b >= 0)
-	{
-		UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(temp), 3);
-	}
+	if (kingPos.a == temp.a && kingPos.b == temp.b)return true;
 	// 右方向
 	temp = element_stock + Math::Point2(2, 1);
-	if (temp.a <= 7 && temp.a >= 0 && temp.b <= 7 && temp.b >= 0)
-	{
-		UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(temp), 3);
-	}
+	if (kingPos.a == temp.a && kingPos.b == temp.b)return true;
 	temp = element_stock + Math::Point2(2, -1);
-	if (temp.a <= 7 && temp.a >= 0 && temp.b <= 7 && temp.b >= 0)
-	{
-		UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(temp), 3);
-	}
+	if (kingPos.a == temp.a && kingPos.b == temp.b)return true;
 	// 左方向
 	temp = element_stock + Math::Point2(-2, 1);
-	if (temp.a <= 7 && temp.a >= 0 && temp.b <= 7 && temp.b >= 0)
-	{
-		UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(temp), 3);
-	}
+	if (kingPos.a == temp.a && kingPos.b == temp.b)return true;
 	temp = element_stock + Math::Point2(-2, -1);
-	if (temp.a <= 7 && temp.a >= 0 && temp.b <= 7 && temp.b >= 0)
-	{
-		UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(temp), 3);
-	}
+	if (kingPos.a == temp.a && kingPos.b == temp.b)return true;
 	// 下方向
 	temp = element_stock + Math::Point2(1, -2);
-	if (temp.a <= 7 && temp.a >= 0 && temp.b <= 7 && temp.b >= 0)
-	{
-		UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(temp), 3);
-	}
+	if (kingPos.a == temp.a && kingPos.b == temp.b)return true;
 	temp = element_stock + Math::Point2(-1, -2);
-	if (temp.a <= 7 && temp.a >= 0 && temp.b <= 7 && temp.b >= 0)
-	{
-		UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(temp), 3);
-	}
+	if (kingPos.a == temp.a && kingPos.b == temp.b)return true;
+
+	return false;
 }
 
 void XIIlib::Knight::IniState()
