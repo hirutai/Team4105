@@ -48,7 +48,7 @@ void XIIlib::Rook::Update()
 {
 	// 駒の行動
 	Action();
-	
+
 
 	// 位置座標の更新
 	collCapsule->SetPosition(
@@ -57,7 +57,7 @@ void XIIlib::Rook::Update()
 
 	// 攻撃当たったら
 	if (UnitManager::GetInstance()
-		->IsAttackValid(element_stock,(int)_PositionType::MINE)) {
+		->IsAttackValid(element_stock, (int)_PositionType::MINE)) {
 		Hit(1);
 		// ノックバック
 		element_stock += UnitManager::GetInstance()->GetBackVector(element_stock);
@@ -84,7 +84,7 @@ void XIIlib::Rook::SetStartElement(int x, int z)
 
 void XIIlib::Rook::Action()
 {
-	
+
 	//if (UnitManager::GetInstance()->GetIntervalTimer() > 0)return;
 
 	// 範囲に入ってるかのチェック
@@ -93,28 +93,29 @@ void XIIlib::Rook::Action()
 		if (isAttack == false)
 		{
 			isAttack = true;
-			preElement_stock = kingPos;	
+			preElement_stock = kingPos;
 		}
 	}
 	else
 	{
 		Move();
 	}
-	
-	if (isAttack == true)
+
+	if (isAttack == true && notAttackflag == true)
 	{
 		point_attack = preElement_stock;
 		//攻撃マスの色を変える
 		UnitManager::GetInstance()->ChangeAttackValidTile(point_attack, (int)type);
 		Attack();
 	}
-	else 
+	else
 	{
+		isAttack = false;
 		//移動範囲の色付け
 		AttackAreaDraw();
 	}
 
-	
+
 }
 
 void XIIlib::Rook::Attack()
@@ -128,7 +129,7 @@ void XIIlib::Rook::Attack()
 		Math::Point2 dif = kingPos - element_stock;
 		Math::Point2 temp = element_stock;
 
-		// 縦に重なっている 
+		// 縦に重なっている
 		if (dif.a == 0)
 		{
 			// 0より小さければKingより上にいる
@@ -190,11 +191,12 @@ void XIIlib::Rook::Attack()
 				}
 			}
 		}
-		if (AttackAreaExists()){preElement_stock = kingPos;}
+		if (AttackAreaExists()) { preElement_stock = kingPos; }
 		// 攻撃
 		element_stock = preElement_stock;
-		
+
 		IniState();
+		notAttackflag = false;
 	}
 }
 
@@ -202,6 +204,7 @@ void XIIlib::Rook::Move()
 {
 	if (isAttack == true)return;
 	if (UnitManager::GetInstance()->GetIntervalTimer() > 0)return;
+	notAttackflag = TRUE;
 
 	collCapsule->SetColor(0, 1, 1, 1);
 	Math::Point2 dif = kingPos - element_stock;
@@ -274,54 +277,10 @@ bool XIIlib::Rook::AttackAreaExists()
 
 void XIIlib::Rook::AttackAreaDraw()
 {
-
-	//左方向に駒があるか
-	for (int i = 1; i < 8; i++)
+	for (int i = 0; i < 8; i++)
 	{
-		if (UnitManager::GetInstance()->AllOnUnit(Math::Point2(element_stock.a - i, element_stock.b)) || element_stock.a - i < 0)
-		{
-			break;
-		}
-		else
-		{
-			UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(element_stock.a - i, element_stock.b), 3);
-		}
-	}
-	//右方向に駒があるか
-	for (int i = 1; i < 8; i++)
-	{
-		if (UnitManager::GetInstance()->AllOnUnit(Math::Point2(element_stock.a + i, element_stock.b)) || element_stock.a + i > 7)
-		{
-			break;
-		}
-		else
-		{
-			UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(element_stock.a + i, element_stock.b), 3);
-		}
-	}
-	//下方向に駒があるか
-	for (int i = 1; i < 8; i++)
-	{
-		if (UnitManager::GetInstance()->AllOnUnit(Math::Point2(element_stock.a , element_stock.b - i)) || element_stock.b - i < 0)
-		{
-			break;
-		}
-		else
-		{
-			UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(element_stock.a , element_stock.b - i), 3);
-		}
-	}
-	//上方向に駒があるか
-	for (int i = 1; i < 8; i++)
-	{
-		if (UnitManager::GetInstance()->AllOnUnit(Math::Point2(element_stock.a, element_stock.b + i)) || element_stock.b + i > 7)
-		{
-			break;
-		}
-		else
-		{
-			UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(element_stock.a, element_stock.b + i), 3);
-		}
+		UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(i, element_stock.b), 3);
+		UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(element_stock.a, i), 3);
 	}
 }
 
