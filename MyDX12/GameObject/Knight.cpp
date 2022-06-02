@@ -248,45 +248,61 @@ void XIIlib::Knight::AttackAreaDraw()
 	temp = element_stock + Math::Point2(1, 2);
 	if (temp.a <= 7 && temp.a >= 0 && temp.b <= 7 && temp.b >= 0)
 	{
-		UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(temp), 3);
+		AttackAreaManager::GetInstance()->SetAttackAreas(Math::Point2(temp));
+
+		//UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(temp), 3);
 	}
 	temp = element_stock + Math::Point2(-1, 2);
 	if (temp.a <= 7 && temp.a >= 0 && temp.b <= 7 && temp.b >= 0)
 	{
-		UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(temp), 3);
+		AttackAreaManager::GetInstance()->SetAttackAreas(Math::Point2(temp));
+
+		//UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(temp), 3);
 	}
 	// âEï˚å¸
 	temp = element_stock + Math::Point2(2, 1);
 	if (temp.a <= 7 && temp.a >= 0 && temp.b <= 7 && temp.b >= 0)
 	{
-		UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(temp), 3);
+		AttackAreaManager::GetInstance()->SetAttackAreas(Math::Point2(temp));
+
+		//UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(temp), 3);
 	}
 	temp = element_stock + Math::Point2(2, -1);
 	if (temp.a <= 7 && temp.a >= 0 && temp.b <= 7 && temp.b >= 0)
 	{
-		UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(temp), 3);
+		AttackAreaManager::GetInstance()->SetAttackAreas(Math::Point2(temp));
+
+		//UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(temp), 3);
 	}
 	// ç∂ï˚å¸
 	temp = element_stock + Math::Point2(-2, 1);
 	if (temp.a <= 7 && temp.a >= 0 && temp.b <= 7 && temp.b >= 0)
 	{
-		UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(temp), 3);
+		AttackAreaManager::GetInstance()->SetAttackAreas(Math::Point2(temp));
+
+		//UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(temp), 3);
 	}
 	temp = element_stock + Math::Point2(-2, -1);
 	if (temp.a <= 7 && temp.a >= 0 && temp.b <= 7 && temp.b >= 0)
 	{
-		UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(temp), 3);
+		AttackAreaManager::GetInstance()->SetAttackAreas(Math::Point2(temp));
+
+		//UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(temp), 3);
 	}
 	// â∫ï˚å¸
 	temp = element_stock + Math::Point2(1, -2);
 	if (temp.a <= 7 && temp.a >= 0 && temp.b <= 7 && temp.b >= 0)
 	{
-		UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(temp), 3);
+		AttackAreaManager::GetInstance()->SetAttackAreas(Math::Point2(temp));
+
+		//UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(temp), 3);
 	}
 	temp = element_stock + Math::Point2(-1, -2);
 	if (temp.a <= 7 && temp.a >= 0 && temp.b <= 7 && temp.b >= 0)
 	{
-		UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(temp), 3);
+		AttackAreaManager::GetInstance()->SetAttackAreas(Math::Point2(temp));
+
+		//UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(temp), 3);
 	}
 }
 

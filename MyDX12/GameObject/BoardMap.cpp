@@ -87,6 +87,14 @@ void XIIlib::BoardMap::ChangeAttackValidTile(const Math::Point2& element, int ty
 	else if (type_positioning == 1) {
 		map_board[element.b][element.a]->SetEnemyAttackValid();
 	}
+	//二体以上の攻撃可能マス
+	else if (type_positioning == 2) {
+		map_board[element.b][element.a]->SetAttackPointValid();
+	}
+	//一体のみの攻撃可能マス
+	else if (type_positioning == 3) {
+		map_board[element.b][element.a]->SetMovePointValid();
+	}
 	else {
 		map_board[element.b][element.a]->SetMovePointValid();
 	}

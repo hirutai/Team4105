@@ -42,13 +42,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -178,6 +178,7 @@
     <ClCompile Include="Base\Library.cpp" />
     <ClCompile Include="Base\WindowsApp.cpp" />
     <ClCompile Include="Camera\DebugCamera.cpp" />
+    <ClCompile Include="GameObject\AttackAreaManager.cpp" />
     <ClCompile Include="GameObject\Bishop.cpp" />
     <ClCompile Include="GameObject\BoardMap.cpp" />
     <ClCompile Include="GameObject\Common.cpp" />
@@ -240,6 +241,7 @@
     <ClInclude Include="Base\Library.h" />
     <ClInclude Include="Base\WindowsApp.h" />
     <ClInclude Include="Camera\DebugCamera.h" />
+    <ClInclude Include="GameObject\AttackAreaManager.h" />
     <ClInclude Include="GameObject\Bishop.h" />
     <ClInclude Include="GameObject\BoardMap.h" />
     <ClInclude Include="GameObject\Common.h" />
