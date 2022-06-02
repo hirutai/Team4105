@@ -1,39 +1,28 @@
-#include "IntervalTimer.h"
-#include "../Tool/DigitalNumberText.h"
+#include "IntervalTimer.h" 
+#include "../2D/Sprite.h"
+
 using namespace XIIlib;
-void IntervalTimer::Initialize(int textureNumber)
+
+void IntervalTimer::Initialize(const int& timerTexNum, const int& barTexNum)
 {
-	timerNum = DigitalNumberText::GetInstance();
-	timerNum->Initialize(textureNumber);
+	timer = Sprite::Create(timerTexNum, { 10.0f, 100.0f }); // タイマー画像の作成
+	timer_bar = Sprite::Create(barTexNum, { 20.0f, 150.0f }); // タイマーバー画像の作成
 }
 
 void IntervalTimer::Timer()
 {
-	if (internalCounter <= ENDCOUNTER) // 内部カウントが終了した時
+	if (timerNum <= 0) // タイマーが０以下になった時
 	{
-		internalCounter = INITIALCOUNTER;
-		displayCounter = MAXNUM;
+		timerNum = intCountingNum; // タイマーをリセット
 	}
 
-	internalCounter--; // 内部カウントスタート
+	timerNum--;
 
-	if (internalCounter <= INITIALCOUNTER - 120) // ０～６０
-	{
-		displayCounter = DISPLAYZERO; // ０を表示
-	}
-	else if (internalCounter > INITIALCOUNTER - 120 && internalCounter <= INITIALCOUNTER - 60) // ６１～１２０
-	{
-		displayCounter = DISPLAYONE; // １を表示
-	}
-	else if (internalCounter > INITIALCOUNTER - 60 && internalCounter < INITIALCOUNTER) // １２１～１８０
-	{
-		displayCounter = DISPLAYTWO; // ２を表示
-	}
-
-	timerNum->Print(displayCounter, POSX, POSY, SCALE);
+	timer_bar->SetSize({ (float)timerNum, 50.0f });
 }
 
 void IntervalTimer::Draw()
 {
-	timerNum->DrawAll();
+	timer_bar->Draw();
+	timer->Draw();
 }

@@ -1,46 +1,44 @@
 #pragma once
 
-class DigitalNumberText;
+#include "../Struct/Math.h"
 
-// 座標
-#define POSX 0
-#define POSY 0
-// 大きさ
-#define SCALE 1.0f
-
-// 内部カウンター
-//#define INITIALCOUNTER 60 + 60 * MAXNUM // 初期カウント数
-#define INITIALCOUNTER 60 + 60 * MAXNUM // 初期カウント数
-#define ENDCOUNTER 0 // 終了カウント数
-
-// 表示カウンター
-#define MAXNUM DISPLAYTWO
-#define DISPLAYTWO 2
-#define DISPLAYONE (DISPLAYTWO - 1)
-#define DISPLAYZERO (DISPLAYONE - 1)
+class Sprite;
 
 namespace XIIlib
 {
-/// <summary>
-/// 敵の行動間隔用タイマー
-/// </summary>
+	/// <summary>
+	/// 敵の行動間隔用タイマー
+	/// </summary>
 	class IntervalTimer
 	{
-	public: // メンバ関数
-		void Initialize(int textureNumber); // 初期化
+#pragma region エイリアス
+	private:
+		using Vector2 = Math::Vector2;
+		using Vector3 = Math::Vector3;
+#pragma endregion
+
+#pragma region 定数
+		const int countingNum = 5; // 数える秒数
+		const int intCountingNum = 60 * countingNum; // 数えるフレーム数
+#pragma endregion
+
+#pragma region メンバ関数
+	public:
+		void Initialize(const int& timerTexNum, const int& barTexNum); // 初期化
 
 		void Timer(); // タイマー関数
 
 		void Draw(); // 描画
 
-		const unsigned int GetTimer() { return internalCounter; } // タイマーの取得
-		const unsigned int GetGameTimer() { return displayCounter; } // タイマーの取得
+		const unsigned int GetTimer() { return timerNum; } // タイマーの取得
+#pragma endregion
 
-	private: // メンバ変数
-		unsigned int internalCounter = INITIALCOUNTER; // 内部カウンター
+#pragma region メンバ変数
+	private:
+		unsigned int timerNum = intCountingNum; // タイマー
 
-		unsigned int displayCounter = MAXNUM; // 表示カウンター
-
-		DigitalNumberText* timerNum = nullptr; // タイマー用の数字画像
+		Sprite* timer = nullptr; // タイマー画像
+		Sprite* timer_bar = nullptr; // タイマーのバー画像
+#pragma endregion
 	};
 }
