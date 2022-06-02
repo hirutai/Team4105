@@ -11,7 +11,7 @@ void IntervalTimer::Initialize(const int& timerTexNum, const int& barTexNum)
 
 void IntervalTimer::Timer()
 {
-	if (timerNum <= 0) // タイマーが０以下になった時
+	if (timerNum == 0) // タイマーが０になった時
 	{
 		timerNum = intCountingNum; // タイマーをリセット
 	}
