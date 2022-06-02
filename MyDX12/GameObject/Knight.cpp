@@ -99,6 +99,11 @@ void XIIlib::Knight::Action()
 		Move();
 	}
 
+	if (UnitManager::GetInstance()->GetIntervalTimer() == 0)
+	{
+		notAttackflag = TRUE;
+	}
+
 	if (isAttack == true && notAttackflag == TRUE)
 	{
 		point_attack = preElement_stock;
