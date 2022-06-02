@@ -84,12 +84,27 @@ void XIIlib::Rook::SetStartElement(int x, int z)
 
 void XIIlib::Rook::Action()
 {
-
-	//if (UnitManager::GetInstance()->GetIntervalTimer() > 0)return;
-
 	// 範囲に入ってるかのチェック
 	if (AttackAreaExists())
 	{
+		Math::Point2 dif = kingPos - element_stock;
+		Math::Point2 norm(0, 0);
+		if (dif.a != 0) { norm.a = dif.a / abs(dif.a); }
+		else { norm.a = dif.a; }
+		if (dif.b != 0) { norm.b = dif.b / abs(dif.b); }
+		else { norm.b = dif.b; }
+
+		if (dif.a == 0)
+		{
+			// kingのポイション分を引いてfor文で調べる
+			if (MoveAreaCheck(element_stock, norm, dif.b))return;
+		}
+		else
+		{
+			// kingのポイション分を引いてfor文で調べる
+			if (MoveAreaCheck(element_stock, norm, dif.a))return;
+		}
+
 		if (isAttack == false)
 		{
 			isAttack = true;
@@ -131,7 +146,7 @@ void XIIlib::Rook::Attack()
 	collCapsule->SetColor(1, 0, 0, 1);
 	if (attackInterval == 0)
 	{
-		Math::Point2 dif = kingPos - element_stock;
+		Math::Point2 dif = kingPos - preElement_stock;
 		Math::Point2 temp = element_stock;
 
 		// 縦に重なっている
@@ -196,7 +211,7 @@ void XIIlib::Rook::Attack()
 				}
 			}
 		}
-		if (AttackAreaExists()) { preElement_stock = kingPos; }
+		//if (AttackAreaExists()) { preElement_stock = kingPos; }
 		// 攻撃
 		element_stock = preElement_stock;
 
@@ -225,7 +240,7 @@ void XIIlib::Rook::Move()
 			for (int i = 0; i < abs(dif.b); ++i)
 			{
 				temp.b--;
-				if (UnitManager::GetInstance()->AllOnUnit(temp))return;
+				if (ThreeCheckArea(temp))return;
 				element_stock.b--;
 			}
 		}
@@ -235,7 +250,7 @@ void XIIlib::Rook::Move()
 			for (int i = 0; i < abs(dif.b); ++i)
 			{
 				temp.b++;
-				if (UnitManager::GetInstance()->AllOnUnit(temp))return;
+				if (ThreeCheckArea(temp))return;
 				element_stock.b++;
 			}
 		}
@@ -249,7 +264,7 @@ void XIIlib::Rook::Move()
 			for (int i = 0; i < abs(dif.a); ++i)
 			{
 				temp.a--;
-				if (UnitManager::GetInstance()->AllOnUnit(temp))return;
+				if (ThreeCheckArea(temp))return;
 				element_stock.a--;
 			}
 		}
@@ -259,7 +274,7 @@ void XIIlib::Rook::Move()
 			for (int i = 0; i < abs(dif.a); ++i)
 			{
 				temp.a++;
-				if (UnitManager::GetInstance()->AllOnUnit(temp))return;
+				if (ThreeCheckArea(temp))return;
 				element_stock.a++;
 			}
 		}
@@ -320,4 +335,15 @@ void XIIlib::Rook::SetTypePositioning(_PositionType changeType)
 void XIIlib::Rook::CreateAttackArea()
 {
 
+}
+
+bool XIIlib::Rook::MoveAreaCheck(Math::Point2 crPos, Math::Point2 vec, int tileNum)
+{
+	Math::Point2 pos = crPos;
+	for (int i = 0; i < abs(tileNum) - 1; ++i)
+	{
+		pos += vec;
+		if (UnitManager::GetInstance()->AllOnUnit(pos))return true;
+	}
+	return false;
 }

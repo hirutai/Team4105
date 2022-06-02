@@ -24,11 +24,11 @@ XIIlib::Knight::~Knight()
 
 std::shared_ptr<XIIlib::Knight> XIIlib::Knight::Create(int point_x, int point_z)
 {
-	std::shared_ptr<Knight> rook = std::make_shared<Knight>();
-	rook.get()->SetStartElement(point_x, point_z);
-	rook.get()->Initialize();
+	std::shared_ptr<Knight> knight = std::make_shared<Knight>();
+	knight.get()->SetStartElement(point_x, point_z);
+	knight.get()->Initialize();
 
-	return std::move(rook);
+	return std::move(knight);
 }
 
 void XIIlib::Knight::Initialize()
@@ -122,9 +122,10 @@ void XIIlib::Knight::Attack()
 	attackInterval--;
 	//色を変える
 	collCapsule->SetColor(1, 0, 0, 1);
+	
 	if (attackInterval == 0)
 	{
-		if (AttackAreaExists()) { preElement_stock = kingPos; }
+		//if (AttackAreaExists()) { preElement_stock = kingPos; }
 		// 攻撃
 		element_stock = preElement_stock;
 		IniState();
@@ -152,13 +153,11 @@ void XIIlib::Knight::Move()
 		{
 			// 上右方向
 			temp = element_stock + Math::Point2(1, 2);
-			if (UnitManager::GetInstance()->AllOnUnit(temp)
-				|| Common::GetExceptionPoint(temp.a)
-				|| Common::GetExceptionPoint(temp.b))
+			if (ThreeCheckArea(temp))
 			{
 				// 右上方向
 				temp = element_stock + Math::Point2(2, 1);
-				if (UnitManager::GetInstance()->AllOnUnit(temp))return;
+				if (ThreeCheckArea(temp))return;
 			}
 			element_stock = temp;
 		}
@@ -166,13 +165,11 @@ void XIIlib::Knight::Move()
 		{
 			// 上左方向
 			temp = element_stock + Math::Point2(-1, 2);
-			if (UnitManager::GetInstance()->AllOnUnit(temp)
-				|| Common::GetExceptionPoint(temp.a)
-				|| Common::GetExceptionPoint(temp.b))
+			if (ThreeCheckArea(temp))
 			{
 				// 左上方向
 				temp = element_stock + Math::Point2(-2, 1);
-				if (UnitManager::GetInstance()->AllOnUnit(temp))return;
+				if (ThreeCheckArea(temp))return;
 			}
 			element_stock = temp;
 		}
@@ -184,13 +181,11 @@ void XIIlib::Knight::Move()
 		{
 			// 下右方向
 			temp = element_stock + Math::Point2(1, -2);
-			if (UnitManager::GetInstance()->AllOnUnit(temp)
-				|| Common::GetExceptionPoint(temp.a)
-				|| Common::GetExceptionPoint(temp.b))
+			if (ThreeCheckArea(temp))
 			{
 				// 右下方向
 				temp = element_stock + Math::Point2(2, -1);
-				if (UnitManager::GetInstance()->AllOnUnit(temp))return;
+				if (ThreeCheckArea(temp))return;
 			}
 			element_stock = temp;
 		}
@@ -198,13 +193,11 @@ void XIIlib::Knight::Move()
 		{
 			// 下左方向
 			temp = element_stock + Math::Point2(-1, -2);
-			if (UnitManager::GetInstance()->AllOnUnit(temp)
-				|| Common::GetExceptionPoint(temp.a)
-				|| Common::GetExceptionPoint(temp.b))
+			if (ThreeCheckArea(temp))
 			{
 				// 左上方向
 				temp = element_stock + Math::Point2(-2, -1);
-				if (UnitManager::GetInstance()->AllOnUnit(temp))return;
+				if (ThreeCheckArea(temp))return;
 			}
 			element_stock = temp;
 		}
@@ -277,4 +270,15 @@ void XIIlib::Knight::SetTypePositioning(_PositionType changeType)
 void XIIlib::Knight::CreateAttackArea()
 {
 
+}
+
+bool XIIlib::Knight::MoveAreaCheck(Math::Point2 crPos, Math::Point2 vec, int tileNum)
+{
+	Math::Point2 pos = crPos;
+	for (int i = 0; i < abs(tileNum) - 1; ++i)
+	{
+		pos += vec;
+		if (UnitManager::GetInstance()->AllOnUnit(pos))return true;
+	}
+	return false;
 }

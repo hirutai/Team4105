@@ -34,6 +34,7 @@ namespace XIIlib {
 
 		Math::Point2 GetElementStock()const { return element_stock; }
 
+		bool MoveAreaCheck(Math::Point2 crPos, Math::Point2 vec, int tileNum)override;
 	};
 
 }

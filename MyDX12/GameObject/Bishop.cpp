@@ -85,6 +85,19 @@ void XIIlib::Bishop::Action()
 	// 範囲に入ってるかのチェック
 	if (AttackAreaExists())
 	{
+		Math::Point2 dif = kingPos - element_stock;
+		Math::Point2 norm(0, 0);
+		if (dif.a != 0) { norm.a = dif.a / abs(dif.a); }
+		else { norm.a = dif.a; }
+		if (dif.b != 0) { norm.b = dif.b / abs(dif.b); }
+		else { norm.b = dif.b; }
+
+		if (dif.a == dif.b)
+		{
+			// kingのポイション分を引いてfor文で調べる
+			if (MoveAreaCheck(element_stock, norm, dif.b))return;
+		}
+
 		if (isAttack == false)
 		{
 			isAttack = true;
@@ -120,7 +133,7 @@ void XIIlib::Bishop::Attack()
 	collCapsule->SetColor(1, 0, 0, 1);
 	if (attackInterval == 0)
 	{
-		Math::Point2 dif = kingPos - element_stock;
+		Math::Point2 dif = kingPos - preElement_stock;
 		Math::Point2 temp = element_stock;
 
 		Math::Point2 temp_norm;
@@ -128,6 +141,7 @@ void XIIlib::Bishop::Attack()
 		else { temp_norm.a = dif.a / abs(dif.a); }
 		if (dif.b == 0) { temp_norm.b = dif.b; }
 		else { temp_norm.b = dif.b / abs(dif.b); }
+
 		// 自分とキングの間を1マスづつ調べる
 		for (int i = 0; i < abs(dif.a) - 1; ++i)
 		{
@@ -138,7 +152,7 @@ void XIIlib::Bishop::Attack()
 				return;
 			}
 		}
-		if (AttackAreaExists()) { preElement_stock = kingPos; }
+		//if (AttackAreaExists()) { preElement_stock = kingPos; }
 		// 攻撃
 		element_stock = preElement_stock;
 		IniState();
@@ -166,28 +180,20 @@ void XIIlib::Bishop::Move()
 		if (dif.a > 0)
 		{
 			temp = element_stock + Math::Point2(1, 1);
-			if (UnitManager::GetInstance()->AllOnUnit(temp)
-				|| Common::GetExceptionPoint(temp.a)
-				|| Common::GetExceptionPoint(temp.b))
+			if (ThreeCheckArea(temp))
 			{
 				temp = element_stock + Math::Point2(-1, 1);
-				if (UnitManager::GetInstance()->AllOnUnit(temp)
-					|| Common::GetExceptionPoint(temp.a)
-					|| Common::GetExceptionPoint(temp.b))return;
+				if (ThreeCheckArea(temp))return;
 			}
 			element_stock = temp;
 		}
 		else // キングが左か真ん中にいる
 		{
 			temp = element_stock + Math::Point2(-1, 1);
-			if (UnitManager::GetInstance()->AllOnUnit(temp)
-				|| Common::GetExceptionPoint(temp.a)
-				|| Common::GetExceptionPoint(temp.b))
+			if (ThreeCheckArea(temp))
 			{
 				temp = element_stock + Math::Point2(1, 1);
-				if (UnitManager::GetInstance()->AllOnUnit(temp)
-					|| Common::GetExceptionPoint(temp.a)
-					|| Common::GetExceptionPoint(temp.b))return;
+				if (ThreeCheckArea(temp))return;
 			}
 			element_stock = temp;
 		}
@@ -198,28 +204,20 @@ void XIIlib::Bishop::Move()
 		if (dif.a > 0)
 		{
 			temp = element_stock + Math::Point2(1, -1);
-			if (UnitManager::GetInstance()->AllOnUnit(temp)
-				|| Common::GetExceptionPoint(temp.a)
-				|| Common::GetExceptionPoint(temp.b))
+			if (ThreeCheckArea(temp))
 			{
 				temp = element_stock + Math::Point2(-1, -1);
-				if (UnitManager::GetInstance()->AllOnUnit(temp)
-					|| Common::GetExceptionPoint(temp.a)
-					|| Common::GetExceptionPoint(temp.b))return;
+				if (ThreeCheckArea(temp))return;
 			}
 			element_stock = temp;
 		}
 		else
 		{
 			temp = element_stock + Math::Point2(-1, -1);
-			if (UnitManager::GetInstance()->AllOnUnit(temp)
-				|| Common::GetExceptionPoint(temp.a)
-				|| Common::GetExceptionPoint(temp.b))
+			if (ThreeCheckArea(temp))
 			{
 				temp = element_stock + Math::Point2(1, -1);
-				if (UnitManager::GetInstance()->AllOnUnit(temp)
-					|| Common::GetExceptionPoint(temp.a)
-					|| Common::GetExceptionPoint(temp.b))return;
+				if (ThreeCheckArea(temp))return;
 			}
 			element_stock = temp;
 		}
@@ -231,27 +229,19 @@ void XIIlib::Bishop::Move()
 			if (element_stock.b >= 4)
 			{
 				temp = element_stock + Math::Point2(1, -1);
-				if (UnitManager::GetInstance()->AllOnUnit(temp)
-					|| Common::GetExceptionPoint(temp.a)
-					|| Common::GetExceptionPoint(temp.b))
+				if (ThreeCheckArea(temp))
 				{
 					temp = element_stock + Math::Point2(1, 1);
-					if (UnitManager::GetInstance()->AllOnUnit(temp)
-						|| Common::GetExceptionPoint(temp.a)
-						|| Common::GetExceptionPoint(temp.b))return;
+					if (ThreeCheckArea(temp))return;
 				}
 			}
 			else
 			{
 				temp = element_stock + Math::Point2(1, 1);
-				if (UnitManager::GetInstance()->AllOnUnit(temp)
-					|| Common::GetExceptionPoint(temp.a)
-					|| Common::GetExceptionPoint(temp.b))
+				if (ThreeCheckArea(temp))
 				{
 					temp = element_stock + Math::Point2(1, -1);
-					if (UnitManager::GetInstance()->AllOnUnit(temp)
-						|| Common::GetExceptionPoint(temp.a)
-						|| Common::GetExceptionPoint(temp.b))return;
+					if (ThreeCheckArea(temp))return;
 				}
 			}
 		}
@@ -260,27 +250,19 @@ void XIIlib::Bishop::Move()
 			if (element_stock.b >= 4)
 			{
 				temp = element_stock + Math::Point2(-1, -1);
-				if (UnitManager::GetInstance()->AllOnUnit(temp)
-					|| Common::GetExceptionPoint(temp.a)
-					|| Common::GetExceptionPoint(temp.b))
+				if (ThreeCheckArea(temp))
 				{
 					temp = element_stock + Math::Point2(-1, 1);
-					if (UnitManager::GetInstance()->AllOnUnit(temp)
-						|| Common::GetExceptionPoint(temp.a)
-						|| Common::GetExceptionPoint(temp.b))return;
+					if (ThreeCheckArea(temp))return;
 				}
 			}
 			else
 			{
 				temp = element_stock + Math::Point2(-1, 1);
-				if (UnitManager::GetInstance()->AllOnUnit(temp)
-					|| Common::GetExceptionPoint(temp.a)
-					|| Common::GetExceptionPoint(temp.b))
+				if (ThreeCheckArea(temp))
 				{
 					temp = element_stock + Math::Point2(-1, -1);
-					if (UnitManager::GetInstance()->AllOnUnit(temp)
-						|| Common::GetExceptionPoint(temp.a)
-						|| Common::GetExceptionPoint(temp.b))return;
+					if (ThreeCheckArea(temp))return;
 				}
 			}
 		}
@@ -333,4 +315,15 @@ void XIIlib::Bishop::SetTypePositioning(_PositionType changeType)
 void XIIlib::Bishop::CreateAttackArea()
 {
 
+}
+
+bool XIIlib::Bishop::MoveAreaCheck(Math::Point2 crPos, Math::Point2 vec, int tileNum)
+{
+	Math::Point2 pos = crPos;
+	for (int i = 0; i < abs(tileNum) - 1; ++i)
+	{
+		pos += vec;
+		if (UnitManager::GetInstance()->AllOnUnit(pos))return true;
+	}
+	return false;
 }
