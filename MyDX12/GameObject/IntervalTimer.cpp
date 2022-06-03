@@ -19,9 +19,9 @@ void IntervalTimer::Timer()
 
 	timerNum++; // タイマー
 
-	currentSize = maxSize - intCountingNum * timerNum; // 現在のサイズを計算
+	currentSize = maxSize - decNum * timerNum; // 現在のサイズを計算
 
-	timer_bar->SetSize({ currentSize, 50.0f });
+	timer_bar->SetSize({ currentSize, 50.0f }); // サイズの設定
 }
 
 void IntervalTimer::Draw()
