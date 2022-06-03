@@ -235,7 +235,7 @@ void XIIlib::Rook::Action()
 		Move();
 	}
 
-	if (UnitManager::GetInstance()->GetIntervalTimer() == 0)
+	if (UnitManager::GetInstance()->GetIntervalTimer() == 420)
 	{
 		notAttackflag = TRUE;
 	}
@@ -342,13 +342,12 @@ void XIIlib::Rook::Attack()
 void XIIlib::Rook::Move()
 {
 	if (isAttack == true)return;
-	if (UnitManager::GetInstance()->GetIntervalTimer() > 0)return;
+	if (UnitManager::GetInstance()->GetIntervalTimer() < 420)return;
 	notAttackflag = TRUE;
 
 	collCapsule->SetColor(0, 1, 1, 1);
 	Math::Point2 dif = kingPos - element_stock;
 	Math::Point2 temp = element_stock;
-	if (abs(dif.a) == 1 && abs(dif.b) == 1)return;
 	// ·•ª‚ªX‚Ì‚Ù‚¤‚ª‘å‚«‚¢
 	if (abs(dif.a) > abs(dif.b))
 	{
