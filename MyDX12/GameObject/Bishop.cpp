@@ -229,7 +229,7 @@ void XIIlib::Bishop::Action()
 	{
 		Move();
 	}
-	if (UnitManager::GetInstance()->GetIntervalTimer()==420)
+	if (UnitManager::GetInstance()->GetIntervalTimer() == 420)
 	{
 		notAttackflag = TRUE;
 	}
