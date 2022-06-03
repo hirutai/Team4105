@@ -9,8 +9,6 @@ namespace XIIlib {
 	public:
 		Bishop();
 		~Bishop();
-		//çUåÇflag
-		bool notAttackflag = true;
 		// ê∂ê¨ä÷êî
 		static std::shared_ptr<Bishop> Create(int point_x, int point_z);
 
@@ -22,6 +20,7 @@ namespace XIIlib {
 		void Action()override;
 		void Attack()override;
 		void Move()override;
+		void AttackAreaDraw();
 		bool AttackAreaExists()override;
 		void IniState()override;
 

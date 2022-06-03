@@ -315,6 +315,9 @@
     <ClCompile Include="GameObject\Unit.cpp">
       <Filter>GameObject\Unit</Filter>
     </ClCompile>
+    <ClCompile Include="GameObject\AttackAreaManager.cpp">
+      <Filter>GameObject\Tile</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Base\DirectX12.h">
@@ -529,6 +532,9 @@
     </ClInclude>
     <ClInclude Include="GameScene\End.h">
       <Filter>GameScene\StateScene</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\AttackAreaManager.h">
+      <Filter>GameObject\Tile</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

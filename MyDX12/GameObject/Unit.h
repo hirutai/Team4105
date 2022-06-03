@@ -2,6 +2,7 @@
 #include "../Struct/Point2.h"
 #include <vector>
 #include <string>
+#include"AttackAreaManager.h"
 class CollisionCapsule;
 
 namespace XIIlib {
@@ -42,6 +43,8 @@ namespace XIIlib {
 		// ’Ç‰Á
 		unsigned int attackInterval = 120;
 		bool isAttack = false;
+		//UŒ‚flag
+		bool notAttackflag = true;
 		Math::Point2 preElement_stock{0,0};
 
 		bool is_dead = false;// €–S‚µ‚Ä‚é‚©‚Ç‚¤‚©‚ğŠÇ—
@@ -96,6 +99,7 @@ namespace XIIlib {
 		std::string GetID()const { return ID; }
 
 		virtual bool MoveAreaCheck(Math::Point2 crPos, Math::Point2 vec, int tileNum) = 0;
+
 		bool ThreeCheckArea(Math::Point2 element_stock);
 		
 	};
