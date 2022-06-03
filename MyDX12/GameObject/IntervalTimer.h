@@ -18,8 +18,12 @@ namespace XIIlib
 #pragma endregion
 
 #pragma region 定数
-		const int countingNum = 5; // 数える秒数
-		const int intCountingNum = 60 * countingNum; // 数えるフレーム数
+		const float countingNum = 7; // 数えたい秒数
+
+		const float maxSize = 300.0f; // 最大サイズ
+		const float second = 60.0f; // 一秒分のフレーム数
+		const float baseDecNum = maxSize / second; // 一秒時に減らす量
+		const float decNum = baseDecNum / countingNum; // 減らす量
 #pragma endregion
 
 #pragma region メンバ関数
@@ -35,7 +39,9 @@ namespace XIIlib
 
 #pragma region メンバ変数
 	private:
-		unsigned int timerNum = intCountingNum; // タイマー
+		int timerNum = 0; // タイマー
+
+		float currentSize; // 現在のサイズ
 
 		Sprite* timer = nullptr; // タイマー画像
 		Sprite* timer_bar = nullptr; // タイマーのバー画像

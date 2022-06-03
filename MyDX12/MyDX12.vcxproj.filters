@@ -312,6 +312,9 @@
     <ClCompile Include="GameScene\End.cpp">
       <Filter>GameScene\StateScene</Filter>
     </ClCompile>
+    <ClCompile Include="GameObject\Unit.cpp">
+      <Filter>GameObject\Unit</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Base\DirectX12.h">

@@ -36,6 +36,6 @@ namespace XIIlib{
 		void SetTypePositioning(_PositionType changeType)override;
 
 		void CreateAttackArea()override;
-
+		bool MoveAreaCheck(Math::Point2 crPos, Math::Point2 vec, int tileNum)override;
 	};
 }

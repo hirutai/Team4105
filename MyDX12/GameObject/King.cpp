@@ -61,7 +61,7 @@ void XIIlib::King::Update()
 			if ((container[i].a < 8 && container[i].a >= 0) && (container[i].b < 8 && container[i].b >= 0)) {
 				UnitManager::GetInstance()->ChangeAttackValidTile(container[i],(int)type);
 				Math::Point2 vec_point = container[i] - element_stock;
-				UnitManager::GetInstance()->SetBackVector(container[i], vec_point);
+				UnitManager::GetInstance()->SetBackVector(container[i], vec_point * 2);
 			}
 		}
 	}
@@ -241,4 +241,9 @@ void XIIlib::King::CreateAttackArea()
 	attack_area[(int)AREA::RIGHT_UP].push_back(Math::Point2(0,  1));
 	attack_area[(int)AREA::RIGHT_UP].push_back(Math::Point2(1,  1));
 	attack_area[(int)AREA::RIGHT_UP].push_back(Math::Point2(1,  0));
+}
+
+bool XIIlib::King::MoveAreaCheck(Math::Point2 crPos, Math::Point2 vec, int tileNum)
+{
+	return false;
 }

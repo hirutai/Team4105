@@ -24,11 +24,11 @@ XIIlib::Knight::~Knight()
 
 std::shared_ptr<XIIlib::Knight> XIIlib::Knight::Create(int point_x, int point_z)
 {
-	std::shared_ptr<Knight> rook = std::make_shared<Knight>();
-	rook.get()->SetStartElement(point_x, point_z);
-	rook.get()->Initialize();
+	std::shared_ptr<Knight> knight = std::make_shared<Knight>();
+	knight.get()->SetStartElement(point_x, point_z);
+	knight.get()->Initialize();
 
-	return std::move(rook);
+	return std::move(knight);
 }
 
 void XIIlib::Knight::Initialize()
@@ -60,11 +60,132 @@ void XIIlib::Knight::Update()
 		// ノックバック
 		element_stock += UnitManager::GetInstance()->GetBackVector(element_stock);
 
+		Math::Point2 dif = kingPos - element_stock;
+		Math::Point2 temp = kingPos;
+		// ノックバック時に間に他の駒がいる場合、その間の駒の位置に止まる
+		// 縦にノックバック
+		if (dif.a == 0)
+		{
+			// 0より小さければKingより上にいる
+			if (dif.b < 0)
+			{
+				// 自分とキングの間を1マスづつ調べる
+				for (int i = 0; i < abs(dif.b) - 1; ++i)
+				{
+					temp.b++;
+					if (UnitManager::GetInstance()->AllOnUnit(temp))
+					{
+						element_stock = temp;
+					}
+				}
+			}
+			else // 0より大きければKingより下にいる
+			{
+				// 自分とキングの間を1マスづつ調べる
+				for (int i = 0; i < abs(dif.b) - 1; ++i)
+				{
+					temp.b--;
+					if (UnitManager::GetInstance()->AllOnUnit(temp))
+					{
+						element_stock = temp;
+					}
+				}
+			}
+		}
+		else if (dif.b == 0) // 横にノックバック
+		{
+			// 0より小さければKingより右
+			if (dif.a < 0)
+			{
+				// 自分とキングの間を1マスづつ調べる
+				for (int i = 0; i < abs(dif.a) - 1; ++i)
+				{
+					temp.a++;
+					if (UnitManager::GetInstance()->AllOnUnit(temp))
+					{
+						element_stock = temp;
+					}
+				}
+			}
+			else// 0より大きければKingより左
+			{
+				// 自分とキングの間を1マスづつ調べる
+				for (int i = 0; i < abs(dif.a) - 1; ++i)
+				{
+					temp.a--;
+					if (UnitManager::GetInstance()->AllOnUnit(temp))
+					{
+						element_stock = temp;
+					}
+				}
+			}
+		}
+		else	// 斜めにノックバック
+		{
+			// 左上にノックバック
+			if (dif.a > 0 && dif.b < 0)
+			{
+				// 自分とキングの間を1マスづつ調べる
+				for (int i = 0; i < abs(dif.a) - 1; ++i)
+				{
+					temp.a--;
+					temp.b++;
+					if (UnitManager::GetInstance()->AllOnUnit(temp))
+					{
+						element_stock = temp;
+
+					}
+				}
+			}
+			else if (dif.a < 0 && dif.b < 0)	// 右上にノックバック
+			{
+				// 自分とキングの間を1マスづつ調べる
+				for (int i = 0; i < abs(dif.a) - 1; ++i)
+				{
+					temp.a++;
+					temp.b++;
+					if (UnitManager::GetInstance()->AllOnUnit(temp))
+					{
+						element_stock = temp;
+						break;
+					}
+				}
+			}
+			else if (dif.a > 0 && dif.b > 0)	// 左下にノックバック
+			{
+				// 自分とキングの間を1マスづつ調べる
+				for (int i = 0; i < abs(dif.a) - 1; ++i)
+				{
+					temp.a--;
+					temp.b--;
+					if (UnitManager::GetInstance()->AllOnUnit(temp))
+					{
+						element_stock = temp;
+						break;
+					}
+				}
+			}
+			else if (dif.a < 0 && dif.b > 0)	// 右下にノックバック
+			{
+				// 自分とキングの間を1マスづつ調べる
+				for (int i = 0; i < abs(dif.a) - 1; ++i)
+				{
+					temp.a++;
+					temp.b--;
+					if (UnitManager::GetInstance()->AllOnUnit(temp))
+					{
+						element_stock = temp;
+						break;
+					}
+				}
+			}
+		}
+
+
 		if (Common::GetExceptionPoint(element_stock.a) || Common::GetExceptionPoint(element_stock.b)) {
 			Hit(3);
 		}
 
-		element_stock = Common::OffsetTilePosition2(element_stock);
 	}
 
 	collCapsule->Update();
@@ -122,9 +243,10 @@ void XIIlib::Knight::Attack()
 	attackInterval--;
 	//色を変える
 	collCapsule->SetColor(1, 0, 0, 1);
+	
 	if (attackInterval == 0)
 	{
-		if (AttackAreaExists()) { preElement_stock = kingPos; }
+		//if (AttackAreaExists()) { preElement_stock = kingPos; }
 		// 攻撃
 		element_stock = preElement_stock;
 		IniState();
@@ -152,13 +274,11 @@ void XIIlib::Knight::Move()
 		{
 			// 上右方向
 			temp = element_stock + Math::Point2(1, 2);
-			if (UnitManager::GetInstance()->AllOnUnit(temp)
-				|| Common::GetExceptionPoint(temp.a)
-				|| Common::GetExceptionPoint(temp.b))
+			if (ThreeCheckArea(temp))
 			{
 				// 右上方向
 				temp = element_stock + Math::Point2(2, 1);
-				if (UnitManager::GetInstance()->AllOnUnit(temp))return;
+				if (ThreeCheckArea(temp))return;
 			}
 			element_stock = temp;
 		}
@@ -166,13 +286,11 @@ void XIIlib::Knight::Move()
 		{
 			// 上左方向
 			temp = element_stock + Math::Point2(-1, 2);
-			if (UnitManager::GetInstance()->AllOnUnit(temp)
-				|| Common::GetExceptionPoint(temp.a)
-				|| Common::GetExceptionPoint(temp.b))
+			if (ThreeCheckArea(temp))
 			{
 				// 左上方向
 				temp = element_stock + Math::Point2(-2, 1);
-				if (UnitManager::GetInstance()->AllOnUnit(temp))return;
+				if (ThreeCheckArea(temp))return;
 			}
 			element_stock = temp;
 		}
@@ -184,13 +302,11 @@ void XIIlib::Knight::Move()
 		{
 			// 下右方向
 			temp = element_stock + Math::Point2(1, -2);
-			if (UnitManager::GetInstance()->AllOnUnit(temp)
-				|| Common::GetExceptionPoint(temp.a)
-				|| Common::GetExceptionPoint(temp.b))
+			if (ThreeCheckArea(temp))
 			{
 				// 右下方向
 				temp = element_stock + Math::Point2(2, -1);
-				if (UnitManager::GetInstance()->AllOnUnit(temp))return;
+				if (ThreeCheckArea(temp))return;
 			}
 			element_stock = temp;
 		}
@@ -198,13 +314,11 @@ void XIIlib::Knight::Move()
 		{
 			// 下左方向
 			temp = element_stock + Math::Point2(-1, -2);
-			if (UnitManager::GetInstance()->AllOnUnit(temp)
-				|| Common::GetExceptionPoint(temp.a)
-				|| Common::GetExceptionPoint(temp.b))
+			if (ThreeCheckArea(temp))
 			{
 				// 左上方向
 				temp = element_stock + Math::Point2(-2, -1);
-				if (UnitManager::GetInstance()->AllOnUnit(temp))return;
+				if (ThreeCheckArea(temp))return;
 			}
 			element_stock = temp;
 		}
@@ -277,4 +391,15 @@ void XIIlib::Knight::SetTypePositioning(_PositionType changeType)
 void XIIlib::Knight::CreateAttackArea()
 {
 
+}
+
+bool XIIlib::Knight::MoveAreaCheck(Math::Point2 crPos, Math::Point2 vec, int tileNum)
+{
+	Math::Point2 pos = crPos;
+	for (int i = 0; i < abs(tileNum) - 1; ++i)
+	{
+		pos += vec;
+		if (UnitManager::GetInstance()->AllOnUnit(pos))return true;
+	}
+	return false;
 }

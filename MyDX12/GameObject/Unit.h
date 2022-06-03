@@ -94,5 +94,9 @@ namespace XIIlib {
 		Math::Point2 GetAttackArea(int pattern, int element)const { return attack_area[pattern][element]; }
 
 		std::string GetID()const { return ID; }
+
+		virtual bool MoveAreaCheck(Math::Point2 crPos, Math::Point2 vec, int tileNum) = 0;
+		bool ThreeCheckArea(Math::Point2 element_stock);
+		
 	};
 }
