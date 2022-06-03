@@ -10,7 +10,6 @@
 #include "../2D/Line2D.h"
 #include "../3D/Line.h"
 #include "../GameObject/UnitManager.h"
-#include "../GameObject/AttackAreaManager.h"
 #include "../3D/CollCapsule.h"
 #include "../3D/CollBox.h"
 #include "../3D/CollCircle.h"
@@ -55,7 +54,6 @@ GameApp::~GameApp()
 void GameApp::Initialize()
 {
 	manager = UnitManager::GetInstance();
-	attackAreaManager = AttackAreaManager::GetInstance();
 
 	DirectX12::SetClearColor(0.2f, 0.3f, 0.7f);
 
@@ -129,7 +127,6 @@ void GameApp::Initialize()
 	circle = Circle::Create();
 
 	manager->Initialize();
-	attackAreaManager->Initialize();
 
 	VariableInit();
 	game_scene = new XIIlib::GameScene();

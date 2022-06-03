@@ -36,12 +36,11 @@ void XIIlib::Tile::Update()
 
 	p_box->SetColor(1,1,1,1);
 	// ƒtƒ‰ƒO‚ªƒIƒ“‚Å10fÔ‚É
-	if (!is_attack_player && !is_attack_enemy && !is_move_point && !is_attack_point)return;
+	if (!is_attack_player && !is_attack_enemy && !is_move_point)return;
 
 	if (is_attack_player)p_box->SetColor(1, 0, 0, 1);
 	if (is_attack_enemy)p_box->SetColor(1, 0, 0, 1);
 	if (is_move_point)p_box->SetColor(0.6f, 0.4f, 0, 1);
-	if (is_attack_point)p_box->SetColor(0.0f, 0.0f, 0, 1);
 
 	if (is_attack_player && is_attack_enemy)p_box->SetColor(1,0,1,1);
 
@@ -50,7 +49,6 @@ void XIIlib::Tile::Update()
 		is_attack_player = false;
 		is_attack_enemy = false;
 		is_move_point = false;
-		is_attack_point = false;
 		vec_back = Math::Point2();
 		time_valid = 0;
 	}
@@ -76,11 +74,6 @@ void XIIlib::Tile::SetEnemyAttackValid()
 void XIIlib::Tile::SetMovePointValid()
 {
 	is_move_point = true;
-}
-
-void XIIlib::Tile::SetAttackPointValid()
-{
-	is_attack_point = true;
 }
 
 void XIIlib::Tile::SetBackVector(const Math::Point2& point)

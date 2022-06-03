@@ -319,8 +319,7 @@ void XIIlib::Bishop::AttackAreaDraw()
 		}
 		else
 		{
-			AttackAreaManager::GetInstance()->SetAttackAreas(Math::Point2(element_stock.a - i, element_stock.b-i));
-			//UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(element_stock.a - i, element_stock.b - i), 3);
+			UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(element_stock.a - i, element_stock.b - i), 3);
 		}
 	}
 	//‰Eã
@@ -332,9 +331,7 @@ void XIIlib::Bishop::AttackAreaDraw()
 		}
 		else
 		{
-			AttackAreaManager::GetInstance()->SetAttackAreas(Math::Point2(element_stock.a + i, element_stock.b + i));
-
-			//UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(element_stock.a + i, element_stock.b + i), 3);
+			UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(element_stock.a + i, element_stock.b + i), 3);
 		}
 	}
 	//‰E‰º
@@ -346,9 +343,7 @@ void XIIlib::Bishop::AttackAreaDraw()
 		}
 		else
 		{
-			AttackAreaManager::GetInstance()->SetAttackAreas(Math::Point2(element_stock.a + i, element_stock.b - i));
-
-			//UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(element_stock.a + i, element_stock.b - i), 3);
+			UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(element_stock.a + i, element_stock.b - i), 3);
 		}
 	}
 	//¶ã
@@ -360,8 +355,7 @@ void XIIlib::Bishop::AttackAreaDraw()
 		}
 		else
 		{
-			AttackAreaManager::GetInstance()->SetAttackAreas(Math::Point2(element_stock.a - i, element_stock.b + i));
-			//UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(element_stock.a - i, element_stock.b + i), 3);
+			UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(element_stock.a - i, element_stock.b + i), 3);
 		}
 	}
 }

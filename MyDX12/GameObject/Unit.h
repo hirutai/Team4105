@@ -2,7 +2,6 @@
 #include "../Struct/Point2.h"
 #include <vector>
 #include <string>
-#include"AttackAreaManager.h"
 class CollisionCapsule;
 
 namespace XIIlib {
