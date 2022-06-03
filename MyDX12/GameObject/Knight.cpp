@@ -56,7 +56,8 @@ void XIIlib::Knight::Update()
 	// 攻撃当たったら
 	if (UnitManager::GetInstance()
 		->IsAttackValid(element_stock, (int)_PositionType::MINE)) {
-		Hit(1);
+		//Hit(1);
+		isAttack = false;
 		// ノックバック
 		element_stock += UnitManager::GetInstance()->GetBackVector(element_stock);
 
@@ -243,7 +244,7 @@ void XIIlib::Knight::Attack()
 	// カウントを減らす
 	attackInterval--;
 	//色を変える
-	if (attackInterval <= 150 && attackInterval >= 120 || attackInterval <= 90 && attackInterval >= 60 || attackInterval <= 30 && attackInterval >= 0)
+	if (attackInterval <= 150 && attackInterval >= 120 || attackInterval <= 90 && attackInterval >= 75 || attackInterval <= 60 && attackInterval >= 45 || attackInterval <= 30 && attackInterval >= 15)
 	{
 		collCapsule->SetColor(1, 0, 0, 1);
 	}
