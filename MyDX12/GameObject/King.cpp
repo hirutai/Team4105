@@ -242,3 +242,8 @@ void XIIlib::King::CreateAttackArea()
 	attack_area[(int)AREA::RIGHT_UP].push_back(Math::Point2(1,  1));
 	attack_area[(int)AREA::RIGHT_UP].push_back(Math::Point2(1,  0));
 }
+
+bool XIIlib::King::MoveAreaCheck(Math::Point2 crPos, Math::Point2 vec, int tileNum)
+{
+	return false;
+}
