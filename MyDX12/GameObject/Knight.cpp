@@ -220,7 +220,7 @@ void XIIlib::Knight::Action()
 		Move();
 	}
 
-	if (UnitManager::GetInstance()->GetIntervalTimer() == 0)
+	if (UnitManager::GetInstance()->GetIntervalTimer() == 420)
 	{
 		notAttackflag = TRUE;
 	}
@@ -257,7 +257,7 @@ void XIIlib::Knight::Attack()
 void XIIlib::Knight::Move()
 {
 	if (isAttack == true)return;
-	if (UnitManager::GetInstance()->GetIntervalTimer() > 0)return;
+	if (UnitManager::GetInstance()->GetIntervalTimer() < 420)return;
 	notAttackflag = true;
 
 	collCapsule->SetColor(1, 1, 0, 1);
