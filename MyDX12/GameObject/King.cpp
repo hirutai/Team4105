@@ -61,7 +61,7 @@ void XIIlib::King::Update()
 			if ((container[i].a < 8 && container[i].a >= 0) && (container[i].b < 8 && container[i].b >= 0)) {
 				UnitManager::GetInstance()->ChangeAttackValidTile(container[i],(int)type);
 				Math::Point2 vec_point = container[i] - element_stock;
-				UnitManager::GetInstance()->SetBackVector(container[i], vec_point);
+				UnitManager::GetInstance()->SetBackVector(container[i], vec_point * 2);
 			}
 		}
 	}

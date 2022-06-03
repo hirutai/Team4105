@@ -48,8 +48,6 @@ void XIIlib::Rook::Update()
 {
 	// 駒の行動
 	Action();
-
-
 	// 位置座標の更新
 	collCapsule->SetPosition(
 		Common::ConvertTilePosition(element_stock.a), 1.0f,
@@ -62,11 +60,132 @@ void XIIlib::Rook::Update()
 		// ノックバック
 		element_stock += UnitManager::GetInstance()->GetBackVector(element_stock);
 
+		Math::Point2 dif = kingPos - element_stock;
+		Math::Point2 temp = kingPos;
+		// ノックバック時に間に他の駒がいる場合、その間の駒の位置に止まる
+		// 縦にノックバック
+		if (dif.a == 0)
+		{
+			// 0より小さければKingより上にいる
+			if (dif.b < 0)
+			{
+				// 自分とキングの間を1マスづつ調べる
+				for (int i = 0; i < abs(dif.b) - 1; ++i)
+				{
+					temp.b++;
+					if (UnitManager::GetInstance()->AllOnUnit(temp))
+					{
+						element_stock = temp;
+					}
+				}
+			}
+			else // 0より大きければKingより下にいる
+			{
+				// 自分とキングの間を1マスづつ調べる
+				for (int i = 0; i < abs(dif.b) - 1; ++i)
+				{
+					temp.b--;
+					if (UnitManager::GetInstance()->AllOnUnit(temp))
+					{
+						element_stock = temp;
+					}
+				}
+			}
+		}
+		else if (dif.b == 0) // 横にノックバック
+		{
+			// 0より小さければKingより右
+			if (dif.a < 0)
+			{
+				// 自分とキングの間を1マスづつ調べる
+				for (int i = 0; i < abs(dif.a) - 1; ++i)
+				{
+					temp.a++;
+					if (UnitManager::GetInstance()->AllOnUnit(temp))
+					{
+						element_stock = temp;
+					}
+				}
+			}
+			else// 0より大きければKingより左
+			{
+				// 自分とキングの間を1マスづつ調べる
+				for (int i = 0; i < abs(dif.a) - 1; ++i)
+				{
+					temp.a--;
+					if (UnitManager::GetInstance()->AllOnUnit(temp))
+					{
+						element_stock = temp;
+					}
+				}
+			}
+		}
+		else	// 斜めにノックバック
+		{
+			// 左上にノックバック
+			if (dif.a > 0 && dif.b < 0)
+			{
+				// 自分とキングの間を1マスづつ調べる
+				for (int i = 0; i < abs(dif.a) - 1; ++i)
+				{
+					temp.a--;
+					temp.b++;
+					if (UnitManager::GetInstance()->AllOnUnit(temp))
+					{
+						element_stock = temp;
+
+					}
+				}
+			}
+			else if (dif.a < 0 && dif.b < 0)	// 右上にノックバック
+			{
+				// 自分とキングの間を1マスづつ調べる
+				for (int i = 0; i < abs(dif.a) - 1; ++i)
+				{
+					temp.a++;
+					temp.b++;
+					if (UnitManager::GetInstance()->AllOnUnit(temp))
+					{
+						element_stock = temp;
+						break;
+					}
+				}
+			}
+			else if (dif.a > 0 && dif.b > 0)	// 左下にノックバック
+			{
+				// 自分とキングの間を1マスづつ調べる
+				for (int i = 0; i < abs(dif.a) - 1; ++i)
+				{
+					temp.a--;
+					temp.b--;
+					if (UnitManager::GetInstance()->AllOnUnit(temp))
+					{
+						element_stock = temp;
+						break;
+					}
+				}
+			}
+			else if (dif.a < 0 && dif.b > 0)	// 右下にノックバック
+			{
+				// 自分とキングの間を1マスづつ調べる
+				for (int i = 0; i < abs(dif.a) - 1; ++i)
+				{
+					temp.a++;
+					temp.b--;
+					if (UnitManager::GetInstance()->AllOnUnit(temp))
+					{
+						element_stock = temp;
+						break;
+					}
+				}
+			}
+		}
+
+
 		if (Common::GetExceptionPoint(element_stock.a) || Common::GetExceptionPoint(element_stock.b)) {
 			Hit(3);
 		}
 
-		element_stock = Common::OffsetTilePosition2(element_stock);
 	}
 
 	collCapsule->Update();
