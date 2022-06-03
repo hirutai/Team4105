@@ -9,8 +9,6 @@ namespace XIIlib {
 	public:
 		Bishop();
 		~Bishop();
-		//UŒ‚flag
-		bool notAttackflag = true;
 		// ¶¬ŠÖ”
 		static std::shared_ptr<Bishop> Create(int point_x, int point_z);
 

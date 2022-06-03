@@ -42,6 +42,8 @@ namespace XIIlib {
 		// ’Ç‰Á
 		unsigned int attackInterval = 120;
 		bool isAttack = false;
+		//UŒ‚flag
+		bool notAttackflag = true;
 		Math::Point2 preElement_stock{0,0};
 
 		bool is_dead = false;// €–S‚µ‚Ä‚é‚©‚Ç‚¤‚©‚ğŠÇ—

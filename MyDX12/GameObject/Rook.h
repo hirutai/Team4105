@@ -9,8 +9,6 @@ namespace XIIlib {
 	public:
 		Rook();
 		~Rook();
-		//UŒ‚flag
-		bool notAttackflag = true;
 		// ¶¬ŠÖ”
 		static std::shared_ptr<Rook> Create(int point_x, int point_z);
 

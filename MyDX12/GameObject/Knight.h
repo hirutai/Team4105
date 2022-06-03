@@ -9,8 +9,6 @@ namespace XIIlib {
 	public:
 		Knight();
 		~Knight();
-		//UŒ‚flag
-		bool notAttackflag = true;
 		// ¶¬ŠÖ”
 		static std::shared_ptr<Knight> Create(int point_x, int point_z);
 
