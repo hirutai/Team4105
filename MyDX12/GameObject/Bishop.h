@@ -20,6 +20,7 @@ namespace XIIlib {
 		void Action()override;
 		void Attack()override;
 		void Move()override;
+		void AttackAreaDraw();
 		bool AttackAreaExists()override;
 		void IniState()override;
 

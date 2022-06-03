@@ -2,6 +2,7 @@
 #include "../Struct/Point2.h"
 #include <vector>
 #include <string>
+#include"AttackAreaManager.h"
 class CollisionCapsule;
 
 namespace XIIlib {
@@ -98,6 +99,7 @@ namespace XIIlib {
 		std::string GetID()const { return ID; }
 
 		virtual bool MoveAreaCheck(Math::Point2 crPos, Math::Point2 vec, int tileNum) = 0;
+
 		bool ThreeCheckArea(Math::Point2 element_stock);
 		
 	};

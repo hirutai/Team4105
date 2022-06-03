@@ -253,7 +253,7 @@ void XIIlib::Rook::Action()
 		//ˆÚ“®”ÍˆÍ‚ÌF•t‚¯
 		AttackAreaDraw();
 	}
-
+	
 
 }
 
@@ -415,11 +415,62 @@ bool XIIlib::Rook::AttackAreaExists()
 
 void XIIlib::Rook::AttackAreaDraw()
 {
-	for (int i = 0; i < 8; i++)
+	//¶•ûŒü‚É‹î‚ª‚ ‚é‚©
+	for (int i = 1; i < 8; i++)
 	{
-		UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(i, element_stock.b), 3);
-		UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(element_stock.a, i), 3);
+		if (UnitManager::GetInstance()->AllOnUnit(Math::Point2(element_stock.a - i, element_stock.b)) || element_stock.a - i < 0)
+		{
+			break;
+		}
+		else
+		{
+			AttackAreaManager::GetInstance()->SetAttackAreas(Math::Point2(element_stock.a - i, element_stock.b));
+			//UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(element_stock.a - i, element_stock.b), 3);
+		}
 	}
+	//‰E•ûŒü‚É‹î‚ª‚ ‚é‚©
+	for (int i = 1; i < 8; i++)
+	{
+		if (UnitManager::GetInstance()->AllOnUnit(Math::Point2(element_stock.a + i, element_stock.b)) || element_stock.a + i > 7)
+		{
+			break;
+		}
+		else
+		{
+			AttackAreaManager::GetInstance()->SetAttackAreas(Math::Point2(element_stock.a + i, element_stock.b));
+
+			//UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(element_stock.a + i, element_stock.b), 3);
+		}
+	}
+	//‰º•ûŒü‚É‹î‚ª‚ ‚é‚©
+	for (int i = 1; i < 8; i++)
+	{
+		if (UnitManager::GetInstance()->AllOnUnit(Math::Point2(element_stock.a, element_stock.b - i)) || element_stock.b - i < 0)
+		{
+			break;
+		}
+		else
+		{
+			AttackAreaManager::GetInstance()->SetAttackAreas(Math::Point2(element_stock.a, element_stock.b - i));
+
+			//UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(element_stock.a , element_stock.b - i), 3);
+		}
+	}
+	//ã•ûŒü‚É‹î‚ª‚ ‚é‚©
+	for (int i = 1; i < 8; i++)
+	{
+		if (UnitManager::GetInstance()->AllOnUnit(Math::Point2(element_stock.a, element_stock.b + i))||  element_stock.b + i > 7)
+		{
+			break;
+		}
+		else
+		{
+			AttackAreaManager::GetInstance()->SetAttackAreas(Math::Point2(element_stock.a, element_stock.b + i));
+
+			//UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(element_stock.a, element_stock.b + i), 3);
+		}
+	}
+
 }
 
 void XIIlib::Rook::IniState()

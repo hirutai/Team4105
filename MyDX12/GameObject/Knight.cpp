@@ -234,6 +234,7 @@ void XIIlib::Knight::Action()
 	else
 	{
 		isAttack = false;
+		AttackAreaDraw();
 	}
 }
 
@@ -358,6 +359,72 @@ bool XIIlib::Knight::AttackAreaExists()
 	if (kingPos.a == temp.a && kingPos.b == temp.b)return true;
 
 	return false;
+}
+
+void XIIlib::Knight::AttackAreaDraw()
+{
+	// 範囲に入ってるかのチェック
+	Math::Point2 temp(0, 0);
+	// 上方向
+	temp = element_stock + Math::Point2(1, 2);
+	if (temp.a <= 7 && temp.a >= 0 && temp.b <= 7 && temp.b >= 0)
+	{
+		AttackAreaManager::GetInstance()->SetAttackAreas(Math::Point2(temp));
+
+		//UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(temp), 3);
+	}
+	temp = element_stock + Math::Point2(-1, 2);
+	if (temp.a <= 7 && temp.a >= 0 && temp.b <= 7 && temp.b >= 0)
+	{
+		AttackAreaManager::GetInstance()->SetAttackAreas(Math::Point2(temp));
+
+		//UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(temp), 3);
+	}
+	// 右方向
+	temp = element_stock + Math::Point2(2, 1);
+	if (temp.a <= 7 && temp.a >= 0 && temp.b <= 7 && temp.b >= 0)
+	{
+		AttackAreaManager::GetInstance()->SetAttackAreas(Math::Point2(temp));
+
+		//UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(temp), 3);
+	}
+	temp = element_stock + Math::Point2(2, -1);
+	if (temp.a <= 7 && temp.a >= 0 && temp.b <= 7 && temp.b >= 0)
+	{
+		AttackAreaManager::GetInstance()->SetAttackAreas(Math::Point2(temp));
+
+		//UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(temp), 3);
+	}
+	// 左方向
+	temp = element_stock + Math::Point2(-2, 1);
+	if (temp.a <= 7 && temp.a >= 0 && temp.b <= 7 && temp.b >= 0)
+	{
+		AttackAreaManager::GetInstance()->SetAttackAreas(Math::Point2(temp));
+
+		//UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(temp), 3);
+	}
+	temp = element_stock + Math::Point2(-2, -1);
+	if (temp.a <= 7 && temp.a >= 0 && temp.b <= 7 && temp.b >= 0)
+	{
+		AttackAreaManager::GetInstance()->SetAttackAreas(Math::Point2(temp));
+
+		//UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(temp), 3);
+	}
+	// 下方向
+	temp = element_stock + Math::Point2(1, -2);
+	if (temp.a <= 7 && temp.a >= 0 && temp.b <= 7 && temp.b >= 0)
+	{
+		AttackAreaManager::GetInstance()->SetAttackAreas(Math::Point2(temp));
+
+		//UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(temp), 3);
+	}
+	temp = element_stock + Math::Point2(-1, -2);
+	if (temp.a <= 7 && temp.a >= 0 && temp.b <= 7 && temp.b >= 0)
+	{
+		AttackAreaManager::GetInstance()->SetAttackAreas(Math::Point2(temp));
+
+		//UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(temp), 3);
+	}
 }
 
 void XIIlib::Knight::IniState()

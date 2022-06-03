@@ -48,6 +48,7 @@ void XIIlib::GameScene::Initialize()
 	intervalTimter = new IntervalTimer();
 	intervalTimter->Initialize(4, 5);
 	UnitManager::GetInstance()->SetIntervalTimer(intervalTimter);
+
 	// ƒV[ƒ“‚Ì‰Šú‰»
 	state->Initialize(this);
 

@@ -8,6 +8,7 @@
 #include "../GameObject/Bishop.h"
 #include "../GameObject/Knight.h"
 #include "../GameObject/UnitManager.h"
+#include"../GameObject/AttackAreaManager.h"
 
 XIIlib::Play::Play()
 {
@@ -47,6 +48,7 @@ void XIIlib::Play::Update(GameScene* p_game_scene)
 {
 	// XV
 	UnitManager::GetInstance()->Update();
+	AttackAreaManager::GetInstance()->Draw();
 
 	if (KeyInput::GetInstance()->Trigger(DIK_SPACE)) {
 		p_game_scene->ChangeState(new End);

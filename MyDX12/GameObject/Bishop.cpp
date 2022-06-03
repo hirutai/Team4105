@@ -242,6 +242,7 @@ void XIIlib::Bishop::Action()
 	}
 	else
 	{
+		AttackAreaDraw();
 		isAttack = false;
 	}
 }
@@ -405,6 +406,64 @@ bool XIIlib::Bishop::AttackAreaExists()
 	// x‚Æz‚Ìâ‘Î’l‚ªˆê‚¾‚Á‚½‚çUŒ‚”ÍˆÍ‚É‚¢‚é”ÍˆÍ
 	if (abs(dif.a) == abs(dif.b))return true;
 	return false;
+}
+
+void XIIlib::Bishop::AttackAreaDraw()
+{
+	//¶‰º
+	for (int i = 1; i < 8; i++)
+	{
+		if (UnitManager::GetInstance()->AllOnUnit(Math::Point2(element_stock.a - i, element_stock.b - i)) || element_stock.a - i < 0 || element_stock.b - i < 0)
+		{
+			break;
+		}
+		else
+		{
+			AttackAreaManager::GetInstance()->SetAttackAreas(Math::Point2(element_stock.a - i, element_stock.b - i));
+			//UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(element_stock.a - i, element_stock.b - i), 3);
+		}
+	}
+	//‰Eã
+	for (int i = 1; i < 8; i++)
+	{
+		if (UnitManager::GetInstance()->AllOnUnit(Math::Point2(element_stock.a + i, element_stock.b + i)) || element_stock.a + i > 7 || element_stock.b + i > 7)
+		{
+			break;
+		}
+		else
+		{
+			AttackAreaManager::GetInstance()->SetAttackAreas(Math::Point2(element_stock.a + i, element_stock.b + i));
+
+			//UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(element_stock.a + i, element_stock.b + i), 3);
+		}
+	}
+	//‰E‰º
+	for (int i = 1; i < 8; i++)
+	{
+		if (UnitManager::GetInstance()->AllOnUnit(Math::Point2(element_stock.a + i, element_stock.b - i)) || element_stock.a + i > 7 || element_stock.b - i < 0)
+		{
+			break;
+		}
+		else
+		{
+			AttackAreaManager::GetInstance()->SetAttackAreas(Math::Point2(element_stock.a + i, element_stock.b - i));
+
+			//UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(element_stock.a + i, element_stock.b - i), 3);
+		}
+	}
+	//¶ã
+	for (int i = 1; i < 8; i++)
+	{
+		if (UnitManager::GetInstance()->AllOnUnit(Math::Point2(element_stock.a - i, element_stock.b + i)) || element_stock.a - i < 0 || element_stock.b + i > 7)
+		{
+			break;
+		}
+		else
+		{
+			AttackAreaManager::GetInstance()->SetAttackAreas(Math::Point2(element_stock.a - i, element_stock.b + i));
+			//UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(element_stock.a - i, element_stock.b + i), 3);
+		}
+	}
 }
 
 void XIIlib::Bishop::IniState()
