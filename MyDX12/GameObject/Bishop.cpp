@@ -252,7 +252,14 @@ void XIIlib::Bishop::Attack()
 	// カウントを減らす
 	attackInterval--;
 	//色を変える
-	collCapsule->SetColor(1, 0, 0, 1);
+	if (attackInterval <= 150 && attackInterval >= 120 || attackInterval <= 90 && attackInterval >= 60 || attackInterval <= 30 && attackInterval >= 0)
+	{
+		collCapsule->SetColor(1, 0, 0, 1);
+	}
+	else
+	{
+		collCapsule->SetColor(0, 1, 0, 1);
+	}
 	if (attackInterval == 0)
 	{
 		Math::Point2 dif = kingPos - preElement_stock;
@@ -469,7 +476,7 @@ void XIIlib::Bishop::AttackAreaDraw()
 void XIIlib::Bishop::IniState()
 {
 	isAttack = false;
-	attackInterval = 60;
+	attackInterval = 180;
 	collCapsule->SetColor(0, 1, 0, 1);
 }
 

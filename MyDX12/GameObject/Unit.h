@@ -41,7 +41,7 @@ namespace XIIlib {
 		int damage_counter = 0;
 
 		// ’Ç‰Á
-		unsigned int attackInterval = 120;
+		unsigned int attackInterval = 180;
 		bool isAttack = false;
 		//UŒ‚flag
 		bool notAttackflag = true;

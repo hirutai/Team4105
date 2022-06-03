@@ -438,4 +438,5 @@ void Sprite::TransferVertices()
 		memcpy(vertMap, vertices, sizeof(vertices));
 		vertBuff->Unmap(0, nullptr);
 	}
+	//test
 }
