@@ -4,12 +4,13 @@
 namespace XIIlib {
 
 	class GameScene;
+	class IntervalTimer;
 
 	// プレイシーンのクラス
 	class Play : public SceneState {
 	private:
 		// プレイ内で使う変数宣言の場(Object/Sprite/時間/フラグ等)
-
+		IntervalTimer* intervalTimter = nullptr; // 敵の行動間隔用タイマー
 	public:
 		Play();
 		~Play();

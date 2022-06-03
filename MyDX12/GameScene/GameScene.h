@@ -5,7 +5,6 @@ namespace XIIlib
 {
 	class Audio;
 	class SceneState;
-	class IntervalTimer;
 
 	class GameScene
 	{
@@ -28,8 +27,7 @@ namespace XIIlib
 		SceneState* state = nullptr;
 		// 音
 		Audio* audio = nullptr;
-		// 本体
-		IntervalTimer* intervalTimter = nullptr; // 敵の行動間隔用タイマー
+		
 		// 制御
 		int isTurn = 0;
 
