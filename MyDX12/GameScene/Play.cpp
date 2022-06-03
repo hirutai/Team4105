@@ -9,6 +9,7 @@
 #include "../GameObject/Knight.h"
 #include "../GameObject/UnitManager.h"
 #include"../GameObject/AttackAreaManager.h"
+#include "../GameObject/IntervalTimer.h"
 
 XIIlib::Play::Play()
 {
@@ -19,10 +20,16 @@ XIIlib::Play::Play()
 XIIlib::Play::~Play()
 {
 	// ポインタ使ったやつの埋葬場
+	delete intervalTimter;
 }
 
 void XIIlib::Play::Initialize(GameScene* p_game_scene)
 {
+	// IntervalTimer newと初期化
+	intervalTimter = new IntervalTimer();
+	intervalTimter->Initialize(4, 5);
+	UnitManager::GetInstance()->SetIntervalTimer(intervalTimter);
+
 	// Scene切り替え時に一度通る処理
 	std::shared_ptr<King> king = std::move(King::CreateKing(1, 0));
 	std::shared_ptr<Knight> knight = std::move(Knight::Create(7, 7));
@@ -50,6 +57,8 @@ void XIIlib::Play::Update(GameScene* p_game_scene)
 	UnitManager::GetInstance()->Update();
 	AttackAreaManager::GetInstance()->Draw();
 
+	intervalTimter->Timer();
+
 	if (KeyInput::GetInstance()->Trigger(DIK_SPACE)) {
 		p_game_scene->ChangeState(new End);
 	}
@@ -66,5 +75,5 @@ void XIIlib::Play::Draw()
 void XIIlib::Play::DrawTex()
 {
 	// スプライト描画
-
+	intervalTimter->Draw();
 }
