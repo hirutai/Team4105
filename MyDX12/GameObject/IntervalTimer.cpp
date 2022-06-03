@@ -11,14 +11,17 @@ void IntervalTimer::Initialize(const int& timerTexNum, const int& barTexNum)
 
 void IntervalTimer::Timer()
 {
-	if (timerNum == 0) // タイマーが０になった時
+	if (currentSize <= 0) // サイズが０になった時
 	{
-		timerNum = intCountingNum; // タイマーをリセット
+		timerNum = 0; // タイマーをリセット
+		currentSize = maxSize; // サイズをリセット
 	}
 
-	timerNum--;
+	timerNum++; // タイマー
 
-	timer_bar->SetSize({ (float)timerNum, 50.0f });
+	currentSize = maxSize - intCountingNum * timerNum; // 現在のサイズを計算
+
+	timer_bar->SetSize({ currentSize, 50.0f });
 }
 
 void IntervalTimer::Draw()
