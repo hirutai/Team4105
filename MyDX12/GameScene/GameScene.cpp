@@ -15,7 +15,6 @@
 #include "../Tool/Messenger.h"
 #include "../Tool/DebugJISText.h"
 #include "../GameObject/UnitManager.h"
-#include "../GameObject/IntervalTimer.h"
 #include <Xinput.h>
 
 #pragma comment(lib, "xinput.lib")
@@ -42,12 +41,6 @@ void XIIlib::GameScene::Initialize()
 {
 	// Audioの初期化
 	audio = new Audio();
-	
-
-	// IntervalTimer newと初期化
-	intervalTimter = new IntervalTimer();
-	intervalTimter->Initialize(4, 5);
-	UnitManager::GetInstance()->SetIntervalTimer(intervalTimter);
 
 	// シーンの初期化
 	state->Initialize(this);
@@ -84,8 +77,6 @@ void XIIlib::GameScene::Update()
 
 	// シーンの更新
 	state->Update(this);
-
-	intervalTimter->Timer();
 }
 
 void XIIlib::GameScene::Draw()
@@ -98,8 +89,6 @@ void XIIlib::GameScene::DrawSprite()
 {
 	// シーンのテクスチャ描画
 	state->DrawTex();
-
-	intervalTimter->Draw();
 }
 
 XIIlib::Audio* XIIlib::GameScene::GetAudio() const
