@@ -130,6 +130,12 @@
     <Filter Include="GameObject\Unit">
       <UniqueIdentifier>{095fe796-a04a-486d-b5d0-ecb82181e06b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="3D\obj">
+      <UniqueIdentifier>{cfc72d9a-ae17-4f81-bd2f-908b9bb3596b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="HLSL\obj">
+      <UniqueIdentifier>{1740a7bc-2ba0-4c08-b2e5-40956bd583e0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -317,6 +323,18 @@
     </ClCompile>
     <ClCompile Include="GameObject\AttackAreaManager.cpp">
       <Filter>GameObject\Tile</Filter>
+    </ClCompile>
+    <ClCompile Include="3D\Material.cpp">
+      <Filter>3D\obj</Filter>
+    </ClCompile>
+    <ClCompile Include="3D\Mesh.cpp">
+      <Filter>3D\obj</Filter>
+    </ClCompile>
+    <ClCompile Include="3D\Model.cpp">
+      <Filter>3D\obj</Filter>
+    </ClCompile>
+    <ClCompile Include="3D\Object3D.cpp">
+      <Filter>3D\obj</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -536,6 +554,18 @@
     <ClInclude Include="GameObject\AttackAreaManager.h">
       <Filter>GameObject\Tile</Filter>
     </ClInclude>
+    <ClInclude Include="3D\Material.h">
+      <Filter>3D\obj</Filter>
+    </ClInclude>
+    <ClInclude Include="3D\Mesh.h">
+      <Filter>3D\obj</Filter>
+    </ClInclude>
+    <ClInclude Include="3D\Model.h">
+      <Filter>3D\obj</Filter>
+    </ClInclude>
+    <ClInclude Include="3D\Object3D.h">
+      <Filter>3D\obj</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Shaders\FBX.hlsli">
@@ -573,6 +603,9 @@
     </None>
     <None Include="Resources\Shaders\CapsuleHLSLI.hlsli">
       <Filter>HLSL\Capsule</Filter>
+    </None>
+    <None Include="Resources\Shaders\OBJShaderHeader.hlsli">
+      <Filter>HLSL\obj</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -656,6 +689,12 @@
     </FxCompile>
     <FxCompile Include="Resources\Shaders\CapsulePS.hlsl">
       <Filter>HLSL\Capsule</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\OBJPixelShader.hlsl">
+      <Filter>HLSL\obj</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\OBJVertexShader.hlsl">
+      <Filter>HLSL\obj</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

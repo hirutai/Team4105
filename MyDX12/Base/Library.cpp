@@ -5,7 +5,7 @@
 #include "../Input/KeyInput.h"
 #include "../Input/ControllerInput.h"
 #include "../Audio/Sound.h"
-
+#include "../3D/Object3D.h"
 #include "../2D/Sprite.h"
 #include "../2D/Point2D.h"
 #include "../2D/Line2D.h"
@@ -46,9 +46,6 @@ int XIIlib::Library::Initialize()
 	keyInput = KeyInput::GetInstance();
 	keyInput->Initialize(w_app->GetInstance(), w_app->GetWinHandle());
 
-	//pad_input = ControllerInput::GetInstance();
-	//pad_input->Initialize(w_app->GetInstance(), w_app->GetWinHandle());
-
 	// ‚»‚Ì‘¼”Ä—pƒNƒ‰ƒX‚Ì‰Šú‰»
 	Sprite::StaticInitialize();
 	Point2D::StaticInitialize();
@@ -56,7 +53,7 @@ int XIIlib::Library::Initialize()
 	Circle::StaticInitialize();
 	Line::StaticInitialize();
 	TextureInstance::StaticInitialize();
-
+	Object3D::StaticInitialize();
 	LightGroup::StaticInitialize(DirectX12::GetDevice());
 	ParticleManager::GetInstance()->Initialize("effect1.png");
 	CollisionCapsule::StaticInitialize();
