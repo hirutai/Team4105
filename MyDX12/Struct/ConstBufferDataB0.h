@@ -15,7 +15,10 @@ struct ConstBufferDataB0
 	DirectX::XMFLOAT4 lightpos;
 	DirectX::XMMATRIX wlp;
 	DirectX::XMMATRIX wlpt;
+	DirectX::XMFLOAT3 pd;
 
+	float _time;					// シェーダー内部で使うタイマー
+	float isElec;					// シェーダータイプ
 };
 
 struct ConstBufferDataB01

@@ -6,6 +6,7 @@
 #include "../Tool/DigitalNumberText.h"
 #include "../Tool/Messenger.h"
 #include "../Camera/DebugCamera.h"
+#include "../3D/Object3D.h"
 #include "../Particle/ParticleManager.h"
 #include "../2D/Line2D.h"
 #include "../3D/Line.h"
@@ -74,6 +75,9 @@ void GameApp::Initialize()
 	lightGroup->SetDirLightActive(0, true);
 	lightGroup->SetDirLightActive(1, true);
 	lightGroup->SetDirLightActive(2, true);
+
+	Object3D::SetDebugCamera(d_camera);
+	Object3D::SetLightGroup(lightGroup);
 
 	//lightGroup->SetSpotLightActive(0, true);
 

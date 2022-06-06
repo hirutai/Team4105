@@ -171,6 +171,10 @@
     <ClCompile Include="3D\CollCapsule.cpp" />
     <ClCompile Include="3D\CollCircle.cpp" />
     <ClCompile Include="3D\Line.cpp" />
+    <ClCompile Include="3D\Material.cpp" />
+    <ClCompile Include="3D\Mesh.cpp" />
+    <ClCompile Include="3D\Model.cpp" />
+    <ClCompile Include="3D\Object3D.cpp" />
     <ClCompile Include="3D\Tessellation.cpp" />
     <ClCompile Include="Audio\Audio.cpp" />
     <ClCompile Include="Audio\Sound.cpp" />
@@ -235,6 +239,10 @@
     <ClInclude Include="3D\CollCapsule.h" />
     <ClInclude Include="3D\CollCircle.h" />
     <ClInclude Include="3D\Line.h" />
+    <ClInclude Include="3D\Material.h" />
+    <ClInclude Include="3D\Mesh.h" />
+    <ClInclude Include="3D\Model.h" />
+    <ClInclude Include="3D\Object3D.h" />
     <ClInclude Include="3D\Tessellation.h" />
     <ClInclude Include="Audio\Audio.h" />
     <ClInclude Include="Audio\Sound.h" />
@@ -308,6 +316,7 @@
     <None Include="Resources\Shaders\FBX.hlsli" />
     <None Include="Resources\Shaders\Line2DShader.hlsli" />
     <None Include="Resources\Shaders\Line3DShader.hlsli" />
+    <None Include="Resources\Shaders\OBJShaderHeader.hlsli" />
     <None Include="Resources\Shaders\Particle.hlsli" />
     <None Include="Resources\Shaders\PointShaderHeader.hlsli" />
     <None Include="Resources\Shaders\PostEffectTest.hlsli" />
@@ -389,6 +398,14 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\OBJPixelShader.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\OBJVertexShader.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
     </FxCompile>
     <FxCompile Include="Resources\Shaders\ParticleGS.hlsl">
