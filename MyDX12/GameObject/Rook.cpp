@@ -42,20 +42,23 @@ void XIIlib::Rook::Initialize()
 	ID = Common::SeparateFilePath(path).second;
 	type = _PositionType::ENEMY;
 	CreateAttackArea();
+
 }
 
 void XIIlib::Rook::Update()
 {
+	
 	// 駒の行動
 	Action();
 	// 位置座標の更新
 	collCapsule->SetPosition(
 		Common::ConvertTilePosition(element_stock.a), 1.0f,
 		Common::ConvertTilePosition(element_stock.b));
+	std::cout << tileRand << std::endl;
+	
 
 	// 攻撃当たったら
-	if (UnitManager::GetInstance()
-		->IsAttackValid(element_stock, (int)_PositionType::MINE)) {
+	if (UnitManager::GetInstance()->IsAttackValid(element_stock, (int)_PositionType::MINE)) {
 		//Hit(1);
 		isAttack = false;
 		// ノックバック
@@ -199,6 +202,7 @@ void XIIlib::Rook::Draw()
 
 void XIIlib::Rook::SetStartElement(int x, int z)
 {
+	startElement_stock = Math::Point2(x, z);
 	element_stock = Math::Point2(x, z);
 }
 
@@ -255,7 +259,6 @@ void XIIlib::Rook::Action()
 		AttackAreaDraw();
 	}
 	
-
 }
 
 void XIIlib::Rook::Attack()
@@ -289,6 +292,7 @@ void XIIlib::Rook::Attack()
 					if (UnitManager::GetInstance()->AllOnUnit(temp))
 					{
 						IniState();
+
 						return;
 					}
 				}
@@ -349,62 +353,142 @@ void XIIlib::Rook::Attack()
 
 void XIIlib::Rook::Move()
 {
+	//攻撃フラグ
 	if (isAttack == true)return;
+	//移動までのインターバル
 	if (UnitManager::GetInstance()->GetIntervalTimer() < 420)return;
+	//ルークの座標
+	Math::Point2 temp = element_stock;
 	notAttackflag = TRUE;
 
 	collCapsule->SetColor(0, 1, 1, 1);
-	Math::Point2 dif = kingPos - element_stock;
-	Math::Point2 temp = element_stock;
-	// 差分がXのほうが大きい
-	if (abs(dif.a) > abs(dif.b))
+	
+	//3マス以下しか動けない時の移動用乱数
+	int RookjMin = jMin;
+	int RookjMax = jMax;
+	tileRand = 1;
+	//Switch文用の乱数
+	int RookSwitchiMin = SwitchRandiMin;
+	int RookSwitchiMax = SwitchRandiMax;
+	SwitchRand = SwitchRandiMin + (int)(rand() * (SwitchRandiMax - SwitchRandiMin + 1) / (1 + RAND_MAX));
+
+	switch (SwitchRand)
 	{
-		//// 自分とキングの間を1マスづつ調べる
-		if (dif.b < 0)//0より小さければKingより上にいる
+	case 0:
+		//左方向			
+		tileRand = jMin + (int)(rand() * (jMax - jMin + 1) / (1 + RAND_MAX));
+
+		temp.a -= tileRand;
+
+		if (ThreeCheckArea(temp))
 		{
-			// kingのポイション分を引いてfor文で調べる
-			for (int i = 0; i < abs(dif.b); ++i)
-			{
-				temp.b--;
-				if (ThreeCheckArea(temp))return;
-				element_stock.b--;
-			}
+			element_stock.a = 0;
 		}
-		else // 0より大きければKingより下にいる
+		else
 		{
-			// kingのポイション分を引いてfor文で調べる
-			for (int i = 0; i < abs(dif.b); ++i)
-			{
-				temp.b++;
-				if (ThreeCheckArea(temp))return;
-				element_stock.b++;
-			}
+			element_stock.a = temp.a;
 		}
+			break;
+	case 1:
+		//右方向
+
+		tileRand = jMin + (int)(rand() * (jMax - jMin + 1) / (1 + RAND_MAX));
+
+		temp.a += tileRand;
+
+		if (ThreeCheckArea(temp))
+		{
+			element_stock.a = 7;
+		}
+		else
+		{
+			element_stock.a = temp.a;
+		}
+		break;
+	case 2:
+		//下方向
+		tileRand = jMin + (int)(rand() * (jMax - jMin + 1) / (1 + RAND_MAX));
+
+		temp.b -= tileRand;
+
+		if (ThreeCheckArea(temp))
+		{
+			element_stock.b = 0;
+		}
+		else
+		{
+			element_stock.b = temp.b;
+		}
+		break;
+	case 3:
+		//上方向
+		tileRand = jMin + (int)(rand() * (jMax - jMin + 1) / (1 + RAND_MAX));
+
+		temp.b += tileRand;
+
+		if (ThreeCheckArea(temp))
+		{
+			element_stock.b = 7;
+		}
+		else
+		{
+			element_stock.b = temp.b;
+		}
+		break;
 	}
-	else //差分がZの方が大きい (or どっちも一緒の時Z優先)
-	{
-		//// 自分とキングの間を1マスづつ調べる
-		if (dif.a < 0)//0より小さければKingより左にいる
-		{
-			// kingのポイション分を引いてfor文で調べる
-			for (int i = 0; i < abs(dif.a); ++i)
-			{
-				temp.a--;
-				if (ThreeCheckArea(temp))return;
-				element_stock.a--;
-			}
-		}
-		else // 0より大きければKingより下にいる
-		{
-			// kingのポイション分を引いてfor文で調べる
-			for (int i = 0; i < abs(dif.a); ++i)
-			{
-				temp.a++;
-				if (ThreeCheckArea(temp))return;
-				element_stock.a++;
-			}
-		}
-	}
+	return;
+
+	//ルークの座標ープレイヤーの座標
+	//Math::Point2 dif = kingPos - element_stock;
+	//// 差分がXのほうが大きい
+	//if (abs(dif.a) > abs(dif.b))
+	//{
+	//	//// 自分とキングの間を1マスづつ調べる
+	//	if (dif.b < 0)//0より小さければKingより上にいる
+	//	{
+	//		// kingのポイション分を引いてfor文で調べる
+	//		for (int i = 0; i < abs(dif.b); ++i)
+	//		{
+	//			temp.b--;
+	//			if (ThreeCheckArea(temp))return;
+	//			element_stock.b--;
+	//		}
+	//	}
+	//	else // 0より大きければKingより下にいる
+	//	{
+	//		// kingのポイション分を引いてfor文で調べる
+	//		for (int i = 0; i < abs(dif.b); ++i)
+	//		{
+	//			temp.b++;
+	//			if (ThreeCheckArea(temp))return;
+	//			element_stock.b++;
+	//		}
+	//	}
+	//}
+	//else //差分がZの方が大きい (or どっちも一緒の時Z優先)
+	//{
+	//	//// 自分とキングの間を1マスづつ調べる
+	//	if (dif.a < 0)//0より小さければKingより左にいる
+	//	{
+	//		// kingのポイション分を引いてfor文で調べる
+	//		for (int i = 0; i < abs(dif.a); ++i)
+	//		{
+	//			temp.a--;
+	//			if (ThreeCheckArea(temp))return;
+	//			element_stock.a--;
+	//		}
+	//	}
+	//	else // 0より大きければKingより下にいる
+	//	{
+	//		// kingのポイション分を引いてfor文で調べる
+	//		for (int i = 0; i < abs(dif.a); ++i)
+	//		{
+	//			temp.a++;
+	//			if (ThreeCheckArea(temp))return;
+	//			element_stock.a++;
+	//		}
+	//	}
+	//}
 }
 
 bool XIIlib::Rook::AttackAreaExists()
