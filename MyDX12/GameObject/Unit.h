@@ -40,6 +40,16 @@ namespace XIIlib {
 		int is_hit = 0;// 0 : 受けてない、1 : 受けている
 		int damage_counter = 0;
 
+		//乱数用
+		//3以下しか動けない時の乱数
+		int jMin = 1;
+		int jMax = 3;
+		int tileRand = 1;
+		
+		int SwitchRandiMin = 0;
+		int SwitchRandiMax = 3;
+		int SwitchRand = 0;
+
 		// 追加
 		unsigned int attackInterval = 180;
 		bool isAttack = false;
@@ -50,6 +60,7 @@ namespace XIIlib {
 		bool is_dead = false;// 死亡してるかどうかを管理
 
 		Math::Point2 element_stock;// マスの座標(Vector2じゃないよ)
+		Math::Point2 startElement_stock;//初期位置
 
 		std::vector<std::vector<Math::Point2>> attack_area; // 駒が持つ攻撃範囲の情報
 
