@@ -336,6 +336,9 @@
     <ClCompile Include="3D\Object3D.cpp">
       <Filter>3D\obj</Filter>
     </ClCompile>
+    <ClCompile Include="GameObject\Yankee.cpp">
+      <Filter>GameObject\Unit</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Base\DirectX12.h">
@@ -565,6 +568,9 @@
     </ClInclude>
     <ClInclude Include="3D\Object3D.h">
       <Filter>3D\obj</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\Yankee.h">
+      <Filter>GameObject\Unit</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

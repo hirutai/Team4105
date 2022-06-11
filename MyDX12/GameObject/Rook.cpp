@@ -185,7 +185,6 @@ void XIIlib::Rook::Update()
 			}
 		}
 
-
 		if (Common::GetExceptionPoint(element_stock.a) || Common::GetExceptionPoint(element_stock.b)) {
 			Hit(3);
 		}
