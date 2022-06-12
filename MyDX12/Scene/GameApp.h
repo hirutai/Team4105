@@ -11,6 +11,9 @@ class ParticleManager;
 class Line2D;
 class Line;
 class Circle;
+
+class Object3D;
+
 namespace XIIlib
 {
 	class UnitManager;
@@ -24,6 +27,8 @@ class GameApp
 private:
 	static const int debugTextTexNumber = 0;
 	static const int debugJISTextTexNumber = 1;
+
+	Object3D* attack = nullptr;
 public:
 	GameApp();
 	~GameApp();
