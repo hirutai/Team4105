@@ -30,6 +30,8 @@ private:
 
 	//ÉäÉ\Å[ÉX
 	Object3D* attack = nullptr;
+	Object3D* cars = nullptr;
+	Object3D* bike = nullptr;
 public:
 	GameApp();
 	~GameApp();

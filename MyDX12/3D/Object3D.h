@@ -135,9 +135,6 @@ public: // メンバ関数
 	/// <param name="_isElec">シェーダータイプ(電気のみの0orその他)</param>
 	void SetShaderType(float shader_type) { this->_isElec = shader_type; }
 
-	///
-	void SetPosition(Vector3 position) { this->position = position; }
-
 	/// <summary>
 	/// モデルを取得
 	/// </summary>
