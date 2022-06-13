@@ -4,6 +4,7 @@
 #include "Common.h"
 #include "UnitManager.h"
 #include "../Tool/Messenger.h"
+#include "../3D/Object3D.h"
 
 XIIlib::Yankee::Yankee()
 {
@@ -42,6 +43,7 @@ void XIIlib::Yankee::Initialize()
 	ID = Common::SeparateFilePath(path).second;
 	type = _PositionType::ENEMY;
 	CreateAttackArea();
+	object3d = Object3D::Create(Model::CreateFromOBJ("Badboy_Enemy"));
 
 }
 
@@ -56,6 +58,7 @@ void XIIlib::Yankee::Update()
 		Common::ConvertTilePosition(element_stock.b));
 	std::cout << tileRand << std::endl;
 
+	object3d->position = { Common::ConvertTilePosition(element_stock.a),1.0f, Common::ConvertTilePosition(element_stock.b) };
 
 	// UŒ‚“–‚½‚Á‚½‚ç
 	if (UnitManager::GetInstance()->IsAttackValid(element_stock, (int)_PositionType::MINE)) {
@@ -193,11 +196,13 @@ void XIIlib::Yankee::Update()
 	}
 
 	collCapsule->Update();
+	object3d->Update();
 }
 
 void XIIlib::Yankee::Draw()
 {
-	collCapsule->Draw();
+	//collCapsule->Draw();
+	object3d->Draw();
 }
 
 void XIIlib::Yankee::SetStartElement(int x, int z)
