@@ -482,9 +482,6 @@
     <ClInclude Include="3D\CollCircle.h">
       <Filter>3D\HitCheckObj</Filter>
     </ClInclude>
-    <ClInclude Include="GameScene\SceneState.h">
-      <Filter>GameScene\StateScene</Filter>
-    </ClInclude>
     <ClInclude Include="Tool\DigitalNumberText.h">
       <Filter>Tool</Filter>
     </ClInclude>
@@ -571,6 +568,9 @@
     </ClInclude>
     <ClInclude Include="GameObject\Yankee.h">
       <Filter>GameObject\Unit</Filter>
+    </ClInclude>
+    <ClInclude Include="GameScene\SceneState.h">
+      <Filter>GameScene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

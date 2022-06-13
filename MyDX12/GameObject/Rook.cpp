@@ -50,7 +50,6 @@ void XIIlib::Rook::Initialize()
 
 void XIIlib::Rook::Update()
 {
-	
 	// 駒の行動
 	Action();
 	// 位置座標の更新
@@ -62,7 +61,6 @@ void XIIlib::Rook::Update()
 
 	std::cout << tileRand << std::endl;
 	
-
 	// 攻撃当たったら
 	if (UnitManager::GetInstance()->IsAttackValid(element_stock, (int)_PositionType::MINE)) {
 		//Hit(1);
