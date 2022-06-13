@@ -144,9 +144,7 @@ void GameApp::Initialize()
 	game_scene->Initialize();
 
 	//リソース
-	attack = Object3D::Create(Model::CreateFromOBJ("bike"));//Attack
-	cars = Object3D::Create(Model::CreateFromOBJ("cars"));
-	bike = Object3D::Create(Model::CreateFromOBJ("bike"));
+	attack = Object3D::Create(Model::CreateFromOBJ("Attack"));
 }
 
 void GameApp::VariableInit()
@@ -254,9 +252,7 @@ void GameApp::ObjMDraw()
 {
 	game_scene->Draw();
 	Object3D::PreDraw();
-	attack->Draw();
-	//cars->Draw();
-	//bike->Draw();
+	//attack->Draw();
 	Object3D::PostDraw();
 }
 
