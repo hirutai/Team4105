@@ -30,8 +30,11 @@ private:
 
 	//���\�[�X
 	Object3D* attack = nullptr;
+<<<<<<< HEAD
 	Object3D* cars = nullptr;
 	Object3D* bike = nullptr;
+=======
+>>>>>>> parent of 9e41256 (GameAppから確認用のコード削除)
 public:
 	GameApp();
 	~GameApp();

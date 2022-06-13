@@ -144,9 +144,13 @@ void GameApp::Initialize()
 	game_scene->Initialize();
 
 	//リソース
+<<<<<<< HEAD
 	attack = Object3D::Create(Model::CreateFromOBJ("bike"));//Attack
 	cars = Object3D::Create(Model::CreateFromOBJ("cars"));
 	bike = Object3D::Create(Model::CreateFromOBJ("bike"));
+=======
+	attack = Object3D::Create(Model::CreateFromOBJ("Attack"));
+>>>>>>> parent of 9e41256 (GameAppから確認用のコード削除)
 }
 
 void GameApp::VariableInit()
@@ -254,9 +258,13 @@ void GameApp::ObjMDraw()
 {
 	game_scene->Draw();
 	Object3D::PreDraw();
+<<<<<<< HEAD
 	attack->Draw();
 	//cars->Draw();
 	//bike->Draw();
+=======
+	//attack->Draw();
+>>>>>>> parent of 9e41256 (GameAppから確認用のコード削除)
 	Object3D::PostDraw();
 }
 
