@@ -21,6 +21,7 @@ XIIlib::Bishop::Bishop()
 XIIlib::Bishop::~Bishop()
 {
 	delete collCapsule;
+	//ƒoƒCƒN“P‹Ž
 	delete bike;
 }
 
