@@ -4,6 +4,8 @@
 #include "Common.h"
 #include "UnitManager.h"
 #include "../Tool/Messenger.h"
+#include "../3D/Object3D.h"
+
 
 XIIlib::Knight::Knight()
 {
@@ -194,7 +196,7 @@ void XIIlib::Knight::Update()
 
 void XIIlib::Knight::Draw()
 {
-	collCapsule->Draw();
+	//collCapsule->Draw();
 }
 
 void XIIlib::Knight::SetStartElement(int x, int z)

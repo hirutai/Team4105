@@ -28,10 +28,6 @@ private:
 	static const int debugTextTexNumber = 0;
 	static const int debugJISTextTexNumber = 1;
 
-	//ÉäÉ\Å[ÉX
-	Object3D* attack = nullptr;
-	Object3D* cars = nullptr;
-	Object3D* bike = nullptr;
 public:
 	GameApp();
 	~GameApp();
