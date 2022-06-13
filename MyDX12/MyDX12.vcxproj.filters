@@ -136,6 +136,9 @@
     <Filter Include="HLSL\obj">
       <UniqueIdentifier>{1740a7bc-2ba0-4c08-b2e5-40956bd583e0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="3D\bill_obj">
+      <UniqueIdentifier>{a43417c7-7b0e-4ca1-9d4a-281efa1f920c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -338,6 +341,9 @@
     </ClCompile>
     <ClCompile Include="GameObject\Yankee.cpp">
       <Filter>GameObject\Unit</Filter>
+    </ClCompile>
+    <ClCompile Include="3D\BillObj.cpp">
+      <Filter>3D\bill_obj</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -571,6 +577,9 @@
     </ClInclude>
     <ClInclude Include="GameScene\SceneState.h">
       <Filter>GameScene</Filter>
+    </ClInclude>
+    <ClInclude Include="3D\BillObj.h">
+      <Filter>3D\bill_obj</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
