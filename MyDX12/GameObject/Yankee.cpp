@@ -390,26 +390,41 @@ void XIIlib::Yankee::Move()
 
 	collCapsule->SetColor(0, 1, 1, 1);
 
-	//ヤンキーの座標ープレイヤーの座標
+	//プレイヤーの座標 ー ヤンキーの座標
 	Math::Point2 dif = kingPos - element_stock;
 
-	//// 自分とキングの間を1マスづつ調べる
-	if (dif.b <= 0 && dif.a == element_stock.a)//キングより下にいるかを調べる
+	// 自分とキングの間を1マスづつ調べる
+	if (dif.b < 0 && dif.a == 0)//キングより下にいるかを調べる
 	{
 		//上に１進む
 		temp.b -= 1;
 		if (ThreeCheckArea(temp))return;
 		element_stock.b -= 1;
 	}
-	//// 自分とキングの間を1マスづつ調べる
-	else if (dif.b > 0 && dif.a == element_stock.a)//キングより上にいるかを調べる
+	// 自分とキングの間を1マスづつ調べる
+	else if (dif.b > 0 && dif.a == 0)//キングより上にいるかを調べる
 	{
 		//下に1進む
 		temp.b += 1;
 		if (ThreeCheckArea(temp))return;
 		element_stock.b += 1;
 	}
-	//// 自分とキングの間を1マスづつ調べる
+	// 自分とキングの間を1マスづつ調べる
+	else if (dif.a < 0 && dif.b == 0)//キングより左にいるかを調べる
+	{
+		//右に１進む
+		temp.a -= 1;
+		if (ThreeCheckArea(temp))return;
+		element_stock.a -= 1;
+	}
+	else if (dif.a > 0 && dif.b == 0)// 0より大きければKingより右にいる
+	{
+		//左に１進む
+		temp.a += 1;
+		if (ThreeCheckArea(temp))return;
+		element_stock.a += 1;
+	}
+	// 自分とキングの間を1マスづつ調べる
 	else if (dif.b <= 0 && dif.a <= 0)//キングより左下にいるかを調べる
 	{
 		//右上に1進む
@@ -419,7 +434,7 @@ void XIIlib::Yankee::Move()
 		element_stock.a -= 1;
 		element_stock.b -= 1;
 	}
-	//// 自分とキングの間を1マスづつ調べる
+	// 自分とキングの間を1マスづつ調べる
 	else if (dif.b > 0 && dif.a <= 0)//キングより左上にいるかを調べる
 	{
 		//右下に1進む
@@ -429,7 +444,7 @@ void XIIlib::Yankee::Move()
 		element_stock.a -= 1;
 		element_stock.b += 1;
 	}
-	//// 自分とキングの間を1マスづつ調べる
+	// 自分とキングの間を1マスづつ調べる
 	else if (dif.b <= 0 && dif.a > 0)//キングより右下にいるかを調べる
 	{
 		//左上に1進む
@@ -439,7 +454,7 @@ void XIIlib::Yankee::Move()
 		element_stock.a += 1;
 		element_stock.b -= 1;
 	}
-	//// 自分とキングの間を1マスづつ調べる
+	// 自分とキングの間を1マスづつ調べる
 	else if (dif.b > 0 && dif.a >= 0)//キングより右上にいるかを調べる
 	{
 		//左下に1進む
@@ -449,22 +464,6 @@ void XIIlib::Yankee::Move()
 		element_stock.a += 1;
 		element_stock.b += 1;
 	}
-	//// 自分とキングの間を1マスづつ調べる
-	else if (dif.a <= 0 && dif.b == element_stock.b)//キングより左にいるかを調べる
-	{
-		//右に１進む
-		temp.a -= 1;
-		if (ThreeCheckArea(temp))return;
-		element_stock.a -= 1;
-	}
-	else if (dif.a > 0 && dif.b == element_stock.b)// 0より大きければKingより右にいる
-	{
-		//左に１進む
-		temp.a += 1;
-		if (ThreeCheckArea(temp))return;
-		element_stock.a += 1;
-	}
-	
 }
 
 bool XIIlib::Yankee::AttackAreaExists()
