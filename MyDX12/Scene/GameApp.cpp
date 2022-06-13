@@ -26,6 +26,8 @@
 #include "../2D/ShadowMap.h"
 #include <iostream>
 #include <string>
+
+#include "../3D/Object3D.h"
 /*仮置き(ここまで)*/
 
 using namespace Math;
@@ -140,6 +142,11 @@ void GameApp::Initialize()
 	VariableInit();
 	game_scene = new XIIlib::GameScene();
 	game_scene->Initialize();
+
+	//リソース
+	attack = Object3D::Create(Model::CreateFromOBJ("bike"));//Attack
+	cars = Object3D::Create(Model::CreateFromOBJ("cars"));
+	bike = Object3D::Create(Model::CreateFromOBJ("bike"));
 }
 
 void GameApp::VariableInit()
@@ -169,6 +176,8 @@ void GameApp::Update()
 	circle->DrawCircle(10,32 * 16 + 16,10,0,255,255,255);
 	circle->DrawCircle(10,32 * 17 + 16,10,0,255,0,255);
 	circle->DrawCircle(10,32 * 18 + 16,10,255,255,0,255);
+
+	attack->Update();
 }
 
 void GameApp::Draw3D()
@@ -244,6 +253,11 @@ void GameApp::Draw()
 void GameApp::ObjMDraw()
 {
 	game_scene->Draw();
+	Object3D::PreDraw();
+	attack->Draw();
+	//cars->Draw();
+	//bike->Draw();
+	Object3D::PostDraw();
 }
 
 void GameApp::DestoryAfter()
