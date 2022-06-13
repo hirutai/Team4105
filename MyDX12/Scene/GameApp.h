@@ -29,7 +29,6 @@ private:
 	static const int debugJISTextTexNumber = 1;
 
 	//ƒŠƒ\[ƒX
-	Object3D* attack = nullptr;
 public:
 	GameApp();
 	~GameApp();
