@@ -21,7 +21,6 @@ XIIlib::Bishop::Bishop()
 XIIlib::Bishop::~Bishop()
 {
 	delete collCapsule;
-
 }
 
 std::shared_ptr<XIIlib::Bishop> XIIlib::Bishop::Create(int point_x, int point_z)
