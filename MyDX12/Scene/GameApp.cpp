@@ -6,10 +6,12 @@
 #include "../Tool/DigitalNumberText.h"
 #include "../Tool/Messenger.h"
 #include "../Camera/DebugCamera.h"
+#include "../3D/Object3D.h"
 #include "../Particle/ParticleManager.h"
 #include "../2D/Line2D.h"
 #include "../3D/Line.h"
 #include "../GameObject/UnitManager.h"
+#include "../GameObject/AttackAreaManager.h"
 #include "../3D/CollCapsule.h"
 #include "../3D/CollBox.h"
 #include "../3D/CollCircle.h"
@@ -24,6 +26,8 @@
 #include "../2D/ShadowMap.h"
 #include <iostream>
 #include <string>
+
+#include "../3D/Object3D.h"
 /*仮置き(ここまで)*/
 
 using namespace Math;
@@ -54,6 +58,7 @@ GameApp::~GameApp()
 void GameApp::Initialize()
 {
 	manager = UnitManager::GetInstance();
+	attackAreaManager = AttackAreaManager::GetInstance();
 
 	DirectX12::SetClearColor(0.2f, 0.3f, 0.7f);
 
@@ -72,6 +77,9 @@ void GameApp::Initialize()
 	lightGroup->SetDirLightActive(0, true);
 	lightGroup->SetDirLightActive(1, true);
 	lightGroup->SetDirLightActive(2, true);
+
+	Object3D::SetDebugCamera(d_camera);
+	Object3D::SetLightGroup(lightGroup);
 
 	//lightGroup->SetSpotLightActive(0, true);
 
@@ -129,10 +137,16 @@ void GameApp::Initialize()
 	circle = Circle::Create();
 
 	manager->Initialize();
+	attackAreaManager->Initialize();
 
 	VariableInit();
 	game_scene = new XIIlib::GameScene();
 	game_scene->Initialize();
+
+	//リソース
+	attack = Object3D::Create(Model::CreateFromOBJ("bike"));//Attack
+	cars = Object3D::Create(Model::CreateFromOBJ("cars"));
+	bike = Object3D::Create(Model::CreateFromOBJ("bike"));
 }
 
 void GameApp::VariableInit()
@@ -162,6 +176,8 @@ void GameApp::Update()
 	circle->DrawCircle(10,32 * 16 + 16,10,0,255,255,255);
 	circle->DrawCircle(10,32 * 17 + 16,10,0,255,0,255);
 	circle->DrawCircle(10,32 * 18 + 16,10,255,255,0,255);
+
+	attack->Update();
 }
 
 void GameApp::Draw3D()
@@ -237,6 +253,11 @@ void GameApp::Draw()
 void GameApp::ObjMDraw()
 {
 	game_scene->Draw();
+	Object3D::PreDraw();
+	attack->Draw();
+	//cars->Draw();
+	//bike->Draw();
+	Object3D::PostDraw();
 }
 
 void GameApp::DestoryAfter()

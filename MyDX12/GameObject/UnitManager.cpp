@@ -4,6 +4,7 @@
 #include "BoardMap.h"
 #include "IntervalTimer.h"
 #include "../Struct/Math.h"
+#include "../3D/Object3D.h"
 
 XIIlib::UnitManager::UnitManager() {}
 
@@ -68,14 +69,20 @@ void XIIlib::UnitManager::Draw()
 {
 	map_board->Draw();
 
+	// ”»’è—pƒ|ƒŠƒSƒ“‚Ì•`‰æ
 	CollisionCapsule::PreDraw();
-
 	for (auto& obj : units)
 	{
 		obj->Draw();
 	}
-
 	CollisionCapsule::PostDraw();
+
+	// ƒ‚ƒfƒ‹‚Ì•`‰æ(.obj)
+	Object3D::PreDraw();
+
+
+	Object3D::PostDraw();
+
 }
 
 void XIIlib::UnitManager::AddUnit(const std::shared_ptr<Unit>& spObject)

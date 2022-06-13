@@ -52,11 +52,12 @@ void XIIlib::Bishop::Update()
 	collCapsule->SetPosition(
 		Common::ConvertTilePosition(element_stock.a), 1.0f,
 		Common::ConvertTilePosition(element_stock.b));
-
+	std::cout << tileRand << "ビショップ" << std::endl;
 	// 攻撃当たったら
 	if (UnitManager::GetInstance()
 		->IsAttackValid(element_stock, (int)_PositionType::MINE)) {
-		Hit(1);
+		//Hit(1);
+		isAttack = false;
 		// ノックバック
 		element_stock += UnitManager::GetInstance()->GetBackVector(element_stock);
 
@@ -242,6 +243,7 @@ void XIIlib::Bishop::Action()
 	}
 	else
 	{
+		AttackAreaDraw();
 		isAttack = false;
 	}
 }
@@ -251,7 +253,14 @@ void XIIlib::Bishop::Attack()
 	// カウントを減らす
 	attackInterval--;
 	//色を変える
-	collCapsule->SetColor(1, 0, 0, 1);
+	if (attackInterval <= 150 && attackInterval >= 120 || attackInterval <= 90 && attackInterval >= 75 || attackInterval <= 60 && attackInterval >= 45 || attackInterval <= 30 && attackInterval >= 15)
+	{
+		collCapsule->SetColor(1, 0, 0, 1);
+	}
+	else
+	{
+		collCapsule->SetColor(0, 1, 0, 1);
+	}
 	if (attackInterval == 0)
 	{
 		Math::Point2 dif = kingPos - preElement_stock;
@@ -290,105 +299,136 @@ void XIIlib::Bishop::Move()
 	notAttackflag = TRUE;
 
 	collCapsule->SetColor(0, 1, 0, 1);
-	Math::Point2 dif = kingPos - element_stock;
+	//Math::Point2 dif = kingPos - element_stock;
 	Math::Point2 temp(0, 0);
 	// もうすでに範囲上にいたら動かない
-	if (abs(dif.a) == abs(dif.b))return;
-	// キングが自分より上にいる
-	if (dif.b > 0)
-	{
-		// キングが右にいる
-		if (dif.a > 0)
-		{
-			temp = element_stock + Math::Point2(1, 1);
-			if (ThreeCheckArea(temp))
-			{
-				temp = element_stock + Math::Point2(-1, 1);
-				if (ThreeCheckArea(temp))return;
-			}
-			element_stock = temp;
-		}
-		else // キングが左か真ん中にいる
-		{
-			temp = element_stock + Math::Point2(-1, 1);
-			if (ThreeCheckArea(temp))
-			{
-				temp = element_stock + Math::Point2(1, 1);
-				if (ThreeCheckArea(temp))return;
-			}
-			element_stock = temp;
-		}
+	//if (abs(dif.a) == abs(dif.b))return;
+	//3マス以下しか動けない時の移動用乱数
+	int BishopjMin = jMin;
+	int BishopjMax = jMax;
+	tileRand = 1;
+	//Switch文用の乱数
+	int BishopSwitchiMin = SwitchRandiMin;
+	int BishopSwitchiMax = SwitchRandiMax;
+	SwitchRand = SwitchRandiMin + (int)(rand() * (SwitchRandiMax - SwitchRandiMin + 1) / (1 + RAND_MAX));
 
-	}
-	else if (dif.b < 0) // キングが自分より下にいる
+	switch (SwitchRand)
 	{
-		if (dif.a > 0)
+	case 0:
+		//左下方向			
+		tileRand = jMin + (int)(rand() * (jMax - jMin + 1) / (1 + RAND_MAX));
+
+		temp.a -= tileRand;
+		temp.b -= tileRand;
+		
+		//if (ThreeCheckArea(element_stock))
+		//{
+
+		//}
+
+		if (temp.a <= -1 && temp.b <= -1)
 		{
-			temp = element_stock + Math::Point2(1, -1);
-			if (ThreeCheckArea(temp))
-			{
-				temp = element_stock + Math::Point2(-1, -1);
-				if (ThreeCheckArea(temp))return;
-			}
-			element_stock = temp;
+			element_stock.a = 0;
+			element_stock.b = 0;
+		}
+		else if(temp.a <= -1)
+		{
+			element_stock.b = temp.b - temp.a;
+			element_stock.a = 0;
+		}
+		else if (temp.b <= -1)
+		{
+			element_stock.a = temp.a - temp.b;
+			element_stock.b = 0;
 		}
 		else
 		{
-			temp = element_stock + Math::Point2(-1, -1);
-			if (ThreeCheckArea(temp))
-			{
-				temp = element_stock + Math::Point2(1, -1);
-				if (ThreeCheckArea(temp))return;
-			}
 			element_stock = temp;
 		}
-	}
-	else // 真ん中だったら
-	{
-		if (dif.a > 0)
+		break;
+	case 1:
+		//右下方向			
+		tileRand = jMin + (int)(rand() * (jMax - jMin + 1) / (1 + RAND_MAX));
+
+		temp.a += tileRand;
+		temp.b -= tileRand;
+
+		if (temp.a >= 8 && temp.b <= -1)
 		{
-			if (element_stock.b >= 4)
-			{
-				temp = element_stock + Math::Point2(1, -1);
-				if (ThreeCheckArea(temp))
-				{
-					temp = element_stock + Math::Point2(1, 1);
-					if (ThreeCheckArea(temp))return;
-				}
-			}
-			else
-			{
-				temp = element_stock + Math::Point2(1, 1);
-				if (ThreeCheckArea(temp))
-				{
-					temp = element_stock + Math::Point2(1, -1);
-					if (ThreeCheckArea(temp))return;
-				}
-			}
+			element_stock.a = 8;
+			element_stock.b = 0;
+		}
+		else if (temp.a >= 8)
+		{
+			element_stock.b = temp.b + (temp.a - 7);
+			element_stock.a = 7;
+		}
+		else if (temp.b <= -1)
+		{
+			element_stock.a = temp.a + temp.b;
+			element_stock.b = 0;
 		}
 		else
 		{
-			if (element_stock.b >= 4)
-			{
-				temp = element_stock + Math::Point2(-1, -1);
-				if (ThreeCheckArea(temp))
-				{
-					temp = element_stock + Math::Point2(-1, 1);
-					if (ThreeCheckArea(temp))return;
-				}
-			}
-			else
-			{
-				temp = element_stock + Math::Point2(-1, 1);
-				if (ThreeCheckArea(temp))
-				{
-					temp = element_stock + Math::Point2(-1, -1);
-					if (ThreeCheckArea(temp))return;
-				}
-			}
+			element_stock = temp;
 		}
-		element_stock = temp;
+		break;
+	case 2:
+		//左上方向
+		tileRand = jMin + (int)(rand() * (jMax - jMin + 1) / (1 + RAND_MAX));
+
+		temp.a -= tileRand;
+		temp.b += tileRand;
+
+		if (temp.a <= -1 && temp.b >= 8)
+		{
+			element_stock.a = 0;
+			element_stock.b = 7;
+		}
+		else if (temp.a <= -1)
+		{
+			element_stock.b = temp.b + temp.a;
+			element_stock.a = 0;
+		}
+		else if (temp.b >= 8)
+		{
+			element_stock.a = temp.a - (temp.b - 7);
+			element_stock.b = 7;
+		}
+		else
+		{
+			element_stock = temp;
+		}
+		break;
+	case 3:
+		//右上方向
+		tileRand = jMin + (int)(rand() * (jMax - jMin + 1) / (1 + RAND_MAX));
+
+		temp.a += tileRand;
+		temp.b += tileRand;
+
+		if (temp.a >= 8 && temp.b >= 8)
+		{
+			element_stock.a = 7;
+			element_stock.b = 7;
+		}
+		else if (temp.a >= 8)
+		{
+			element_stock.b = temp.b - (temp.a - 7);
+			element_stock.a = 0;
+		}
+		else if (temp.b >= 8)
+		{
+			element_stock.a = temp.a - (temp.b - 7);
+			element_stock.b = 7;
+		}
+		else
+		{
+			element_stock = temp;
+		}
+		break;
 	}
+	return;
 }
 
 bool XIIlib::Bishop::AttackAreaExists()
@@ -407,10 +447,68 @@ bool XIIlib::Bishop::AttackAreaExists()
 	return false;
 }
 
+void XIIlib::Bishop::AttackAreaDraw()
+{
+	//左下
+	for (int i = 1; i < 8; i++)
+	{
+		if (UnitManager::GetInstance()->AllOnUnit(Math::Point2(element_stock.a - i, element_stock.b - i)) || element_stock.a - i < 0 || element_stock.b - i < 0)
+		{
+			break;
+		}
+		else
+		{
+			AttackAreaManager::GetInstance()->SetAttackAreas(Math::Point2(element_stock.a - i, element_stock.b - i));
+			//UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(element_stock.a - i, element_stock.b - i), 3);
+		}
+	}
+	//右上
+	for (int i = 1; i < 8; i++)
+	{
+		if (UnitManager::GetInstance()->AllOnUnit(Math::Point2(element_stock.a + i, element_stock.b + i)) || element_stock.a + i > 7 || element_stock.b + i > 7)
+		{
+			break;
+		}
+		else
+		{
+			AttackAreaManager::GetInstance()->SetAttackAreas(Math::Point2(element_stock.a + i, element_stock.b + i));
+
+			//UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(element_stock.a + i, element_stock.b + i), 3);
+		}
+	}
+	//右下
+	for (int i = 1; i < 8; i++)
+	{
+		if (UnitManager::GetInstance()->AllOnUnit(Math::Point2(element_stock.a + i, element_stock.b - i)) || element_stock.a + i > 7 || element_stock.b - i < 0)
+		{
+			break;
+		}
+		else
+		{
+			AttackAreaManager::GetInstance()->SetAttackAreas(Math::Point2(element_stock.a + i, element_stock.b - i));
+
+			//UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(element_stock.a + i, element_stock.b - i), 3);
+		}
+	}
+	//左上
+	for (int i = 1; i < 8; i++)
+	{
+		if (UnitManager::GetInstance()->AllOnUnit(Math::Point2(element_stock.a - i, element_stock.b + i)) || element_stock.a - i < 0 || element_stock.b + i > 7)
+		{
+			break;
+		}
+		else
+		{
+			AttackAreaManager::GetInstance()->SetAttackAreas(Math::Point2(element_stock.a - i, element_stock.b + i));
+			//UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(element_stock.a - i, element_stock.b + i), 3);
+		}
+	}
+}
+
 void XIIlib::Bishop::IniState()
 {
 	isAttack = false;
-	attackInterval = 60;
+	attackInterval = 180;
 	collCapsule->SetColor(0, 1, 0, 1);
 }
 

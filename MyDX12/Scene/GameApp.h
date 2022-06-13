@@ -11,11 +11,15 @@ class ParticleManager;
 class Line2D;
 class Line;
 class Circle;
+
+class Object3D;
+
 namespace XIIlib
 {
 	class UnitManager;
 	class GameScene;
 	class Messenger;
+	class AttackAreaManager;
 }
 
 class GameApp
@@ -23,6 +27,11 @@ class GameApp
 private:
 	static const int debugTextTexNumber = 0;
 	static const int debugJISTextTexNumber = 1;
+
+	//ÉäÉ\Å[ÉX
+	Object3D* attack = nullptr;
+	Object3D* cars = nullptr;
+	Object3D* bike = nullptr;
 public:
 	GameApp();
 	~GameApp();
@@ -70,6 +79,7 @@ private:
 	Circle* circle = nullptr;
 	
 	XIIlib::UnitManager* manager = nullptr;
+	XIIlib::AttackAreaManager* attackAreaManager = nullptr;
 	std::string destoryName;
 	XIIlib::GameScene* game_scene = nullptr;
 
