@@ -5,7 +5,6 @@
 #include "UnitManager.h"
 #include "Rook.h"
 #include "../Tool/Messenger.h"
-#include "../3D/Object3D.h"
 
 XIIlib::King::King()
 {
@@ -46,8 +45,6 @@ void XIIlib::King::Initialize()
 	CreateAttackArea();
 
 	now_attack.reserve(3);
-
-	object3d = Object3D::Create(Model::CreateFromOBJ("Badboy_Bat_1"));
 }
 
 void XIIlib::King::Update()
@@ -85,17 +82,12 @@ void XIIlib::King::Update()
 		Common::ConvertTilePosition(element_stock.a),1.0f,
 		Common::ConvertTilePosition(element_stock.b));
 
-	object3d->position = { Common::ConvertTilePosition(element_stock.a), 1.0f, Common::ConvertTilePosition(element_stock.b) };
-
-
 	collCapsule->Update();
-	object3d->Update();
 }
 
 void XIIlib::King::Draw()
 {
-	//collCapsule->Draw();
-	object3d->Draw();
+	collCapsule->Draw();
 }
 
 void XIIlib::King::SetStartElement(int x, int z)

@@ -4,8 +4,6 @@
 #include "Common.h"
 #include "UnitManager.h"
 #include "../Tool/Messenger.h"
-#include "../3D/Object3D.h"
-
 
 XIIlib::Bishop::Bishop()
 {
@@ -44,8 +42,6 @@ void XIIlib::Bishop::Initialize()
 	ID = Common::SeparateFilePath(path).second;
 	type = _PositionType::ENEMY;
 	CreateAttackArea();
-	object3d = Object3D::Create(Model::CreateFromOBJ("bike"));
-
 }
 
 void XIIlib::Bishop::Update()
@@ -57,9 +53,6 @@ void XIIlib::Bishop::Update()
 		Common::ConvertTilePosition(element_stock.a), 1.0f,
 		Common::ConvertTilePosition(element_stock.b));
 	std::cout << tileRand << "ビショップ" << std::endl;
-
-	object3d->position = { Common::ConvertTilePosition(element_stock.a), 1.0f, Common::ConvertTilePosition(element_stock.b) };
-
 	// 攻撃当たったら
 	if (UnitManager::GetInstance()
 		->IsAttackValid(element_stock, (int)_PositionType::MINE)) {
@@ -197,13 +190,11 @@ void XIIlib::Bishop::Update()
 	}
 
 	collCapsule->Update();
-	object3d->Update();
 }
 
 void XIIlib::Bishop::Draw()
 {
-	//collCapsule->Draw();
-	object3d->Draw();
+	collCapsule->Draw();
 }
 
 void XIIlib::Bishop::SetStartElement(int x, int z)
