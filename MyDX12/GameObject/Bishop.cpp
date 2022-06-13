@@ -20,6 +20,10 @@ XIIlib::Bishop::Bishop()
 XIIlib::Bishop::~Bishop()
 {
 	delete collCapsule;
+<<<<<<< HEAD
+=======
+	delete bike;
+>>>>>>> parent of 1d1fcc5 (コメント)
 }
 
 std::shared_ptr<XIIlib::Bishop> XIIlib::Bishop::Create(int point_x, int point_z)
