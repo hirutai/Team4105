@@ -336,6 +336,9 @@
     <ClCompile Include="3D\Object3D.cpp">
       <Filter>3D\obj</Filter>
     </ClCompile>
+    <ClCompile Include="GameObject\Yankee.cpp">
+      <Filter>GameObject\Unit</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Base\DirectX12.h">
@@ -479,9 +482,6 @@
     <ClInclude Include="3D\CollCircle.h">
       <Filter>3D\HitCheckObj</Filter>
     </ClInclude>
-    <ClInclude Include="GameScene\SceneState.h">
-      <Filter>GameScene\StateScene</Filter>
-    </ClInclude>
     <ClInclude Include="Tool\DigitalNumberText.h">
       <Filter>Tool</Filter>
     </ClInclude>
@@ -565,6 +565,12 @@
     </ClInclude>
     <ClInclude Include="3D\Object3D.h">
       <Filter>3D\obj</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\Yankee.h">
+      <Filter>GameObject\Unit</Filter>
+    </ClInclude>
+    <ClInclude Include="GameScene\SceneState.h">
+      <Filter>GameScene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

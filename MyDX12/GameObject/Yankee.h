@@ -3,14 +3,14 @@
 #include <memory>
 
 namespace XIIlib {
-	class Rook : public Unit {
+	class Yankee : public Unit {
 	private:
 		Math::Point2 point_attack;
 	public:
-		Rook();
-		~Rook();
+		Yankee();
+		~Yankee();
 		// ê∂ê¨ä÷êî
-		static std::shared_ptr<Rook> Create(int point_x, int point_z);
+		static std::shared_ptr<Yankee> Create(int point_x, int point_z);
 
 		void Initialize()override;
 		void Update()override;

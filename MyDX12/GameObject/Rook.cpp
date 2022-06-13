@@ -5,13 +5,11 @@
 #include "UnitManager.h"
 #include "../Tool/Messenger.h"
 
-
 XIIlib::Rook::Rook()
 {
 	// モデルの初期化
 	collCapsule = CollisionCapsule::Create({ 0,1,0 }, { 0,-1,0 }, 0.5f, 16);
 	collCapsule->SetColor(0, 1, 1, 1);
-	cars = Object3D::Create(Model::CreateFromOBJ("cars"));
 	// 各ステータスの初期化
 	_cost = 0;
 	_hit_point = 2;
@@ -21,7 +19,6 @@ XIIlib::Rook::Rook()
 
 XIIlib::Rook::~Rook()
 {
-	delete cars;
 	delete collCapsule;
 }
 
@@ -50,19 +47,14 @@ void XIIlib::Rook::Initialize()
 
 void XIIlib::Rook::Update()
 {
-	
 	// 駒の行動
 	Action();
 	// 位置座標の更新
 	collCapsule->SetPosition(
 		Common::ConvertTilePosition(element_stock.a), 1.0f,
 		Common::ConvertTilePosition(element_stock.b));
-
-	cars->SetPosition({ Common::ConvertTilePosition(element_stock.a),1.0f, Common::ConvertTilePosition(element_stock.b) });
-
 	std::cout << tileRand << std::endl;
 	
-
 	// 攻撃当たったら
 	if (UnitManager::GetInstance()->IsAttackValid(element_stock, (int)_PositionType::MINE)) {
 		//Hit(1);
@@ -191,7 +183,6 @@ void XIIlib::Rook::Update()
 			}
 		}
 
-
 		if (Common::GetExceptionPoint(element_stock.a) || Common::GetExceptionPoint(element_stock.b)) {
 			Hit(3);
 		}
@@ -199,13 +190,11 @@ void XIIlib::Rook::Update()
 	}
 
 	collCapsule->Update();
-	cars->Update();
 }
 
 void XIIlib::Rook::Draw()
 {
-	//collCapsule->Draw();
-	cars->Draw();
+	collCapsule->Draw();
 }
 
 void XIIlib::Rook::SetStartElement(int x, int z)

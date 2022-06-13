@@ -2,13 +2,10 @@
 #include "Unit.h"
 #include <memory>
 
-#include "../3D/Object3D.h"
-
 namespace XIIlib {
 	class Bishop : public Unit {
 	private:
 		Math::Point2 point_attack;
-		Object3D* bike = nullptr;
 	public:
 		Bishop();
 		~Bishop();

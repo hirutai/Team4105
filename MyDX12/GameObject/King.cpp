@@ -87,7 +87,7 @@ void XIIlib::King::Update()
 
 void XIIlib::King::Draw()
 {
-	//collCapsule->Draw();
+	collCapsule->Draw();
 }
 
 void XIIlib::King::SetStartElement(int x, int z)

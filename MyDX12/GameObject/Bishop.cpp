@@ -10,7 +10,6 @@ XIIlib::Bishop::Bishop()
 	// モデルの初期化
 	collCapsule = CollisionCapsule::Create({ 0,1,0 }, { 0,-1,0 }, 0.5f, 16);
 	collCapsule->SetColor(0, 1, 0, 1);
-	bike = Object3D::Create(Model::CreateFromOBJ("bike"));
 	// 各ステータスの初期化
 	_cost = 0;
 	_hit_point = 2;
@@ -21,8 +20,6 @@ XIIlib::Bishop::Bishop()
 XIIlib::Bishop::~Bishop()
 {
 	delete collCapsule;
-	//バイク撤去
-	delete bike;
 }
 
 std::shared_ptr<XIIlib::Bishop> XIIlib::Bishop::Create(int point_x, int point_z)
@@ -55,12 +52,7 @@ void XIIlib::Bishop::Update()
 	collCapsule->SetPosition(
 		Common::ConvertTilePosition(element_stock.a), 1.0f,
 		Common::ConvertTilePosition(element_stock.b));
-
-	bike->SetPosition(
-		{ Common::ConvertTilePosition(element_stock.a),1.0f, 
-		Common::ConvertTilePosition(element_stock.b) });
-
-
+	std::cout << tileRand << "ビショップ" << std::endl;
 	// 攻撃当たったら
 	if (UnitManager::GetInstance()
 		->IsAttackValid(element_stock, (int)_PositionType::MINE)) {
@@ -198,13 +190,11 @@ void XIIlib::Bishop::Update()
 	}
 
 	collCapsule->Update();
-	bike->Update();
 }
 
 void XIIlib::Bishop::Draw()
 {
-	//collCapsule->Draw();
-	bike->Draw();
+	collCapsule->Draw();
 }
 
 void XIIlib::Bishop::SetStartElement(int x, int z)
@@ -331,6 +321,11 @@ void XIIlib::Bishop::Move()
 		temp.a -= tileRand;
 		temp.b -= tileRand;
 		
+		//if (ThreeCheckArea(element_stock))
+		//{
+
+		//}
+
 		if (temp.a <= -1 && temp.b <= -1)
 		{
 			element_stock.a = 0;
@@ -434,101 +429,6 @@ void XIIlib::Bishop::Move()
 		break;
 	}
 	return;
-	//// キングが自分より上にいる
-	//if (dif.b > 0)
-	//{
-	//	// キングが右にいる
-	//	if (dif.a > 0)
-	//	{
-	//		temp = element_stock + Math::Point2(1, 1);
-	//		if (ThreeCheckArea(temp))
-	//		{
-	//			temp = element_stock + Math::Point2(-1, 1);
-	//			if (ThreeCheckArea(temp))return;
-	//		}
-	//		element_stock = temp;
-	//	}
-	//	else // キングが左か真ん中にいる
-	//	{
-	//		temp = element_stock + Math::Point2(-1, 1);
-	//		if (ThreeCheckArea(temp))
-	//		{
-	//			temp = element_stock + Math::Point2(1, 1);
-	//			if (ThreeCheckArea(temp))return;
-	//		}
-	//		element_stock = temp;
-	//	}
-
-	//}
-	//else if (dif.b < 0) // キングが自分より下にいる
-	//{
-	//	if (dif.a > 0)
-	//	{
-	//		temp = element_stock + Math::Point2(1, -1);
-	//		if (ThreeCheckArea(temp))
-	//		{
-	//			temp = element_stock + Math::Point2(-1, -1);
-	//			if (ThreeCheckArea(temp))return;
-	//		}
-	//		element_stock = temp;
-	//	}
-	//	else
-	//	{
-	//		temp = element_stock + Math::Point2(-1, -1);
-	//		if (ThreeCheckArea(temp))
-	//		{
-	//			temp = element_stock + Math::Point2(1, -1);
-	//			if (ThreeCheckArea(temp))return;
-	//		}
-	//		element_stock = temp;
-	//	}
-	//}
-	//else // 真ん中だったら
-	//{
-	//	if (dif.a > 0)
-	//	{
-	//		if (element_stock.b >= 4)
-	//		{
-	//			temp = element_stock + Math::Point2(1, -1);
-	//			if (ThreeCheckArea(temp))
-	//			{
-	//				temp = element_stock + Math::Point2(1, 1);
-	//				if (ThreeCheckArea(temp))return;
-	//			}
-	//		}
-	//		else
-	//		{
-	//			temp = element_stock + Math::Point2(1, 1);
-	//			if (ThreeCheckArea(temp))
-	//			{
-	//				temp = element_stock + Math::Point2(1, -1);
-	//				if (ThreeCheckArea(temp))return;
-	//			}
-	//		}
-	//	}
-	//	else
-	//	{
-	//		if (element_stock.b >= 4)
-	//		{
-	//			temp = element_stock + Math::Point2(-1, -1);
-	//			if (ThreeCheckArea(temp))
-	//			{
-	//				temp = element_stock + Math::Point2(-1, 1);
-	//				if (ThreeCheckArea(temp))return;
-	//			}
-	//		}
-	//		else
-	//		{
-	//			temp = element_stock + Math::Point2(-1, 1);
-	//			if (ThreeCheckArea(temp))
-	//			{
-	//				temp = element_stock + Math::Point2(-1, -1);
-	//				if (ThreeCheckArea(temp))return;
-	//			}
-	//		}
-	//	}
-	//	element_stock = temp;
-	//}
 }
 
 bool XIIlib::Bishop::AttackAreaExists()
