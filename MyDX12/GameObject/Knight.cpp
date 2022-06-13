@@ -194,7 +194,7 @@ void XIIlib::Knight::Update()
 
 void XIIlib::Knight::Draw()
 {
-	collCapsule->Draw();
+	//collCapsule->Draw();
 }
 
 void XIIlib::Knight::SetStartElement(int x, int z)

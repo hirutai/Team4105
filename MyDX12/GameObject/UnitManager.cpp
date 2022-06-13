@@ -70,17 +70,19 @@ void XIIlib::UnitManager::Draw()
 	map_board->Draw();
 
 	// ”»’è—pƒ|ƒŠƒSƒ“‚Ì•`‰æ
-	CollisionCapsule::PreDraw();
+	//CollisionCapsule::PreDraw();
+	//for (auto& obj : units)
+	//{
+	//	obj->Draw();
+	//}
+	//CollisionCapsule::PostDraw();
+
+	// ƒ‚ƒfƒ‹‚Ì•`‰æ(.obj)
+	Object3D::PreDraw();
 	for (auto& obj : units)
 	{
 		obj->Draw();
 	}
-	CollisionCapsule::PostDraw();
-
-	// ƒ‚ƒfƒ‹‚Ì•`‰æ(.obj)
-	Object3D::PreDraw();
-
-
 	Object3D::PostDraw();
 
 }

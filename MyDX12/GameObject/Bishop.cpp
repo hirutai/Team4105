@@ -10,6 +10,7 @@ XIIlib::Bishop::Bishop()
 	// モデルの初期化
 	collCapsule = CollisionCapsule::Create({ 0,1,0 }, { 0,-1,0 }, 0.5f, 16);
 	collCapsule->SetColor(0, 1, 0, 1);
+	bike = Object3D::Create(Model::CreateFromOBJ("bike"));
 	// 各ステータスの初期化
 	_cost = 0;
 	_hit_point = 2;
@@ -20,6 +21,7 @@ XIIlib::Bishop::Bishop()
 XIIlib::Bishop::~Bishop()
 {
 	delete collCapsule;
+	delete bike;
 }
 
 std::shared_ptr<XIIlib::Bishop> XIIlib::Bishop::Create(int point_x, int point_z)
@@ -52,6 +54,11 @@ void XIIlib::Bishop::Update()
 	collCapsule->SetPosition(
 		Common::ConvertTilePosition(element_stock.a), 1.0f,
 		Common::ConvertTilePosition(element_stock.b));
+
+	bike->SetPosition(
+		{ Common::ConvertTilePosition(element_stock.a),1.0f, 
+		Common::ConvertTilePosition(element_stock.b) });
+
 
 	// 攻撃当たったら
 	if (UnitManager::GetInstance()
@@ -190,11 +197,13 @@ void XIIlib::Bishop::Update()
 	}
 
 	collCapsule->Update();
+	bike->Update();
 }
 
 void XIIlib::Bishop::Draw()
 {
-	collCapsule->Draw();
+	//collCapsule->Draw();
+	bike->Draw();
 }
 
 void XIIlib::Bishop::SetStartElement(int x, int z)
