@@ -4,6 +4,8 @@
 #include "Common.h"
 #include "UnitManager.h"
 #include "../Tool/Messenger.h"
+#include "../3D/Object3D.h"
+
 
 XIIlib::Rook::Rook()
 {
@@ -42,6 +44,7 @@ void XIIlib::Rook::Initialize()
 	ID = Common::SeparateFilePath(path).second;
 	type = _PositionType::ENEMY;
 	CreateAttackArea();
+	object3d = Object3D::Create(Model::CreateFromOBJ("cars"));
 
 }
 
@@ -54,6 +57,8 @@ void XIIlib::Rook::Update()
 		Common::ConvertTilePosition(element_stock.a), 1.0f,
 		Common::ConvertTilePosition(element_stock.b));
 	std::cout << tileRand << std::endl;
+
+	object3d->position = { Common::ConvertTilePosition(element_stock.a),1.0f, Common::ConvertTilePosition(element_stock.b) };
 	
 	// UŒ‚“–‚½‚Á‚½‚ç
 	if (UnitManager::GetInstance()->IsAttackValid(element_stock, (int)_PositionType::MINE)) {
@@ -190,11 +195,13 @@ void XIIlib::Rook::Update()
 	}
 
 	collCapsule->Update();
+	object3d->Update();
 }
 
 void XIIlib::Rook::Draw()
 {
-	collCapsule->Draw();
+	//collCapsule->Draw();
+	object3d->Draw();
 }
 
 void XIIlib::Rook::SetStartElement(int x, int z)

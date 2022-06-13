@@ -71,15 +71,15 @@ void XIIlib::UnitManager::Draw()
 
 	// ”»’è—pƒ|ƒŠƒSƒ“‚Ì•`‰æ
 	CollisionCapsule::PreDraw();
-	for (auto& obj : units)
-	{
-		obj->Draw();
-	}
+
 	CollisionCapsule::PostDraw();
 
 	// ƒ‚ƒfƒ‹‚Ì•`‰æ(.obj)
 	Object3D::PreDraw();
-
+	for (auto& obj : units)
+	{
+		obj->Draw();
+	}
 
 	Object3D::PostDraw();
 

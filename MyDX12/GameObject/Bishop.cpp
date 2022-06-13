@@ -4,6 +4,7 @@
 #include "Common.h"
 #include "UnitManager.h"
 #include "../Tool/Messenger.h"
+#include "../3D/Object3D.h"
 
 XIIlib::Bishop::Bishop()
 {
@@ -20,10 +21,7 @@ XIIlib::Bishop::Bishop()
 XIIlib::Bishop::~Bishop()
 {
 	delete collCapsule;
-<<<<<<< HEAD
-=======
-	delete bike;
->>>>>>> parent of 1d1fcc5 (ã‚³ãƒ¡ãƒ³ãƒˆ)
+
 }
 
 std::shared_ptr<XIIlib::Bishop> XIIlib::Bishop::Create(int point_x, int point_z)
@@ -46,6 +44,8 @@ void XIIlib::Bishop::Initialize()
 	ID = Common::SeparateFilePath(path).second;
 	type = _PositionType::ENEMY;
 	CreateAttackArea();
+	object3d = Object3D::Create(Model::CreateFromOBJ("bike"));
+
 }
 
 void XIIlib::Bishop::Update()
@@ -57,6 +57,9 @@ void XIIlib::Bishop::Update()
 		Common::ConvertTilePosition(element_stock.a), 1.0f,
 		Common::ConvertTilePosition(element_stock.b));
 	std::cout << tileRand << "ƒrƒVƒ‡ƒbƒv" << std::endl;
+
+	object3d->position = { Common::ConvertTilePosition(element_stock.a),1.0f, Common::ConvertTilePosition(element_stock.b) };
+
 	// UŒ‚“–‚½‚Á‚½‚ç
 	if (UnitManager::GetInstance()
 		->IsAttackValid(element_stock, (int)_PositionType::MINE)) {
@@ -194,11 +197,13 @@ void XIIlib::Bishop::Update()
 	}
 
 	collCapsule->Update();
+	object3d->Update();
 }
 
 void XIIlib::Bishop::Draw()
 {
-	collCapsule->Draw();
+	//collCapsule->Draw();
+	object3d->Draw();
 }
 
 void XIIlib::Bishop::SetStartElement(int x, int z)

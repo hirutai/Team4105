@@ -4,6 +4,7 @@
 #include <string>
 #include"AttackAreaManager.h"
 class CollisionCapsule;
+class Object3D;
 
 namespace XIIlib {
 
@@ -67,6 +68,8 @@ namespace XIIlib {
 		_PositionType type = _PositionType::MINE; // “G–¡•û”»•Ê—p
 
 		CollisionCapsule* collCapsule = nullptr; // ‹î‚Ì‰¼ƒ‚ƒfƒ‹(‰~)
+
+		Object3D* object3d = nullptr;
 
 		// ’Ç‰Á
 		Math::Point2 kingPos{0,0};

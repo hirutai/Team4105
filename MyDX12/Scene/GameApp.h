@@ -28,7 +28,6 @@ private:
 	static const int debugTextTexNumber = 0;
 	static const int debugJISTextTexNumber = 1;
 
-	//ƒŠƒ\[ƒX
 public:
 	GameApp();
 	~GameApp();
