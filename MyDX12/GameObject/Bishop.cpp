@@ -308,7 +308,7 @@ void XIIlib::Bishop::Move()
 
 	collCapsule->SetColor(0, 1, 0, 1);
 	//Math::Point2 dif = kingPos - element_stock;
-	Math::Point2 temp(0, 0);
+	Math::Point2 temp = element_stock;
 	// ‚à‚¤‚·‚Å‚É”ÍˆÍã‚É‚¢‚½‚ç“®‚©‚È‚¢
 	//if (abs(dif.a) == abs(dif.b))return;
 	//3ƒ}ƒXˆÈ‰º‚µ‚©“®‚¯‚È‚¢‚ÌˆÚ“®—p—”
@@ -328,11 +328,6 @@ void XIIlib::Bishop::Move()
 
 		temp.a -= tileRand;
 		temp.b -= tileRand;
-		
-		//if (ThreeCheckArea(element_stock))
-		//{
-
-		//}
 
 		if (temp.a <= -1 && temp.b <= -1)
 		{
@@ -422,8 +417,8 @@ void XIIlib::Bishop::Move()
 		}
 		else if (temp.a >= 8)
 		{
+			element_stock.a = 7;
 			element_stock.b = temp.b - (temp.a - 7);
-			element_stock.a = 0;
 		}
 		else if (temp.b >= 8)
 		{
