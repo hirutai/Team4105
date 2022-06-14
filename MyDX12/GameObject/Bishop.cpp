@@ -269,7 +269,7 @@ void XIIlib::Bishop::Attack()
 	{
 		collCapsule->SetColor(0, 1, 0, 1);
 	}
-	if (attackInterval == 0)
+	if (UnitManager::GetInstance()->GetIntervalTimer() == 420)
 	{
 		Math::Point2 dif = kingPos - preElement_stock;
 		Math::Point2 temp = element_stock;
@@ -294,7 +294,7 @@ void XIIlib::Bishop::Attack()
 		// UŒ‚
 		element_stock = preElement_stock;
 		IniState();
-		notAttackflag = FALSE;
+		//notAttackflag = FALSE;
 	}
 }
 
@@ -304,7 +304,7 @@ void XIIlib::Bishop::Move()
 	if (isAttack == true)return;
 	if (UnitManager::GetInstance()->GetIntervalTimer() < 420)return;
 
-	notAttackflag = TRUE;
+	//notAttackflag = TRUE;
 
 	collCapsule->SetColor(0, 1, 0, 1);
 	//Math::Point2 dif = kingPos - element_stock;
