@@ -4,6 +4,8 @@
 #include "../Input/KeyInput.h"
 #include "../Tool/DebugJISText.h"
 #include "../GameObject/UnitManager.h"
+#include "../2D/Sprite.h"
+
 
 XIIlib::End::End()
 {
@@ -14,13 +16,14 @@ XIIlib::End::End()
 XIIlib::End::~End()
 {
 	// ポインタ使ったやつの埋葬場
-
+	delete spGameOver;
 }
 
 void XIIlib::End::Initialize(GameScene* p_game_scene)
 {
 	// Scene切り替え時に一度通る処理
 	UnitManager::GetInstance()->AllDestroy();
+	spGameOver = Sprite::Create(GAMEOVER_SP, {0.0f,0.0f});
 }
 
 void XIIlib::End::Update(GameScene* p_game_scene)
@@ -46,5 +49,5 @@ void XIIlib::End::Draw()
 void XIIlib::End::DrawTex()
 {
 	// スプライト描画
-
+	spGameOver->Draw();
 }

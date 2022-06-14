@@ -1,6 +1,8 @@
 #pragma once
 #include "SceneState.h"
 
+class Sprite;
+
 namespace XIIlib {
 
 	class GameScene;
@@ -18,5 +20,8 @@ namespace XIIlib {
 		void Update(GameScene* p_game_scene)override;
 		void Draw()override;
 		void DrawTex()override;
+
+	private:
+		Sprite* spPushA = nullptr;
 	};
 }

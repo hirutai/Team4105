@@ -99,10 +99,12 @@ void GameApp::Initialize()
 	d_camera->_Update();
 	int texind = 2;
 	Sprite::LoadTexture(debugJISTextTexNumber, L"Resources/JIS_Code_ver.1.02.png");
-	Sprite::LoadTexture(texind, L"Resources/digitalNum.png");					texind++;
-	Sprite::LoadTexture(texind, L"Resources/effect1.png");						texind++;
-	Sprite::LoadTexture(texind, L"Resources/timer.png"); texind++;
-	Sprite::LoadTexture(texind, L"Resources/timer_bar.png"); texind++;
+	Sprite::LoadTexture(texind, L"Resources/digitalNum.png"); texind++;
+	Sprite::LoadTexture(texind, L"Resources/effect1.png");	  texind++;
+	Sprite::LoadTexture(texind, L"Resources/timer.png");      texind++;
+	Sprite::LoadTexture(texind, L"Resources/timer_bar.png");  texind++;
+	Sprite::LoadTexture(texind, L"Resources/PushA.png");      texind++;
+	Sprite::LoadTexture(texind, L"Resources/GameOver.png");   texind++;
 
 	debugJIS = DebugJISText::GetInstance();
 	debugJIS->Initialize(debugJISTextTexNumber);

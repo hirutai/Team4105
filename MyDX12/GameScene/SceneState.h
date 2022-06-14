@@ -1,10 +1,14 @@
 #pragma once
 #include "../Input/GamePAD_XInput.h"
-
 namespace XIIlib
 {
 	class GameScene;
 
+	enum SpriteName
+	{
+		PUSHA_SP = 6,
+		GAMEOVER_SP,
+	};
 	// Šî’êó‘ÔƒNƒ‰ƒX
 	class SceneState
 	{
