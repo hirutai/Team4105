@@ -19,13 +19,17 @@ XIIlib::Title::~Title()
 void XIIlib::Title::Initialize(GameScene* p_game_scene)
 {
 	// SceneØ‚è‘Ö‚¦Žž‚Éˆê“x’Ê‚éˆ—
-
+	
 }
 
 void XIIlib::Title::Update(GameScene* p_game_scene)
 {
 	// XV
 	if (KeyInput::GetInstance()->Trigger(DIK_SPACE)) {
+		p_game_scene->ChangeState(new Menu);
+	}
+
+	if (gamePad_->Button_Down(X_A)) {
 		p_game_scene->ChangeState(new Menu);
 	}
 

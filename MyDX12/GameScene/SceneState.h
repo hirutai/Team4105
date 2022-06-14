@@ -1,4 +1,5 @@
 #pragma once
+#include "../Input/GamePAD_XInput.h"
 
 namespace XIIlib
 {
@@ -22,5 +23,8 @@ namespace XIIlib
 		virtual void Update(GameScene* p_game_scene) = 0;//　更新
 		virtual void Draw() = 0;// 描画
 		virtual void DrawTex() = 0;//スプライト描画
+		void SetGamePad(GamePAD_XInput* gamePad) { this->gamePad_ = gamePad; }
+	protected:
+		static GamePAD_XInput* gamePad_;
 	};
 }

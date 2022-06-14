@@ -348,6 +348,12 @@
     <ClCompile Include="Input\GamePAD_XInput.cpp">
       <Filter>Input</Filter>
     </ClCompile>
+    <ClCompile Include="GameObject\AttackTimer.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="GameScene\SceneState.cpp">
+      <Filter>GameScene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Base\DirectX12.h">
@@ -586,6 +592,9 @@
     </ClInclude>
     <ClInclude Include="Input\GamePAD_XInput.h">
       <Filter>Input</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\AttackTimer.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -26,6 +26,7 @@ XIIlib::Play::~Play()
 
 void XIIlib::Play::Initialize(GameScene* p_game_scene)
 {
+	
 	// IntervalTimer new‚Æ‰Šú‰»
 	intervalTimter = new IntervalTimer();
 	intervalTimter->Initialize(4, 5);
@@ -71,6 +72,10 @@ void XIIlib::Play::Update(GameScene* p_game_scene)
 		p_game_scene->ChangeState(new End);
 	}
 
+	if (gamePad_->Button_Down(X_A))
+	{
+		p_game_scene->ChangeState(new End);
+	}
 	DebugJISText::GetInstance()->Print("ƒvƒŒƒC", 0, 0, 1);
 }
 

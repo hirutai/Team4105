@@ -30,6 +30,10 @@ void XIIlib::End::Update(GameScene* p_game_scene)
 		p_game_scene->ChangeState(new Title);
 	}
 
+	if (gamePad_->Button_Down(X_A)) {
+		p_game_scene->ChangeState(new Title);
+	}
+
 	DebugJISText::GetInstance()->Print("ƒGƒ“ƒh", 0, 0, 1);
 }
 
