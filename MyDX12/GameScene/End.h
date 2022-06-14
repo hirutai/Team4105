@@ -1,9 +1,10 @@
 #pragma once
 #include "SceneState.h"
-
+class Sprite;
 namespace XIIlib {
 
 	class GameScene;
+	
 
 	// プレイシーンのクラス
 	class End : public SceneState {
@@ -18,5 +19,7 @@ namespace XIIlib {
 		void Update(GameScene* p_game_scene)override;
 		void Draw()override;
 		void DrawTex()override;
+	private: // メンバ変数
+		Sprite* spGameOver = nullptr;
 	};
 }
