@@ -342,9 +342,6 @@
     <ClCompile Include="GameObject\Yankee.cpp">
       <Filter>GameObject\Unit</Filter>
     </ClCompile>
-    <ClCompile Include="3D\BillObj.cpp">
-      <Filter>3D\bill_obj</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Base\DirectX12.h">
@@ -577,9 +574,6 @@
     </ClInclude>
     <ClInclude Include="GameScene\SceneState.h">
       <Filter>GameScene</Filter>
-    </ClInclude>
-    <ClInclude Include="3D\BillObj.h">
-      <Filter>3D\bill_obj</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
