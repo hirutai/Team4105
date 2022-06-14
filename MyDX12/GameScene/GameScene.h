@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include "../Input/GamePAD_XInput.h"
 
 namespace XIIlib
 {
@@ -19,6 +20,7 @@ namespace XIIlib
 		void Update();
 		void Draw();
 		void DrawSprite();
+		//void SetGamePad();
 
 		Audio* GetAudio()const;
 
@@ -27,7 +29,9 @@ namespace XIIlib
 		SceneState* state = nullptr;
 		// âπ
 		Audio* audio = nullptr;
-		
+		// GamePad
+		GamePAD_XInput* gamePad = nullptr;
+
 		// êßå‰
 		int isTurn = 0;
 
@@ -40,7 +44,5 @@ namespace XIIlib
 
 		int _timer = 0;
 		int at_type = 0;
-
-		//Ç§ÇÒÇø
 	};
 }

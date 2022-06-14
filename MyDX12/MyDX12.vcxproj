@@ -200,6 +200,7 @@
     <ClCompile Include="GameScene\GameScene.cpp" />
     <ClCompile Include="GameScene\Menu.cpp" />
     <ClCompile Include="GameScene\Play.cpp" />
+    <ClCompile Include="GameScene\SceneState.cpp" />
     <ClCompile Include="GameScene\Title.cpp" />
     <ClCompile Include="ImGui\Docking\imgui.cpp" />
     <ClCompile Include="ImGui\Docking\imgui_demo.cpp" />

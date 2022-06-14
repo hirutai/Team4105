@@ -23,6 +23,11 @@ XIIlib::GameScene::GameScene()
 { 
 	// コンストラクタ!
 	state = new Title; // 初期状態の格納・設定
+
+	// GamePadの生成と初期化とStateに設定
+	gamePad = new GamePAD_XInput();
+	gamePad->Initialize();
+	state->SetGamePad(gamePad);
 }
 
 XIIlib::GameScene::~GameScene()
@@ -41,7 +46,7 @@ void XIIlib::GameScene::Initialize()
 {
 	// Audioの初期化
 	audio = new Audio();
-
+	
 	// シーンの初期化
 	state->Initialize(this);
 
@@ -68,6 +73,9 @@ void XIIlib::GameScene::Update()
 	//if (state.Gamepad.wButtons & XINPUT_GAMEPAD_A) {
 	//	Messenger::GetInstance()->AddPrintOut("Ａが押された。");
 	//}
+
+	// GamePadの更新
+	gamePad->Update();
 
 	int bai = 16,dist = 32;
 
