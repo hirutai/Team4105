@@ -32,6 +32,7 @@ XIIlib::GameScene::GameScene()
 
 XIIlib::GameScene::~GameScene()
 {
+	delete gamePad;
 	delete audio;
 }
 
