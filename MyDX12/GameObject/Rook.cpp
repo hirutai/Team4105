@@ -278,7 +278,7 @@ void XIIlib::Rook::Attack()
 	{
 		collCapsule->SetColor(0, 1, 1, 1);
 	}
-	if (attackInterval == 0)
+	if (UnitManager::GetInstance()->GetIntervalTimer() == 420)
 	{
 		Math::Point2 dif = kingPos - preElement_stock;
 		Math::Point2 temp = element_stock;
@@ -351,7 +351,7 @@ void XIIlib::Rook::Attack()
 		element_stock = preElement_stock;
 
 		IniState();
-		notAttackflag = false;
+		//notAttackflag = false;
 	}
 }
 
