@@ -345,6 +345,9 @@
     <ClCompile Include="GameObject\Stone.cpp">
       <Filter>GameObject\Unit</Filter>
     </ClCompile>
+    <ClCompile Include="Input\GamePAD_XInput.cpp">
+      <Filter>Input</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Base\DirectX12.h">
@@ -580,6 +583,9 @@
     </ClInclude>
     <ClInclude Include="GameObject\Stone.h">
       <Filter>GameObject\Unit</Filter>
+    </ClInclude>
+    <ClInclude Include="Input\GamePAD_XInput.h">
+      <Filter>Input</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
