@@ -342,6 +342,9 @@
     <ClCompile Include="GameObject\Yankee.cpp">
       <Filter>GameObject\Unit</Filter>
     </ClCompile>
+    <ClCompile Include="GameObject\Stone.cpp">
+      <Filter>GameObject\Unit</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Base\DirectX12.h">
@@ -574,6 +577,9 @@
     </ClInclude>
     <ClInclude Include="GameScene\SceneState.h">
       <Filter>GameScene</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\Stone.h">
+      <Filter>GameObject\Unit</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
