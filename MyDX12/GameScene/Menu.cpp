@@ -29,6 +29,10 @@ void XIIlib::Menu::Update(GameScene* p_game_scene)
 		p_game_scene->ChangeState(new Play);
 	}
 
+	if (gamePad_->Button_Down(X_A)) {
+		p_game_scene->ChangeState(new Play);
+	}
+
 	DebugJISText::GetInstance()->Print("ƒƒjƒ…[", 0, 0, 1);
 }
 
