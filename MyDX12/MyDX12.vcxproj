@@ -209,6 +209,7 @@
     <ClCompile Include="ImGui\Docking\imgui_tables.cpp" />
     <ClCompile Include="ImGui\Docking\imgui_widgets.cpp" />
     <ClCompile Include="Input\ControllerInput.cpp" />
+    <ClCompile Include="Input\GamePAD_XInput.cpp" />
     <ClCompile Include="Input\KeyInput.cpp" />
     <ClCompile Include="Input\MouseInput.cpp" />
     <ClCompile Include="Light\LightGroup.cpp" />
@@ -282,6 +283,7 @@
     <ClInclude Include="ImGui\Docking\imstb_textedit.h" />
     <ClInclude Include="ImGui\Docking\imstb_truetype.h" />
     <ClInclude Include="Input\ControllerInput.h" />
+    <ClInclude Include="Input\GamePAD_XInput.h" />
     <ClInclude Include="Input\KeyInput.h" />
     <ClInclude Include="Input\MouseInput.h" />
     <ClInclude Include="Light\DirectionalLight.h" />
