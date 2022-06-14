@@ -190,6 +190,7 @@
     <ClCompile Include="GameObject\King.cpp" />
     <ClCompile Include="GameObject\Knight.cpp" />
     <ClCompile Include="GameObject\Rook.cpp" />
+    <ClCompile Include="GameObject\Stone.cpp" />
     <ClCompile Include="GameObject\Tile.cpp" />
     <ClCompile Include="GameObject\Unit.cpp" />
     <ClCompile Include="GameObject\UnitManager.cpp" />
@@ -259,6 +260,7 @@
     <ClInclude Include="GameObject\King.h" />
     <ClInclude Include="GameObject\Knight.h" />
     <ClInclude Include="GameObject\Rook.h" />
+    <ClInclude Include="GameObject\Stone.h" />
     <ClInclude Include="GameObject\Tile.h" />
     <ClInclude Include="GameObject\Unit.h" />
     <ClInclude Include="GameObject\UnitManager.h" />
