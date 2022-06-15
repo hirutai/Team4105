@@ -8,6 +8,7 @@
 #include "../GameObject/Bishop.h"
 #include "../GameObject/Knight.h"
 #include "../GameObject/Yankee.h"
+#include "../GameObject/Stone.h"
 #include "../GameObject/UnitManager.h"
 #include"../GameObject/AttackAreaManager.h"
 #include "../GameObject/IntervalTimer.h"
@@ -56,6 +57,7 @@ void XIIlib::Play::Initialize(GameScene* p_game_scene)
 		std::shared_ptr<Yankee> yankee2 = std::move(Yankee::Create(5, 1));
 		std::shared_ptr<Yankee> yankee3 = std::move(Yankee::Create(5, 6));
 		std::shared_ptr<Yankee> yankee4 = std::move(Yankee::Create(5, 7));
+		//std::shared_ptr<Stone> stone = std::move(Stone::Create(6, 6));
 
 		UnitManager::GetInstance()->AddUnit(std::move(king));
 		//UnitManager::GetInstance()->AddUnit(std::move(knight));
@@ -69,6 +71,7 @@ void XIIlib::Play::Initialize(GameScene* p_game_scene)
 		UnitManager::GetInstance()->AddUnit(std::move(yankee2));
 		UnitManager::GetInstance()->AddUnit(std::move(yankee3));
 		UnitManager::GetInstance()->AddUnit(std::move(yankee4));
+		//UnitManager::GetInstance()->AddUnit(std::move(stone));
 	}
 }
 
