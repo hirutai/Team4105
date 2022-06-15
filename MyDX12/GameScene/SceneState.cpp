@@ -1,3 +1,3 @@
 #include "SceneState.h"
-XIIlib::StageNumber XIIlib::SceneState::stageNum = DEBUG;
+XIIlib::StageNumber XIIlib::SceneState::stageNum = EASY;
 GamePAD_XInput* XIIlib::SceneState::gamePad_ = nullptr;

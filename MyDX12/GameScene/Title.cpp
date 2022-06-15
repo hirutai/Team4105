@@ -28,7 +28,7 @@ void XIIlib::Title::Update(GameScene* p_game_scene)
 {
 	// XV
 	if (KeyInput::GetInstance()->Trigger(DIK_SPACE)) {
-		p_game_scene->ChangeState(new Menu);
+		p_game_scene->ChangeState(new Play);
 	}
 
 	if (gamePad_->Button_Down(X_A)) {
