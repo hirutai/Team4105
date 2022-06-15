@@ -35,6 +35,14 @@ void XIIlib::Title::Update(GameScene* p_game_scene)
 		p_game_scene->ChangeState(new Play);
 	}
 
+	if (gamePad_->Button_Down(X_Y)) {
+		stageNum = EASY;
+	}
+
+	if (gamePad_->Button_Down(X_X)) {
+		stageNum = NORMAL;
+	}
+
 	DebugJISText::GetInstance()->Print("ƒ^ƒCƒgƒ‹",0,0,1);
 }
 

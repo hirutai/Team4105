@@ -4,10 +4,20 @@ namespace XIIlib
 {
 	class GameScene;
 
+	// スプライトの名前
 	enum SpriteName
 	{
 		PUSHA_SP = 6,
 		GAMEOVER_SP,
+	};
+
+	// ステージナンバー
+	enum StageNumber
+	{
+		DEBUG = -1,
+		EASY,
+		NORMAL,
+		HARD,
 	};
 	// 基底状態クラス
 	class SceneState
@@ -27,8 +37,10 @@ namespace XIIlib
 		virtual void Update(GameScene* p_game_scene) = 0;//　更新
 		virtual void Draw() = 0;// 描画
 		virtual void DrawTex() = 0;//スプライト描画
+	public: // Setter関数
 		void SetGamePad(GamePAD_XInput* gamePad) { this->gamePad_ = gamePad; } // GamePadの設定
-	protected:
+	protected: // 静的メンバ変数
+		static StageNumber stageNum; // ステージナンバー
 		// GamePadの借り物変数
 		static GamePAD_XInput* gamePad_;
 	};

@@ -31,33 +31,45 @@ void XIIlib::Play::Initialize(GameScene* p_game_scene)
 	intervalTimter = new IntervalTimer();
 	intervalTimter->Initialize(4, 5);
 	UnitManager::GetInstance()->SetIntervalTimer(intervalTimter);
+	
+	if (stageNum == EASY)
+	{
+		// SceneØ‚è‘Ö‚¦‚Éˆê“x’Ê‚éˆ—
+		std::shared_ptr<King> king = std::move(King::CreateKing(1, 0));
+		std::shared_ptr<Bishop> bishop = std::move(Bishop::Create(2, 3));
 
-	// SceneØ‚è‘Ö‚¦‚Éˆê“x’Ê‚éˆ—
-	std::shared_ptr<King> king = std::move(King::CreateKing(1, 0));
-	//std::shared_ptr<Knight> knight = std::move(Knight::Create(7, 7));
-	//std::shared_ptr<Knight> knight2 = std::move(Knight::Create(6, 2));
-	//std::shared_ptr<Knight> knight3 = std::move(Knight::Create(7, 0));
-	std::shared_ptr<Bishop> bishop = std::move(Bishop::Create(2, 3));
-	//std::shared_ptr<Bishop> bishop2 = std::move(Bishop::Create(3, 5));
-	std::shared_ptr<Rook> rook = std::move(Rook::Create(3, 6));
-	//std::shared_ptr<Rook> rook2 = std::move(Rook::Create(6, 6));
-	std::shared_ptr<Yankee> yankee = std::move(Yankee::Create(3, 3));
-	std::shared_ptr<Yankee> yankee2 = std::move(Yankee::Create(5, 1));
-	std::shared_ptr<Yankee> yankee3 = std::move(Yankee::Create(5, 6));
-	std::shared_ptr<Yankee> yankee4 = std::move(Yankee::Create(5, 7));
+		UnitManager::GetInstance()->AddUnit(std::move(king));
+		UnitManager::GetInstance()->AddUnit(std::move(bishop));
+	}
+	else if (stageNum == NORMAL)
+	{
+		// SceneØ‚è‘Ö‚¦‚Éˆê“x’Ê‚éˆ—
+		std::shared_ptr<King> king = std::move(King::CreateKing(1, 0));
+		//std::shared_ptr<Knight> knight = std::move(Knight::Create(7, 7));
+		//std::shared_ptr<Knight> knight2 = std::move(Knight::Create(6, 2));
+		//std::shared_ptr<Knight> knight3 = std::move(Knight::Create(7, 0));
+		std::shared_ptr<Bishop> bishop = std::move(Bishop::Create(2, 3));
+		//std::shared_ptr<Bishop> bishop2 = std::move(Bishop::Create(3, 5));
+		std::shared_ptr<Rook> rook = std::move(Rook::Create(3, 6));
+		//std::shared_ptr<Rook> rook2 = std::move(Rook::Create(6, 6));
+		std::shared_ptr<Yankee> yankee = std::move(Yankee::Create(3, 3));
+		std::shared_ptr<Yankee> yankee2 = std::move(Yankee::Create(5, 1));
+		std::shared_ptr<Yankee> yankee3 = std::move(Yankee::Create(5, 6));
+		std::shared_ptr<Yankee> yankee4 = std::move(Yankee::Create(5, 7));
 
-	UnitManager::GetInstance()->AddUnit(std::move(king));
-	//UnitManager::GetInstance()->AddUnit(std::move(knight));
-	//UnitManager::GetInstance()->AddUnit(std::move(knight2));
-	//UnitManager::GetInstance()->AddUnit(std::move(knight3));
-	UnitManager::GetInstance()->AddUnit(std::move(bishop));
-	//UnitManager::GetInstance()->AddUnit(std::move(bishop2));
-	UnitManager::GetInstance()->AddUnit(std::move(rook));
-	//UnitManager::GetInstance()->AddUnit(std::move(rook2));
-	UnitManager::GetInstance()->AddUnit(std::move(yankee));
-	UnitManager::GetInstance()->AddUnit(std::move(yankee2));
-	UnitManager::GetInstance()->AddUnit(std::move(yankee3));
-	UnitManager::GetInstance()->AddUnit(std::move(yankee4));
+		UnitManager::GetInstance()->AddUnit(std::move(king));
+		//UnitManager::GetInstance()->AddUnit(std::move(knight));
+		//UnitManager::GetInstance()->AddUnit(std::move(knight2));
+		//UnitManager::GetInstance()->AddUnit(std::move(knight3));
+		UnitManager::GetInstance()->AddUnit(std::move(bishop));
+		//UnitManager::GetInstance()->AddUnit(std::move(bishop2));
+		UnitManager::GetInstance()->AddUnit(std::move(rook));
+		//UnitManager::GetInstance()->AddUnit(std::move(rook2));
+		UnitManager::GetInstance()->AddUnit(std::move(yankee));
+		UnitManager::GetInstance()->AddUnit(std::move(yankee2));
+		UnitManager::GetInstance()->AddUnit(std::move(yankee3));
+		UnitManager::GetInstance()->AddUnit(std::move(yankee4));
+	}
 }
 
 void XIIlib::Play::Update(GameScene* p_game_scene)
