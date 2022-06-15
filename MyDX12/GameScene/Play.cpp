@@ -37,10 +37,14 @@ void XIIlib::Play::Initialize(GameScene* p_game_scene)
 	{
 		// SceneØ‚è‘Ö‚¦‚Éˆê“x’Ê‚éˆ—
 		std::shared_ptr<King> king = std::move(King::CreateKing(1, 0));
-		std::shared_ptr<Bishop> bishop = std::move(Bishop::Create(2, 3));
+		//std::shared_ptr<Bishop> bishop = std::move(Bishop::Create(2, 3));
+		//std::shared_ptr<Rook> rook = std::move(Rook::Create(3, 6));
+		std::shared_ptr<Yankee> yankee = std::move(Yankee::Create(3, 6));
 
 		UnitManager::GetInstance()->AddUnit(std::move(king));
-		UnitManager::GetInstance()->AddUnit(std::move(bishop));
+		//UnitManager::GetInstance()->AddUnit(std::move(bishop));
+		//UnitManager::GetInstance()->AddUnit(std::move(rook));
+		UnitManager::GetInstance()->AddUnit(std::move(yankee));
 	}
 	else if (stageNum == NORMAL)
 	{

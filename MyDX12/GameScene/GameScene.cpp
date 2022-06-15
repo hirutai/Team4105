@@ -75,6 +75,13 @@ void XIIlib::GameScene::Update()
 	//	Messenger::GetInstance()->AddPrintOut("‚`‚ª‰Ÿ‚³‚ê‚½B");
 	//}
 
+	//‰¹
+	if (KeyInput::GetInstance()->Trigger(DIK_RETURN)) {
+		//audio->PlaySE("yankeeVoice.wav");
+		audio->PlaySE("swing.wav");
+		
+	}
+
 	// GamePad‚ÌXV
 	gamePad->Update();
 
