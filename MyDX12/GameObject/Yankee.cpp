@@ -64,9 +64,18 @@ void XIIlib::Yankee::Update()
 	if (UnitManager::GetInstance()->IsAttackValid(element_stock, (int)_PositionType::MINE)) {
 		//Hit(1);
 		isAttack = false;
-		// ノックバック
-		element_stock += UnitManager::GetInstance()->GetBackVector(element_stock);
+		// ノックバックの移動量
+		const Math::Point2 backVector = UnitManager::GetInstance()->GetBackVector(element_stock);
 
+		// ノックバック
+		const int countLoop = 2;
+		for (int i = 0; i < countLoop; i++) {
+			Math::Point2 movePoint = backVector / 2.0f;
+			if (Common::GetExceptionPoint(element_stock.a + movePoint.a) || Common::GetExceptionPoint(element_stock.b + movePoint.b)) {
+				movePoint *= 0;
+			}
+			element_stock += movePoint;
+		}
 		Math::Point2 dif = kingPos - element_stock;
 		Math::Point2 temp = kingPos;
 		// ノックバック時に間に他の駒がいる場合、その間の駒の位置に止まる
@@ -187,12 +196,6 @@ void XIIlib::Yankee::Update()
 				}
 			}
 		}
-
-
-		if (Common::GetExceptionPoint(element_stock.a) || Common::GetExceptionPoint(element_stock.b)) {
-			Hit(3);
-		}
-
 	}
 
 	collCapsule->Update();
