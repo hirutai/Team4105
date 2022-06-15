@@ -271,7 +271,7 @@ void XIIlib::Bishop::Attack()
 	}
 	if (UnitManager::GetInstance()->GetIntervalTimer() == 420)
 	{
-		Math::Point2 dif = kingPos - preElement_stock;
+		Math::Point2 dif = preElement_stock - element_stock;
 		Math::Point2 temp = element_stock;
 
 		Math::Point2 temp_norm;
