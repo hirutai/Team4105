@@ -159,7 +159,7 @@ void GameApp::Update()
 	lightGroup->Update();
 
 	// カメラの動きの処理
-	Math::Vector3 c_pos = { 0,48,0 };
+	Math::Vector3 c_pos = { 0,24,-30 };
 	d_camera->SetPosition(c_pos.x, c_pos.y, c_pos.z);
 	d_camera->SetLookAtRange(0,-1, 0);
 

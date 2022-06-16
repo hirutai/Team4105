@@ -263,7 +263,7 @@ void BillObj::Update()
 	if (SUCCEEDED(result)) {
 		constMap->mat = matWorld;
 		constMap->viewproj = matViewProjection;
-		constMap->matbillboard = d_camera->GetMatYBillboard();
+		constMap->matbillboard = d_camera->GetMatBillboard();
 		constMap->color = color;
 		constBuff->Unmap(0, nullptr);
 	}

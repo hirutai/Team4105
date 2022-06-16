@@ -47,8 +47,8 @@ void AttackTimer::Draw()
 
 void AttackTimer::SetPosition(const Vector3& position)
 {
-	timerBar->SetPosition(position.x - 1.5f, position.y, position.z - 2); // バーの座標の設定
-	timerEdge->SetPosition(position.x, position.y, position.z - 2); // 縁の座標の設定
+	timerBar->SetPosition(position.x - 1.5f, position.y + 4, position.z - 1); // バーの座標の設定
+	timerEdge->SetPosition(position.x, position.y + 4, position.z - 1); // 縁の座標の設定
 }
 
 bool XIIlib::AttackTimer::SizeZeroFlag()
