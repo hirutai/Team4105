@@ -1,6 +1,6 @@
 #pragma once
 #include "../Struct/Point2.h"
-class CollisionBox;
+class Object3D;
 
 namespace XIIlib {
 
@@ -19,9 +19,8 @@ namespace XIIlib {
 
 		// 攻撃判定の有無を計る
 		int time_valid = 0; // 10f目で消える
-		// マス用の仮モデル
-		CollisionBox* p_box = nullptr;
-
+		// マス用のモデル
+		Object3D* tile = nullptr;
 	public:
 		static Tile* Create(float _x,float _z);
 

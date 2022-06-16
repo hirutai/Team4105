@@ -1,5 +1,5 @@
 #include "Tile.h"
-#include "../3D/CollBox.h"
+#include "../3D/Object3D.h"
 
 XIIlib::Tile* XIIlib::Tile::Create(float _x, float _z)
 {
@@ -18,32 +18,33 @@ XIIlib::Tile::Tile(){
 }
 
 XIIlib::Tile::~Tile(){
-	delete p_box;
+	delete tile;
 }
 
 void XIIlib::Tile::Initialize(float _x, float _z)
 {
-	const Math::Vector3 startPoint = { 0.5f,0.5f,0.5f };
-	const Math::Vector3 endPoint = startPoint * -1.0f;
-
-	p_box = CollisionBox::Create(startPoint,endPoint);
-	p_box->SetPosition(_x,0,_z);
+	// オブジェクトの初期化
+	tile = Object3D::Create(Model::CreateFromOBJ("bord"));
+	tile->position = { _x,0,_z };
+	tile->scale = Math::Vector3(10,1,10);
 }
 
 void XIIlib::Tile::Update()
 {
+	tile->Update();
+
 	on_tile = false;
 
-	p_box->SetColor(1,1,1,1);
+	tile->color = { 1,1, 1 };
 	// フラグがオンで10f赤に
 	if (!is_attack_player && !is_attack_enemy && !is_move_point&&!is_attack_point)return;
 
-	if (is_attack_player)p_box->SetColor(1, 0, 0, 1);
-	if (is_attack_enemy)p_box->SetColor(1, 0, 0, 1);
-	if (is_move_point)p_box->SetColor(0.6f, 0.4f, 0, 1);
-	if (is_attack_point)p_box->SetColor(0.0f, 0.0f, 0, 1);
+	if (is_attack_player)tile->color = { 1,0,0};
+	if (is_attack_enemy)tile->color = { 1,0,0 };
+	if (is_move_point)tile->color = { 0.6f, 0.4f, 0 };
+	if (is_attack_point)tile->color = { 0.0f, 0.0f, 0 };
 
-	if (is_attack_player && is_attack_enemy)p_box->SetColor(1,0,1,1);
+	if (is_attack_player && is_attack_enemy)tile->color = { 1,0, 1 };
 
 	time_valid++;
 	if (time_valid > 10) {
@@ -60,7 +61,7 @@ void XIIlib::Tile::Update()
 
 void XIIlib::Tile::Draw()
 {
-	p_box->Draw();
+	tile->Draw();
 }
 
 void XIIlib::Tile::SetPlayerAttackValid()
