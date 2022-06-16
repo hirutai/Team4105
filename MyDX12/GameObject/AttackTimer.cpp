@@ -1,30 +1,57 @@
 #include "AttackTimer.h"
 
-#include "../2D/Sprite.h"
+#include "../3D/BillObj.h"
 
 using namespace XIIlib;
+using namespace Math;
 
-void AttackTimer::Initialize(const int& timerTexNum, const int& barTexNum)
+AttackTimer::AttackTimer(float countingNum_)
 {
-	timer_bar = Sprite::Create(barTexNum, { 20.0f, 150.0f }); // タイマーバー画像の作成
+	countingNum = countingNum_; // カウントしたい数の入力
+	decNum = baseDecNum / countingNum; //  // 減らす量の計算
+	timerNum = 0;
+	currentSize = maxSize;
+}
+
+void AttackTimer::Initialize()
+{
+	timerBar = BillObj::Create({}, "timer_bar.png"); // バーのオブジェクトの作成
+	timerBar->SetAnchorPoint({ 0.0f, 0.5f });
+	timerBar->SetSize(barSize); // バーのサイズの設定
+	timerEdge = BillObj::Create({}, "timer_edge.png"); // 縁のオブジェクトの作成
+	timerEdge->SetSize(edgeSize); // 縁のサイズの設定
 }
 
 void AttackTimer::Timer()
 {
-	if (currentSize <= 0) // サイズが０になった時
+	if (SizeZeroFlag()) // サイズが０になった時
 	{
 		timerNum = 0; // タイマーをリセット
 		currentSize = maxSize; // サイズをリセット
 	}
 
-	timerNum++; // タイマー
+	timerNum++; // タイマーカウント中
 
 	currentSize = maxSize - decNum * timerNum; // 現在のサイズを計算
 
-	timer_bar->SetSize({ currentSize, 50.0f }); // サイズの設定
+	barSize.x = currentSize; // バーのサイズの設定
+
+	timerBar->SetSize(barSize); // バーのサイズの反映
 }
 
 void AttackTimer::Draw()
 {
-	timer_bar->Draw();
+	timerBar->Draw(); // バーの座標の描画
+	timerEdge->Draw(); // 縁の座標の描画
+}
+
+void AttackTimer::SetPosition(const Vector3& position)
+{
+	timerBar->SetPosition(position.x - 1.5f, position.y, position.z - 2); // バーの座標の設定
+	timerEdge->SetPosition(position.x, position.y, position.z - 2); // 縁の座標の設定
+}
+
+bool XIIlib::AttackTimer::SizeZeroFlag()
+{
+	return currentSize <= 0;
 }
