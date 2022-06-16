@@ -65,13 +65,11 @@ void XIIlib::BoardMap::Update()
 
 void XIIlib::BoardMap::Draw()
 {
-	CollisionBox::PreDraw();
 	for (auto tiles : map_board) {
 		for (auto tile : tiles) {
 			tile->Draw();
 		}
 	}
-	CollisionBox::PostDraw();
 }
 
 void XIIlib::BoardMap::SetBackVector(const Math::Point2& element, const Math::Point2& point)

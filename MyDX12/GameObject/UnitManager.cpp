@@ -68,10 +68,13 @@ void XIIlib::UnitManager::Update()
 
 void XIIlib::UnitManager::Draw()
 {
-	map_board->Draw();
-
 	// ƒ‚ƒfƒ‹‚Ì•`‰æ(.obj)
 	Object3D::PreDraw();
+
+	// ƒ}ƒX‚Ì•`‰æ
+	map_board->Draw();
+
+	// ‹î‚Ì•`‰æ
 	for (auto& obj : units)
 	{
 		obj->Draw();
