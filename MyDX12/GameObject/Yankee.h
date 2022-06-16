@@ -3,13 +3,13 @@
 #include <memory>
 
 namespace XIIlib {
-	class BillObj;
+	class AttackTimer;
 
 	class Yankee : public Unit {
 	private:
 		Math::Point2 point_attack;
 
-		BillObj* billObj = nullptr;
+		AttackTimer* attackTimer = nullptr; // 攻撃タイマー
 	public:
 		Yankee();
 		~Yankee();

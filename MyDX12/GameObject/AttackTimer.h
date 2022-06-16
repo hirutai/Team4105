@@ -2,10 +2,10 @@
 
 #include "../Struct/Math.h"
 
-class Sprite;
-
 namespace XIIlib
 {
+	class BillObj;
+
 	/// <summary>
 	/// 敵の攻撃タイマー
 	/// </summary>
@@ -18,32 +18,43 @@ namespace XIIlib
 #pragma endregion
 
 #pragma region 定数
-		const float countingNum = 7; // 数えたい秒数
+		float countingNum = 1.0f; // 数えたい秒数
 
-		const float maxSize = 300.0f; // 最大サイズ
+		const float maxSize = 3.0f; // 最大サイズ
 		const float second = 60.0f; // 一秒分のフレーム数
 		const float baseDecNum = maxSize / second; // 一秒時に減らす量
-		const float decNum = baseDecNum / countingNum; // 減らす量k
+		float decNum; // 減らす量
 #pragma endregion
 
 #pragma region メンバ関数
 	public:
-		void Initialize(const int& timerTexNum, const int& barTexNum); // 初期化
-
-		void Timer(); // タイマー関数
-
-		void Draw(); // 描画
-
-		const unsigned int GetTimer() { return timerNum; } // タイマーの取得
+		// コンストラクタ
+		AttackTimer(float countingNum_);
+		// 初期化
+		void Initialize();
+		// タイマー関数
+		void Timer();
+		// 描画
+		void Draw();
+		// タイマーの取得
+		const unsigned int GetTimer() { return timerNum; }
+		// サイズの取得
+		bool SizeZeroFlag();
+		// バーの座標の設定
+		void SetPosition(const Vector3& position);
 #pragma endregion
 
 #pragma region メンバ変数
 	private:
-		int timerNum = 0; // タイマー
+		unsigned int timerNum; // タイマー
 
 		float currentSize; // 現在のサイズ
 
-		Sprite* timer_bar = nullptr; // タイマーのバー画像
+		BillObj* timerBar = nullptr; // タイマーバーのオブジェクト
+		BillObj* timerEdge = nullptr; // タイマーの縁のオブジェクト
+
+		Vector2 barSize{ 3.0f, 0.75f }; // バーのサイズ
+		Vector2 edgeSize{ 3.5f, 1.0f }; // 縁のサイズ
 #pragma endregion
 	};
 }

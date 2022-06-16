@@ -5,7 +5,7 @@
 #include "UnitManager.h"
 #include "../Tool/Messenger.h"
 #include "../3D/Object3D.h"
-#include "../3D/BillObj.h"
+#include "../GameObject/AttackTimer.h"
 
 XIIlib::Yankee::Yankee()
 {
@@ -21,7 +21,7 @@ XIIlib::Yankee::Yankee()
 
 XIIlib::Yankee::~Yankee()
 {
-	delete billObj;
+	delete attackTimer;
 	delete collCapsule;
 }
 
@@ -47,9 +47,8 @@ void XIIlib::Yankee::Initialize()
 	CreateAttackArea();
 	object3d = Object3D::Create(Model::CreateFromOBJ("Badboy_Enemy"));
 
-	// 板ポリ(ビルボード)の初期化
-	// 文字列なしで白テクスチャ使用
-	billObj = BillObj::Create(Math::Vector3(),"timer_bar.png");
+	attackTimer = new AttackTimer(5);
+	attackTimer->Initialize();
 }
 
 void XIIlib::Yankee::Update()
@@ -203,14 +202,8 @@ void XIIlib::Yankee::Update()
 		}
 	}
 
-	billObj->SetPosition(
-		object3d->position.x,
-		object3d->position.y,
-		object3d->position.z
-	);
-
-	billObj->SetSize({10,1});
-	billObj->SetAnchorPoint({ 0.0,0.0 });
+	attackTimer->Timer();
+	attackTimer->SetPosition(object3d->position);
 
 	collCapsule->Update();
 	object3d->Update();
@@ -262,7 +255,7 @@ void XIIlib::Yankee::Action()
 		Move();
 	}
 
-	if (UnitManager::GetInstance()->GetIntervalTimer() == 420)
+	if (attackTimer->SizeZeroFlag())
 	{
 		notAttackflag = TRUE;
 	}
@@ -296,7 +289,7 @@ void XIIlib::Yankee::Attack()
 	{
 		collCapsule->SetColor(0, 1, 1, 1);
 	}
-	if (UnitManager::GetInstance()->GetIntervalTimer() == 420)
+	if (attackTimer->SizeZeroFlag())
 	{
 		Math::Point2 dif = preElement_stock - element_stock;
 		Math::Point2 temp = element_stock;
@@ -314,7 +307,7 @@ void XIIlib::Yankee::Move()
 	//攻撃フラグ
 	if (isAttack == true)return;
 	//移動までのインターバル
-	if (UnitManager::GetInstance()->GetIntervalTimer() < 420)return;
+	if (!attackTimer->SizeZeroFlag())return;
 	//ヤンキーの座標
 	Math::Point2 temp = element_stock;
 	notAttackflag = TRUE;
@@ -532,7 +525,7 @@ void XIIlib::Yankee::CreateAttackArea()
 
 void XIIlib::Yankee::BillObjectDraw()
 {
-	billObj->Draw();
+	attackTimer->Draw(); // 攻撃タイマーの描画
 }
 
 bool XIIlib::Yankee::MoveAreaCheck(Math::Point2 crPos, Math::Point2 vec, int tileNum)
