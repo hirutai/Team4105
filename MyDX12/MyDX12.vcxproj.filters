@@ -139,6 +139,9 @@
     <Filter Include="3D\bill_obj">
       <UniqueIdentifier>{a43417c7-7b0e-4ca1-9d4a-281efa1f920c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="HLSL\bill_obj">
+      <UniqueIdentifier>{59a83813-ea8c-45c0-ab98-82518aea6667}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -353,6 +356,9 @@
     </ClCompile>
     <ClCompile Include="GameScene\SceneState.cpp">
       <Filter>GameScene</Filter>
+    </ClCompile>
+    <ClCompile Include="3D\BillObj.cpp">
+      <Filter>3D\bill_obj</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -596,6 +602,9 @@
     <ClInclude Include="GameObject\AttackTimer.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="3D\BillObj.h">
+      <Filter>3D\bill_obj</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Shaders\FBX.hlsli">
@@ -636,6 +645,9 @@
     </None>
     <None Include="Resources\Shaders\OBJShaderHeader.hlsli">
       <Filter>HLSL\obj</Filter>
+    </None>
+    <None Include="Resources\Shaders\BillGauge.hlsli">
+      <Filter>HLSL\bill_obj</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -725,6 +737,12 @@
     </FxCompile>
     <FxCompile Include="Resources\Shaders\OBJVertexShader.hlsl">
       <Filter>HLSL\obj</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\BillGaugePS.hlsl">
+      <Filter>HLSL\bill_obj</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\BillGaugeVS.hlsl">
+      <Filter>HLSL\bill_obj</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

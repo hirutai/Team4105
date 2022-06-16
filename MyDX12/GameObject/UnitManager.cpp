@@ -5,6 +5,7 @@
 #include "IntervalTimer.h"
 #include "../Struct/Math.h"
 #include "../3D/Object3D.h"
+#include "../3D/BillObj.h"
 
 XIIlib::UnitManager::UnitManager() {}
 
@@ -69,11 +70,6 @@ void XIIlib::UnitManager::Draw()
 {
 	map_board->Draw();
 
-	// 判定用ポリゴンの描画
-	CollisionCapsule::PreDraw();
-
-	CollisionCapsule::PostDraw();
-
 	// モデルの描画(.obj)
 	Object3D::PreDraw();
 	for (auto& obj : units)
@@ -83,6 +79,13 @@ void XIIlib::UnitManager::Draw()
 
 	Object3D::PostDraw();
 
+	// 板ポリビルボードオブジェクトの描画
+	BillObj::PreDraw();
+	for (auto& obj : units)
+	{
+		obj->BillObjectDraw();
+	}
+	BillObj::PostDraw();
 }
 
 void XIIlib::UnitManager::AddUnit(const std::shared_ptr<Unit>& spObject)

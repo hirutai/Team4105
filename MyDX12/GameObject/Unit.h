@@ -96,6 +96,8 @@ namespace XIIlib {
 
 		virtual void CreateAttackArea() = 0;
 
+		virtual void BillObjectDraw();
+
 		// ïœçXÇµÇ‹Ç∑ÇΩÅB
 		int GetTypePositioning()const { return (int)type; }
 		int IsDead()const { return is_dead; }

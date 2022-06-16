@@ -56,25 +56,6 @@ void XIIlib::GameScene::Initialize()
 
 void XIIlib::GameScene::Update()
 {
-	//XINPUT_STATE state;
-	//ZeroMemory(&state, sizeof(XINPUT_STATE));
-
-	//// Simply get the state of the controller from XInput.
-	//DWORD dwResult = XInputGetState(0, &state);
-
-	//if (dwResult == ERROR_SUCCESS)
-	//{
-	//	// Controller is connected
-	//}
-	//else
-	//{
-	//	// Controller is not connected
-	//}
-
-	//if (state.Gamepad.wButtons & XINPUT_GAMEPAD_A) {
-	//	Messenger::GetInstance()->AddPrintOut("‚`‚ª‰Ÿ‚³‚ê‚½B");
-	//}
-
 	//‰¹
 	if (KeyInput::GetInstance()->Trigger(DIK_RETURN)) {
 		//audio->PlaySE("yankeeVoice.wav");
