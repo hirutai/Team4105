@@ -8,8 +8,6 @@ namespace XIIlib{
 	private:
 		AREA type_attack = AREA::NONE;
 
-		std::vector<Math::Point2>now_attack;
-
 		int moveCount;
 		int moveLag;
 

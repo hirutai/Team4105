@@ -39,7 +39,7 @@ void XIIlib::King::Initialize()
 	_hit_point = 2;
 	//行動タイマーとその遅延分の数値
 	moveCount = 0;
-	moveLag = 30;
+	moveLag = 20;
 
 	// クラスネーム取得
 	const type_info& id = typeid(King);
@@ -49,8 +49,6 @@ void XIIlib::King::Initialize()
 
 	CreateAttackArea();
 
-	now_attack.reserve(3);
-
 	object3d = Object3D::Create(Model::CreateFromOBJ("Badboy_Bat_1"));
 }
 
@@ -59,16 +57,19 @@ void XIIlib::King::Update()
 	
 	Action();
 
-	if (type_attack != AREA::NONE) {
-		std::vector<Math::Point2> container = attack_area[(int)type_attack];
-		int add_element = 0;
-		Math::Vector2 at[3];
-		for (int i = 0; i < 3; i++) {
-			container[i] += element_stock;
-			if ((container[i].a < 8 && container[i].a >= 0) && (container[i].b < 8 && container[i].b >= 0)) {
-				UnitManager::GetInstance()->ChangeAttackValidTile(container[i],(int)type);
-				Math::Point2 vec_point = container[i] - element_stock;
-				UnitManager::GetInstance()->SetBackVector(container[i], vec_point * 2);
+	if (moveCount <= 0) {
+		if (type_attack != AREA::NONE) {
+			std::vector<Math::Point2> container = attack_area[(int)type_attack];
+			int add_element = 0;
+			moveCount = moveLag;
+			Math::Vector2 at[3];
+			for (int i = 0; i < 3; i++) {
+				container[i] += element_stock;
+				if ((container[i].a < 8 && container[i].a >= 0) && (container[i].b < 8 && container[i].b >= 0)) {
+					UnitManager::GetInstance()->ChangeAttackValidTile(container[i], (int)type);
+					Math::Point2 vec_point = container[i] - element_stock;
+					UnitManager::GetInstance()->SetBackVector(container[i], vec_point * 2);
+				}
 			}
 		}
 	}
@@ -122,30 +123,30 @@ void XIIlib::King::Move()
 		next_state += move_vec[0];
 		if (!UnitManager::GetInstance()->AllOnUnit(next_state)) {
 			element_stock = next_state;
+			moveCount = moveLag;
 		}
-		moveCount = moveLag;
 	}
 	else if (KeyInput::GetInstance()->Push(DIK_S)) {
 		next_state += move_vec[1];
 		if (!UnitManager::GetInstance()->AllOnUnit(next_state)) {
 			element_stock = next_state;
+			moveCount = moveLag;
 		}
-		moveCount = moveLag;
 	}
 
 	if (KeyInput::GetInstance()->Push(DIK_A)) {
 		next_state += move_vec[2];
 		if (!UnitManager::GetInstance()->AllOnUnit(next_state)) {
 			element_stock = next_state;
+			moveCount = moveLag;
 		}
-		moveCount = moveLag;
 	}
 	else if (KeyInput::GetInstance()->Push(DIK_D)) {
 		next_state += move_vec[3];
 		if (!UnitManager::GetInstance()->AllOnUnit(next_state)) {
 			element_stock = next_state;
+			moveCount = moveLag;
 		}
-		moveCount = moveLag;
 	}
 
 	element_stock = Common::OffsetTilePosition2(element_stock);
@@ -155,39 +156,30 @@ void XIIlib::King::Attack()
 {
 	if (KeyInput::GetInstance()->Push(DIK_UP)) {
 		type_attack = AREA::UP;
-		moveCount = moveLag;
 	}
 	else if (KeyInput::GetInstance()->Push(DIK_UP) && KeyInput::GetInstance()->Push(DIK_LEFT)) {
 		type_attack = AREA::UP_LEFT;
-		moveCount = moveLag;
 	}
 	else if (KeyInput::GetInstance()->Push(DIK_LEFT)) {
 		type_attack = AREA::LEFT;
-		moveCount = moveLag;
 	}
 	else if (KeyInput::GetInstance()->Push(DIK_LEFT) && KeyInput::GetInstance()->Push(DIK_DOWN)) {
 		type_attack = AREA::LEFT_DOWN;
-		moveCount = moveLag;
 	}
 	else if (KeyInput::GetInstance()->Push(DIK_DOWN)) {
 		type_attack = AREA::DOWN;
-		moveCount = moveLag;
 	}
 	else if (KeyInput::GetInstance()->Push(DIK_DOWN) && KeyInput::GetInstance()->Push(DIK_RIGHT)) {
 		type_attack = AREA::DOWN_RIGHT;
-		moveCount = moveLag;
 	}
 	else if (KeyInput::GetInstance()->Push(DIK_RIGHT)) {
 		type_attack = AREA::RIGHT;
-		moveCount = moveLag;
 	}
 	else if (KeyInput::GetInstance()->Push(DIK_RIGHT) && KeyInput::GetInstance()->Push(DIK_UP)) {
 		type_attack = AREA::RIGHT_UP;
-		moveCount = 15;
 	}
 	else {
 		type_attack = AREA::NONE;
-		now_attack.clear();
 	}
 }
 
@@ -195,16 +187,12 @@ void XIIlib::King::Action()
 {
 	if (moveCount <= 0) {
 		Move();
-		if (moveCount <= 0) {
-			Attack();
-		}
 	}
 	else
 	{
 		moveCount--;
 	}
-
-	
+	Attack();
 }
 
 bool XIIlib::King::AttackAreaExists()
