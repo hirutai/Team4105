@@ -179,6 +179,7 @@ float4 main(VSOutput input) : SV_TARGET
 
 	// シェーディングによる色で描画
 	float4 result = shadecolor * texcolor;
+	result = texcolor;
 
 	// 値が0出なければ結果に加える
 	if (isElec != 0.0f) {
