@@ -37,6 +37,9 @@ void XIIlib::King::Initialize()
 {
 	// 特になし
 	_hit_point = 2;
+	//行動タイマーとその遅延分の数値
+	moveCount = 0;
+	moveLag = 30;
 
 	// クラスネーム取得
 	const type_info& id = typeid(King);
@@ -114,31 +117,35 @@ void XIIlib::King::Move()
 		{1, 0}		// D|3
 	};
 
-	if (KeyInput::GetInstance()->Trigger(DIK_W)) {
+	if (KeyInput::GetInstance()->Push(DIK_W)) {
 
 		next_state += move_vec[0];
 		if (!UnitManager::GetInstance()->AllOnUnit(next_state)) {
 			element_stock = next_state;
 		}
+		moveCount = moveLag;
 	}
-	else if (KeyInput::GetInstance()->Trigger(DIK_S)) {
+	else if (KeyInput::GetInstance()->Push(DIK_S)) {
 		next_state += move_vec[1];
 		if (!UnitManager::GetInstance()->AllOnUnit(next_state)) {
 			element_stock = next_state;
 		}
+		moveCount = moveLag;
 	}
 
-	if (KeyInput::GetInstance()->Trigger(DIK_A)) {
+	if (KeyInput::GetInstance()->Push(DIK_A)) {
 		next_state += move_vec[2];
 		if (!UnitManager::GetInstance()->AllOnUnit(next_state)) {
 			element_stock = next_state;
 		}
+		moveCount = moveLag;
 	}
-	else if (KeyInput::GetInstance()->Trigger(DIK_D)) {
+	else if (KeyInput::GetInstance()->Push(DIK_D)) {
 		next_state += move_vec[3];
 		if (!UnitManager::GetInstance()->AllOnUnit(next_state)) {
 			element_stock = next_state;
 		}
+		moveCount = moveLag;
 	}
 
 	element_stock = Common::OffsetTilePosition2(element_stock);
@@ -146,29 +153,37 @@ void XIIlib::King::Move()
 
 void XIIlib::King::Attack()
 {
-	if (KeyInput::GetInstance()->Trigger(DIK_UP)) {
+	if (KeyInput::GetInstance()->Push(DIK_UP)) {
 		type_attack = AREA::UP;
+		moveCount = moveLag;
 	}
-	else if (KeyInput::GetInstance()->Trigger(DIK_UP) && KeyInput::GetInstance()->Trigger(DIK_LEFT)) {
+	else if (KeyInput::GetInstance()->Push(DIK_UP) && KeyInput::GetInstance()->Push(DIK_LEFT)) {
 		type_attack = AREA::UP_LEFT;
+		moveCount = moveLag;
 	}
-	else if (KeyInput::GetInstance()->Trigger(DIK_LEFT)) {
+	else if (KeyInput::GetInstance()->Push(DIK_LEFT)) {
 		type_attack = AREA::LEFT;
+		moveCount = moveLag;
 	}
-	else if (KeyInput::GetInstance()->Trigger(DIK_LEFT) && KeyInput::GetInstance()->Trigger(DIK_DOWN)) {
+	else if (KeyInput::GetInstance()->Push(DIK_LEFT) && KeyInput::GetInstance()->Push(DIK_DOWN)) {
 		type_attack = AREA::LEFT_DOWN;
+		moveCount = moveLag;
 	}
-	else if (KeyInput::GetInstance()->Trigger(DIK_DOWN)) {
+	else if (KeyInput::GetInstance()->Push(DIK_DOWN)) {
 		type_attack = AREA::DOWN;
+		moveCount = moveLag;
 	}
-	else if (KeyInput::GetInstance()->Trigger(DIK_DOWN) && KeyInput::GetInstance()->Trigger(DIK_RIGHT)) {
+	else if (KeyInput::GetInstance()->Push(DIK_DOWN) && KeyInput::GetInstance()->Push(DIK_RIGHT)) {
 		type_attack = AREA::DOWN_RIGHT;
+		moveCount = moveLag;
 	}
-	else if (KeyInput::GetInstance()->Trigger(DIK_RIGHT)) {
+	else if (KeyInput::GetInstance()->Push(DIK_RIGHT)) {
 		type_attack = AREA::RIGHT;
+		moveCount = moveLag;
 	}
-	else if (KeyInput::GetInstance()->Trigger(DIK_RIGHT) && KeyInput::GetInstance()->Trigger(DIK_UP)) {
+	else if (KeyInput::GetInstance()->Push(DIK_RIGHT) && KeyInput::GetInstance()->Push(DIK_UP)) {
 		type_attack = AREA::RIGHT_UP;
+		moveCount = 15;
 	}
 	else {
 		type_attack = AREA::NONE;
@@ -178,8 +193,18 @@ void XIIlib::King::Attack()
 
 void XIIlib::King::Action()
 {
-	Attack();
-	Move();
+	if (moveCount <= 0) {
+		Move();
+		if (moveCount <= 0) {
+			Attack();
+		}
+	}
+	else
+	{
+		moveCount--;
+	}
+
+	
 }
 
 bool XIIlib::King::AttackAreaExists()

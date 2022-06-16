@@ -10,6 +10,9 @@ namespace XIIlib{
 
 		std::vector<Math::Point2>now_attack;
 
+		int moveCount;
+		int moveLag;
+
 	public:
 		King();
 		~King();
