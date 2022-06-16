@@ -28,6 +28,7 @@
 #include <string>
 
 #include "../3D/Object3D.h"
+#include "../3D/BillObj.h"
 /*仮置き(ここまで)*/
 
 using namespace Math;
@@ -88,6 +89,7 @@ void GameApp::Initialize()
 	CollisionBox::SetDebugCamera(d_camera);
 	CollisionCircle::SetDebugCamera(d_camera);
 	Tessellation::SetDebugCamera(d_camera);
+	BillObj::SetDebugCamera(d_camera);
 
 	Sprite::LoadTexture(debugTextTexNumber, L"Resources/ASCIItex_ver2.png");
 
@@ -249,8 +251,6 @@ void GameApp::Draw()
 void GameApp::ObjMDraw()
 {
 	game_scene->Draw();
-	Object3D::PreDraw();
-	Object3D::PostDraw();
 }
 
 void GameApp::DestoryAfter()

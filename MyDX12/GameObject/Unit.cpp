@@ -1,6 +1,7 @@
 #include "Unit.h"
 #include "UnitManager.h"
 #include "../GameObject/Common.h"
+#include <iostream>
 
 bool XIIlib::Unit::ThreeCheckArea(Math::Point2 element_stock)
 {
@@ -10,4 +11,9 @@ bool XIIlib::Unit::ThreeCheckArea(Math::Point2 element_stock)
 
 	return false;
 
+}
+
+void XIIlib::Unit::BillObjectDraw()
+{
+	std::cout << "板ポリビルボードは描画されていません!!" << std::endl;
 }

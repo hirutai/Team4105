@@ -111,4 +111,5 @@ public:
 	DirectX::XMMATRIX GetMatViewProjection()const { return matView * matProjection; }
 	// ビルボード専用行列のGet()
 	DirectX::XMMATRIX GetMatBillboard()const { return matBillboard; }
+	DirectX::XMMATRIX GetMatYBillboard()const { return matBillboardY; }
 };

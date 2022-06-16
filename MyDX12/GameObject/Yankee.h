@@ -3,9 +3,13 @@
 #include <memory>
 
 namespace XIIlib {
+	class BillObj;
+
 	class Yankee : public Unit {
 	private:
 		Math::Point2 point_attack;
+
+		BillObj* billObj = nullptr;
 	public:
 		Yankee();
 		~Yankee();
@@ -30,6 +34,8 @@ namespace XIIlib {
 		void SetTypePositioning(_PositionType changeType)override;
 
 		void CreateAttackArea()override;
+
+		void BillObjectDraw()override;
 
 		Math::Point2 GetElementStock()const { return element_stock; }
 		bool MoveAreaCheck(Math::Point2 crPos, Math::Point2 vec, int tileNum)override;
