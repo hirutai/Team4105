@@ -9,6 +9,7 @@ namespace XIIlib
 	{
 		PUSHA_SP = 6,
 		GAMEOVER_SP,
+		STAGEBG1_SP,
 	};
 
 	// ステージナンバー

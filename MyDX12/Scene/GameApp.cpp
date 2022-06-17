@@ -107,6 +107,7 @@ void GameApp::Initialize()
 	Sprite::LoadTexture(texind, L"Resources/timer_bar.png");  texind++;
 	Sprite::LoadTexture(texind, L"Resources/PushA.png");      texind++;
 	Sprite::LoadTexture(texind, L"Resources/GameOver.png");   texind++;
+	Sprite::LoadTexture(texind, L"Resources/stage_BG1.png");   texind++;
 
 	debugJIS = DebugJISText::GetInstance();
 	debugJIS->Initialize(debugJISTextTexNumber);
@@ -159,7 +160,7 @@ void GameApp::Update()
 	lightGroup->Update();
 
 	// カメラの動きの処理
-	Math::Vector3 c_pos = { 0,24,-30 };
+	Math::Vector3 c_pos = { 0,45,-5 };
 	d_camera->SetPosition(c_pos.x, c_pos.y, c_pos.z);
 	d_camera->SetLookAtRange(0,-1, 0);
 

@@ -12,6 +12,7 @@
 #include "../GameObject/UnitManager.h"
 #include"../GameObject/AttackAreaManager.h"
 #include "../GameObject/IntervalTimer.h"
+#include "../2D/Sprite.h"
 
 XIIlib::Play::Play()
 {
@@ -23,6 +24,7 @@ XIIlib::Play::~Play()
 {
 	// ポインタ使ったやつの埋葬場
 	delete intervalTimter;
+	delete spStageBG1;
 }
 
 void XIIlib::Play::Initialize(GameScene* p_game_scene)
@@ -45,6 +47,7 @@ void XIIlib::Play::Initialize(GameScene* p_game_scene)
 		//UnitManager::GetInstance()->AddUnit(std::move(bishop));
 		//UnitManager::GetInstance()->AddUnit(std::move(rook));
 		UnitManager::GetInstance()->AddUnit(std::move(yankee));
+		spStageBG1 = Sprite::Create(STAGEBG1_SP, { 0.0f,0.0f });
 	}
 	else if (stageNum == NORMAL)
 	{
@@ -112,5 +115,6 @@ void XIIlib::Play::DrawTex()
 
 void XIIlib::Play::DrawBackground()
 {
-
+	// 背景スプライト描画
+	spStageBG1->Draw();
 }

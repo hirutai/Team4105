@@ -1,6 +1,6 @@
 #pragma once
 #include "SceneState.h"
-
+class Sprite;
 namespace XIIlib {
 
 	class GameScene;
@@ -20,5 +20,7 @@ namespace XIIlib {
 		void Draw()override;
 		void DrawTex()override;
 		void DrawBackground()override;
+	private: // ƒƒ“ƒo•Ï”
+		Sprite* spStageBG1 = nullptr;
 	};
 }

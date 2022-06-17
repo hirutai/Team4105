@@ -26,7 +26,7 @@ void XIIlib::Tile::Initialize(float _x, float _z)
 	// オブジェクトの初期化
 	tile = Object3D::Create(Model::CreateFromOBJ("bord"));
 	tile->position = { _x,0,_z };
-	tile->scale = Math::Vector3(10,1,10);
+	tile->scale = Math::Vector3(4,1,4);
 }
 
 void XIIlib::Tile::Update()
@@ -41,8 +41,8 @@ void XIIlib::Tile::Update()
 
 	if (is_attack_player)tile->color = { 1,0,0};
 	if (is_attack_enemy)tile->color = { 1,0,0 };
-	if (is_move_point)tile->color = { 0.6f, 0.4f, 0 };
-	if (is_attack_point)tile->color = { 0.0f, 0.0f, 0 };
+	if (is_move_point)tile->color = { 0, 0.3f, 0.7f};
+	if (is_attack_point)tile->color = { 0, 0, 0 };
 
 	if (is_attack_player && is_attack_enemy)tile->color = { 1,0, 1 };
 
