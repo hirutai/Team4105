@@ -382,7 +382,6 @@ void DirectX12::Previous()
 			cpuUsage = cputime * FPS_BASIS * 100.0f;
 			sprintf(str, "fps=%03.0f cpu usage=%06.2f%%", frameRate, cputime * FPS_BASIS * 100.0f);
 			//SetWindowTextA(winApp->GetWinHandle(), str);
-			std::cout << str << std::endl;
 		}
 	}
 }
