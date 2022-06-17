@@ -66,7 +66,7 @@ void XIIlib::Bishop::Update()
 	// 攻撃当たったら
 	if (UnitManager::GetInstance()
 		->IsAttackValid(element_stock, (int)_PositionType::MINE)) {
-		//Hit(1);
+		Hit(1);
 		isAttack = false;
 		// ノックバックの移動量
 		const Math::Point2 backVector = UnitManager::GetInstance()->GetBackVector(element_stock);
