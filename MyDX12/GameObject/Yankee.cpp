@@ -309,6 +309,7 @@ void XIIlib::Yankee::Move()
 		temp.b -= 1;
 		if (ThreeCheckArea(temp))return;
 		element_stock.b -= 1;
+		audio_->PlaySE("yankeeVoice.wav");
 	}
 	// 自分とキングの間を1マスづつ調べる
 	else if (dif.b > 0 && dif.a == 0)//キングより上にいるかを調べる
@@ -317,6 +318,7 @@ void XIIlib::Yankee::Move()
 		temp.b += 1;
 		if (ThreeCheckArea(temp))return;
 		element_stock.b += 1;
+		audio_->PlaySE("yankeeVoice.wav");
 	}
 	// 自分とキングの間を1マスづつ調べる
 	else if (dif.a < 0 && dif.b == 0)//キングより左にいるかを調べる
@@ -325,6 +327,7 @@ void XIIlib::Yankee::Move()
 		temp.a -= 1;
 		if (ThreeCheckArea(temp))return;
 		element_stock.a -= 1;
+		audio_->PlaySE("yankeeVoice.wav");
 	}
 	else if (dif.a > 0 && dif.b == 0)// 0より大きければKingより右にいる
 	{
@@ -332,6 +335,7 @@ void XIIlib::Yankee::Move()
 		temp.a += 1;
 		if (ThreeCheckArea(temp))return;
 		element_stock.a += 1;
+		audio_->PlaySE("yankeeVoice.wav");
 	}
 	// 自分とキングの間を1マスづつ調べる
 	else if (dif.b <= 0 && dif.a <= 0)//キングより左下にいるかを調べる
@@ -342,6 +346,7 @@ void XIIlib::Yankee::Move()
 		if (ThreeCheckArea(temp))return;
 		element_stock.a -= 1;
 		element_stock.b -= 1;
+		audio_->PlaySE("yankeeVoice.wav");
 	}
 	// 自分とキングの間を1マスづつ調べる
 	else if (dif.b > 0 && dif.a <= 0)//キングより左上にいるかを調べる
@@ -352,6 +357,7 @@ void XIIlib::Yankee::Move()
 		if (ThreeCheckArea(temp))return;
 		element_stock.a -= 1;
 		element_stock.b += 1;
+		audio_->PlaySE("yankeeVoice.wav");
 	}
 	// 自分とキングの間を1マスづつ調べる
 	else if (dif.b <= 0 && dif.a > 0)//キングより右下にいるかを調べる
@@ -362,6 +368,7 @@ void XIIlib::Yankee::Move()
 		if (ThreeCheckArea(temp))return;
 		element_stock.a += 1;
 		element_stock.b -= 1;
+		audio_->PlaySE("yankeeVoice.wav");
 	}
 	// 自分とキングの間を1マスづつ調べる
 	else if (dif.b > 0 && dif.a >= 0)//キングより右上にいるかを調べる
@@ -372,6 +379,7 @@ void XIIlib::Yankee::Move()
 		if (ThreeCheckArea(temp))return;
 		element_stock.a += 1;
 		element_stock.b += 1;
+		audio_->PlaySE("yankeeVoice.wav");
 	}
 }
 
