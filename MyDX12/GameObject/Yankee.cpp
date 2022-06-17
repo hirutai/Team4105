@@ -52,6 +52,10 @@ void XIIlib::Yankee::Update()
 
 	// 駒の行動
 	Action();
+
+	{// 敵の
+	}
+
 	// 位置座標の更新
 	object3d->position = { Common::ConvertTilePosition(element_stock.a),1.0f, Common::ConvertTilePosition(element_stock.b) };
 
