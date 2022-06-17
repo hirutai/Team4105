@@ -16,3 +16,12 @@ bool XIIlib::Unit::ThreeCheckArea(Math::Point2 element_stock)
 void XIIlib::Unit::BillObjectDraw()
 {
 }
+
+void XIIlib::Unit::ZeroHp()
+{
+	if (_hit_point <= 0)
+	{
+		OnDead();
+		UnitManager::GetInstance()->AddCountDead();
+	}
+}

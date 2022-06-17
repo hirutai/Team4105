@@ -206,3 +206,13 @@ const unsigned int XIIlib::UnitManager::GetIntervalTimer()
 {
 	return _intervalTimter->GetTimer();
 }
+
+void XIIlib::UnitManager::AddCountDead()
+{
+	deadCount++;
+}
+
+void XIIlib::UnitManager::ResetCount()
+{
+	deadCount = 0;
+}

@@ -21,6 +21,8 @@ namespace XIIlib {
 
 		BoardMap* map_board = nullptr;
 
+		int deadCount = 0;
+
 	public:
 		UnitManager(const UnitManager& obj) = delete;
 		UnitManager& operator = (const UnitManager& obj) = delete;
@@ -77,6 +79,12 @@ namespace XIIlib {
 		/// </summary>
 		/// <returns> unsigned int タイマーを返す</returns>
 		const unsigned int GetIntervalTimer();
+
+		// 敵が死んだ時にカウント関数
+		void AddCountDead();
+		// カウントのリセット
+		void ResetCount();
+
 	};
 
 }
