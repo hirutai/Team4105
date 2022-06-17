@@ -214,7 +214,7 @@ const unsigned int XIIlib::UnitManager::GetIntervalTimer()
 
 int XIIlib::UnitManager::GetAllUnitCount() const
 {
-	return units.size();
+	units.size();
 }
 
 void XIIlib::UnitManager::AddCountDead()
