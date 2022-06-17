@@ -112,7 +112,7 @@ void XIIlib::Play::Draw()
 void XIIlib::Play::DrawTex()
 {
 	// スプライト描画
-	intervalTimter->Draw();
+	//intervalTimter->Draw();
 }
 
 void XIIlib::Play::DrawBackground()
