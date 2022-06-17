@@ -43,7 +43,6 @@ void XIIlib::Title::Update(GameScene* p_game_scene)
 		stageNum = NORMAL;
 	}
 
-	DebugJISText::GetInstance()->Print("ƒ^ƒCƒgƒ‹",0,0,1);
 }
 
 void XIIlib::Title::Draw()

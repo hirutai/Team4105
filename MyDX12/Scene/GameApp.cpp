@@ -173,10 +173,6 @@ void GameApp::Update()
 	XIIlib::Messenger::GetInstance()->DrawMessage();
 
 	game_scene->Update();
-	circle->DrawCircle(10,32 * 16 + 16,10,0,255,255,255);
-	circle->DrawCircle(10,32 * 17 + 16,10,0,255,0,255);
-	circle->DrawCircle(10,32 * 18 + 16,10,255,255,0,255);
-
 }
 
 void GameApp::Draw3D()

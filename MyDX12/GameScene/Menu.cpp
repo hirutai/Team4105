@@ -33,7 +33,6 @@ void XIIlib::Menu::Update(GameScene* p_game_scene)
 		p_game_scene->ChangeState(new Play);
 	}
 
-	DebugJISText::GetInstance()->Print("ƒƒjƒ…[", 0, 0, 1);
 }
 
 void XIIlib::Menu::Draw()

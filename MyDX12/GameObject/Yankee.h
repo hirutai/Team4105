@@ -8,6 +8,8 @@ namespace XIIlib {
 	class Yankee : public Unit {
 	private:
 		Math::Point2 point_attack;
+		float movingTimer = 0.0f;
+		bool determinateMoveAction = false;
 
 		AttackTimer* attackTimer = nullptr; // 攻撃タイマー
 	public:
