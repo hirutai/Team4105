@@ -18,6 +18,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	dxXii = new XIIlib::Library();
 	dxXii->Initialize();
 
+	dxXii->GetQuery();
+
 	GameApp* app = nullptr;
 	PostEffect* postEffect = nullptr;
 	//// win_appのアドレス
@@ -38,6 +40,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	{
 		// メッセージ処理
 		if (dxXii->Message()) { break; }
+		else { dxXii->RunTimer(); }
 
 		// 入力処理 : 更新
 		dxXii->InputUpdate();
