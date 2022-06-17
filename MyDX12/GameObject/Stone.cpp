@@ -1,6 +1,5 @@
 #include "Stone.h"
 #include "King.h"
-#include "../3D/CollCapsule.h"
 #include "Common.h"
 #include "UnitManager.h"
 #include "../Tool/Messenger.h"
@@ -8,9 +7,6 @@
 
 XIIlib::Stone::Stone()
 {
-	// モデルの初期化
-	collCapsule = CollisionCapsule::Create({ 0,1,0 }, { 0,-1,0 }, 0.5f, 16);
-	collCapsule->SetColor(0, 1, 1, 1);
 	// 各ステータスの初期化
 	_cost = 0;
 	_hit_point = 2;
@@ -20,7 +16,7 @@ XIIlib::Stone::Stone()
 
 XIIlib::Stone::~Stone()
 {
-	delete collCapsule;
+	delete object3d;
 }
 
 std::shared_ptr<XIIlib::Stone> XIIlib::Stone::Create(int point_x, int point_z)
@@ -53,10 +49,6 @@ void XIIlib::Stone::Update()
 	// 駒の行動
 	Action();
 	// 位置座標の更新
-	collCapsule->SetPosition(
-		Common::ConvertTilePosition(element_stock.a), 1.0f,
-		Common::ConvertTilePosition(element_stock.b));
-
 	object3d->position = { Common::ConvertTilePosition(element_stock.a),1.0f, Common::ConvertTilePosition(element_stock.b) };
 
 	// 攻撃当たったら
@@ -194,7 +186,6 @@ void XIIlib::Stone::Update()
 
 	//}
 
-	collCapsule->Update();
 	object3d->Update();
 }
 

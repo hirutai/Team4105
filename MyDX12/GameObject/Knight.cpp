@@ -1,15 +1,11 @@
 #include "Knight.h"
 #include "King.h"
-#include "../3D/CollCapsule.h"
 #include "Common.h"
 #include "UnitManager.h"
 #include "../Tool/Messenger.h"
 
 XIIlib::Knight::Knight()
 {
-	// モデルの初期化
-	collCapsule = CollisionCapsule::Create({ 0,1,0 }, { 0,-1,0 }, 0.5f, 16);
-	collCapsule->SetColor(1, 1, 0, 1);
 	// 各ステータスの初期化
 	_cost = 0;
 	_hit_point = 2;
@@ -19,7 +15,7 @@ XIIlib::Knight::Knight()
 
 XIIlib::Knight::~Knight()
 {
-	delete collCapsule;
+	delete object3d;
 }
 
 std::shared_ptr<XIIlib::Knight> XIIlib::Knight::Create(int point_x, int point_z)
@@ -49,9 +45,7 @@ void XIIlib::Knight::Update()
 	// 駒の行動
 	Action();
 	// 位置座標の更新
-	collCapsule->SetPosition(
-		Common::ConvertTilePosition(element_stock.a), 1.0f,
-		Common::ConvertTilePosition(element_stock.b));
+
 
 	// 攻撃当たったら
 	if (UnitManager::GetInstance()
@@ -189,12 +183,10 @@ void XIIlib::Knight::Update()
 
 	}
 
-	collCapsule->Update();
 }
 
 void XIIlib::Knight::Draw()
 {
-	collCapsule->Draw();
 }
 
 void XIIlib::Knight::SetStartElement(int x, int z)
@@ -223,10 +215,10 @@ void XIIlib::Knight::Action()
 
 	if (UnitManager::GetInstance()->GetIntervalTimer() == 420)
 	{
-		notAttackflag = TRUE;
+		notAttackflag = 1;
 	}
 
-	if (isAttack == true && notAttackflag == TRUE)
+	if (isAttack == true && notAttackflag == 1)
 	{
 		point_attack = preElement_stock;
 		UnitManager::GetInstance()->ChangeAttackValidTile(point_attack, (int)type);
@@ -244,22 +236,13 @@ void XIIlib::Knight::Attack()
 	// カウントを減らす
 	attackInterval--;
 	//色を変える
-	if (attackInterval <= 150 && attackInterval >= 120 || attackInterval <= 90 && attackInterval >= 75 || attackInterval <= 60 && attackInterval >= 45 || attackInterval <= 30 && attackInterval >= 15)
-	{
-		collCapsule->SetColor(1, 0, 0, 1);
-	}
-	else
-	{
-		collCapsule->SetColor(1, 1, 0, 1);
-	}
-	
 	if (attackInterval == 0)
 	{
 		//if (AttackAreaExists()) { preElement_stock = kingPos; }
 		// 攻撃
 		element_stock = preElement_stock;
 		IniState();
-		notAttackflag = FALSE;
+		notAttackflag = 0;
 	}
 }
 
@@ -269,7 +252,6 @@ void XIIlib::Knight::Move()
 	if (UnitManager::GetInstance()->GetIntervalTimer() < 420)return;
 	notAttackflag = true;
 
-	collCapsule->SetColor(1, 1, 0, 1);
 	Math::Point2 dif = kingPos - element_stock;
 	Math::Point2 temp(0, 0);
 
@@ -439,7 +421,6 @@ void XIIlib::Knight::IniState()
 {
 	isAttack = false;
 	attackInterval = 180;
-	collCapsule->SetColor(1, 1, 0, 1);
 }
 
 void XIIlib::Knight::Hit(int attackPoint)

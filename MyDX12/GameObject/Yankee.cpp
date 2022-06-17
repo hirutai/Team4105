@@ -1,6 +1,5 @@
 #include "Yankee.h"
 #include "King.h"
-#include "../3D/CollCapsule.h"
 #include "Common.h"
 #include "UnitManager.h"
 #include "../Tool/Messenger.h"
@@ -9,9 +8,6 @@
 
 XIIlib::Yankee::Yankee()
 {
-	// モデルの初期化
-	collCapsule = CollisionCapsule::Create({ 0,1,0 }, { 0,-1,0 }, 0.5f, 16);
-	collCapsule->SetColor(0, 1, 1, 1);
 	// 各ステータスの初期化
 	_cost = 0;
 	_hit_point = 2;
@@ -22,7 +18,7 @@ XIIlib::Yankee::Yankee()
 XIIlib::Yankee::~Yankee()
 {
 	delete attackTimer;
-	delete collCapsule;
+	delete object3d;
 }
 
 std::shared_ptr<XIIlib::Yankee> XIIlib::Yankee::Create(int point_x, int point_z)
@@ -57,11 +53,6 @@ void XIIlib::Yankee::Update()
 	// 駒の行動
 	Action();
 	// 位置座標の更新
-	collCapsule->SetPosition(
-		Common::ConvertTilePosition(element_stock.a), 1.0f,
-		Common::ConvertTilePosition(element_stock.b));
-	std::cout << tileRand << std::endl;
-
 	object3d->position = { Common::ConvertTilePosition(element_stock.a),1.0f, Common::ConvertTilePosition(element_stock.b) };
 
 	// 攻撃当たったら
@@ -205,7 +196,6 @@ void XIIlib::Yankee::Update()
 	attackTimer->Timer();
 	attackTimer->SetPosition(object3d->position);
 
-	collCapsule->Update();
 	object3d->Update();
 }
 
@@ -281,14 +271,6 @@ void XIIlib::Yankee::Attack()
 	// カウントを減らす
 	attackInterval--;
 	//色を変える
-	if (attackInterval <= 150 && attackInterval >= 120 || attackInterval <= 90 && attackInterval >= 75 || attackInterval <= 60 && attackInterval >= 45 || attackInterval <= 30 && attackInterval >= 15)
-	{
-		collCapsule->SetColor(1, 0, 0, 1);
-	}
-	else
-	{
-		collCapsule->SetColor(0, 1, 1, 1);
-	}
 	if (attackTimer->SizeZeroFlag())
 	{
 		Math::Point2 dif = preElement_stock - element_stock;
@@ -312,7 +294,6 @@ void XIIlib::Yankee::Move()
 	Math::Point2 temp = element_stock;
 	notAttackflag = TRUE;
 
-	collCapsule->SetColor(0, 1, 1, 1);
 
 	//プレイヤーの座標 ー ヤンキーの座標
 	Math::Point2 dif = kingPos - element_stock;
@@ -494,7 +475,6 @@ void XIIlib::Yankee::IniState()
 {
 	isAttack = false;
 	attackInterval = 180;
-	collCapsule->SetColor(0, 1, 1, 1);
 }
 
 void XIIlib::Yankee::Hit(int attackPoint)
