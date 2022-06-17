@@ -93,26 +93,13 @@ void XIIlib::Play::Update(GameScene* p_game_scene)
 
 	intervalTimter->Timer();
 
-	/*if (KeyInput::GetInstance()->Trigger(DIK_SPACE)) {
+	if (KeyInput::GetInstance()->Trigger(DIK_SPACE)) {
 		p_game_scene->ChangeState(new Over);
 	}
 
 	if (gamePad_->Button_Down(X_A))
 	{
 		p_game_scene->ChangeState(new Over);
-	}*/
-
-	if (UnitManager::GetInstance()->GetUnitIDElements("King") >= 0) // プレイヤが存在している場合
-	{
-		if (UnitManager::GetInstance()->GetAllUnitCount() - 1 == 0) // 敵を全滅させた時
-		{
-			p_game_scene->ChangeState(new Clear); // クリアシーンへ
-		}
-	}
-
-	if (UnitManager::GetInstance()->GetUnitIDElements("King") < 0) // プレイヤが存在していない場合
-	{
-		p_game_scene->ChangeState(new Over); // オーバーシーンへ
 	}
 }
 
