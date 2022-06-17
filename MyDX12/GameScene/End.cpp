@@ -33,12 +33,10 @@ void XIIlib::End::Update(GameScene* p_game_scene)
 	// XV
 	if (KeyInput::GetInstance()->Trigger(DIK_SPACE)) {
 		p_game_scene->ChangeState(new Title);
-		p_game_scene->GetAudio()->StopBGM();
 	}
 
 	if (gamePad_->Button_Down(X_A)) {
 		p_game_scene->ChangeState(new Title);
-		p_game_scene->GetAudio()->StopBGM();
 	}
 
 }

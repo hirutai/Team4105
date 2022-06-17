@@ -94,13 +94,11 @@ void XIIlib::Play::Update(GameScene* p_game_scene)
 
 	if (KeyInput::GetInstance()->Trigger(DIK_SPACE)) {
 		p_game_scene->ChangeState(new End);
-		p_game_scene->GetAudio()->StopBGM();
 	}
 
 	if (gamePad_->Button_Down(X_A))
 	{
 		p_game_scene->ChangeState(new End);
-		p_game_scene->GetAudio()->StopBGM();
 	}
 }
 
