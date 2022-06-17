@@ -73,9 +73,8 @@ void XIIlib::Select::Update(GameScene* p_game_scene)
 		}
 		else if (edgePos.x == HOMER_POS.x)
 		{
-			stageNum = StageNumber::HARD;
-			p_game_scene->ChangeState(new Title);
 			return;
+			//stageNum = StageNumber::HARD;
 		}
 		p_game_scene->ChangeState(new Play);
 	}
