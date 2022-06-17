@@ -222,7 +222,7 @@ void GameApp::FrontSc()
 
 	// 円
 	Circle::PreDraw();
-	circle->Draw();
+	//circle->Draw();
 	Circle::PostDraw();
 
 	// 文字スプライト

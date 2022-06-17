@@ -68,9 +68,9 @@ void XIIlib::GameScene::Update()
 
 	int bai = 16,dist = 32;
 
-	DebugJISText::GetInstance()->Print("青がルーク", dist, dist * bai, 1); bai++;
-	DebugJISText::GetInstance()->Print("緑がビショップ", dist, dist * bai,1); bai++;
-	DebugJISText::GetInstance()->Print("黄がナイト", dist, dist * bai,1);
+	//DebugJISText::GetInstance()->Print("青がルーク", dist, dist * bai, 1); bai++;
+	//DebugJISText::GetInstance()->Print("緑がビショップ", dist, dist * bai,1); bai++;
+	//DebugJISText::GetInstance()->Print("黄がナイト", dist, dist * bai,1);
 
 	// シーンの更新
 	state->Update(this);
