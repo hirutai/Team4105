@@ -65,6 +65,16 @@ int XIIlib::Library::Initialize()
 	return 1;
 }
 
+void XIIlib::Library::SetFPS()
+{
+	SetTimer(w_app->GetWinHandle(), timerId, frameRate, nullptr);
+}
+
+void XIIlib::Library::ReleaseTimer()
+{
+	KillTimer(w_app->GetWinHandle(),timerId);
+}
+
 bool XIIlib::Library::Message()
 {
 	return w_app->Message();

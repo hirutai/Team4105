@@ -3,9 +3,7 @@
 #include "2D/PostEffect.h"
 
 #include "Input/KeyInput.h"
-
-
-//jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
+#include <sstream>
 
 // ターゲットがDebugの時
 #ifdef _DEBUG
@@ -20,6 +18,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	XIIlib::Library* dxXii = nullptr;
 	dxXii = new XIIlib::Library();
 	dxXii->Initialize();
+
+	dxXii->SetFPS();
 
 	GameApp* app = nullptr;
 	PostEffect* postEffect = nullptr;
@@ -37,10 +37,33 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 	postEffect->SetPosition(windowSize / 2);
 
+	DWORD timeBefore = GetTickCount();
+	DWORD fps = 0;
+
 	while (true)
 	{
 		// メッセージ処理
 		if (dxXii->Message()) { break; }
+
+		++fps;
+
+		if ((GetTickCount() - timeBefore) >= 1000) { // 1秒以上経過している
+#ifdef _DEBUG // デバッグ用(デバッガにFSP出す)
+#ifdef UNICODE
+			std::wstringstream stream;
+#else
+			std::stringstream stream;
+#endif
+			stream << fps << " FPS" << std::endl;
+			OutputDebugString(stream.str().c_str());
+			std::wcout << stream.str()<< std::endl;
+#endif
+
+			// 0にリセット
+			fps = 0;
+			// リセット
+			timeBefore = GetTickCount();
+		}
 
 		// 入力処理 : 更新
 		dxXii->InputUpdate();
@@ -72,6 +95,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		// ESCで閉じる
 		if (XIIlib::KeyInput::GetInstance()->Trigger(DIK_ESCAPE))break;
 	}
+
+	dxXii->ReleaseTimer();
+
 	// 各種解放
 	delete postEffect;
 	delete app;

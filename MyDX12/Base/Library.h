@@ -16,6 +16,8 @@ namespace XIIlib
 		DirectX12* dx12;
 		KeyInput* keyInput;
 		//ControllerInput* pad_input;
+		const unsigned int timerId = 1;
+		const unsigned int frameRate = (1000 / 60);
 
 	public:
 		// コンストラクタ
@@ -24,6 +26,10 @@ namespace XIIlib
 		~Library();
 		// 初期化
 		int Initialize();
+		// FPSの固定(簡易)
+		void SetFPS();
+		// Timerの破棄
+		void ReleaseTimer();
 		// メッセージ
 		bool Message();
 		// 入力処理の更新

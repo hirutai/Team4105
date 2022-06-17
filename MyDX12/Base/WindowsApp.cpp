@@ -92,12 +92,17 @@ bool WindowsApp::Message()
 
 	if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE)) // メッセージがある？
 	{
-		TranslateMessage(&msg); // キー入力メッセージの処理
-		DispatchMessage(&msg); // ウィンドウプロシージャにメッセージを送る
+		if (msg.message == WM_QUIT) {// 終了メッセージが来たらループを抜ける
+			return true;
+		}
+		else {
+			TranslateMessage(&msg); // キー入力メッセージの処理
+			DispatchMessage(&msg); // ウィンドウプロシージャにメッセージを送る
+		}
 	}
-
-	if (msg.message == WM_QUIT) // 終了メッセージが来たらループを抜ける
-	{return true;}
+	else {
+		Sleep(5);
+	}
 
 	return false;
 }
