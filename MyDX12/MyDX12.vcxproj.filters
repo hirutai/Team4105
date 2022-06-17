@@ -321,7 +321,7 @@
     <ClCompile Include="GameScene\Play.cpp">
       <Filter>GameScene\StateScene</Filter>
     </ClCompile>
-    <ClCompile Include="GameScene\End.cpp">
+    <ClCompile Include="GameScene\Over.cpp">
       <Filter>GameScene\StateScene</Filter>
     </ClCompile>
     <ClCompile Include="GameObject\Unit.cpp">
@@ -361,6 +361,9 @@
       <Filter>GameObject\GameTimer</Filter>
     </ClCompile>
     <ClCompile Include="GameScene\Select.cpp">
+      <Filter>GameScene\StateScene</Filter>
+    </ClCompile>
+    <ClCompile Include="GameScene\Clear.cpp">
       <Filter>GameScene\StateScene</Filter>
     </ClCompile>
   </ItemGroup>
@@ -572,7 +575,7 @@
     <ClInclude Include="GameScene\Play.h">
       <Filter>GameScene\StateScene</Filter>
     </ClInclude>
-    <ClInclude Include="GameScene\End.h">
+    <ClInclude Include="GameScene\Over.h">
       <Filter>GameScene\StateScene</Filter>
     </ClInclude>
     <ClInclude Include="GameObject\AttackAreaManager.h">
@@ -609,6 +612,9 @@
       <Filter>GameObject\GameTimer</Filter>
     </ClInclude>
     <ClInclude Include="GameScene\Select.h">
+      <Filter>GameScene\StateScene</Filter>
+    </ClInclude>
+    <ClInclude Include="GameScene\Clear.h">
       <Filter>GameScene\StateScene</Filter>
     </ClInclude>
   </ItemGroup>

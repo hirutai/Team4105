@@ -1,4 +1,4 @@
-#include "End.h"
+#include "Clear.h"
 #include "GameScene.h"
 #include "Title.h"
 #include "../Input/KeyInput.h"
@@ -7,27 +7,25 @@
 #include "../2D/Sprite.h"
 #include "../Audio/Audio.h"
 
-XIIlib::End::End()
-{
-	// Initializeとほぼ同じ
+using namespace XIIlib;
 
+Clear::Clear()
+{
 }
 
-XIIlib::End::~End()
+Clear::~Clear()
 {
-	// ポインタ使ったやつの埋葬場
-	delete spGameOver;
+	delete gameClear;
 }
 
-void XIIlib::End::Initialize(GameScene* p_game_scene)
+void Clear::Initialize(GameScene* p_game_scene)
 {
 	// Scene切り替え時に一度通る処理
 	UnitManager::GetInstance()->AllDestroy();
-	spGameOver = Sprite::Create((UINT)SpriteName::GAMEOVER_SP, {0.0f,0.0f});
-	p_game_scene->GetAudio()->PlayBGM("yankeeBGM.wav");
+	gameClear = Sprite::Create((UINT)SpriteName::GAMECLEAR_SP, { 0.0f,0.0f });
 }
 
-void XIIlib::End::Update(GameScene* p_game_scene)
+void Clear::Update(GameScene* p_game_scene)
 {
 	// 更新
 	if (KeyInput::GetInstance()->Trigger(DIK_SPACE)) {
@@ -40,19 +38,19 @@ void XIIlib::End::Update(GameScene* p_game_scene)
 
 }
 
-void XIIlib::End::Draw()
+void Clear::Draw()
 {
 	// 3D描画
 
 }
 
-void XIIlib::End::DrawTex()
+void Clear::DrawTex()
 {
 	// スプライト描画
-	spGameOver->Draw();
+	gameClear->Draw();
 }
 
-void XIIlib::End::DrawBackground()
+void Clear::DrawBackground()
 {
 
 }

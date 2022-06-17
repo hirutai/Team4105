@@ -1,26 +1,33 @@
 #pragma once
 #include "SceneState.h"
 class Sprite;
-namespace XIIlib {
 
+/// <summary>
+/// ゲームクリアシーン
+/// </summary>
+namespace XIIlib
+{
 	class GameScene;
-	
 
-	// プレイシーンのクラス
-	class End : public SceneState {
-	private:
-		// プレイ内で使う変数宣言の場(Object/Sprite/時間/フラグ等)
+	class Clear : public SceneState
+	{
+	public: // メンバ関数
+		// コンストラクタ
+		Clear();
+		// デスストラクタ
+		~Clear();
 
-	public:
-		End();
-		~End();
-
+		// 初期化
 		void Initialize(GameScene* p_game_scene)override;
+		// 更新
 		void Update(GameScene* p_game_scene)override;
+		// 描画
 		void Draw()override;
 		void DrawTex()override;
 		void DrawBackground()override;
+
 	private: // メンバ変数
-		Sprite* spGameOver = nullptr;
+		Sprite* gameClear = nullptr; // クリア画像
 	};
+
 }

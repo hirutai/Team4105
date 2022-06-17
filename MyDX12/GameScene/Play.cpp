@@ -1,6 +1,7 @@
 #include "Play.h"
 #include "GameScene.h"
-#include "End.h"
+#include "Clear.h"
+#include "Over.h"
 #include "../Input/KeyInput.h"
 #include "../Tool/DebugJISText.h"
 #include "../GameObject/King.h"
@@ -93,12 +94,12 @@ void XIIlib::Play::Update(GameScene* p_game_scene)
 	intervalTimter->Timer();
 
 	if (KeyInput::GetInstance()->Trigger(DIK_SPACE)) {
-		p_game_scene->ChangeState(new End);
+		p_game_scene->ChangeState(new Over);
 	}
 
 	if (gamePad_->Button_Down(X_A))
 	{
-		p_game_scene->ChangeState(new End);
+		p_game_scene->ChangeState(new Over);
 	}
 }
 

@@ -197,7 +197,8 @@
     <ClCompile Include="GameObject\Unit.cpp" />
     <ClCompile Include="GameObject\UnitManager.cpp" />
     <ClCompile Include="GameObject\Yankee.cpp" />
-    <ClCompile Include="GameScene\End.cpp" />
+    <ClCompile Include="GameScene\Clear.cpp" />
+    <ClCompile Include="GameScene\Over.cpp" />
     <ClCompile Include="GameScene\GameScene.cpp" />
     <ClCompile Include="GameScene\Menu.cpp" />
     <ClCompile Include="GameScene\Play.cpp" />
@@ -272,7 +273,8 @@
     <ClInclude Include="GameObject\Unit.h" />
     <ClInclude Include="GameObject\UnitManager.h" />
     <ClInclude Include="GameObject\Yankee.h" />
-    <ClInclude Include="GameScene\End.h" />
+    <ClInclude Include="GameScene\Clear.h" />
+    <ClInclude Include="GameScene\Over.h" />
     <ClInclude Include="GameScene\GameScene.h" />
     <ClInclude Include="GameScene\Menu.h" />
     <ClInclude Include="GameScene\Play.h" />
