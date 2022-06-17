@@ -59,6 +59,7 @@ void XIIlib::GameScene::Initialize()
 
 void XIIlib::GameScene::Update()
 {
+	SetCursorPos(0,0);
 	//‰¹
 	if (KeyInput::GetInstance()->Trigger(DIK_RETURN)) {
 		//audio->PlaySE("yankeeVoice.wav");
