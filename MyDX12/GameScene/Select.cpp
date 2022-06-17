@@ -1,6 +1,7 @@
 #include "Select.h"
 #include "GameScene.h"
 #include "Play.h"
+#include "Title.h"
 #include "../Input/KeyInput.h"
 #include "../Tool/DebugJISText.h"
 #include "../2D/Sprite.h"
@@ -18,20 +19,64 @@ XIIlib::Select::~Select()
 void XIIlib::Select::Initialize(GameScene* p_game_scene)
 {
 	// Scene切り替え時に一度通る処理
-	easyButton.reset(Sprite::Create((UINT)SpriteName::EASY_BUTTON_SP, {0.0f,0.0f}));
-	normalButton.reset(Sprite::Create((UINT)SpriteName::NORMAL_BUTTON_SP, { 0.0f,0.0f }));
-	hardButton.reset(Sprite::Create((UINT)SpriteName::HARD_BUTTON_SP, { 0.0f,0.0f }));
-	edge.reset(Sprite::Create((UINT)SpriteName::EDGE_SP, { 0.0f,0.0f }));
+	easyButton.reset(Sprite::Create((UINT)SpriteName::EASY_BUTTON_SP, HOMEL_POS));
+	normalButton.reset(Sprite::Create((UINT)SpriteName::NORMAL_BUTTON_SP, HOMEC_POS));
+	hardButton.reset(Sprite::Create((UINT)SpriteName::HARD_BUTTON_SP, HOMER_POS));
+	edge.reset(Sprite::Create((UINT)SpriteName::EDGE_SP, HOMEL_POS));
 }
 
 void XIIlib::Select::Update(GameScene* p_game_scene)
 {
-	// 更新
-	if (KeyInput::GetInstance()->Trigger(DIK_SPACE)) {
+	
+	if (gamePad_->Button_Down(X_A)) {
 		p_game_scene->ChangeState(new Play);
 	}
+	// AかDを押してたら
+	if (KeyInput::GetInstance()->Trigger(DIK_A) 
+		|| KeyInput::GetInstance()->Trigger(DIK_D)) 
+	{
+		const float moveX = BASE_SIZE.x + GAP;
+		
+		if (KeyInput::GetInstance()->Trigger(DIK_A))
+		{
+			edgePos.x -= moveX;
+		}
+		else if (KeyInput::GetInstance()->Trigger(DIK_D))
+		{
+			edgePos.x += moveX;
+		}
+	}
 
-	if (gamePad_->Button_Down(X_A)) {
+	// 超えたら戻す
+	if (edgePos.x <= HOMEL_POS.x)
+	{
+		edgePos.x = HOMEL_POS.x;
+	}
+	else if (edgePos.x >= HOMER_POS.x)
+	{
+		edgePos.x = HOMER_POS.x;
+	}
+
+	// 情報の更新
+	edge->SetPosition(edgePos);
+
+	// 更新
+	if (KeyInput::GetInstance()->Trigger(DIK_SPACE)) {
+		// ポジションによってステージナンバーを代入
+		if (edgePos.x == HOMEL_POS.x)
+		{
+			stageNum = StageNumber::EASY;
+		}
+		else if (edgePos.x == HOMEC_POS.x)
+		{
+			stageNum = StageNumber::NORMAL;
+		}
+		else if (edgePos.x == HOMER_POS.x)
+		{
+			stageNum = StageNumber::HARD;
+			p_game_scene->ChangeState(new Title);
+			return;
+		}
 		p_game_scene->ChangeState(new Play);
 	}
 }

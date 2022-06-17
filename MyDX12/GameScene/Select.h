@@ -12,12 +12,18 @@ namespace XIIlib {
 	// ステージ選択シーンのクラス
 	class Select : public SceneState {
 	private: // メンバ定数
-		const float homePosY = 0;
-		const Math::Vector2 HOMEL_POS = {};
-		const Math::Vector2 HOMEC_POS = {};
-		const Math::Vector2 HOMER_POS = {};
+		const float GAP = 100.0f;
+		const float HOME_POSY = 250;
+		const Math::Vector2 BASE_SIZE = {360,240};
+		const Math::Vector2 HOMEL_POS 
+			= {0,HOME_POSY };
+		const Math::Vector2 HOMEC_POS 
+			= {HOMEL_POS.x + BASE_SIZE.x + GAP ,HOME_POSY };
+		const Math::Vector2 HOMER_POS 
+			= { HOMEC_POS.x + BASE_SIZE.x + GAP ,HOME_POSY };
 	private: // メンバ変数
 		// 変数宣言の場(Object/Sprite/時間/フラグ等)
+		Math::Vector2 edgePos = HOMEL_POS;
 #pragma region Spriteデータ
 		std::unique_ptr<Sprite> easyButton;
 		std::unique_ptr<Sprite> normalButton;
