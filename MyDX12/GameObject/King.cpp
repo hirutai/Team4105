@@ -5,7 +5,7 @@
 #include "Rook.h"
 #include "../Tool/Messenger.h"
 #include "../3D/Object3D.h"
-
+#include "../Audio/Audio.h"
 
 XIIlib::King::King()
 {
@@ -44,6 +44,9 @@ void XIIlib::King::Initialize()
 	ID = Common::SeparateFilePath(path).second;
 	type = _PositionType::MINE;
 
+	// Audio‚Ì‰Šú‰»
+	audio_ = UnitManager::GetInstance()->GetAudio();
+
 	CreateAttackArea();
 
 	object3d = Object3D::Create(Model::CreateFromOBJ("Badboy_Bat_1"));
@@ -63,6 +66,7 @@ void XIIlib::King::Update()
 			for (int i = 0; i < 3; i++) {
 				container[i] += element_stock;
 				if ((container[i].a < 8 && container[i].a >= 0) && (container[i].b < 8 && container[i].b >= 0)) {
+					audio_->PlaySE("swing.wav");
 					UnitManager::GetInstance()->ChangeAttackValidTile(container[i], (int)type);
 					Math::Point2 vec_point = container[i] - element_stock;
 					UnitManager::GetInstance()->SetBackVector(container[i], vec_point * 2);

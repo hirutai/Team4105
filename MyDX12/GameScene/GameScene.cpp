@@ -53,6 +53,7 @@ void XIIlib::GameScene::Initialize()
 	// シーンの初期化
 	state->Initialize(this);
 
+	UnitManager::GetInstance()->SetAudio(audio);
 	// コメントしました。
 }
 
@@ -61,7 +62,7 @@ void XIIlib::GameScene::Update()
 	//音
 	if (KeyInput::GetInstance()->Trigger(DIK_RETURN)) {
 		//audio->PlaySE("yankeeVoice.wav");
-		audio->PlaySE("swing.wav");
+		//audio->PlaySE("swing.wav");
 		
 	}
 

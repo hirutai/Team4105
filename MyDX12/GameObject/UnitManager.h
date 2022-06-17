@@ -8,6 +8,7 @@ namespace XIIlib {
 
 	class BoardMap;
 	class IntervalTimer;
+	class Audio;
 
 	class UnitManager {
 	private:
@@ -22,6 +23,8 @@ namespace XIIlib {
 		BoardMap* map_board = nullptr;
 
 		int deadCount = 0;
+
+		Audio* audio_ = nullptr;
 
 	public:
 		UnitManager(const UnitManager& obj) = delete;
@@ -59,6 +62,8 @@ namespace XIIlib {
 
 		void SetOnTile(const Math::Point2& element);
 
+		void SetAudio(Audio* audio){ this->audio_ = audio; }
+
 		bool IsAttackValid(const Math::Point2& element, int type_positioning)const;
 
 		Math::Point2 GetBackVector(const Math::Point2& element)const;
@@ -66,6 +71,8 @@ namespace XIIlib {
 		bool GetOnTile(const Math::Point2& element)const;
 
 		std::vector<int> GetOnUnitElements(const Math::Point2& point);
+
+		Audio* GetAudio() { return audio_; };//音
 
 		// タイマーのGetSet関数
 		/// <summary>
