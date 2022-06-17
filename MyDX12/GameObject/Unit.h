@@ -101,7 +101,7 @@ namespace XIIlib {
 
 		void OnDead() { is_dead = true; }
 
-		void ZeroHp() { if (_hit_point <= 0)OnDead(); }
+		void ZeroHp();
 
 		Math::Point2 GetElementStock()const { return element_stock; }
 
