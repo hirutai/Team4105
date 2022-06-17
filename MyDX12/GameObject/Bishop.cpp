@@ -1,6 +1,5 @@
 #include "Bishop.h"
 #include "King.h"
-#include "../3D/CollCapsule.h"
 #include "Common.h"
 #include "UnitManager.h"
 #include "../Tool/Messenger.h"
@@ -9,9 +8,6 @@
 
 XIIlib::Bishop::Bishop()
 {
-	// モデルの初期化
-	collCapsule = CollisionCapsule::Create({ 0,1,0 }, { 0,-1,0 }, 0.5f, 16);
-	collCapsule->SetColor(0, 1, 0, 1);
 	// 各ステータスの初期化
 	_cost = 0;
 	_hit_point = 2;
@@ -22,7 +18,7 @@ XIIlib::Bishop::Bishop()
 XIIlib::Bishop::~Bishop()
 {
 	delete attackTimer;
-	delete collCapsule;
+	delete object3d;
 }
 
 std::shared_ptr<XIIlib::Bishop> XIIlib::Bishop::Create(int point_x, int point_z)
@@ -56,9 +52,6 @@ void XIIlib::Bishop::Update()
 	// 駒の行動
 	Action();
 	// 位置座標の更新
-	collCapsule->SetPosition(
-		Common::ConvertTilePosition(element_stock.a), 1.0f,
-		Common::ConvertTilePosition(element_stock.b));
 	std::cout << tileRand << "ビショップ" << std::endl;
 
 	object3d->position = { Common::ConvertTilePosition(element_stock.a),1.0f, Common::ConvertTilePosition(element_stock.b) };
@@ -205,7 +198,6 @@ void XIIlib::Bishop::Update()
 	attackTimer->Timer();
 	attackTimer->SetPosition(object3d->position);
 
-	collCapsule->Update();
 	object3d->Update();
 }
 
@@ -271,14 +263,6 @@ void XIIlib::Bishop::Attack()
 	// カウントを減らす
 	attackInterval--;
 	//色を変える
-	if (attackInterval <= 150 && attackInterval >= 120 || attackInterval <= 90 && attackInterval >= 75 || attackInterval <= 60 && attackInterval >= 45 || attackInterval <= 30 && attackInterval >= 15)
-	{
-		collCapsule->SetColor(1, 0, 0, 1);
-	}
-	else
-	{
-		collCapsule->SetColor(0, 1, 0, 1);
-	}
 	if (attackTimer->SizeZeroFlag())
 	{
 		Math::Point2 dif = preElement_stock - element_stock;
@@ -316,7 +300,6 @@ void XIIlib::Bishop::Move()
 
 	//notAttackflag = TRUE;
 
-	collCapsule->SetColor(0, 1, 0, 1);
 	//Math::Point2 dif = kingPos - element_stock;
 	Math::Point2 temp = element_stock;
 	// もうすでに範囲上にいたら動かない
@@ -522,7 +505,6 @@ void XIIlib::Bishop::IniState()
 {
 	isAttack = false;
 	attackInterval = 180;
-	collCapsule->SetColor(0, 1, 0, 1);
 }
 
 void XIIlib::Bishop::Hit(int attackPoint)

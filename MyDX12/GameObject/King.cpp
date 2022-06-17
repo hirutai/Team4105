@@ -1,5 +1,4 @@
 #include "King.h"
-#include "../3D/CollCapsule.h"
 #include "../Input/KeyInput.h"
 #include "Common.h"
 #include "UnitManager.h"
@@ -10,8 +9,6 @@
 
 XIIlib::King::King()
 {
-	// モデルの初期化
-	collCapsule = CollisionCapsule::Create({ 0,1,0 }, {0,-1,0},0.5f,16);
 	// 各ステータスの初期化
 	_cost = 0;
 	_hit_point = 2;
@@ -21,7 +18,7 @@ XIIlib::King::King()
 
 XIIlib::King::~King()
 {
-	delete collCapsule;
+	delete object3d;
 }
 
 std::shared_ptr<XIIlib::King> XIIlib::King::CreateKing(int point_x, int point_z)
@@ -75,24 +72,18 @@ void XIIlib::King::Update()
 	}
 
 	if (is_hit) {
-		collCapsule->SetColor(1, 0, 0, 1);
 		damage_counter++;
 
 		if (damage_counter > 20) {
 			is_hit = 0;
 			damage_counter = 0;
-			collCapsule->SetColor(1, 1, 1, 1);
 		}
 	}
 
 	// 位置座標の更新
-	collCapsule->SetPosition(
-		Common::ConvertTilePosition(element_stock.a),1.0f,
-		Common::ConvertTilePosition(element_stock.b));
 
 	object3d->position = { Common::ConvertTilePosition(element_stock.a),1.0f, Common::ConvertTilePosition(element_stock.b) };
 
-	collCapsule->Update();
 	object3d->Update();
 }
 
