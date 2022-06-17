@@ -5,6 +5,7 @@
 #include "UnitManager.h"
 #include "../Tool/Messenger.h"
 #include "../3D/Object3D.h"
+#include "../GameObject/AttackTimer.h"
 
 XIIlib::Bishop::Bishop()
 {
@@ -20,6 +21,7 @@ XIIlib::Bishop::Bishop()
 
 XIIlib::Bishop::~Bishop()
 {
+	delete attackTimer;
 	delete collCapsule;
 }
 
@@ -45,6 +47,8 @@ void XIIlib::Bishop::Initialize()
 	CreateAttackArea();
 	object3d = Object3D::Create(Model::CreateFromOBJ("bike"));
 
+	attackTimer = new AttackTimer(countingNum);
+	attackTimer->Initialize();
 }
 
 void XIIlib::Bishop::Update()
@@ -198,6 +202,9 @@ void XIIlib::Bishop::Update()
 		}
 	}
 
+	attackTimer->Timer();
+	attackTimer->SetPosition(object3d->position);
+
 	collCapsule->Update();
 	object3d->Update();
 }
@@ -241,7 +248,7 @@ void XIIlib::Bishop::Action()
 	{
 		Move();
 	}
-	if (UnitManager::GetInstance()->GetIntervalTimer() == 420)
+	if (attackTimer->SizeZeroFlag())
 	{
 		notAttackflag = TRUE;
 	}
@@ -272,7 +279,7 @@ void XIIlib::Bishop::Attack()
 	{
 		collCapsule->SetColor(0, 1, 0, 1);
 	}
-	if (UnitManager::GetInstance()->GetIntervalTimer() == 420)
+	if (attackTimer->SizeZeroFlag())
 	{
 		Math::Point2 dif = preElement_stock - element_stock;
 		Math::Point2 temp = element_stock;
@@ -305,7 +312,7 @@ void XIIlib::Bishop::Move()
 {
 
 	if (isAttack == true)return;
-	if (UnitManager::GetInstance()->GetIntervalTimer() < 420)return;
+	if (!attackTimer->SizeZeroFlag())return;
 
 	//notAttackflag = TRUE;
 
@@ -540,6 +547,11 @@ void XIIlib::Bishop::SetTypePositioning(_PositionType changeType)
 void XIIlib::Bishop::CreateAttackArea()
 {
 
+}
+
+void XIIlib::Bishop::BillObjectDraw()
+{
+	attackTimer->Draw(); // 攻撃タイマーの描画
 }
 
 bool XIIlib::Bishop::MoveAreaCheck(Math::Point2 crPos, Math::Point2 vec, int tileNum)
