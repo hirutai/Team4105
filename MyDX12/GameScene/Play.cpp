@@ -81,6 +81,8 @@ void XIIlib::Play::Initialize(GameScene* p_game_scene)
 		UnitManager::GetInstance()->AddUnit(std::move(yankee3));
 		UnitManager::GetInstance()->AddUnit(std::move(yankee4));
 		//UnitManager::GetInstance()->AddUnit(std::move(stone));
+
+		spStageBG1 = Sprite::Create((UINT)SpriteName::STAGEBG1_SP, { 0.0f,0.0f });
 	}
 	p_game_scene->GetAudio()->PlayBGM("yankeeBGM.wav");
 }
