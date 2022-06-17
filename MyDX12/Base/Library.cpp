@@ -110,6 +110,7 @@ void XIIlib::Library::RunTimer()
 		stream << fps << " FPS" << std::endl;
 		// カウンタ付けて10回に1回出力、とかにしないと見づらいかもね
 		OutputDebugString(stream.str().c_str());
+		std::wcout << stream.str() << std::endl;
 #endif // _DEBUG
 	}
 

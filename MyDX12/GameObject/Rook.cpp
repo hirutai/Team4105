@@ -59,7 +59,6 @@ void XIIlib::Rook::Update()
 	collCapsule->SetPosition(
 		Common::ConvertTilePosition(element_stock.a), 1.0f,
 		Common::ConvertTilePosition(element_stock.b));
-	std::cout << tileRand << std::endl;
 
 	object3d->position = { Common::ConvertTilePosition(element_stock.a),1.0f, Common::ConvertTilePosition(element_stock.b) };
 	
