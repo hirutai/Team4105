@@ -100,9 +100,6 @@ bool WindowsApp::Message()
 			DispatchMessage(&msg); // ウィンドウプロシージャにメッセージを送る
 		}
 	}
-	else {
-		Sleep(5);
-	}
 
 	return false;
 }

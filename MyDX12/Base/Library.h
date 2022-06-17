@@ -1,4 +1,6 @@
 #pragma once
+#include <windows.h>
+
 // プロトタイプ宣言
 class WindowsApp;
 class DirectX12;
@@ -16,8 +18,13 @@ namespace XIIlib
 		DirectX12* dx12;
 		KeyInput* keyInput;
 		//ControllerInput* pad_input;
-		const unsigned int timerId = 1;
-		const unsigned int frameRate = (1000 / 60);
+		const float MIN_FREAM_TIME = 1.0f / 60;
+		float frameTime = 0;
+		LARGE_INTEGER timeStart;
+		LARGE_INTEGER timeEnd;
+		LARGE_INTEGER timeFreq;
+		// fpsを取得するなら0で初期化しないとゴミが混ざってマイナスから始まったりする(かも知れない)
+		float fps = 0;
 
 	public:
 		// コンストラクタ
@@ -27,9 +34,9 @@ namespace XIIlib
 		// 初期化
 		int Initialize();
 		// FPSの固定(簡易)
-		void SetFPS();
+		int GetQuery();
 		// Timerの破棄
-		void ReleaseTimer();
+		void RunTimer();
 		// メッセージ
 		bool Message();
 		// 入力処理の更新

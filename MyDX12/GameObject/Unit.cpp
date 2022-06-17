@@ -15,5 +15,4 @@ bool XIIlib::Unit::ThreeCheckArea(Math::Point2 element_stock)
 
 void XIIlib::Unit::BillObjectDraw()
 {
-	std::cout << "板ポリビルボードは描画されていません!!" << std::endl;
 }
