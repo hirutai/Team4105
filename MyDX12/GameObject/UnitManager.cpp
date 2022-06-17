@@ -126,6 +126,11 @@ bool XIIlib::UnitManager::AllOnUnit(const Math::Point2& point)
 	return false;
 }
 
+bool XIIlib::UnitManager::IsPlayerOnTile(const Math::Point2& point)
+{
+	return false;
+}
+
 int XIIlib::UnitManager::GetUnitIDElements(std::string name) const
 {
 	for (int i = 0; i < units.size(); i++)
@@ -205,6 +210,11 @@ std::vector<int> XIIlib::UnitManager::GetOnUnitElements(const Math::Point2& poin
 const unsigned int XIIlib::UnitManager::GetIntervalTimer()
 {
 	return _intervalTimter->GetTimer();
+}
+
+int XIIlib::UnitManager::GetAllUnitCount() const
+{
+	units.size();
 }
 
 void XIIlib::UnitManager::AddCountDead()
