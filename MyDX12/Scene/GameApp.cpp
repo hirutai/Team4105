@@ -112,6 +112,8 @@ void GameApp::Initialize()
 	Sprite::LoadTexture(texind, L"Resources/Normal.png"); texind++;
 	Sprite::LoadTexture(texind, L"Resources/Hard.png"); texind++;
 	Sprite::LoadTexture(texind, L"Resources/waku.png"); texind++;
+	Sprite::LoadTexture(texind, L"Resources/TitleBG.png"); texind++;
+
 	debugJIS = DebugJISText::GetInstance();
 	debugJIS->Initialize(debugJISTextTexNumber);
 
