@@ -108,7 +108,10 @@ void GameApp::Initialize()
 	Sprite::LoadTexture(texind, L"Resources/PushA.png");      texind++;
 	Sprite::LoadTexture(texind, L"Resources/GameOver.png");   texind++;
 	Sprite::LoadTexture(texind, L"Resources/stage_BG1.png");   texind++;
-
+	Sprite::LoadTexture(texind, L"Resources/Easy.png"); texind++;
+	Sprite::LoadTexture(texind, L"Resources/Normal.png"); texind++;
+	Sprite::LoadTexture(texind, L"Resources/Hard.png"); texind++;
+	Sprite::LoadTexture(texind, L"Resources/waku.png"); texind++;
 	debugJIS = DebugJISText::GetInstance();
 	debugJIS->Initialize(debugJISTextTexNumber);
 

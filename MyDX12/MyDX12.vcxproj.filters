@@ -360,6 +360,9 @@
     <ClCompile Include="GameObject\AttackTimer.cpp">
       <Filter>GameObject\GameTimer</Filter>
     </ClCompile>
+    <ClCompile Include="GameScene\Select.cpp">
+      <Filter>GameScene\StateScene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Base\DirectX12.h">
@@ -604,6 +607,9 @@
     </ClInclude>
     <ClInclude Include="GameObject\AttackTimer.h">
       <Filter>GameObject\GameTimer</Filter>
+    </ClInclude>
+    <ClInclude Include="GameScene\Select.h">
+      <Filter>GameScene\StateScene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
