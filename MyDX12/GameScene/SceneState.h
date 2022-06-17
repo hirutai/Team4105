@@ -15,6 +15,7 @@ namespace XIIlib
 		HARD_BUTTON_SP,
 		EDGE_SP,
 		TITLEBG_SP,
+		TITLELOG_SP,
 		GAMECLEAR_SP
 	};
 

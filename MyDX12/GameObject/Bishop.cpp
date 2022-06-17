@@ -509,11 +509,13 @@ void XIIlib::Bishop::IniState()
 
 void XIIlib::Bishop::Hit(int attackPoint)
 {
-	int _damage = _defense_point - attackPoint;
-	if (_damage < 0) {
-		_hit_point += _damage;
-		is_hit = 1;
-	}
+	//int _damage = _defense_point - attackPoint;
+	//if (_damage < 0) {
+	//	_hit_point += _damage;
+	//	is_hit = 1;
+	//}
+
+	_hit_point -= attackPoint;
 }
 
 void XIIlib::Bishop::SetElementStock(int x, int z)
