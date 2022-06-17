@@ -71,7 +71,7 @@ void WindowsApp::GenerateWindow()
 
 	// ウィンドウオブジェクトの生成
 	hwnd = CreateWindow(w.lpszClassName,	// クラス名
-			L"DucKing",						// タイトルバーの文字
+			L"盤長",						// タイトルバーの文字
 			WS_OVERLAPPEDWINDOW,			// タイトルバーと境界線があるウィンドウ
 			CW_USEDEFAULT,					// 表示X座標（OSに任せる）
 			CW_USEDEFAULT,					// 表示Y座標（OSに任せる）
