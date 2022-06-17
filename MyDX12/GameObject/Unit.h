@@ -6,7 +6,7 @@
 class Object3D;
 
 namespace XIIlib {
-	class Audio;
+
 	// UŒ‚ƒGƒŠƒA
 	enum struct AREA : int {
 		NONE =-1,
@@ -49,8 +49,6 @@ namespace XIIlib {
 		int SwitchRandiMin = 0;
 		int SwitchRandiMax = 3;
 		int SwitchRand = 0;
-
-		Audio* audio_ = nullptr;
 
 		// ’Ç‰Á
 		unsigned int attackInterval = 180;

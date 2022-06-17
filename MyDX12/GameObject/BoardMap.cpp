@@ -2,7 +2,6 @@
 #include "../Struct/Math.h"
 #include "Tile.h"
 #include "../3D/CollBox.h"
-#include "Common.h"
 
 XIIlib::BoardMap* XIIlib::BoardMap::Create()
 {
@@ -107,9 +106,6 @@ void XIIlib::BoardMap::SetOnTile(const Math::Point2& element)
 
 bool XIIlib::BoardMap::IsAttackValid(const Math::Point2& element, int type_positioning) const
 {
-	if (Common::GetExceptionPoint(element.a))return false;
-	if (Common::GetExceptionPoint(element.b))return false;
-	
 	if (type_positioning == 0) {
 		return map_board[element.b][element.a]->IsPlayerAttackValid();
 	}

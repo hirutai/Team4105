@@ -25,6 +25,6 @@ namespace XIIlib {
 	private:
 		Sprite* spPushA = nullptr;
 		Sprite* spTitleBG = nullptr;
-		Sprite* spTitleLog = nullptr;
+
 	};
 }

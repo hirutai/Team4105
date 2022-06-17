@@ -4,7 +4,6 @@
 #include "UnitManager.h"
 #include "../Tool/Messenger.h"
 #include "../3D/Object3D.h"
-#include "../Audio/Audio.h"
 #include "../GameObject/AttackTimer.h"
 
 XIIlib::Yankee::Yankee()
@@ -43,8 +42,6 @@ void XIIlib::Yankee::Initialize()
 	type = _PositionType::ENEMY;
 	CreateAttackArea();
 	object3d = Object3D::Create(Model::CreateFromOBJ("Badboy_Enemy"));
-	// Audioの初期化
-	audio_ = UnitManager::GetInstance()->GetAudio();
 
 	attackTimer = new AttackTimer(5);
 	attackTimer->Initialize();
@@ -55,6 +52,9 @@ void XIIlib::Yankee::Update()
 
 	// 駒の行動
 	Action();
+
+	{// 敵の
+	}
 
 	// 位置座標の更新
 	object3d->position = { Common::ConvertTilePosition(element_stock.a),1.0f, Common::ConvertTilePosition(element_stock.b) };
@@ -282,7 +282,7 @@ void XIIlib::Yankee::Attack()
 
 		// 攻撃
 		element_stock = preElement_stock;
-		audio_->PlaySE("yankeeVoice.wav");
+
 		IniState();
 		//notAttackflag = false;
 	}
