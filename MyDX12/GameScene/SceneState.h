@@ -14,6 +14,7 @@ namespace XIIlib
 		NORMAL_BUTTON_SP,
 		HARD_BUTTON_SP,
 		EDGE_SP,
+		TITLEBG_SP,
 	};
 
 	// ステージナンバー
