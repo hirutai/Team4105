@@ -3,6 +3,7 @@
 #include "Play.h"
 #include "../Input/KeyInput.h"
 #include "../Tool/DebugJISText.h"
+#include "../Audio/Audio.h"
 
 XIIlib::Menu::Menu()
 {
@@ -19,7 +20,7 @@ XIIlib::Menu::~Menu()
 void XIIlib::Menu::Initialize(GameScene* p_game_scene)
 {
 	// SceneØ‚è‘Ö‚¦Žž‚Éˆê“x’Ê‚éˆ—
-
+	p_game_scene->GetAudio()->PlayBGM("yankeeBGM.wav");
 }
 
 void XIIlib::Menu::Update(GameScene* p_game_scene)

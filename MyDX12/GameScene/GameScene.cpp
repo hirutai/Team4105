@@ -38,6 +38,7 @@ XIIlib::GameScene::~GameScene()
 
 void XIIlib::GameScene::ChangeState(SceneState* different_state)
 {
+	audio->StopBGM();
 	delete state;
 	state = different_state;
 	state->Initialize(this);

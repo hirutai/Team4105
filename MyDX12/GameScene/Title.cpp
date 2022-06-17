@@ -5,6 +5,7 @@
 #include "../Input/KeyInput.h"
 #include "../Tool/DebugJISText.h"
 #include "../2D/Sprite.h"
+#include "../Audio/Audio.h"
 
 XIIlib::Title::Title()
 {
@@ -22,6 +23,7 @@ void XIIlib::Title::Initialize(GameScene* p_game_scene)
 {
 	// SceneØ‚è‘Ö‚¦Žž‚Éˆê“x’Ê‚éˆ—
 	spPushA = Sprite::Create(PUSHA_SP, {0.0f,0.0f});
+	p_game_scene->GetAudio()->PlayBGM("yankeeBGM.wav");
 }
 
 void XIIlib::Title::Update(GameScene* p_game_scene)
