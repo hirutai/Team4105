@@ -20,6 +20,7 @@ namespace XIIlib
 		void Update();
 		void Draw();
 		void DrawSprite();
+		void DrawBackground();
 		//void SetGamePad();
 
 		Audio* GetAudio()const;
