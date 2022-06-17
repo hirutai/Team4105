@@ -47,6 +47,8 @@ namespace XIIlib {
 
 		// 指定マスにユニットが載っているか?
 		bool AllOnUnit(const Math::Point2& point);
+		// そのマスにプレイヤーが存在するか否か
+		bool IsPlayerOnTile(const Math::Point2& point);
 
 		// 指定文字列からユニットの"ID(クラス名)"がヒットした要素数を返す
 		int GetUnitIDElements(std::string name)const;
@@ -86,6 +88,9 @@ namespace XIIlib {
 		/// </summary>
 		/// <returns> unsigned int タイマーを返す</returns>
 		const unsigned int GetIntervalTimer();
+
+		// 管理しているユニット数(全て)
+		int GetAllUnitCount()const;
 
 		// 敵が死んだ時にカウント関数
 		void AddCountDead();
