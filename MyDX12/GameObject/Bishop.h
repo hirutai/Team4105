@@ -3,9 +3,14 @@
 #include <memory>
 
 namespace XIIlib {
+	class AttackTimer;
+
 	class Bishop : public Unit {
 	private:
 		Math::Point2 point_attack;
+
+		AttackTimer* attackTimer = nullptr; // 攻撃タイマー
+		int countingNum = 5; // カウントしたい数
 	public:
 		Bishop();
 		~Bishop();
@@ -30,6 +35,8 @@ namespace XIIlib {
 		void SetTypePositioning(_PositionType changeType)override;
 
 		void CreateAttackArea()override;
+
+		void BillObjectDraw()override;
 
 		Math::Point2 GetElementStock()const { return element_stock; }
 
