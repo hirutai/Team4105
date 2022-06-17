@@ -95,7 +95,6 @@ void XIIlib::Play::Update(GameScene* p_game_scene)
 	{
 		p_game_scene->ChangeState(new End);
 	}
-	DebugJISText::GetInstance()->Print("ƒvƒŒƒC", 0, 0, 1);
 }
 
 void XIIlib::Play::Draw()
