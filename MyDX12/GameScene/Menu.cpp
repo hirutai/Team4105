@@ -1,6 +1,6 @@
 #include "Menu.h"
 #include "GameScene.h"
-#include "Play.h"
+#include "Select.h"
 #include "../Input/KeyInput.h"
 #include "../Tool/DebugJISText.h"
 #include "../Audio/Audio.h"
@@ -27,11 +27,11 @@ void XIIlib::Menu::Update(GameScene* p_game_scene)
 {
 	// XV
 	if (KeyInput::GetInstance()->Trigger(DIK_SPACE)) {
-		p_game_scene->ChangeState(new Play);
+		p_game_scene->ChangeState(new Select);
 	}
 
 	if (gamePad_->Button_Down(X_A)) {
-		p_game_scene->ChangeState(new Play);
+		p_game_scene->ChangeState(new Select);
 	}
 
 }

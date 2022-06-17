@@ -36,7 +36,7 @@ void XIIlib::Play::Initialize(GameScene* p_game_scene)
 	intervalTimter->Initialize(4, 5);
 	UnitManager::GetInstance()->SetIntervalTimer(intervalTimter);
 	
-	if (stageNum == EASY)
+	if (stageNum == StageNumber::EASY)
 	{
 		// SceneØ‚è‘Ö‚¦‚Éˆê“x’Ê‚éˆ—
 		std::shared_ptr<King> king = std::move(King::CreateKing(1, 0));
@@ -48,9 +48,9 @@ void XIIlib::Play::Initialize(GameScene* p_game_scene)
 		//UnitManager::GetInstance()->AddUnit(std::move(bishop));
 		//UnitManager::GetInstance()->AddUnit(std::move(rook));
 		UnitManager::GetInstance()->AddUnit(std::move(yankee));
-		spStageBG1 = Sprite::Create(STAGEBG1_SP, { 0.0f,0.0f });
+		spStageBG1 = Sprite::Create((UINT)SpriteName::STAGEBG1_SP, { 0.0f,0.0f });
 	}
-	else if (stageNum == NORMAL)
+	else if (stageNum == StageNumber::NORMAL)
 	{
 		// SceneØ‚è‘Ö‚¦‚Éˆê“x’Ê‚éˆ—
 		std::shared_ptr<King> king = std::move(King::CreateKing(1, 0));

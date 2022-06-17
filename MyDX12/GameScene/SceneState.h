@@ -5,21 +5,26 @@ namespace XIIlib
 	class GameScene;
 
 	// スプライトの名前
-	enum SpriteName
+	enum class SpriteName : int
 	{
 		PUSHA_SP = 6,
 		GAMEOVER_SP,
 		STAGEBG1_SP,
+		EASY_BUTTON_SP,
+		NORMAL_BUTTON_SP,
+		HARD_BUTTON_SP,
+		EDGE_SP,
 	};
 
 	// ステージナンバー
-	enum StageNumber
+	enum class StageNumber : int
 	{
 		DEBUG = -1,
 		EASY,
 		NORMAL,
 		HARD,
 	};
+
 	// 基底状態クラス
 	class SceneState
 	{

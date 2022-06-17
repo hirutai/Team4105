@@ -1,11 +1,11 @@
 #include "Title.h"
 #include "GameScene.h"
 #include "Menu.h"
+#include "Select.h"
 #include "Play.h"
 #include "../Input/KeyInput.h"
 #include "../Tool/DebugJISText.h"
 #include "../2D/Sprite.h"
-#include "../Audio/Audio.h"
 
 XIIlib::Title::Title()
 {
@@ -22,29 +22,27 @@ XIIlib::Title::~Title()
 void XIIlib::Title::Initialize(GameScene* p_game_scene)
 {
 	// SceneØ‚è‘Ö‚¦Žž‚Éˆê“x’Ê‚éˆ—
-	spPushA = Sprite::Create(PUSHA_SP, {0.0f,0.0f});
-	p_game_scene->GetAudio()->PlayBGM("yankeeBGM.wav");
+	spPushA = Sprite::Create((UINT)SpriteName::PUSHA_SP, {0.0f,0.0f});
 }
 
 void XIIlib::Title::Update(GameScene* p_game_scene)
 {
 	// XV
 	if (KeyInput::GetInstance()->Trigger(DIK_SPACE)) {
-		p_game_scene->ChangeState(new Play);
+		p_game_scene->ChangeState(new Select);
 	}
 
 	if (gamePad_->Button_Down(X_A)) {
-		p_game_scene->ChangeState(new Play);
+		p_game_scene->ChangeState(new Select);
 	}
 
 	if (gamePad_->Button_Down(X_Y)) {
-		stageNum = EASY;
+		stageNum = StageNumber::EASY;
 	}
 
 	if (gamePad_->Button_Down(X_X)) {
-		stageNum = NORMAL;
+		stageNum = StageNumber::NORMAL;
 	}
-
 }
 
 void XIIlib::Title::Draw()
