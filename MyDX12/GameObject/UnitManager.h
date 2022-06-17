@@ -84,6 +84,8 @@ namespace XIIlib {
 		void AddCountDead();
 		// カウントのリセット
 		void ResetCount();
+		// カウントのゲッター
+		int GetDeadCount()const { return deadCount; }
 
 	};
 
