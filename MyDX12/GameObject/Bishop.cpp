@@ -4,6 +4,7 @@
 #include "UnitManager.h"
 #include "../Tool/Messenger.h"
 #include "../3D/Object3D.h"
+#include "../Audio/Audio.h"
 #include "../GameObject/AttackTimer.h"
 
 XIIlib::Bishop::Bishop()
@@ -42,6 +43,8 @@ void XIIlib::Bishop::Initialize()
 	type = _PositionType::ENEMY;
 	CreateAttackArea();
 	object3d = Object3D::Create(Model::CreateFromOBJ("bike"));
+	// Audio‚Ì‰Šú‰»
+	audio_ = UnitManager::GetInstance()->GetAudio();
 
 	attackTimer = new AttackTimer(countingNum);
 	attackTimer->Initialize();
@@ -287,6 +290,7 @@ void XIIlib::Bishop::Attack()
 		//if (AttackAreaExists()) { preElement_stock = kingPos; }
 		// UŒ‚
 		element_stock = preElement_stock;
+		audio_->PlaySE("yankeeVoice.wav");
 		IniState();
 		//notAttackflag = FALSE;
 	}
@@ -341,6 +345,7 @@ void XIIlib::Bishop::Move()
 		{
 			element_stock = temp;
 		}
+		audio_->PlaySE("yankeeVoice.wav");
 		break;
 	case 1:
 		//‰E‰º•ûŒü			
@@ -368,6 +373,7 @@ void XIIlib::Bishop::Move()
 		{
 			element_stock = temp;
 		}
+		audio_->PlaySE("yankeeVoice.wav");
 		break;
 	case 2:
 		//¶ã•ûŒü
@@ -395,6 +401,7 @@ void XIIlib::Bishop::Move()
 		{
 			element_stock = temp;
 		}
+		audio_->PlaySE("yankeeVoice.wav");
 		break;
 	case 3:
 		//‰Eã•ûŒü
@@ -422,6 +429,7 @@ void XIIlib::Bishop::Move()
 		{
 			element_stock = temp;
 		}
+		audio_->PlaySE("yankeeVoice.wav");
 		break;
 	}
 	return;

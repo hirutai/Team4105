@@ -387,7 +387,8 @@ void XIIlib::Rook::Move()
 		{
 			element_stock.a = temp.a;
 		}
-			break;
+		break;
+		audio_->PlaySE("yankeeVoice.wav");
 	case 1:
 		//右方向
 
@@ -404,6 +405,7 @@ void XIIlib::Rook::Move()
 			element_stock.a = temp.a;
 		}
 		break;
+		audio_->PlaySE("yankeeVoice.wav");
 	case 2:
 		//下方向
 		tileRand = jMin + (int)(rand() * (jMax - jMin + 1) / (1 + RAND_MAX));
@@ -419,6 +421,7 @@ void XIIlib::Rook::Move()
 			element_stock.b = temp.b;
 		}
 		break;
+		audio_->PlaySE("yankeeVoice.wav");
 	case 3:
 		//上方向
 		tileRand = jMin + (int)(rand() * (jMax - jMin + 1) / (1 + RAND_MAX));
@@ -433,8 +436,10 @@ void XIIlib::Rook::Move()
 		{
 			element_stock.b = temp.b;
 		}
+		audio_->PlaySE("yankeeVoice.wav");
 		break;
 	}
+
 	return;
 
 	//ルークの座標ープレイヤーの座標
