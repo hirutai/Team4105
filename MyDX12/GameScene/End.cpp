@@ -5,6 +5,7 @@
 #include "../Tool/DebugJISText.h"
 #include "../GameObject/UnitManager.h"
 #include "../2D/Sprite.h"
+#include "../Audio/Audio.h"
 
 
 XIIlib::End::End()
@@ -24,6 +25,7 @@ void XIIlib::End::Initialize(GameScene* p_game_scene)
 	// SceneØ‚è‘Ö‚¦Žž‚Éˆê“x’Ê‚éˆ—
 	UnitManager::GetInstance()->AllDestroy();
 	spGameOver = Sprite::Create(GAMEOVER_SP, {0.0f,0.0f});
+	p_game_scene->GetAudio()->PlayBGM("yankeeBGM.wav");
 }
 
 void XIIlib::End::Update(GameScene* p_game_scene)
@@ -31,10 +33,12 @@ void XIIlib::End::Update(GameScene* p_game_scene)
 	// XV
 	if (KeyInput::GetInstance()->Trigger(DIK_SPACE)) {
 		p_game_scene->ChangeState(new Title);
+		p_game_scene->GetAudio()->StopBGM();
 	}
 
 	if (gamePad_->Button_Down(X_A)) {
 		p_game_scene->ChangeState(new Title);
+		p_game_scene->GetAudio()->StopBGM();
 	}
 
 }

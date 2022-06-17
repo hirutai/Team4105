@@ -13,6 +13,7 @@
 #include"../GameObject/AttackAreaManager.h"
 #include "../GameObject/IntervalTimer.h"
 #include "../2D/Sprite.h"
+#include "../Audio/Audio.h"
 
 XIIlib::Play::Play()
 {
@@ -80,6 +81,7 @@ void XIIlib::Play::Initialize(GameScene* p_game_scene)
 		UnitManager::GetInstance()->AddUnit(std::move(yankee4));
 		//UnitManager::GetInstance()->AddUnit(std::move(stone));
 	}
+	p_game_scene->GetAudio()->PlayBGM("yankeeBGM.wav");
 }
 
 void XIIlib::Play::Update(GameScene* p_game_scene)
@@ -92,11 +94,13 @@ void XIIlib::Play::Update(GameScene* p_game_scene)
 
 	if (KeyInput::GetInstance()->Trigger(DIK_SPACE)) {
 		p_game_scene->ChangeState(new End);
+		p_game_scene->GetAudio()->StopBGM();
 	}
 
 	if (gamePad_->Button_Down(X_A))
 	{
 		p_game_scene->ChangeState(new End);
+		p_game_scene->GetAudio()->StopBGM();
 	}
 }
 
