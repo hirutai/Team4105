@@ -18,5 +18,6 @@ namespace XIIlib {
 		void Update(GameScene* p_game_scene)override;
 		void Draw()override;
 		void DrawTex()override;
+		void DrawBackground()override;
 	};
 }

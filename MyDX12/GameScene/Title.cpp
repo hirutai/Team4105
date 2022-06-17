@@ -57,3 +57,8 @@ void XIIlib::Title::DrawTex()
 	// スプライト描画
 	spPushA->Draw();
 }
+
+void XIIlib::Title::DrawBackground()
+{
+
+}

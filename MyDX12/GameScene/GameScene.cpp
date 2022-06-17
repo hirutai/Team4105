@@ -88,6 +88,11 @@ void XIIlib::GameScene::DrawSprite()
 	state->DrawTex();
 }
 
+void XIIlib::GameScene::DrawBackground()
+{
+	state->DrawBackground();
+}
+
 XIIlib::Audio* XIIlib::GameScene::GetAudio() const
 {
 	return audio;

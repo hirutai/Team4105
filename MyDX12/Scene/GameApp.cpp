@@ -205,6 +205,7 @@ void GameApp::BackSc()
 {
 	Sprite::PreDraw();
 
+	game_scene->DrawBackground();
 
 	Sprite::PostDraw();
 	DirectX12::ClearDepthBuffer();

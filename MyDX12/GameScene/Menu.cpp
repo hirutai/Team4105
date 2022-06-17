@@ -47,3 +47,8 @@ void XIIlib::Menu::DrawTex()
 	// スプライト描画
 
 }
+
+void XIIlib::Menu::DrawBackground()
+{
+
+}

@@ -51,3 +51,8 @@ void XIIlib::End::DrawTex()
 	// スプライト描画
 	spGameOver->Draw();
 }
+
+void XIIlib::End::DrawBackground()
+{
+
+}
