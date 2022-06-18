@@ -54,151 +54,12 @@ void XIIlib::Rook::Update()
 {
 	// 駒の行動
 	Action();
-	
-	// 位置座標の更新
-	object3d->position = { Common::ConvertTilePosition(element_stock.a),1.0f, Common::ConvertTilePosition(element_stock.b) };
-	
-	// 攻撃当たったら
-	if (UnitManager::GetInstance()->IsAttackValid(element_stock, (int)_PositionType::MINE)) {
-		Hit(1);
-		isAttack = false;
-
-		// ノックバックの移動量
-		const Math::Point2 backVector = UnitManager::GetInstance()->GetBackVector(element_stock);
-		
-		// ノックバック
-		const int countLoop = 2;
-		for (int i = 0; i < countLoop; i++) {
-			Math::Point2 movePoint = backVector / 2.0f;
-			if (Common::GetExceptionPoint(element_stock.a + movePoint.a) || Common::GetExceptionPoint(element_stock.b + movePoint.b)) {
-				movePoint *= 0;
-			}
-			element_stock += movePoint;
-		}
-		Math::Point2 dif = kingPos - element_stock;
-		Math::Point2 temp = kingPos;
-		// ノックバック時に間に他の駒がいる場合、その間の駒の位置に止まる
-		// 縦にノックバック
-		if (dif.a == 0)
-		{
-			// 0より小さければKingより上にいる
-			if (dif.b < 0)
-			{
-				// 自分とキングの間を1マスづつ調べる
-				for (int i = 0; i < abs(dif.b) - 1; ++i)
-				{
-					temp.b++;
-					if (UnitManager::GetInstance()->AllOnUnit(temp))
-					{
-						element_stock = temp;
-					}
-				}
-			}
-			else // 0より大きければKingより下にいる
-			{
-				// 自分とキングの間を1マスづつ調べる
-				for (int i = 0; i < abs(dif.b) - 1; ++i)
-				{
-					temp.b--;
-					if (UnitManager::GetInstance()->AllOnUnit(temp))
-					{
-						element_stock = temp;
-					}
-				}
-			}
-		}
-		else if (dif.b == 0) // 横にノックバック
-		{
-			// 0より小さければKingより右
-			if (dif.a < 0)
-			{
-				// 自分とキングの間を1マスづつ調べる
-				for (int i = 0; i < abs(dif.a) - 1; ++i)
-				{
-					temp.a++;
-					if (UnitManager::GetInstance()->AllOnUnit(temp))
-					{
-						element_stock = temp;
-					}
-				}
-			}
-			else// 0より大きければKingより左
-			{
-				// 自分とキングの間を1マスづつ調べる
-				for (int i = 0; i < abs(dif.a) - 1; ++i)
-				{
-					temp.a--;
-					if (UnitManager::GetInstance()->AllOnUnit(temp))
-					{
-						element_stock = temp;
-					}
-				}
-			}
-		}
-		else	// 斜めにノックバック
-		{
-			// 左上にノックバック
-			if (dif.a > 0 && dif.b < 0)
-			{
-				// 自分とキングの間を1マスづつ調べる
-				for (int i = 0; i < abs(dif.a) - 1; ++i)
-				{
-					temp.a--;
-					temp.b++;
-					if (UnitManager::GetInstance()->AllOnUnit(temp))
-					{
-						element_stock = temp;
-
-					}
-				}
-			}
-			else if (dif.a < 0 && dif.b < 0)	// 右上にノックバック
-			{
-				// 自分とキングの間を1マスづつ調べる
-				for (int i = 0; i < abs(dif.a) - 1; ++i)
-				{
-					temp.a++;
-					temp.b++;
-					if (UnitManager::GetInstance()->AllOnUnit(temp))
-					{
-						element_stock = temp;
-						break;
-					}
-				}
-			}
-			else if (dif.a > 0 && dif.b > 0)	// 左下にノックバック
-			{
-				// 自分とキングの間を1マスづつ調べる
-				for (int i = 0; i < abs(dif.a) - 1; ++i)
-				{
-					temp.a--;
-					temp.b--;
-					if (UnitManager::GetInstance()->AllOnUnit(temp))
-					{
-						element_stock = temp;
-						break;
-					}
-				}
-			}
-			else if (dif.a < 0 && dif.b > 0)	// 右下にノックバック
-			{
-				// 自分とキングの間を1マスづつ調べる
-				for (int i = 0; i < abs(dif.a) - 1; ++i)
-				{
-					temp.a++;
-					temp.b--;
-					if (UnitManager::GetInstance()->AllOnUnit(temp))
-					{
-						element_stock = temp;
-						break;
-					}
-				}
-			}
-		}
-	}
-
+	// タイマーの更新
 	attackTimer->Timer();
+
+	// 位置座標の更新
 	attackTimer->SetPosition(object3d->position);
+	object3d->position = { Common::ConvertTilePosition(element_stock.a),1.0f, Common::ConvertTilePosition(element_stock.b) };
 
 	object3d->Update();
 }
@@ -267,7 +128,9 @@ void XIIlib::Rook::Action()
 		//移動範囲の色付け
 		AttackAreaDraw();
 	}
-	
+
+	// ノックバック(共通処理)
+	KnockBack();
 }
 
 void XIIlib::Rook::Attack()

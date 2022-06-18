@@ -10,6 +10,7 @@ namespace XIIlib {
 		Math::Point2 point_attack;
 		float movingTimer = 0.0f;
 		bool determinateMoveAction = false;
+		Math::Point2 nextPoint;
 
 		AttackTimer* attackTimer = nullptr; // 攻撃タイマー
 	public:
