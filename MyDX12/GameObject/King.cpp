@@ -19,6 +19,7 @@ XIIlib::King::King()
 XIIlib::King::~King()
 {
 	delete object3d;
+	delete daiza;
 }
 
 std::shared_ptr<XIIlib::King> XIIlib::King::CreateKing(int point_x, int point_z)
@@ -50,6 +51,7 @@ void XIIlib::King::Initialize()
 	CreateAttackArea();
 
 	object3d = Object3D::Create(Model::CreateFromOBJ("Badboy_Bat_1"));
+	daiza = Object3D::Create(Model::CreateFromOBJ("daiza"));
 }
 
 void XIIlib::King::Update()
@@ -86,15 +88,18 @@ void XIIlib::King::Update()
 
 	// 位置座標の更新
 
-	object3d->position = { Common::ConvertTilePosition(element_stock.a),1.0f, Common::ConvertTilePosition(element_stock.b) };
+	object3d->position = { Common::ConvertTilePosition(element_stock.a),2.0f, Common::ConvertTilePosition(element_stock.b) };
+	daiza->position = { Common::ConvertTilePosition(element_stock.a),1.0f, Common::ConvertTilePosition(element_stock.b) };
 
 	object3d->Update();
+	daiza->Update();
 }
 
 void XIIlib::King::Draw()
 {
 	//collCapsule->Draw();
 	object3d->Draw();
+	daiza->Draw();
 }
 
 void XIIlib::King::SetStartElement(int x, int z)
