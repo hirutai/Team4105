@@ -21,7 +21,7 @@ XIIlib::Knight::~Knight()
 std::shared_ptr<XIIlib::Knight> XIIlib::Knight::Create(int point_x, int point_z)
 {
 	std::shared_ptr<Knight> knight = std::make_shared<Knight>();
-	knight.get()->SetStartElement(point_x, point_z);
+	knight.get()->SetElementStock(point_x, point_z);
 	knight.get()->Initialize();
 
 	return std::move(knight);
@@ -187,11 +187,6 @@ void XIIlib::Knight::Update()
 
 void XIIlib::Knight::Draw()
 {
-}
-
-void XIIlib::Knight::SetStartElement(int x, int z)
-{
-	element_stock = Math::Point2(x, z);
 }
 
 void XIIlib::Knight::Action()
@@ -421,22 +416,6 @@ void XIIlib::Knight::IniState()
 {
 	isAttack = false;
 	attackInterval = 180;
-}
-
-void XIIlib::Knight::Hit(int attackPoint)
-{
-	//int _damage = _defense_point - attackPoint;
-	//if (_damage < 0) {
-	//	_hit_point += _damage;
-	//	is_hit = 1;
-	//}
-
-	_hit_point -= attackPoint;
-}
-
-void XIIlib::Knight::SetElementStock(int x, int z)
-{
-	element_stock.a = x; element_stock.b = z;
 }
 
 void XIIlib::Knight::SetTypePositioning(_PositionType changeType)

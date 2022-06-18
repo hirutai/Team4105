@@ -22,8 +22,6 @@ namespace XIIlib{
 		void Update()override;
 		void Draw()override;
 
-		void SetStartElement(int x, int z)override;
-
 		void Move()override;
 		void Attack()override;
 
@@ -31,9 +29,6 @@ namespace XIIlib{
 		bool AttackAreaExists()override;
 		void IniState()override;
 
-		void Hit(int attackPoint)override;
-
-		void SetElementStock(int x, int z)override;
 		void SetTypePositioning(_PositionType changeType)override;
 
 		void CreateAttackArea()override;

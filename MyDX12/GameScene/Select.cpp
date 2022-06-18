@@ -5,6 +5,7 @@
 #include "../Input/KeyInput.h"
 #include "../Tool/DebugJISText.h"
 #include "../2D/Sprite.h"
+#include "../Audio/Audio.h"
 
 XIIlib::Select::Select()
 {
@@ -23,6 +24,7 @@ void XIIlib::Select::Initialize(GameScene* p_game_scene)
 	normalButton.reset(Sprite::Create((UINT)SpriteName::NORMAL_BUTTON_SP, HOMEC_POS));
 	hardButton.reset(Sprite::Create((UINT)SpriteName::HARD_BUTTON_SP, HOMER_POS));
 	edge.reset(Sprite::Create((UINT)SpriteName::EDGE_SP, HOMEL_POS));
+	p_game_scene->GetAudio()->PlayBGM("yankeeBGM.wav");
 }
 
 void XIIlib::Select::Update(GameScene* p_game_scene)
