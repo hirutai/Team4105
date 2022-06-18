@@ -85,6 +85,7 @@ namespace XIIlib {
 		virtual void SetStartElement(int x, int z) = 0;		// 最初のマス座標の設定
 		virtual void Move() = 0;							// 移動用
 		virtual void Attack() = 0;							// 攻撃用(今は使ってない)
+		void KnockBack();
 		
 		virtual void Action() = 0;							// 行動
 		virtual bool AttackAreaExists() = 0;                // 攻撃範囲にいるか
