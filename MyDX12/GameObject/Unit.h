@@ -69,6 +69,7 @@ namespace XIIlib {
 		_PositionType type = _PositionType::MINE; // “G–¡•û”»•Ê—p
 
 		Object3D* object3d = nullptr;
+		Object3D* daiza = nullptr;
 
 		// ’Ç‰Á
 		Math::Point2 kingPos{0,0};
