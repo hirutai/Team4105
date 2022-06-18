@@ -166,3 +166,13 @@ void XIIlib::Unit::KnockBack()
 		}
 	}
 }
+
+void XIIlib::Unit::SetElementStock(int x, int z)
+{
+	element_stock = Math::Point2(x, z);
+}
+
+void XIIlib::Unit::Hit(int attackPoint)
+{
+	_hit_point -= attackPoint;
+}

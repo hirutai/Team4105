@@ -25,7 +25,7 @@ XIIlib::Bishop::~Bishop()
 std::shared_ptr<XIIlib::Bishop> XIIlib::Bishop::Create(int point_x, int point_z)
 {
 	std::shared_ptr<Bishop> rook = std::make_shared<Bishop>();
-	rook.get()->SetStartElement(point_x, point_z);
+	rook.get()->SetElementStock(point_x, point_z);
 	rook.get()->Initialize();
 
 	return std::move(rook);
@@ -67,11 +67,6 @@ void XIIlib::Bishop::Update()
 void XIIlib::Bishop::Draw()
 {
 	object3d->Draw();
-}
-
-void XIIlib::Bishop::SetStartElement(int x, int z)
-{
-	element_stock = Math::Point2(x, z);
 }
 
 void XIIlib::Bishop::Action()
@@ -375,22 +370,6 @@ void XIIlib::Bishop::IniState()
 {
 	isAttack = false;
 	attackInterval = 180;
-}
-
-void XIIlib::Bishop::Hit(int attackPoint)
-{
-	//int _damage = _defense_point - attackPoint;
-	//if (_damage < 0) {
-	//	_hit_point += _damage;
-	//	is_hit = 1;
-	//}
-
-	_hit_point -= attackPoint;
-}
-
-void XIIlib::Bishop::SetElementStock(int x, int z)
-{
-	element_stock.a = x; element_stock.b = z;
 }
 
 void XIIlib::Bishop::SetTypePositioning(_PositionType changeType)

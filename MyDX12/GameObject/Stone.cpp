@@ -22,7 +22,7 @@ XIIlib::Stone::~Stone()
 std::shared_ptr<XIIlib::Stone> XIIlib::Stone::Create(int point_x, int point_z)
 {
 	std::shared_ptr<Stone> rook = std::make_shared<Stone>();
-	rook.get()->SetStartElement(point_x, point_z);
+	rook.get()->SetElementStock(point_x, point_z);
 	rook.get()->Initialize();
 
 	return std::move(rook);
@@ -191,14 +191,7 @@ void XIIlib::Stone::Update()
 
 void XIIlib::Stone::Draw()
 {
-	//collCapsule->Draw();
 	object3d->Draw();
-}
-
-void XIIlib::Stone::SetStartElement(int x, int z)
-{
-	startElement_stock = Math::Point2(x, z);
-	element_stock = Math::Point2(x, z);
 }
 
 void XIIlib::Stone::Action()
@@ -493,16 +486,6 @@ void XIIlib::Stone::IniState()
 	//isAttack = false;
 	//attackInterval = 180;
 	//collCapsule->SetColor(0, 1, 1, 1);
-}
-
-void XIIlib::Stone::Hit(int attackPoint)
-{
-	//_hit_point -= attackPoint;
-}
-
-void XIIlib::Stone::SetElementStock(int x, int z)
-{
-	element_stock.a = x; element_stock.b = z;
 }
 
 void XIIlib::Stone::SetTypePositioning(_PositionType changeType)

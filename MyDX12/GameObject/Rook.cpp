@@ -25,7 +25,7 @@ XIIlib::Rook::~Rook()
 std::shared_ptr<XIIlib::Rook> XIIlib::Rook::Create(int point_x, int point_z)
 {
 	std::shared_ptr<Rook> rook = std::make_shared<Rook>();
-	rook.get()->SetStartElement(point_x, point_z);
+	rook.get()->SetElementStock(point_x, point_z);
 	rook.get()->Initialize();
 
 	return std::move(rook);
@@ -68,12 +68,6 @@ void XIIlib::Rook::Draw()
 {
 	//collCapsule->Draw();
 	object3d->Draw();
-}
-
-void XIIlib::Rook::SetStartElement(int x, int z)
-{
-	startElement_stock = Math::Point2(x, z);
-	element_stock = Math::Point2(x, z);
 }
 
 void XIIlib::Rook::Action()
@@ -436,22 +430,6 @@ void XIIlib::Rook::IniState()
 {
 	isAttack = false;
 	attackInterval = 180;
-}
-
-void XIIlib::Rook::Hit(int attackPoint)
-{
-	//int _damage = _defense_point - attackPoint;
-	//if (_damage < 0) {
-	//	_hit_point += _damage;
-	//	is_hit = 1;
-	//}
-
-	_hit_point -= attackPoint;
-}
-
-void XIIlib::Rook::SetElementStock(int x, int z)
-{
-	element_stock.a = x; element_stock.b = z;
 }
 
 void XIIlib::Rook::SetTypePositioning(_PositionType changeType)

@@ -25,7 +25,7 @@ XIIlib::King::~King()
 std::shared_ptr<XIIlib::King> XIIlib::King::CreateKing(int point_x, int point_z)
 {
 	std::shared_ptr<King> pawn = std::make_shared<King>();
-	pawn.get()->SetStartElement(point_x,point_z);
+	pawn.get()->SetElementStock(point_x, point_z);
 	pawn.get()->Initialize();
 
 	return std::move(pawn);
@@ -97,14 +97,8 @@ void XIIlib::King::Update()
 
 void XIIlib::King::Draw()
 {
-	//collCapsule->Draw();
 	object3d->Draw();
 	daiza->Draw();
-}
-
-void XIIlib::King::SetStartElement(int x, int z)
-{
-	element_stock = Math::Point2(x, z);
 }
 
 void XIIlib::King::Move()
@@ -202,20 +196,6 @@ bool XIIlib::King::AttackAreaExists()
 
 void XIIlib::King::IniState()
 {
-}
-
-void XIIlib::King::Hit(int attackPoint)
-{
-	int _damage = _defense_point - attackPoint;
-	if (_damage < 0) {
-		_hit_point += _damage;
-		is_hit = 1;
-	}
-}
-
-void XIIlib::King::SetElementStock(int x, int z)
-{
-	element_stock.a = x; element_stock.b = z;
 }
 
 void XIIlib::King::SetTypePositioning(_PositionType changeType)

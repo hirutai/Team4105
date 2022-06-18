@@ -62,7 +62,6 @@ namespace XIIlib {
 		bool is_dead = false;// 死亡してるかどうかを管理
 
 		Math::Point2 element_stock;// マスの座標(Vector2じゃないよ)
-		Math::Point2 startElement_stock;//初期位置
 
 		std::vector<std::vector<Math::Point2>> attack_area; // 駒が持つ攻撃範囲の情報
 
@@ -82,17 +81,16 @@ namespace XIIlib {
 		virtual void Update() = 0;
 		virtual void Draw() = 0;
 
-		virtual void SetStartElement(int x, int z) = 0;		// 最初のマス座標の設定
 		virtual void Move() = 0;							// 移動用
 		virtual void Attack() = 0;							// 攻撃用(今は使ってない)
 		void KnockBack();
+		void SetElementStock(int x, int z);		// マス座標の設定
+		void Hit(int attackPoint);				// ダメージを受ける関数
 		
 		virtual void Action() = 0;							// 行動
 		virtual bool AttackAreaExists() = 0;                // 攻撃範囲にいるか
-		virtual void Hit(int attackPoint) = 0;				// ダメージを受ける関数
 		virtual void IniState() = 0;
 
-		virtual void SetElementStock(int x, int z) = 0;		// マス座標の設定
 		virtual void SetTypePositioning(_PositionType changeType) = 0;
 
 		virtual void CreateAttackArea() = 0;

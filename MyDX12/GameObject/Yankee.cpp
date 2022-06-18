@@ -25,7 +25,7 @@ XIIlib::Yankee::~Yankee()
 std::shared_ptr<XIIlib::Yankee> XIIlib::Yankee::Create(int point_x, int point_z)
 {
 	std::shared_ptr<Yankee> rook = std::make_shared<Yankee>();
-	rook.get()->SetStartElement(point_x, point_z);
+	rook.get()->SetElementStock(point_x, point_z);
 	rook.get()->Initialize();
 
 	return std::move(rook);
@@ -71,12 +71,6 @@ void XIIlib::Yankee::Update()
 void XIIlib::Yankee::Draw()
 {
 	object3d->Draw();
-}
-
-void XIIlib::Yankee::SetStartElement(int x, int z)
-{
-	startElement_stock = Math::Point2(x, z);
-	element_stock = Math::Point2(x, z);
 }
 
 void XIIlib::Yankee::Action()
@@ -358,22 +352,6 @@ void XIIlib::Yankee::IniState()
 {
 	isAttack = false;
 	attackInterval = 180;
-}
-
-void XIIlib::Yankee::Hit(int attackPoint)
-{
-	//int _damage = _defense_point - attackPoint;
-	//if (_damage < 0) {
-	//	_hit_point += _damage;
-	//	is_hit = 1;
-	//}
-
-	_hit_point -= attackPoint;
-}
-
-void XIIlib::Yankee::SetElementStock(int x, int z)
-{
-	element_stock.a = x; element_stock.b = z;
 }
 
 void XIIlib::Yankee::SetTypePositioning(_PositionType changeType)
