@@ -102,8 +102,7 @@ void XIIlib::Play::Update(GameScene* p_game_scene)
 			p_game_scene->ChangeState(new Clear); // クリアシーンへ
 		}
 	}
-
-	if (UnitManager::GetInstance()->GetUnitIDElements("King") < 0) // プレイヤが存在していない場合
+	else if (UnitManager::GetInstance()->GetUnitIDElements("King") < 0) // プレイヤが存在していない場合
 	{
 		p_game_scene->ChangeState(new Over); // オーバーシーンへ
 	}
