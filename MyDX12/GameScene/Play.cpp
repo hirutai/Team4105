@@ -114,7 +114,7 @@ void XIIlib::Play::Update(GameScene* p_game_scene)
 	{
 		if (UnitManager::GetInstance()->GetAllUnitCount() - 1 == 0) // 敵を全滅させた時
 		{
-			p_game_scene->GetAudio()->PlaySE("clear.wav", 0.1f);
+			p_game_scene->GetAudio()->PlaySE("clear.wav", 0.5f);
 			p_game_scene->ChangeState(new Clear); // クリアシーンへ
 		}
 	}
