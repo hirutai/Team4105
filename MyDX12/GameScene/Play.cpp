@@ -104,7 +104,10 @@ void XIIlib::Play::Update(GameScene* p_game_scene)
 	
 	if (menuExists)
 	{
-
+		float posX = 0;
+		posX = Easing::EaseInOutElastic(easingCount, -eGuidesPos.x,eGuidesPos.x, MAX_EASING_COUNT);
+		enemyGuides->SetPosition({posX,eGuidesPos.y });
+		easingCount++;
 		// ƒƒjƒ…[‰æ–Ê‚ð•Â‚¶‚é
 		if (KeyInput::GetInstance()->Trigger(DIK_TAB))
 		{
