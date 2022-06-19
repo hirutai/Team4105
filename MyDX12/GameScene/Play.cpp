@@ -15,6 +15,7 @@
 #include "../GameObject/IntervalTimer.h"
 #include "../2D/Sprite.h"
 #include "../Audio/Audio.h"
+#include "../Tool/Easing.h"
 
 XIIlib::Play::Play()
 {
@@ -92,23 +93,50 @@ void XIIlib::Play::Initialize(GameScene* p_game_scene)
 	}
 
 	playerGuide = Sprite::Create((UINT)SpriteName::PLAYERGUIDE_SP, { 1000.0f,600.0f }); // 操作説明
-	menu = Sprite::Create((UINT)SpriteName::MENU_SP, { 0.0f,0.0f }); // メニュー
-	enemyGuides = Sprite::Create((UINT)SpriteName::ENEMYGUIDES_SP, { 0.0f,0.0f });; // 敵の説明
+	menu = Sprite::Create((UINT)SpriteName::MENU_SP, { 0.0f,10.0f }); // メニュー
+	enemyGuides = Sprite::Create((UINT)SpriteName::ENEMYGUIDES_SP, eGuidesPos);; // 敵の説明
 	p_game_scene->GetAudio()->PlayBGM("yankeeBGM.wav");
 }
 
 void XIIlib::Play::Update(GameScene* p_game_scene)
 {
+#pragma region メニュー処理
+	
+	if (menuExists)
+	{
+		float posX = 0;
+		// countがマックスに到達するまで
+		if (easingCount <= MAX_EASING_COUNT)
+		{
+			posX = Easing::EaseInOutCubic(easingCount, -eGuidesPos.x, eGuidesPos.x, MAX_EASING_COUNT);
+		}
+		enemyGuides->SetPosition({posX,eGuidesPos.y });
+		easingCount++;
+	}
+
+	// メニュー画面を展開、閉じる
+	if (KeyInput::GetInstance()->Trigger(DIK_TAB))
+	{
+		if (menuExists && easingCount >= MAX_EASING_COUNT)
+		{
+			// ゼロClear
+			easingCount = 0;
+			menuExists = false;
+		}
+		else
+		{
+			menuExists = true;
+		}
+	}
+
+	// メニューが展開されているならreturn
+	if (menuExists)return;
+#pragma endregion 
+
+#pragma region Game Update処理
 	// 更新
 	UnitManager::GetInstance()->Update();
 	intervalTimter->Timer();
-	
-	// メニュー画面を展開
-	if (KeyInput::GetInstance()->Trigger(DIK_TAB))
-	{
-		
-	}
-
 	// シーン移動
 	if (UnitManager::GetInstance()->GetUnitIDElements("King") >= 0) // プレイヤが存在している場合
 	{
@@ -123,6 +151,7 @@ void XIIlib::Play::Update(GameScene* p_game_scene)
 		p_game_scene->GetAudio()->PlaySE("sakebi.wav",0.5f);
 		p_game_scene->ChangeState(new Over); // オーバーシーンへ
 	}
+#pragma endregion
 }
 
 void XIIlib::Play::Draw()
@@ -138,7 +167,9 @@ void XIIlib::Play::DrawTex()
 	//intervalTimter->Draw();
 	playerGuide->Draw();
 	menu->Draw();
-	//enemyGuides->Draw();
+	// メニューが展開されていないならreturn
+	if (!menuExists)return;
+	enemyGuides->Draw();
 }
 
 void XIIlib::Play::DrawBackground()
