@@ -1,6 +1,8 @@
 #pragma once
 #include "SceneState.h"
+#include "../Struct/Math.h"
 class Sprite;
+
 namespace XIIlib {
 
 	class GameScene;
@@ -25,7 +27,7 @@ namespace XIIlib {
 		Sprite* playerGuide = nullptr; // ‘€ìà–¾
 		Sprite* menu = nullptr; // ƒƒjƒ…[
 		Sprite* enemyGuides = nullptr; // “G‚Ìà–¾
-
 		bool menuExists = false;
+		Math::Vector2 eGuidesPos = {0.0f,0.0f};
 	};
 }
