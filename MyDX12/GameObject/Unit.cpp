@@ -3,6 +3,7 @@
 #include "../GameObject/Common.h"
 #include <iostream>
 #include "../3D/Object3D.h"
+#include "../GameObject/AttackTimer.h"
 
 bool XIIlib::Unit::ThreeCheckArea(Math::Point2 element_stock)
 {
@@ -21,6 +22,9 @@ void XIIlib::Unit::SetTypePositioning(_PositionType changeType)
 
 void XIIlib::Unit::BillObjectDraw()
 {
+	if (attackTimer == nullptr)return;
+	// UŒ‚ƒ^ƒCƒ}[‚Ì•`‰æ
+	attackTimer->Draw();
 }
 
 void XIIlib::Unit::ZeroHp()
@@ -187,4 +191,10 @@ void XIIlib::Unit::SetElementStock(int x, int z)
 void XIIlib::Unit::SetHitDamage(int attackPoint)
 {
 	_hit_point -= attackPoint;
+}
+
+void XIIlib::Unit::SetAttackTimer(int countNum)
+{
+	attackTimer = new AttackTimer(countNum);
+	attackTimer->Initialize();
 }

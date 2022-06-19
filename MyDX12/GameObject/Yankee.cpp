@@ -46,8 +46,7 @@ void XIIlib::Yankee::Initialize()
 	// Audioの初期化
 	audio_ = UnitManager::GetInstance()->GetAudio();
 
-	attackTimer = new AttackTimer(5);
-	attackTimer->Initialize();
+	SetAttackTimer(5);
 
 	nextPoint = { 0,0 };
 }
@@ -352,11 +351,6 @@ void XIIlib::Yankee::IniState()
 void XIIlib::Yankee::CreateAttackArea()
 {
 
-}
-
-void XIIlib::Yankee::BillObjectDraw()
-{
-	attackTimer->Draw(); // 攻撃タイマーの描画
 }
 
 bool XIIlib::Yankee::MoveAreaCheck(Math::Point2 crPos, Math::Point2 vec, int tileNum)
