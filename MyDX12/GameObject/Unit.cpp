@@ -4,6 +4,7 @@
 #include <iostream>
 #include "../3D/Object3D.h"
 #include "../3D/BillObj.h"
+#include "../Audio/Audio.h"
 #include "../GameObject/AttackTimer.h"
 
 bool XIIlib::Unit::ThreeCheckArea(Math::Point2 element_stock)
@@ -56,6 +57,7 @@ void XIIlib::Unit::KnockBack()
 	if (!UnitManager::GetInstance()->IsAttackValid(element_stock, (int)_PositionType::MINE))return;
 
 	SetHitDamage(1);
+	audio_->PlaySE("damage.wav",0.3f);
 	isAttack = false;
 	// ノックバックの移動量
 	const Math::Point2 backVector = UnitManager::GetInstance()->GetBackVector(element_stock);
