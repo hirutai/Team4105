@@ -22,5 +22,6 @@ namespace XIIlib {
 		void PlayBGM(std::string wav);
 
 		void StopBGM();
+		void StopSE();
 	};
 }

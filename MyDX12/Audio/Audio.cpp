@@ -35,3 +35,7 @@ void XIIlib::Audio::StopBGM()
 {
 	bgm->StopWave();
 }
+void XIIlib::Audio::StopSE()
+{
+	se->StopWave();
+}
