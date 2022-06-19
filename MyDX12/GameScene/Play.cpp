@@ -105,7 +105,11 @@ void XIIlib::Play::Update(GameScene* p_game_scene)
 	if (menuExists)
 	{
 		float posX = 0;
-		posX = Easing::EaseInOutElastic(easingCount, -eGuidesPos.x,eGuidesPos.x, MAX_EASING_COUNT);
+		// countがマックスに到達するまで
+		if (easingCount <= MAX_EASING_COUNT)
+		{
+			posX = Easing::EaseInOutCubic(easingCount, -eGuidesPos.x, eGuidesPos.x, MAX_EASING_COUNT);
+		}
 		enemyGuides->SetPosition({posX,eGuidesPos.y });
 		easingCount++;
 	}
