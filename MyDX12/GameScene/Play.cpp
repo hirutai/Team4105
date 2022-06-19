@@ -94,7 +94,7 @@ void XIIlib::Play::Initialize(GameScene* p_game_scene)
 
 	playerGuide = Sprite::Create((UINT)SpriteName::PLAYERGUIDE_SP, { 1000.0f,600.0f }); // 操作説明
 	menu = Sprite::Create((UINT)SpriteName::MENU_SP, { 0.0f,10.0f }); // メニュー
-	enemyGuides = Sprite::Create((UINT)SpriteName::ENEMYGUIDES_SP, eGuidesPos);; // 敵の説明
+	enemyGuides = Sprite::Create((UINT)SpriteName::ENEMYGUIDES_SP, {0.0f,0.0f});; // 敵の説明
 	p_game_scene->GetAudio()->PlayBGM("yankeeBGM.wav");
 }
 
@@ -102,18 +102,6 @@ void XIIlib::Play::Update(GameScene* p_game_scene)
 {
 #pragma region メニュー処理
 	
-	if (menuExists)
-	{
-		float posX = 0;
-		// countがマックスに到達するまで
-		if (easingCount <= MAX_EASING_COUNT)
-		{
-			posX = Easing::EaseInOutCubic(easingCount, -eGuidesPos.x, eGuidesPos.x, MAX_EASING_COUNT);
-		}
-		enemyGuides->SetPosition({posX,eGuidesPos.y });
-		easingCount++;
-	}
-
 	// メニュー画面を展開、閉じる
 	if (KeyInput::GetInstance()->Trigger(DIK_TAB))
 	{
@@ -128,6 +116,20 @@ void XIIlib::Play::Update(GameScene* p_game_scene)
 			menuExists = true;
 		}
 	}
+
+	if (menuExists)
+	{
+		float posX = 0;
+		// countがマックスに到達するまで
+		if (easingCount <= MAX_EASING_COUNT)
+		{
+			posX = Easing::EaseInOutCubic(easingCount, -winSize.x, winSize.x, MAX_EASING_COUNT);
+		}
+		enemyGuides->SetPosition({posX,0});
+		easingCount++;
+	}
+
+	
 
 	// メニューが展開されているならreturn
 	if (menuExists)return;
