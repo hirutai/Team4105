@@ -91,7 +91,7 @@ void XIIlib::Play::Initialize(GameScene* p_game_scene)
 		spStageBG1 = Sprite::Create((UINT)SpriteName::STAGEBG1_SP, { 0.0f,0.0f });
 	}
 
-	playerGuide = Sprite::Create((UINT)SpriteName::PLAYERGUIDE_SP, { 0.0f,0.0f }); // 操作説明
+	playerGuide = Sprite::Create((UINT)SpriteName::PLAYERGUIDE_SP, { 1000.0f,600.0f }); // 操作説明
 	menu = Sprite::Create((UINT)SpriteName::MENU_SP, { 0.0f,0.0f }); // メニュー
 	enemyGuides = Sprite::Create((UINT)SpriteName::ENEMYGUIDES_SP, { 0.0f,0.0f });; // 敵の説明
 	p_game_scene->GetAudio()->PlayBGM("yankeeBGM.wav");
@@ -131,8 +131,8 @@ void XIIlib::Play::DrawTex()
 	// スプライト描画
 	//intervalTimter->Draw();
 	playerGuide->Draw();
-	menu->Draw();
-	enemyGuides->Draw();
+	//menu->Draw();
+	//enemyGuides->Draw();
 }
 
 void XIIlib::Play::DrawBackground()
