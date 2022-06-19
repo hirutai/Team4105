@@ -101,28 +101,33 @@ void XIIlib::Play::Update(GameScene* p_game_scene)
 {
 	// 更新
 	UnitManager::GetInstance()->Update();
-	AttackAreaManager::GetInstance()->Draw();
-
 	intervalTimter->Timer();
 	
+	// メニュー画面を展開
+	if (KeyInput::GetInstance()->Trigger(DIK_TAB))
+	{
+		
+	}
 
 	// シーン移動
 	if (UnitManager::GetInstance()->GetUnitIDElements("King") >= 0) // プレイヤが存在している場合
 	{
 		if (UnitManager::GetInstance()->GetAllUnitCount() - 1 == 0) // 敵を全滅させた時
 		{
+			p_game_scene->GetAudio()->PlaySE("clear.wav", 0.1f);
 			p_game_scene->ChangeState(new Clear); // クリアシーンへ
 		}
 	}
 	else if (UnitManager::GetInstance()->GetUnitIDElements("King") < 0) // プレイヤが存在していない場合
 	{
-		p_game_scene->GetAudio()->PlaySE("sakebi.wav", 0.5f);
+		p_game_scene->GetAudio()->PlaySE("sakebi.wav",0.5f);
 		p_game_scene->ChangeState(new Over); // オーバーシーンへ
 	}
 }
 
 void XIIlib::Play::Draw()
 {
+	AttackAreaManager::GetInstance()->Draw();
 	// 3D描画
 	UnitManager::GetInstance()->Draw();
 }
@@ -132,7 +137,7 @@ void XIIlib::Play::DrawTex()
 	// スプライト描画
 	//intervalTimter->Draw();
 	playerGuide->Draw();
-	//menu->Draw();
+	menu->Draw();
 	//enemyGuides->Draw();
 }
 
