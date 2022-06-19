@@ -116,9 +116,9 @@ void GameApp::Initialize()
 	Sprite::LoadTexture(texind, L"Resources/TitleLog.png"); texind++;
 	Sprite::LoadTexture(texind, L"Resources/GameClear.png"); texind++;
 
-	Sprite::LoadTexture(texind, L"Resources/GameClear.png"); texind++;
-	Sprite::LoadTexture(texind, L"Resources/GameClear.png"); texind++;
-	Sprite::LoadTexture(texind, L"Resources/GameClear.png"); texind++;
+	Sprite::LoadTexture(texind, L"Resources/explanation.png"); texind++;
+	Sprite::LoadTexture(texind, L"Resources/explanation.png"); texind++;
+	Sprite::LoadTexture(texind, L"Resources/explanation.png"); texind++;
 
 	debugJIS = DebugJISText::GetInstance();
 	debugJIS->Initialize(debugJISTextTexNumber);
