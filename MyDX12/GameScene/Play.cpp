@@ -91,9 +91,9 @@ void XIIlib::Play::Initialize(GameScene* p_game_scene)
 		spStageBG1 = Sprite::Create((UINT)SpriteName::STAGEBG1_SP, { 0.0f,0.0f });
 	}
 
-	playerGuide = Sprite::Create(); // ‘€ìà–¾
-	menu = nullptr; // ƒƒjƒ…[
-	enemyGuides = nullptr; // “G‚Ìà–¾
+	playerGuide = Sprite::Create((UINT)SpriteName::STAGEBG1_SP, { 0.0f,0.0f }); // ‘€ìà–¾
+	menu = Sprite::Create((UINT)SpriteName::STAGEBG1_SP, { 0.0f,0.0f }); // ƒƒjƒ…[
+	enemyGuides = Sprite::Create((UINT)SpriteName::STAGEBG1_SP, { 0.0f,0.0f });; // “G‚Ìà–¾
 	p_game_scene->GetAudio()->PlayBGM("yankeeBGM.wav");
 }
 
