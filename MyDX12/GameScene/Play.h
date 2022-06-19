@@ -15,11 +15,7 @@ namespace XIIlib {
 		IntervalTimer* intervalTimter = nullptr; // 敵の行動間隔用タイマー
 
 	private: // メンバ定数
-<<<<<<< HEAD
 		const float MAX_EASING_COUNT = 30.0f;
-=======
-		const float MAX_EASING_COUNT = 60.0f;
->>>>>>> 4965877ae8c2e767f0ad462363b71c4f4a74aeb4
 		const Math::Vector2 winSize = {1280.0f,768.0f};
 	public:
 		Play();
@@ -36,10 +32,7 @@ namespace XIIlib {
 		Sprite* menu = nullptr; // メニュー
 		Sprite* enemyGuides = nullptr; // 敵の説明
 		bool menuExists = false;
-<<<<<<< HEAD
 		bool exitFlag = false;
-=======
->>>>>>> 4965877ae8c2e767f0ad462363b71c4f4a74aeb4
 		//Math::Vector2 eGuidesPos = {1280.0f,0.0f};
 		float easingCount = 0;
 	};
