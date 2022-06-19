@@ -11,9 +11,8 @@ namespace XIIlib{
 		int moveCount;
 		int moveLag;
 
-		bool isDrawAtArea = false;
+		bool isDrawAtArea = false; // UŒ‚‚µ‚Ä‚¢‚é‚©‚Ç‚¤‚©
 		int drawAtArea = 0;
-
 	public:
 		King();
 		~King();

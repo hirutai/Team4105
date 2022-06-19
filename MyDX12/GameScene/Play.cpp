@@ -91,7 +91,7 @@ void XIIlib::Play::Initialize(GameScene* p_game_scene)
 		spStageBG1 = Sprite::Create((UINT)SpriteName::STAGEBG1_SP, { 0.0f,0.0f });
 	}
 
-	playerGuide = Sprite::Create((UINT)SpriteName::PLAYERGUIDE_SP, { 0.0f,0.0f }); // 操作説明
+	playerGuide = Sprite::Create((UINT)SpriteName::PLAYERGUIDE_SP, { 1000.0f,600.0f }); // 操作説明
 	menu = Sprite::Create((UINT)SpriteName::MENU_SP, { 0.0f,0.0f }); // メニュー
 	enemyGuides = Sprite::Create((UINT)SpriteName::ENEMYGUIDES_SP, { 0.0f,0.0f });; // 敵の説明
 	p_game_scene->GetAudio()->PlayBGM("yankeeBGM.wav");
@@ -101,28 +101,33 @@ void XIIlib::Play::Update(GameScene* p_game_scene)
 {
 	// 更新
 	UnitManager::GetInstance()->Update();
-	AttackAreaManager::GetInstance()->Draw();
-
 	intervalTimter->Timer();
 	
+	// メニュー画面を展開
+	if (KeyInput::GetInstance()->Trigger(DIK_TAB))
+	{
+		
+	}
 
 	// シーン移動
 	if (UnitManager::GetInstance()->GetUnitIDElements("King") >= 0) // プレイヤが存在している場合
 	{
 		if (UnitManager::GetInstance()->GetAllUnitCount() - 1 == 0) // 敵を全滅させた時
 		{
+			p_game_scene->GetAudio()->PlaySE("clear.wav", 0.5f);
 			p_game_scene->ChangeState(new Clear); // クリアシーンへ
 		}
 	}
 	else if (UnitManager::GetInstance()->GetUnitIDElements("King") < 0) // プレイヤが存在していない場合
 	{
-		p_game_scene->GetAudio()->PlaySE("sakebi.wav", 0.5f);
+		p_game_scene->GetAudio()->PlaySE("sakebi.wav",0.5f);
 		p_game_scene->ChangeState(new Over); // オーバーシーンへ
 	}
 }
 
 void XIIlib::Play::Draw()
 {
+	AttackAreaManager::GetInstance()->Draw();
 	// 3D描画
 	UnitManager::GetInstance()->Draw();
 }
@@ -133,7 +138,7 @@ void XIIlib::Play::DrawTex()
 	//intervalTimter->Draw();
 	playerGuide->Draw();
 	menu->Draw();
-	enemyGuides->Draw();
+	//enemyGuides->Draw();
 }
 
 void XIIlib::Play::DrawBackground()
