@@ -43,8 +43,8 @@ void XIIlib::UnitManager::Update()
 
 			// d‚È‚Á‚½‚çŽ€‚Ê
 			if (Math::MatchPoint2(unit1->GetElementStock(),unit2->GetElementStock())) {
-				unit1->Hit(3);
-				unit2->Hit(3);
+				unit1->SetHitDamage(3);
+				unit2->SetHitDamage(3);
 			}
 		}
 	}

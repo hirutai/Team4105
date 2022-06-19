@@ -178,15 +178,11 @@ void XIIlib::Knight::Update()
 
 
 		if (Common::GetExceptionPoint(element_stock.a) || Common::GetExceptionPoint(element_stock.b)) {
-			Hit(3);
+			SetHitDamage(3);
 		}
 
 	}
 
-}
-
-void XIIlib::Knight::Draw()
-{
 }
 
 void XIIlib::Knight::Action()
@@ -416,11 +412,6 @@ void XIIlib::Knight::IniState()
 {
 	isAttack = false;
 	attackInterval = 180;
-}
-
-void XIIlib::Knight::SetTypePositioning(_PositionType changeType)
-{
-	type = changeType;
 }
 
 void XIIlib::Knight::CreateAttackArea()

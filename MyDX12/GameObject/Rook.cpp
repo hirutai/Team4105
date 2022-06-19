@@ -64,12 +64,6 @@ void XIIlib::Rook::Update()
 	object3d->Update();
 }
 
-void XIIlib::Rook::Draw()
-{
-	//collCapsule->Draw();
-	object3d->Draw();
-}
-
 void XIIlib::Rook::Action()
 {
 	// 範囲に入ってるかのチェック
@@ -430,11 +424,6 @@ void XIIlib::Rook::IniState()
 {
 	isAttack = false;
 	attackInterval = 180;
-}
-
-void XIIlib::Rook::SetTypePositioning(_PositionType changeType)
-{
-	type = changeType;
 }
 
 void XIIlib::Rook::CreateAttackArea()
