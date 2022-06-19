@@ -17,12 +17,14 @@ XIIlib::Over::~Over()
 {
 	// ポインタ使ったやつの埋葬場
 	delete spGameOver;
+	delete space;
 }
 
 void XIIlib::Over::Initialize(GameScene* p_game_scene)
 {
 	// Scene切り替え時に一度通る処理
 	UnitManager::GetInstance()->AllDestroy();
+	space = Sprite::Create(6, { 1280 / 2 - 300, 768 / 2 + 100 });
 	spGameOver = Sprite::Create((UINT)SpriteName::GAMEOVER_SP, {0.0f,0.0f});
 	//p_game_scene->GetAudio()->PlayBGM("yankeeBGM.wav");
 }
@@ -70,6 +72,7 @@ void XIIlib::Over::DrawTex()
 {
 	// スプライト描画
 	spGameOver->Draw();
+	space->Draw();
 }
 
 void XIIlib::Over::DrawBackground()
