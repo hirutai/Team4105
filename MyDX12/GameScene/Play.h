@@ -31,7 +31,7 @@ namespace XIIlib {
 		Sprite* menu = nullptr; // ƒƒjƒ…[
 		Sprite* enemyGuides = nullptr; // “G‚Ìà–¾
 		bool menuExists = false;
-		Math::Vector2 eGuidesPos = {600.0f,300.0f};
+		Math::Vector2 eGuidesPos = {600.0f,0.0f};
 		float easingCount = 0;
 	};
 }
