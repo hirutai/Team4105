@@ -91,9 +91,9 @@ void XIIlib::Play::Initialize(GameScene* p_game_scene)
 		spStageBG1 = Sprite::Create((UINT)SpriteName::STAGEBG1_SP, { 0.0f,0.0f });
 	}
 
-	playerGuide = Sprite::Create((UINT)SpriteName::STAGEBG1_SP, { 0.0f,0.0f }); // 操作説明
-	menu = Sprite::Create((UINT)SpriteName::STAGEBG1_SP, { 0.0f,0.0f }); // メニュー
-	enemyGuides = Sprite::Create((UINT)SpriteName::STAGEBG1_SP, { 0.0f,0.0f });; // 敵の説明
+	playerGuide = Sprite::Create((UINT)SpriteName::PLAYERGUIDE_SP, { 0.0f,0.0f }); // 操作説明
+	menu = Sprite::Create((UINT)SpriteName::MENU_SP, { 0.0f,0.0f }); // メニュー
+	enemyGuides = Sprite::Create((UINT)SpriteName::ENEMYGUIDES_SP, { 0.0f,0.0f });; // 敵の説明
 	p_game_scene->GetAudio()->PlayBGM("yankeeBGM.wav");
 }
 
@@ -104,7 +104,9 @@ void XIIlib::Play::Update(GameScene* p_game_scene)
 	AttackAreaManager::GetInstance()->Draw();
 
 	intervalTimter->Timer();
+	
 
+	// シーン移動
 	if (UnitManager::GetInstance()->GetUnitIDElements("King") >= 0) // プレイヤが存在している場合
 	{
 		if (UnitManager::GetInstance()->GetAllUnitCount() - 1 == 0) // 敵を全滅させた時
@@ -128,6 +130,9 @@ void XIIlib::Play::DrawTex()
 {
 	// スプライト描画
 	//intervalTimter->Draw();
+	playerGuide->Draw();
+	menu->Draw();
+	enemyGuides->Draw();
 }
 
 void XIIlib::Play::DrawBackground()
