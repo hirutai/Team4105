@@ -8,6 +8,8 @@ class Object3D;
 namespace XIIlib {
 	class Audio;
 	class AttackTimer;
+	class BillObj;
+
 	// 攻撃エリア
 	enum struct AREA : int {
 		NONE =-1,
@@ -51,29 +53,26 @@ namespace XIIlib {
 		int SwitchRandiMax = 3;
 		int SwitchRand = 0;
 
-		Audio* audio_ = nullptr;
-
 		unsigned int attackInterval = 180;
-		bool isAttack = false;
 		//攻撃flag
 		bool notAttackflag = true;
-		Math::Point2 preElement_stock{0,0};
-
+		bool isAttack = false;
 		bool is_dead = false;// 死亡してるかどうかを管理
 
+		Math::Point2 kingPos{0,0};
+		Math::Point2 preElement_stock{0,0};
 		Math::Point2 element_stock;// マスの座標(Vector2じゃないよ)
-
 		std::vector<std::vector<Math::Point2>> attack_area; // 駒が持つ攻撃範囲の情報
+
+		Audio* audio_ = nullptr;
 
 		_PositionType type = _PositionType::MINE; // 敵味方判別用
 
 		Object3D* object3d = nullptr;
 		Object3D* daiza = nullptr;
 
-		Math::Point2 kingPos{0,0};
-
 		AttackTimer* attackTimer = nullptr; // 攻撃タイマー
-
+		BillObj* attackAreasBillboard = nullptr;
 	public:
 		Unit() = default;
 		virtual ~Unit(){}
@@ -81,6 +80,7 @@ namespace XIIlib {
 		virtual void Initialize() = 0;
 		virtual void Update() = 0;
 		virtual void Draw();
+		virtual void OriginBillDraw();
 
 		virtual void Move() = 0;							// 移動用
 		virtual void Attack() = 0;							// 攻撃用(今は使ってない)

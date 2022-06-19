@@ -11,6 +11,9 @@ namespace XIIlib{
 		int moveCount;
 		int moveLag;
 
+		bool isDrawAtArea = false;
+		int drawAtArea = 0;
+
 	public:
 		King();
 		~King();
@@ -21,6 +24,7 @@ namespace XIIlib{
 		void Initialize()override;
 		void Update()override;
 		void Draw()override;
+		void OriginBillDraw()override;
 
 		void Move()override;
 		void Attack()override;
