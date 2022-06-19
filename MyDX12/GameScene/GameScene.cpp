@@ -72,7 +72,7 @@ void XIIlib::GameScene::Initialize()
 		for (int j = 0; j < s_x; ++j) {
 			m_curtain[i][j] = 0;
 			screen_curtain[j + (i * s_x)] =
-				Sprite::Create(4, { (float)(j * tex_size) + (float)(tex_size / 2.0f),(float)(i * tex_size) + (float)(tex_size / 2.0f) }, { 1,1,1,1 }, { 0.5f,0.5f });
+				Sprite::Create(21, { (float)(j * tex_size) + (float)(tex_size / 2.0f),(float)(i * tex_size) + (float)(tex_size / 2.0f) }, { 1,1,1,1 }, { 0.5f,0.5f });
 			screen_curtain[j + (i * s_x)]->SetSize({ 0.0f,0.0f });
 			time_curtain[j + (i * s_x)] = 0.0f;
 		}
