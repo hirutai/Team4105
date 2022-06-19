@@ -55,7 +55,7 @@ void XIIlib::King::Initialize()
 	object3d = Object3D::Create(Model::CreateFromOBJ("Badboy_Bat_1"));
 	daiza = Object3D::Create(Model::CreateFromOBJ("daiza"));
 
-	attackAreasBillboard = BillObj::Create({0,-1,0},"");
+	attackAreasBillboard = BillObj::Create({0,-1,0},"swing_L.png");
 	const float mullPower = 0.8f;
 	attackAreasBillboard->SetSize({19.2f * mullPower,6.4f * mullPower });
 }
@@ -85,7 +85,7 @@ void XIIlib::King::Update()
 	}
 
 	if (isDrawAtArea) {
-		attackAreasBillboard->SetPosition(attackAreasBillboard->GetPosition().x,1.5f, attackAreasBillboard->GetPosition().z);
+		attackAreasBillboard->SetPosition(attackAreasBillboard->GetPosition().x,2.0f, attackAreasBillboard->GetPosition().z);
 		drawAtArea++;
 		if (drawAtArea == 10) {
 			drawAtArea = 0;
@@ -138,6 +138,7 @@ void XIIlib::King::Move()
 	if (KeyInput::GetInstance()->Push(DIK_W)) {
 
 		next_state += move_vec[0];
+		object3d->rotation.y = 0.0f;
 		if (!UnitManager::GetInstance()->AllOnUnit(next_state)) {
 			element_stock = next_state;
 			moveCount = moveLag;
@@ -145,6 +146,7 @@ void XIIlib::King::Move()
 	}
 	else if (KeyInput::GetInstance()->Push(DIK_S)) {
 		next_state += move_vec[1];
+		object3d->rotation.y = 180.0f;
 		if (!UnitManager::GetInstance()->AllOnUnit(next_state)) {
 			element_stock = next_state;
 			moveCount = moveLag;
@@ -153,6 +155,7 @@ void XIIlib::King::Move()
 
 	if (KeyInput::GetInstance()->Push(DIK_A)) {
 		next_state += move_vec[2];
+		object3d->rotation.y = -90.0f;
 		if (!UnitManager::GetInstance()->AllOnUnit(next_state)) {
 			element_stock = next_state;
 			moveCount = moveLag;
@@ -160,6 +163,7 @@ void XIIlib::King::Move()
 	}
 	else if (KeyInput::GetInstance()->Push(DIK_D)) {
 		next_state += move_vec[3];
+		object3d->rotation.y = 90.0f;
 		if (!UnitManager::GetInstance()->AllOnUnit(next_state)) {
 			element_stock = next_state;
 			moveCount = moveLag;
@@ -172,10 +176,11 @@ void XIIlib::King::Move()
 void XIIlib::King::Attack()
 {
 	Math::Point2 tmpAttackArea;
-
+	
 	if (KeyInput::GetInstance()->Push(DIK_UP)) {
 		type_attack = AREA::UP;
 		tmpAttackArea = attack_area[(int)type_attack][1];
+		object3d->rotation.y = 0.0f;
 		attackAreasBillboard->SetRotation(0,0,0);
 		attackAreasBillboard->SetPosition(
 			Common::ConvertTilePosition(element_stock.a + tmpAttackArea.a),
@@ -185,7 +190,8 @@ void XIIlib::King::Attack()
 	else if (KeyInput::GetInstance()->Push(DIK_LEFT)) {
 		type_attack = AREA::LEFT;
 		tmpAttackArea = attack_area[(int)type_attack][1];
-		attackAreasBillboard->SetRotation(0, 90, 0);
+		object3d->rotation.y = -90.0f;
+		attackAreasBillboard->SetRotation(0, -90, 0);
 		attackAreasBillboard->SetPosition(
 			Common::ConvertTilePosition(element_stock.a + tmpAttackArea.a),
 			-1.0f, Common::ConvertTilePosition(element_stock.b + tmpAttackArea.b)
@@ -194,6 +200,7 @@ void XIIlib::King::Attack()
 	else if (KeyInput::GetInstance()->Push(DIK_DOWN)) {
 		type_attack = AREA::DOWN;
 		tmpAttackArea = attack_area[(int)type_attack][1];
+		object3d->rotation.y = 180.0f;
 		attackAreasBillboard->SetRotation(0, 180, 0);
 		attackAreasBillboard->SetPosition(
 			Common::ConvertTilePosition(element_stock.a + tmpAttackArea.a),
@@ -203,7 +210,8 @@ void XIIlib::King::Attack()
 	else if (KeyInput::GetInstance()->Push(DIK_RIGHT)) {
 		type_attack = AREA::RIGHT;
 		tmpAttackArea = attack_area[(int)type_attack][1];
-		attackAreasBillboard->SetRotation(0, 270, 0);
+		object3d->rotation.y = 90.0f;
+		attackAreasBillboard->SetRotation(0, 90, 0);
 		attackAreasBillboard->SetPosition(
 			Common::ConvertTilePosition(element_stock.a + tmpAttackArea.a),
 			-1.0f, Common::ConvertTilePosition(element_stock.b + tmpAttackArea.b)
