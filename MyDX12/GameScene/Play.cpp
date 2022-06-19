@@ -94,86 +94,66 @@ void XIIlib::Play::Initialize(GameScene* p_game_scene)
 
 	playerGuide = Sprite::Create((UINT)SpriteName::PLAYERGUIDE_SP, { 1000.0f,600.0f }); // 操作説明
 	menu = Sprite::Create((UINT)SpriteName::MENU_SP, { 0.0f,10.0f }); // メニュー
-	enemyGuides = Sprite::Create((UINT)SpriteName::ENEMYGUIDES_SP, eGuidesPos);; // 敵の説明
+	enemyGuides = Sprite::Create((UINT)SpriteName::ENEMYGUIDES_SP, {0.0f,0.0f});; // 敵の説明
 	p_game_scene->GetAudio()->PlayBGM("yankeeBGM.wav");
 }
 
 void XIIlib::Play::Update(GameScene* p_game_scene)
 {
-	if (movingScene) {
-
 #pragma region メニュー処理
-
-		if (menuExists)
+	
+	// メニュー画面を展開、閉じる
+	if (KeyInput::GetInstance()->Trigger(DIK_TAB))
+	{
+		if (menuExists && easingCount >= MAX_EASING_COUNT)
 		{
-			float posX = 0;
-			// countがマックスに到達するまで
-			if (easingCount <= MAX_EASING_COUNT)
-			{
-				posX = Easing::EaseInOutCubic(easingCount, -eGuidesPos.x, eGuidesPos.x, MAX_EASING_COUNT);
-			}
-			enemyGuides->SetPosition({ posX,eGuidesPos.y });
-			easingCount++;
+			// ゼロClear
+			easingCount = 0;
+			menuExists = false;
 		}
-
-		// メニュー画面を展開、閉じる
-		if (KeyInput::GetInstance()->Trigger(DIK_TAB))
+		else
 		{
-			if (menuExists && easingCount >= MAX_EASING_COUNT)
-			{
-				// ゼロClear
-				easingCount = 0;
-				menuExists = false;
-			}
-			else
-			{
-				menuExists = true;
-			}
+			menuExists = true;
 		}
+	}
 
-		// メニューが展開されているならreturn
-		if (menuExists)return;
+	if (menuExists)
+	{
+		float posX = 0;
+		// countがマックスに到達するまで
+		if (easingCount <= MAX_EASING_COUNT)
+		{
+			posX = Easing::EaseInOutCubic(easingCount, -winSize.x, winSize.x, MAX_EASING_COUNT);
+		}
+		enemyGuides->SetPosition({posX,0});
+		easingCount++;
+	}
+
+	
+
+	// メニューが展開されているならreturn
+	if (menuExists)return;
 #pragma endregion 
 
 #pragma region Game Update処理
-		// 更新
-		UnitManager::GetInstance()->Update();
-		intervalTimter->Timer();
-		// シーン移動
-		if (UnitManager::GetInstance()->GetUnitIDElements("King") >= 0) // プレイヤが存在している場合
+	// 更新
+	UnitManager::GetInstance()->Update();
+	intervalTimter->Timer();
+	// シーン移動
+	if (UnitManager::GetInstance()->GetUnitIDElements("King") >= 0) // プレイヤが存在している場合
+	{
+		if (UnitManager::GetInstance()->GetAllUnitCount() - 1 == 0) // 敵を全滅させた時
 		{
-			if (UnitManager::GetInstance()->GetAllUnitCount() - 1 == 0) // 敵を全滅させた時
-			{
-				trigSpace = true;
-			}
+			p_game_scene->GetAudio()->PlaySE("clear.wav", 0.5f);
+			p_game_scene->ChangeState(new Clear); // クリアシーンへ
 		}
-		else if (UnitManager::GetInstance()->GetUnitIDElements("King") < 0) // プレイヤが存在していない場合
-		{
-			trigSpace = true;
-		}
+	}
+	else if (UnitManager::GetInstance()->GetUnitIDElements("King") < 0) // プレイヤが存在していない場合
+	{
+		p_game_scene->GetAudio()->PlaySE("sakebi.wav",0.5f);
+		p_game_scene->ChangeState(new Over); // オーバーシーンへ
+	}
 #pragma endregion
-		if (trigSpace) {
-			if (p_game_scene->DrawScreen(false)) {
-				if (UnitManager::GetInstance()->GetUnitIDElements("King") >= 0) // プレイヤが存在している場合
-				{
-					if (UnitManager::GetInstance()->GetAllUnitCount() - 1 == 0) // 敵を全滅させた時
-					{
-						p_game_scene->ChangeState(new Clear); // クリアシーンへ
-					}
-				}
-				else if (UnitManager::GetInstance()->GetUnitIDElements("King") < 0) // プレイヤが存在していない場合
-				{
-					p_game_scene->ChangeState(new Over); // オーバーシーンへ
-				}
-			}
-		}
-	}
-	else {
-		// シーンの遷移が完了しているか？
-		if (p_game_scene->DrawScreen(true)) {
-			movingScene = true;
-		}
-	}
 }
 
 void XIIlib::Play::Draw()
