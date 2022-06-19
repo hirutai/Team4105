@@ -42,10 +42,26 @@ void XIIlib::Select::Update(GameScene* p_game_scene)
 		if (KeyInput::GetInstance()->Trigger(DIK_A))
 		{
 			edgePos.x -= moveX;
+			if (edgePos.x < HOMEL_POS.x)
+			{
+				edgePos.x = HOMEL_POS.x;
+			}
+			else
+			{
+				p_game_scene->GetAudio()->PlaySE("select.wav", 0.1f);
+			}
 		}
 		else if (KeyInput::GetInstance()->Trigger(DIK_D))
-		{
+		{		
 			edgePos.x += moveX;
+			if (edgePos.x > HOMER_POS.x)
+			{
+				edgePos.x = HOMER_POS.x;
+			}
+			else
+			{
+				p_game_scene->GetAudio()->PlaySE("select.wav", 0.1f);
+			}
 		}
 	}
 
@@ -67,14 +83,17 @@ void XIIlib::Select::Update(GameScene* p_game_scene)
 		// ポジションによってステージナンバーを代入
 		if (edgePos.x == HOMEL_POS.x)
 		{
+			p_game_scene->GetAudio()->PlaySE("stageSelect.wav",0.3f);
 			stageNum = StageNumber::EASY;
 		}
 		else if (edgePos.x == HOMEC_POS.x)
 		{
+			p_game_scene->GetAudio()->PlaySE("stageSelect.wav",0.3f);
 			stageNum = StageNumber::NORMAL;
 		}
 		else if (edgePos.x == HOMER_POS.x)
 		{
+			//p_game_scene->GetAudio()->PlaySE("stageSelect.wav",0.3f);
 			return;
 			//stageNum = StageNumber::HARD;
 		}
