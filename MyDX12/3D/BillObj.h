@@ -111,6 +111,8 @@ namespace XIIlib {
 		void SetIsFlipX(bool isFlipX);
 		void SetIsFlipY(bool isFlipY);
 
+		Math::Vector3 GetPosition()const { return position; }
+
 	private:
 		// シェーダリソースビューのハンドル(CPU)
 		CD3DX12_CPU_DESCRIPTOR_HANDLE cpuDescHandleSRV;

@@ -3,6 +3,7 @@
 #include "../GameObject/Common.h"
 #include <iostream>
 #include "../3D/Object3D.h"
+#include "../3D/BillObj.h"
 #include "../GameObject/AttackTimer.h"
 
 bool XIIlib::Unit::ThreeCheckArea(Math::Point2 element_stock)
@@ -22,7 +23,9 @@ void XIIlib::Unit::SetTypePositioning(_PositionType changeType)
 
 void XIIlib::Unit::BillObjectDraw()
 {
-	if (attackTimer == nullptr)return;
+	OriginBillDraw();
+
+	if (attackTimer == nullptr) return;
 	// 攻撃タイマーの描画
 	attackTimer->Draw();
 }
@@ -40,6 +43,11 @@ void XIIlib::Unit::Draw()
 {
 	// オブジェクトの描画
 	object3d->Draw();
+}
+
+void XIIlib::Unit::OriginBillDraw()
+{
+	// 共通ではない時用の関数
 }
 
 void XIIlib::Unit::KnockBack()
