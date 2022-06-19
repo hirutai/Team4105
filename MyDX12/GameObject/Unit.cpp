@@ -2,6 +2,7 @@
 #include "UnitManager.h"
 #include "../GameObject/Common.h"
 #include <iostream>
+#include "../3D/Object3D.h"
 
 bool XIIlib::Unit::ThreeCheckArea(Math::Point2 element_stock)
 {
@@ -11,6 +12,11 @@ bool XIIlib::Unit::ThreeCheckArea(Math::Point2 element_stock)
 
 	return false;
 
+}
+
+void XIIlib::Unit::SetTypePositioning(_PositionType changeType)
+{
+	type = changeType;
 }
 
 void XIIlib::Unit::BillObjectDraw()
@@ -26,12 +32,18 @@ void XIIlib::Unit::ZeroHp()
 	}
 }
 
+void XIIlib::Unit::Draw()
+{
+	// オブジェクトの描画
+	object3d->Draw();
+}
+
 void XIIlib::Unit::KnockBack()
 {
 	// 攻撃当たっていなければそく返す
 	if (!UnitManager::GetInstance()->IsAttackValid(element_stock, (int)_PositionType::MINE))return;
 
-	Hit(1);
+	SetHitDamage(1);
 	isAttack = false;
 	// ノックバックの移動量
 	const Math::Point2 backVector = UnitManager::GetInstance()->GetBackVector(element_stock);
@@ -172,7 +184,7 @@ void XIIlib::Unit::SetElementStock(int x, int z)
 	element_stock = Math::Point2(x, z);
 }
 
-void XIIlib::Unit::Hit(int attackPoint)
+void XIIlib::Unit::SetHitDamage(int attackPoint)
 {
 	_hit_point -= attackPoint;
 }

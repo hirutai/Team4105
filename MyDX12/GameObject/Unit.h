@@ -79,43 +79,40 @@ namespace XIIlib {
 
 		virtual void Initialize() = 0;
 		virtual void Update() = 0;
-		virtual void Draw() = 0;
+		virtual void Draw();
 
 		virtual void Move() = 0;							// 移動用
 		virtual void Attack() = 0;							// 攻撃用(今は使ってない)
-		void KnockBack();
-		void SetElementStock(int x, int z);		// マス座標の設定
-		void Hit(int attackPoint);				// ダメージを受ける関数
 		
 		virtual void Action() = 0;							// 行動
 		virtual bool AttackAreaExists() = 0;                // 攻撃範囲にいるか
 		virtual void IniState() = 0;
 
-		virtual void SetTypePositioning(_PositionType changeType) = 0;
-
 		virtual void CreateAttackArea() = 0;
 
 		virtual void BillObjectDraw();
 
-		// 変更しますた。
-		int GetTypePositioning()const { return (int)type; }
-		int IsDead()const { return is_dead; }
-
-		void OnDead() { is_dead = true; }
-
 		void ZeroHp();
-
-		Math::Point2 GetElementStock()const { return element_stock; }
-
-		int GetPatternElement(int pattern)const { return attack_area[pattern].size(); }
-
-		Math::Point2 GetAttackArea(int pattern, int element)const { return attack_area[pattern][element]; }
-
-		std::string GetID()const { return ID; }
 
 		virtual bool MoveAreaCheck(Math::Point2 crPos, Math::Point2 vec, int tileNum) = 0;
 
 		bool ThreeCheckArea(Math::Point2 element_stock);
-		
+
+	public:// Get関数群
+		int GetPatternElement(int pattern)const { return attack_area[pattern].size(); }
+		int GetTypePositioning()const { return (int)type; }
+		int IsDead()const { return is_dead; }
+		std::string GetID()const { return ID; }
+		Math::Point2 GetElementStock()const { return element_stock; }
+		Math::Point2 GetAttackArea(int pattern, int element)const { return attack_area[pattern][element]; }
+
+	public:// Set関数群
+		void SetTypePositioning(_PositionType changeType);
+		void SetHitDamage(int attackPoint);				// ダメージを受ける関数
+		void OnDead() { is_dead = true; }
+
+	protected:// 共通関数
+		void KnockBack();
+		void SetElementStock(int x, int z);		// マス座標の設定
 	};
 }

@@ -68,11 +68,6 @@ void XIIlib::Yankee::Update()
 	object3d->Update();
 }
 
-void XIIlib::Yankee::Draw()
-{
-	object3d->Draw();
-}
-
 void XIIlib::Yankee::Action()
 {
 	// –¢—ˆ‚Ö‚Ì‰hŒõ‚Ìƒ[ƒh‚ğ‰Šú‰»
@@ -352,11 +347,6 @@ void XIIlib::Yankee::IniState()
 {
 	isAttack = false;
 	attackInterval = 180;
-}
-
-void XIIlib::Yankee::SetTypePositioning(_PositionType changeType)
-{
-	type = changeType;
 }
 
 void XIIlib::Yankee::CreateAttackArea()

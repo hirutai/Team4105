@@ -198,11 +198,6 @@ void XIIlib::King::IniState()
 {
 }
 
-void XIIlib::King::SetTypePositioning(_PositionType changeType)
-{
-	type = changeType;
-}
-
 void XIIlib::King::CreateAttackArea()
 {
 	const int size_data = 8;

@@ -189,11 +189,6 @@ void XIIlib::Stone::Update()
 	object3d->Update();
 }
 
-void XIIlib::Stone::Draw()
-{
-	object3d->Draw();
-}
-
 void XIIlib::Stone::Action()
 {
 	//// 範囲に入ってるかのチェック
@@ -486,11 +481,6 @@ void XIIlib::Stone::IniState()
 	//isAttack = false;
 	//attackInterval = 180;
 	//collCapsule->SetColor(0, 1, 1, 1);
-}
-
-void XIIlib::Stone::SetTypePositioning(_PositionType changeType)
-{
-	type = changeType;
 }
 
 void XIIlib::Stone::CreateAttackArea()
