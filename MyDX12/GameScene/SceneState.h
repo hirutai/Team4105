@@ -16,7 +16,10 @@ namespace XIIlib
 		EDGE_SP,
 		TITLEBG_SP,
 		TITLELOG_SP,
-		GAMECLEAR_SP
+		GAMECLEAR_SP,
+		PLAYERGUIDE_SP,
+		MENU_SP,
+		ENEMYGUIDES_SP,
 	};
 
 	// ステージナンバー

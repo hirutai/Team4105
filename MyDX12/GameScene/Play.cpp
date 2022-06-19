@@ -25,8 +25,11 @@ XIIlib::Play::Play()
 XIIlib::Play::~Play()
 {
 	// ƒ|ƒCƒ“ƒ^Žg‚Á‚½‚â‚Â‚Ì–„‘’ê
-	delete intervalTimter;
+	delete enemyGuides; // “G‚Ìà–¾
+	delete menu; // ƒƒjƒ…[
+	delete playerGuide; // ‘€ìà–¾
 	delete spStageBG1;
+	delete intervalTimter;
 }
 
 void XIIlib::Play::Initialize(GameScene* p_game_scene)
@@ -49,6 +52,8 @@ void XIIlib::Play::Initialize(GameScene* p_game_scene)
 		UnitManager::GetInstance()->AddUnit(std::move(bishop));
 		UnitManager::GetInstance()->AddUnit(std::move(rook));
 		UnitManager::GetInstance()->AddUnit(std::move(yankee));
+
+		// ”wŒi‰æ‘œ¶¬
 		spStageBG1 = Sprite::Create((UINT)SpriteName::STAGEBG1_SP, { 0.0f,0.0f });
 	}
 	else if (stageNum == StageNumber::NORMAL)
@@ -82,8 +87,13 @@ void XIIlib::Play::Initialize(GameScene* p_game_scene)
 		UnitManager::GetInstance()->AddUnit(std::move(yankee4));
 		//UnitManager::GetInstance()->AddUnit(std::move(stone));
 
+		// ”wŒi‰æ‘œ¶¬
 		spStageBG1 = Sprite::Create((UINT)SpriteName::STAGEBG1_SP, { 0.0f,0.0f });
 	}
+
+	playerGuide = Sprite::Create(); // ‘€ìà–¾
+	menu = nullptr; // ƒƒjƒ…[
+	enemyGuides = nullptr; // “G‚Ìà–¾
 	p_game_scene->GetAudio()->PlayBGM("yankeeBGM.wav");
 }
 
