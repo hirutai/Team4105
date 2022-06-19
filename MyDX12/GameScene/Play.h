@@ -21,6 +21,9 @@ namespace XIIlib {
 		void DrawTex()override;
 		void DrawBackground()override;
 	private: // ƒƒ“ƒo•Ï”
-		Sprite* spStageBG1 = nullptr;
+		Sprite* spStageBG1 = nullptr; // ”wŒi
+		Sprite* playerGuide = nullptr; // ‘€ìà–¾
+		Sprite* menu = nullptr; // ƒƒjƒ…[
+		Sprite* enemyGuides = nullptr; // “G‚Ìà–¾
 	};
 }
