@@ -119,9 +119,12 @@ void XIIlib::King::Draw()
 
 void XIIlib::King::OriginBillDraw()
 {
-	if (type_attack == AREA::NONE)return;
+	//if (type_attack == AREA::NONE)return;
 
-	attackAreasBillboard->Draw();
+	if (isDrawAtArea) // UŒ‚’†
+	{
+		attackAreasBillboard->Draw();
+	}
 }
 
 void XIIlib::King::Move()
