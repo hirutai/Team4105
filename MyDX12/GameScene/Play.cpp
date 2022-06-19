@@ -109,12 +109,47 @@ void XIIlib::Play::Update(GameScene* p_game_scene)
 		{
 			// ゼロClear
 			easingCount = 0;
+			exitFlag = true;
 			menuExists = false;
 		}
 		else
 		{
 			menuExists = true;
 		}
+	}
+
+	if (menuExists)
+	{
+		float posX = 0;
+		float posY = 0;
+		// countがマックスに到達するまで
+		if (easingCount <= MAX_EASING_COUNT)
+		{
+			posX = Easing::EaseInOutElastic(easingCount, -winSize.x, winSize.x, MAX_EASING_COUNT);
+			posY = Easing::EaseInOutElastic(easingCount, -winSize.y, winSize.y, MAX_EASING_COUNT);
+			easingCount++;
+		}
+		enemyGuides->SetPosition({posX,posY});
+	}
+
+	if (exitFlag)
+	{
+		float posX = 0;
+		float posY = 0;
+		// countがマックスに到達するまで
+		if (easingCount <= MAX_EASING_COUNT)
+		{
+			posX = Easing::EaseInOutBounce(easingCount, enemyGuides->GetPosition().x, -winSize.x, MAX_EASING_COUNT);
+			posY = Easing::EaseInOutBounce(easingCount, enemyGuides->GetPosition().y, -winSize.y, MAX_EASING_COUNT);
+			easingCount++;
+			enemyGuides->SetPosition({ posX,posY });
+		}
+		else {
+			easingCount = 0;
+			exitFlag = false;
+			menuExists = false;
+		}
+		
 	}
 
 	if (menuExists)
@@ -170,8 +205,9 @@ void XIIlib::Play::DrawTex()
 	playerGuide->Draw();
 	menu->Draw();
 	// メニューが展開されていないならreturn
-	if (!menuExists)return;
+	if (!menuExists || exitFlag)return;
 	enemyGuides->Draw();
+	menu->Draw();
 }
 
 void XIIlib::Play::DrawBackground()
