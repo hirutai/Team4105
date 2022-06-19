@@ -32,76 +32,95 @@ void XIIlib::Select::Initialize(GameScene* p_game_scene)
 
 void XIIlib::Select::Update(GameScene* p_game_scene)
 {
+	if (movingScene) {
+
+		if (gamePad_->Button_Down(X_A)) {
+			p_game_scene->ChangeState(new Play);
+		}
+
+		if (!trigSpace) {
+			// AかDを押してたら
+			if (KeyInput::GetInstance()->Trigger(DIK_A)
+				|| KeyInput::GetInstance()->Trigger(DIK_D))
+			{
+				const float moveX = BASE_SIZE.x + GAP;
+
+				if (KeyInput::GetInstance()->Trigger(DIK_A))
+				{
+					edgePos.x -= moveX;
+					if (edgePos.x < HOMEL_POS.x)
+					{
+						edgePos.x = HOMEL_POS.x;
+					}
+					else
+					{
+						p_game_scene->GetAudio()->PlaySE("select.wav", 0.1f);
+					}
+				}
+				else if (KeyInput::GetInstance()->Trigger(DIK_D))
+				{
+					edgePos.x += moveX;
+					if (edgePos.x > HOMER_POS.x)
+					{
+						edgePos.x = HOMER_POS.x;
+					}
+					else
+					{
+						p_game_scene->GetAudio()->PlaySE("select.wav", 0.1f);
+					}
+				}
+			}
+		}
+
+		// 超えたら戻す
+		if (edgePos.x <= HOMEL_POS.x)
+		{
+			edgePos.x = HOMEL_POS.x;
+		}
+		else if (edgePos.x >= HOMER_POS.x)
+		{
+			edgePos.x = HOMER_POS.x;
+		}
+
+		// 情報の更新
+		edge->SetPosition(edgePos);
+
+		// 更新
+		if (KeyInput::GetInstance()->Trigger(DIK_SPACE)) {
+			trigSpace = true;
+			// ポジションによってステージナンバーを代入
+			if (edgePos.x == HOMEL_POS.x)
+			{
+				p_game_scene->GetAudio()->PlaySE("stageSelect.wav", 0.3f);
+				stageNum = StageNumber::EASY;
+			}
+			else if (edgePos.x == HOMEC_POS.x)
+			{
+				p_game_scene->GetAudio()->PlaySE("stageSelect.wav", 0.3f);
+				stageNum = StageNumber::NORMAL;
+			}
+			else if (edgePos.x == HOMER_POS.x)
+			{
+				//p_game_scene->GetAudio()->PlaySE("stageSelect.wav",0.3f);
+				return;
+				//stageNum = StageNumber::HARD;
+			}
+		}
+
+		if (trigSpace) {
+			if (p_game_scene->DrawScreen(false)) {
+				p_game_scene->ChangeState(new Play);
+			}
+		}
+	}
+	else {
+		// シーンの遷移が完了しているか？
+		if (p_game_scene->DrawScreen(true)) {
+			movingScene = true;
+		}
+	}
+
 	
-	if (gamePad_->Button_Down(X_A)) {
-		p_game_scene->ChangeState(new Play);
-	}
-	// AかDを押してたら
-	if (KeyInput::GetInstance()->Trigger(DIK_A) 
-		|| KeyInput::GetInstance()->Trigger(DIK_D)) 
-	{
-		const float moveX = BASE_SIZE.x + GAP;
-		
-		if (KeyInput::GetInstance()->Trigger(DIK_A))
-		{
-			edgePos.x -= moveX;
-			if (edgePos.x < HOMEL_POS.x)
-			{
-				edgePos.x = HOMEL_POS.x;
-			}
-			else
-			{
-				p_game_scene->GetAudio()->PlaySE("select.wav", 0.1f);
-			}
-		}
-		else if (KeyInput::GetInstance()->Trigger(DIK_D))
-		{		
-			edgePos.x += moveX;
-			if (edgePos.x > HOMER_POS.x)
-			{
-				edgePos.x = HOMER_POS.x;
-			}
-			else
-			{
-				p_game_scene->GetAudio()->PlaySE("select.wav", 0.1f);
-			}
-		}
-	}
-
-	// 超えたら戻す
-	if (edgePos.x <= HOMEL_POS.x)
-	{
-		edgePos.x = HOMEL_POS.x;
-	}
-	else if (edgePos.x >= HOMER_POS.x)
-	{
-		edgePos.x = HOMER_POS.x;
-	}
-
-	// 情報の更新
-	edge->SetPosition(edgePos);
-
-	// 更新
-	if (KeyInput::GetInstance()->Trigger(DIK_SPACE)) {
-		// ポジションによってステージナンバーを代入
-		if (edgePos.x == HOMEL_POS.x)
-		{
-			p_game_scene->GetAudio()->PlaySE("stageSelect.wav",0.3f);
-			stageNum = StageNumber::EASY;
-		}
-		else if (edgePos.x == HOMEC_POS.x)
-		{
-			p_game_scene->GetAudio()->PlaySE("stageSelect.wav",0.3f);
-			stageNum = StageNumber::NORMAL;
-		}
-		else if (edgePos.x == HOMER_POS.x)
-		{
-			//p_game_scene->GetAudio()->PlaySE("stageSelect.wav",0.3f);
-			return;
-			//stageNum = StageNumber::HARD;
-		}
-		p_game_scene->ChangeState(new Play);
-	}
 }
 
 void XIIlib::Select::Draw()

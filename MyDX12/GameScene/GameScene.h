@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include "../Input/GamePAD_XInput.h"
+class Sprite;
 
 namespace XIIlib
 {
@@ -21,6 +22,8 @@ namespace XIIlib
 		void Draw();
 		void DrawSprite();
 		void DrawBackground();
+
+		bool DrawScreen(bool on_curtain);
 		//void SetGamePad();
 
 		Audio* GetAudio()const;
@@ -45,5 +48,10 @@ namespace XIIlib
 
 		int _timer = 0;
 		int at_type = 0;
+
+		std::vector<std::vector<unsigned int>> m_curtain;
+		std::vector<Sprite*> screen_curtain;
+		std::vector<float> time_curtain;
+
 	};
 }

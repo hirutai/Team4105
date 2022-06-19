@@ -36,6 +36,10 @@ namespace XIIlib
 	// Šî’êó‘ÔƒNƒ‰ƒX
 	class SceneState
 	{
+	protected:// ƒƒ“ƒo•Ï”
+		bool trigSpace = false;
+		bool movingScene = false;
+
 	protected:
 		SceneState(){}
 	public:
