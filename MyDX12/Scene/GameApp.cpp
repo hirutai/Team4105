@@ -122,6 +122,7 @@ void GameApp::Initialize()
 
 	Sprite::LoadTexture(texind, L"Resources/BG.png"); texind++;
 	Sprite::LoadTexture(texind, L"Resources/StageSelect.png"); texind++;
+	Sprite::LoadTexture(texind, L"Resources/banTex.png"); texind++;
 
 	debugJIS = DebugJISText::GetInstance();
 	debugJIS->Initialize(debugJISTextTexNumber);
