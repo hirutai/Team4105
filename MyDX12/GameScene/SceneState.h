@@ -20,6 +20,8 @@ namespace XIIlib
 		PLAYERGUIDE_SP,
 		MENU_SP,
 		ENEMYGUIDES_SP,
+		BG_SP,
+		STAGESELECT_SP,
 	};
 
 	// ステージナンバー

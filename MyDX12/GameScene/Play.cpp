@@ -116,6 +116,7 @@ void XIIlib::Play::Update(GameScene* p_game_scene)
 	}
 	else if (UnitManager::GetInstance()->GetUnitIDElements("King") < 0) // プレイヤが存在していない場合
 	{
+		p_game_scene->GetAudio()->PlaySE("sakebi.wav", 0.5f);
 		p_game_scene->ChangeState(new Over); // オーバーシーンへ
 	}
 }

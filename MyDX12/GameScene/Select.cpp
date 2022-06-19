@@ -24,6 +24,9 @@ void XIIlib::Select::Initialize(GameScene* p_game_scene)
 	normalButton.reset(Sprite::Create((UINT)SpriteName::NORMAL_BUTTON_SP, HOMEC_POS));
 	hardButton.reset(Sprite::Create((UINT)SpriteName::HARD_BUTTON_SP, HOMER_POS));
 	edge.reset(Sprite::Create((UINT)SpriteName::EDGE_SP, HOMEL_POS));
+	bg_sp.reset(Sprite::Create((UINT)SpriteName::BG_SP, { 0, 0}));
+	stageSelect_sp.reset(Sprite::Create((UINT)SpriteName::STAGESELECT_SP, { 250, 0}));
+
 	p_game_scene->GetAudio()->PlayBGM("yankeeBGM.wav");
 }
 
@@ -112,9 +115,12 @@ void XIIlib::Select::DrawTex()
 	easyButton->Draw();
 	normalButton->Draw();
 	hardButton->Draw();
+	stageSelect_sp->Draw();
 	edge->Draw();
+
 }
 
 void XIIlib::Select::DrawBackground()
 {
+	bg_sp->Draw();
 }
