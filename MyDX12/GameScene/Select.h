@@ -14,7 +14,7 @@ namespace XIIlib {
 	class Select : public SceneState {
 	private: // ÉÅÉìÉoíËêî
 		const float GAP = 100.0f;
-		const float HOME_POSY = 250;
+		const float HOME_POSY = 300;
 		const Math::Vector2 BASE_SIZE = {360,240};
 		const Math::Vector2 HOMEL_POS 
 			= {0,HOME_POSY };
@@ -31,6 +31,9 @@ namespace XIIlib {
 		std::unique_ptr<Sprite> normalButton;
 		std::unique_ptr<Sprite> hardButton;
 		std::unique_ptr<Sprite> edge;
+		std::unique_ptr<Sprite> bg_sp;
+		std::unique_ptr<Sprite> stageSelect_sp;
+
 #pragma endregion
 		
 
