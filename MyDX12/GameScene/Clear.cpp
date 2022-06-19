@@ -29,6 +29,7 @@ void Clear::Update(GameScene* p_game_scene)
 {
 	// XV
 	if (KeyInput::GetInstance()->Trigger(DIK_SPACE)) {
+		p_game_scene->GetAudio()->PlaySE("kettei.wav", 0.3f);
 		p_game_scene->ChangeState(new Title);
 	}
 
