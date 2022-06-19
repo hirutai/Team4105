@@ -8,6 +8,7 @@ class Sprite;
 namespace XIIlib {
 
 	class GameScene;
+	class Audio;
 
 	// ステージ選択シーンのクラス
 	class Select : public SceneState {
@@ -21,6 +22,7 @@ namespace XIIlib {
 			= {HOMEL_POS.x + BASE_SIZE.x + GAP ,HOME_POSY };
 		const Math::Vector2 HOMER_POS 
 			= { HOMEC_POS.x + BASE_SIZE.x + GAP ,HOME_POSY };
+		Audio* audio_ = nullptr;
 	private: // メンバ変数
 		// 変数宣言の場(Object/Sprite/時間/フラグ等)
 		Math::Vector2 edgePos = HOMEL_POS;
@@ -41,6 +43,8 @@ namespace XIIlib {
 		void Draw()override;
 		void DrawTex()override;
 		void DrawBackground()override;
+
+		Audio* GetAudio() { return audio_; };//音
 	};
 }
 

@@ -18,7 +18,7 @@ namespace XIIlib {
 		Audio();
 		~Audio();
 
-		void PlaySE(std::string wav);
+		void PlaySE(std::string wav,float volume = 0.05f);
 		void PlayBGM(std::string wav);
 
 		void StopBGM();
