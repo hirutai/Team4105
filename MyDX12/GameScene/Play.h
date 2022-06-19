@@ -25,5 +25,7 @@ namespace XIIlib {
 		Sprite* playerGuide = nullptr; // ‘€ìà–¾
 		Sprite* menu = nullptr; // ƒƒjƒ…[
 		Sprite* enemyGuides = nullptr; // “G‚Ìà–¾
+
+		bool menuExists = false;
 	};
 }
