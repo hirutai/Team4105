@@ -24,13 +24,14 @@ void XIIlib::Over::Initialize(GameScene* p_game_scene)
 	// SceneØ‚è‘Ö‚¦Žž‚Éˆê“x’Ê‚éˆ—
 	UnitManager::GetInstance()->AllDestroy();
 	spGameOver = Sprite::Create((UINT)SpriteName::GAMEOVER_SP, {0.0f,0.0f});
-	p_game_scene->GetAudio()->PlayBGM("yankeeBGM.wav");
+	//p_game_scene->GetAudio()->PlayBGM("yankeeBGM.wav");
 }
 
 void XIIlib::Over::Update(GameScene* p_game_scene)
 {
 	// XV
 	if (KeyInput::GetInstance()->Trigger(DIK_SPACE)) {
+		p_game_scene->GetAudio()->StopSE();
 		p_game_scene->GetAudio()->PlaySE("kettei.wav", 0.3f);
 		p_game_scene->ChangeState(new Title);
 	}
