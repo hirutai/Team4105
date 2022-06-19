@@ -117,8 +117,8 @@ void GameApp::Initialize()
 	Sprite::LoadTexture(texind, L"Resources/GameClear.png"); texind++;
 
 	Sprite::LoadTexture(texind, L"Resources/explanation.png"); texind++;
-	Sprite::LoadTexture(texind, L"Resources/explanation.png"); texind++;
-	Sprite::LoadTexture(texind, L"Resources/explanation.png"); texind++;
+	Sprite::LoadTexture(texind, L"Resources/Easy.png"); texind++;
+	Sprite::LoadTexture(texind, L"Resources/PushA.png"); texind++;
 
 	Sprite::LoadTexture(texind, L"Resources/BG.png"); texind++;
 	Sprite::LoadTexture(texind, L"Resources/StageSelect.png"); texind++;
