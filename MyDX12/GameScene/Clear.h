@@ -28,6 +28,7 @@ namespace XIIlib
 
 	private: // ƒƒ“ƒo•Ï”
 		Sprite* gameClear = nullptr; // ƒNƒŠƒA‰æ‘œ
+		bool oneThrough = false;
 	};
 
 }
