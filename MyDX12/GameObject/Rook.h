@@ -3,13 +3,11 @@
 #include <memory>
 
 namespace XIIlib {
-	class AttackTimer;
 
 	class Rook : public Unit {
 	private:
 		Math::Point2 point_attack;
 
-		AttackTimer* attackTimer = nullptr; // 攻撃タイマー
 		int countingNum = 5; // カウントしたい数
 	public:
 		Rook();
@@ -28,8 +26,6 @@ namespace XIIlib {
 		void IniState()override;
 
 		void CreateAttackArea()override;
-
-		void BillObjectDraw()override;
 
 		Math::Point2 GetElementStock()const { return element_stock; }
 		bool MoveAreaCheck(Math::Point2 crPos, Math::Point2 vec, int tileNum)override;

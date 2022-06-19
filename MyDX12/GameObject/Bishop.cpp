@@ -46,8 +46,7 @@ void XIIlib::Bishop::Initialize()
 	// Audioの初期化
 	audio_ = UnitManager::GetInstance()->GetAudio();
 
-	attackTimer = new AttackTimer(countingNum);
-	attackTimer->Initialize();
+	SetAttackTimer(countingNum);
 }
 
 void XIIlib::Bishop::Update()
@@ -370,11 +369,6 @@ void XIIlib::Bishop::IniState()
 void XIIlib::Bishop::CreateAttackArea()
 {
 
-}
-
-void XIIlib::Bishop::BillObjectDraw()
-{
-	attackTimer->Draw(); // 攻撃タイマーの描画
 }
 
 bool XIIlib::Bishop::MoveAreaCheck(Math::Point2 crPos, Math::Point2 vec, int tileNum)

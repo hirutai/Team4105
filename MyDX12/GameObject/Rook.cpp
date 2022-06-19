@@ -46,8 +46,7 @@ void XIIlib::Rook::Initialize()
 	// Audioの初期化
 	audio_ = UnitManager::GetInstance()->GetAudio();
 
-	attackTimer = new AttackTimer(countingNum);
-	attackTimer->Initialize();
+	SetAttackTimer(countingNum);
 }
 
 void XIIlib::Rook::Update()
@@ -429,11 +428,6 @@ void XIIlib::Rook::IniState()
 void XIIlib::Rook::CreateAttackArea()
 {
 
-}
-
-void XIIlib::Rook::BillObjectDraw()
-{
-	attackTimer->Draw(); // 攻撃タイマーの描画
 }
 
 bool XIIlib::Rook::MoveAreaCheck(Math::Point2 crPos, Math::Point2 vec, int tileNum)

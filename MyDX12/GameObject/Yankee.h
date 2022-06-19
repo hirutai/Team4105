@@ -3,7 +3,6 @@
 #include <memory>
 
 namespace XIIlib {
-	class AttackTimer;
 
 	class Yankee : public Unit {
 	private:
@@ -12,7 +11,6 @@ namespace XIIlib {
 		bool determinateMoveAction = false;
 		Math::Point2 nextPoint;
 
-		AttackTimer* attackTimer = nullptr; // 攻撃タイマー
 	public:
 		Yankee();
 		~Yankee();
@@ -30,8 +28,6 @@ namespace XIIlib {
 		void IniState()override;
 
 		void CreateAttackArea()override;
-
-		void BillObjectDraw()override;
 
 		Math::Point2 GetElementStock()const { return element_stock; }
 		bool MoveAreaCheck(Math::Point2 crPos, Math::Point2 vec, int tileNum)override;

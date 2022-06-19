@@ -7,6 +7,7 @@ class Object3D;
 
 namespace XIIlib {
 	class Audio;
+	class AttackTimer;
 	// 攻撃エリア
 	enum struct AREA : int {
 		NONE =-1,
@@ -52,7 +53,6 @@ namespace XIIlib {
 
 		Audio* audio_ = nullptr;
 
-		// 追加
 		unsigned int attackInterval = 180;
 		bool isAttack = false;
 		//攻撃flag
@@ -70,8 +70,9 @@ namespace XIIlib {
 		Object3D* object3d = nullptr;
 		Object3D* daiza = nullptr;
 
-		// 追加
 		Math::Point2 kingPos{0,0};
+
+		AttackTimer* attackTimer = nullptr; // 攻撃タイマー
 
 	public:
 		Unit() = default;
@@ -89,8 +90,6 @@ namespace XIIlib {
 		virtual void IniState() = 0;
 
 		virtual void CreateAttackArea() = 0;
-
-		virtual void BillObjectDraw();
 
 		void ZeroHp();
 
@@ -111,7 +110,12 @@ namespace XIIlib {
 		void SetHitDamage(int attackPoint);				// ダメージを受ける関数
 		void OnDead() { is_dead = true; }
 
-	protected:// 共通関数
+		void SetAttackTimer(int countNum);
+
+	public:// 共通関数
+		void BillObjectDraw();
+
+	protected:// 共通関数(private)
 		void KnockBack();
 		void SetElementStock(int x, int z);		// マス座標の設定
 	};
