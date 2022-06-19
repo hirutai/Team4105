@@ -128,8 +128,8 @@ void XIIlib::Play::Update(GameScene* p_game_scene)
 			posX = Easing::EaseInOutElastic(easingCount, -winSize.x, winSize.x, MAX_EASING_COUNT);
 			posY = Easing::EaseInOutElastic(easingCount, -winSize.y, winSize.y, MAX_EASING_COUNT);
 			easingCount++;
+			enemyGuides->SetPosition({ posX,posY });
 		}
-		enemyGuides->SetPosition({posX,posY});
 	}
 
 	if (exitFlag)
@@ -139,8 +139,8 @@ void XIIlib::Play::Update(GameScene* p_game_scene)
 		// countがマックスに到達するまで
 		if (easingCount <= MAX_EASING_COUNT)
 		{
-			posX = Easing::EaseInOutBounce(easingCount, enemyGuides->GetPosition().x, -winSize.x, MAX_EASING_COUNT);
-			posY = Easing::EaseInOutBounce(easingCount, enemyGuides->GetPosition().y, -winSize.y, MAX_EASING_COUNT);
+			posX = Easing::EaseInOutBounce(easingCount, 0, -winSize.x, MAX_EASING_COUNT);
+			posY = Easing::EaseInOutBounce(easingCount, 0, -winSize.y, MAX_EASING_COUNT);
 			easingCount++;
 			enemyGuides->SetPosition({ posX,posY });
 		}
@@ -151,21 +151,6 @@ void XIIlib::Play::Update(GameScene* p_game_scene)
 		}
 		
 	}
-
-	if (menuExists)
-	{
-		float posX = 0;
-		// countがマックスに到達するまで
-		if (easingCount <= MAX_EASING_COUNT)
-		{
-			posX = Easing::EaseInOutCubic(easingCount, -winSize.x, winSize.x, MAX_EASING_COUNT);
-		}
-		enemyGuides->SetPosition({posX,0});
-		easingCount++;
-	}
-
-	
-
 	// メニューが展開されているならreturn
 	if (menuExists)return;
 #pragma endregion 
