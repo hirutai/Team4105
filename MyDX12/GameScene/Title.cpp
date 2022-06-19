@@ -19,13 +19,13 @@ XIIlib::Title::~Title()
 	// ポインタ使ったやつの埋葬場
 	delete spTitleLog;
 	delete spTitleBG;
-	delete spPushA;
+	delete space;
 }
 
 void XIIlib::Title::Initialize(GameScene* p_game_scene)
 {
 	// Scene切り替え時に一度通る処理
-	spPushA = Sprite::Create((UINT)SpriteName::PUSHA_SP, {0.0f,0.0f});
+	space = Sprite::Create(6, { 1280 / 2 - 300, 768 / 2 + 100 });
 	spTitleBG = Sprite::Create((UINT)SpriteName::TITLEBG_SP, { 0.0f,0.0f });
 	spTitleLog = Sprite::Create((UINT)SpriteName::TITLELOG_SP, { 320.0f,0.0f });
 	p_game_scene->GetAudio()->PlayBGM("yankeeBGM.wav");
@@ -75,7 +75,7 @@ void XIIlib::Title::Draw()
 void XIIlib::Title::DrawTex()
 {
 	// スプライト描画
-	//spPushA->Draw();
+	space->Draw();
 }
 
 void XIIlib::Title::DrawBackground()

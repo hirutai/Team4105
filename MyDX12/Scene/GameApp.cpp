@@ -105,7 +105,7 @@ void GameApp::Initialize()
 	Sprite::LoadTexture(texind, L"Resources/effect1.png");	  texind++;
 	Sprite::LoadTexture(texind, L"Resources/timer.png");      texind++;
 	Sprite::LoadTexture(texind, L"Resources/timer_bar.png");  texind++;
-	Sprite::LoadTexture(texind, L"Resources/PushA.png");      texind++;
+	Sprite::LoadTexture(texind, L"Resources/Space.png");      texind++;
 	Sprite::LoadTexture(texind, L"Resources/GameOver.png");   texind++;
 	Sprite::LoadTexture(texind, L"Resources/stage_BG1.png");   texind++;
 	Sprite::LoadTexture(texind, L"Resources/Easy.png"); texind++;

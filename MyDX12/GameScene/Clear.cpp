@@ -16,12 +16,14 @@ Clear::Clear()
 Clear::~Clear()
 {
 	delete gameClear;
+	delete space;
 }
 
 void Clear::Initialize(GameScene* p_game_scene)
 {
 	// Scene切り替え時に一度通る処理
 	UnitManager::GetInstance()->AllDestroy();
+	space = Sprite::Create(6, { 1280 / 2 - 300, 768 / 2 + 100 });
 	gameClear = Sprite::Create((UINT)SpriteName::GAMECLEAR_SP, { 0.0f,0.0f });
 }
 
@@ -67,6 +69,7 @@ void Clear::DrawTex()
 {
 	// スプライト描画
 	gameClear->Draw();
+	space->Draw();
 }
 
 void Clear::DrawBackground()

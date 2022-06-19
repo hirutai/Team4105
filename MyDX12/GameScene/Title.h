@@ -23,8 +23,9 @@ namespace XIIlib {
 		void DrawBackground()override;
 
 	private:
-		Sprite* spPushA = nullptr;
 		Sprite* spTitleBG = nullptr;
 		Sprite* spTitleLog = nullptr;
+
+		Sprite* space = nullptr;
 	};
 }
