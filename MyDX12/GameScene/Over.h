@@ -22,5 +22,8 @@ namespace XIIlib {
 		void DrawBackground()override;
 	private: // ƒƒ“ƒo•Ï”
 		Sprite* spGameOver = nullptr;
+		bool oneThrough = false;
+
+		Sprite* space = nullptr;
 	};
 }

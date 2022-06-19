@@ -104,6 +104,7 @@ void XIIlib::Play::Update(GameScene* p_game_scene)
 	
 	// メニュー画面を展開、閉じる
 	if (KeyInput::GetInstance()->Trigger(DIK_TAB))
+<<<<<<< HEAD
 	{
 		if (menuExists && easingCount >= MAX_EASING_COUNT)
 		{
@@ -133,6 +134,8 @@ void XIIlib::Play::Update(GameScene* p_game_scene)
 	}
 
 	if (exitFlag)
+=======
+>>>>>>> 4965877ae8c2e767f0ad462363b71c4f4a74aeb4
 	{
 		float posX = 0;
 		float posY = 0;
@@ -151,6 +154,20 @@ void XIIlib::Play::Update(GameScene* p_game_scene)
 		}
 		
 	}
+
+	if (menuExists)
+	{
+		float posX = 0;
+		// countがマックスに到達するまで
+		if (easingCount <= MAX_EASING_COUNT)
+		{
+			posX = Easing::EaseInOutCubic(easingCount, -winSize.x, winSize.x, MAX_EASING_COUNT);
+		}
+		enemyGuides->SetPosition({posX,0});
+		easingCount++;
+	}
+
+	
 
 	// メニューが展開されているならreturn
 	if (menuExists)return;

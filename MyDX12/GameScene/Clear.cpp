@@ -16,27 +16,47 @@ Clear::Clear()
 Clear::~Clear()
 {
 	delete gameClear;
+	delete space;
 }
 
 void Clear::Initialize(GameScene* p_game_scene)
 {
 	// Scene切り替え時に一度通る処理
 	UnitManager::GetInstance()->AllDestroy();
+	space = Sprite::Create(6, { 1280 / 2 - 300, 768 / 2 + 100 });
 	gameClear = Sprite::Create((UINT)SpriteName::GAMECLEAR_SP, { 0.0f,0.0f });
 }
 
 void Clear::Update(GameScene* p_game_scene)
 {
-	// 更新
-	if (KeyInput::GetInstance()->Trigger(DIK_SPACE)) {
-		p_game_scene->GetAudio()->PlaySE("kettei.wav", 0.3f);
-		p_game_scene->ChangeState(new Title);
-	}
+	if (movingScene) {
+		if (!oneThrough) {
+			p_game_scene->GetAudio()->PlaySE("clear.wav", 0.5f);
+			oneThrough = true;
+		}
 
-	if (gamePad_->Button_Down(X_A)) {
-		p_game_scene->ChangeState(new Title);
-	}
+		// 更新
+		if (KeyInput::GetInstance()->Trigger(DIK_SPACE)) {
+			trigSpace = true;
+			p_game_scene->GetAudio()->PlaySE("kettei.wav", 0.3f);
+		}
 
+		if (gamePad_->Button_Down(X_A)) {
+			p_game_scene->ChangeState(new Title);
+		}
+
+		if (trigSpace) {
+			if (p_game_scene->DrawScreen(false)) {
+				p_game_scene->ChangeState(new Title);
+			}
+		}
+	}
+	else {
+		// シーンの遷移が完了しているか？
+		if (p_game_scene->DrawScreen(true)) {
+			movingScene = true;
+		}
+	}
 }
 
 void Clear::Draw()
@@ -49,6 +69,7 @@ void Clear::DrawTex()
 {
 	// スプライト描画
 	gameClear->Draw();
+	space->Draw();
 }
 
 void Clear::DrawBackground()
