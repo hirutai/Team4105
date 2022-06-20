@@ -128,9 +128,8 @@ void XIIlib::Play::Update(GameScene* p_game_scene)
 				posX = Easing::EaseInOutBack(easingCount, -winSize.x, winSize.x, MAX_EASING_COUNT);
 				posY = Easing::EaseInOutBack(easingCount, -winSize.y, winSize.y, MAX_EASING_COUNT);
 				easingCount++;
-				
+				enemyGuides->SetPosition({ posX,posY });
 			}
-			enemyGuides->SetPosition({ posX,posY });
 		}
 		
 
