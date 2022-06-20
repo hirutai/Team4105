@@ -118,6 +118,9 @@ public: // メンバ関数
 	/// </summary>
 	void Draw();
 
+	// α値の設定
+	void SetAlpha(float alpha);
+
 private: // メンバ変数
 	// 頂点バッファ
 	Microsoft::WRL::ComPtr<ID3D12Resource> vertBuff;
