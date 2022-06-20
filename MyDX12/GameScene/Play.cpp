@@ -102,6 +102,10 @@ void XIIlib::Play::Update(GameScene* p_game_scene)
 {
 	if (movingScene) {
 #pragma region ƒƒjƒ…[ˆ—
+<<<<<<< HEAD
+=======
+
+>>>>>>> parent of 27be801 (ã‚·ãƒ¼ãƒ³é·ç§»ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã®ã‚¹ãƒ”ãƒ¼ãƒ‰èª¿æ•´ã€æ›´æ–°å‡¦ç†ã®æ”¹å–„)
 		// ƒƒjƒ…[‰æ–Ê‚ğ“WŠJA•Â‚¶‚é
 		if (KeyInput::GetInstance()->Trigger(DIK_TAB))
 		{
@@ -116,8 +120,13 @@ void XIIlib::Play::Update(GameScene* p_game_scene)
 			{
 				menuExists = true;
 			}
+<<<<<<< HEAD
 		}
 		
+		if (menuExists)
+=======
+		}
+
 		if (menuExists)
 		{
 			float posX = 0;
@@ -125,6 +134,22 @@ void XIIlib::Play::Update(GameScene* p_game_scene)
 			// count‚ªƒ}ƒbƒNƒX‚É“’B‚·‚é‚Ü‚Å
 			if (easingCount <= MAX_EASING_COUNT)
 			{
+				posX = Easing::EaseInOutElastic(easingCount, -winSize.x, winSize.x, MAX_EASING_COUNT);
+				posY = Easing::EaseInOutElastic(easingCount, -winSize.y, winSize.y, MAX_EASING_COUNT);
+				easingCount++;
+			}
+			enemyGuides->SetPosition({ posX,posY });
+		}
+
+		if (exitFlag)
+>>>>>>> parent of 27be801 (ã‚·ãƒ¼ãƒ³é·ç§»ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã®ã‚¹ãƒ”ãƒ¼ãƒ‰èª¿æ•´ã€æ›´æ–°å‡¦ç†ã®æ”¹å–„)
+		{
+			float posX = 0;
+			float posY = 0;
+			// count‚ªƒ}ƒbƒNƒX‚É“’B‚·‚é‚Ü‚Å
+			if (easingCount <= MAX_EASING_COUNT)
+			{
+<<<<<<< HEAD
 				posX = Easing::EaseInOutBack(easingCount, -winSize.x, winSize.x, MAX_EASING_COUNT);
 				posY = Easing::EaseInOutBack(easingCount, -winSize.y, winSize.y, MAX_EASING_COUNT);
 				easingCount++;
@@ -150,6 +175,33 @@ void XIIlib::Play::Update(GameScene* p_game_scene)
 				exitFlag = false;
 			}
 		}
+=======
+				posX = Easing::EaseInOutBounce(easingCount, enemyGuides->GetPosition().x, -winSize.x, MAX_EASING_COUNT);
+				posY = Easing::EaseInOutBounce(easingCount, enemyGuides->GetPosition().y, -winSize.y, MAX_EASING_COUNT);
+				easingCount++;
+				enemyGuides->SetPosition({ posX,posY });
+			}
+			else {
+				easingCount = 0;
+				exitFlag = false;
+				menuExists = false;
+			}
+
+		}
+
+		if (menuExists)
+		{
+			float posX = 0;
+			// count‚ªƒ}ƒbƒNƒX‚É“’B‚·‚é‚Ü‚Å
+			if (easingCount <= MAX_EASING_COUNT)
+			{
+				posX = Easing::EaseInOutCubic(easingCount, -winSize.x, winSize.x, MAX_EASING_COUNT);
+			}
+			enemyGuides->SetPosition({ posX,0 });
+			easingCount++;
+		}
+
+>>>>>>> parent of 27be801 (ã‚·ãƒ¼ãƒ³é·ç§»ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã®ã‚¹ãƒ”ãƒ¼ãƒ‰èª¿æ•´ã€æ›´æ–°å‡¦ç†ã®æ”¹å–„)
 		// ƒƒjƒ…[‚ª“WŠJ‚³‚ê‚Ä‚¢‚é‚È‚çreturn
 		if (menuExists)return;
 #pragma endregion 
