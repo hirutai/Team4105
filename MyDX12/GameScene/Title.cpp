@@ -33,36 +33,28 @@ void XIIlib::Title::Initialize(GameScene* p_game_scene)
 
 void XIIlib::Title::Update(GameScene* p_game_scene)
 {
-	if (movingScene) {
-		// 更新
-		if (KeyInput::GetInstance()->Trigger(DIK_SPACE)) {
-			trigSpace = true;
-			p_game_scene->GetAudio()->PlaySE("kettei.wav", 0.3f);
-		}
+	// 更新
+	if (KeyInput::GetInstance()->Trigger(DIK_SPACE)) {
+		trigSpace = true;
+		p_game_scene->GetAudio()->PlaySE("kettei.wav", 0.3f);
+	}
 
-		if (trigSpace) {
-			if (p_game_scene->DrawScreen(false)) {
-				p_game_scene->ChangeState(new Select);
-			}
-		}
-
-		if (gamePad_->Button_Down(X_A)) {
+	if (trigSpace) {
+		if (p_game_scene->DrawScreen(false)) {
 			p_game_scene->ChangeState(new Select);
 		}
-
-		if (gamePad_->Button_Down(X_Y)) {
-			stageNum = StageNumber::EASY;
-		}
-
-		if (gamePad_->Button_Down(X_X)) {
-			stageNum = StageNumber::NORMAL;
-		}
 	}
-	else {
-		// シーンの遷移が完了しているか？
-		if (p_game_scene->DrawScreen(true)) {
-			movingScene = true;
-		}
+
+	if (gamePad_->Button_Down(X_A)) {
+		p_game_scene->ChangeState(new Select);
+	}
+
+	if (gamePad_->Button_Down(X_Y)) {
+		stageNum = StageNumber::EASY;
+	}
+
+	if (gamePad_->Button_Down(X_X)) {
+		stageNum = StageNumber::NORMAL;
 	}
 }
 

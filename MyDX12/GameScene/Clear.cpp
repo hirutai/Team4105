@@ -29,32 +29,24 @@ void Clear::Initialize(GameScene* p_game_scene)
 
 void Clear::Update(GameScene* p_game_scene)
 {
-	if (movingScene) {
-		if (!oneThrough) {
-			p_game_scene->GetAudio()->PlaySE("clear.wav", 0.5f);
-			oneThrough = true;
-		}
-
-		// 更新
-		if (KeyInput::GetInstance()->Trigger(DIK_SPACE)) {
-			trigSpace = true;
-			p_game_scene->GetAudio()->PlaySE("kettei.wav", 0.3f);
-		}
-
-		if (gamePad_->Button_Down(X_A)) {
-			p_game_scene->ChangeState(new Title);
-		}
-
-		if (trigSpace) {
-			if (p_game_scene->DrawScreen(false)) {
-				p_game_scene->ChangeState(new Title);
-			}
-		}
+	if (!oneThrough) {
+		p_game_scene->GetAudio()->PlaySE("clear.wav", 0.5f);
+		oneThrough = true;
 	}
-	else {
-		// シーンの遷移が完了しているか？
-		if (p_game_scene->DrawScreen(true)) {
-			movingScene = true;
+
+	// 更新
+	if (KeyInput::GetInstance()->Trigger(DIK_SPACE)) {
+		trigSpace = true;
+		p_game_scene->GetAudio()->PlaySE("kettei.wav", 0.3f);
+	}
+
+	if (gamePad_->Button_Down(X_A)) {
+		p_game_scene->ChangeState(new Title);
+	}
+
+	if (trigSpace) {
+		if (p_game_scene->DrawScreen(false)) {
+			p_game_scene->ChangeState(new Title);
 		}
 	}
 }
