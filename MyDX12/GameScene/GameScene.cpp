@@ -105,7 +105,7 @@ void XIIlib::GameScene::Update()
 	//DebugJISText::GetInstance()->Print("黄がナイト", dist, dist * bai,1);
 
 	// シーンの更新
-	state->CommonUpdate(this);
+	state->Update(this);
 }
 
 void XIIlib::GameScene::Draw()
@@ -160,11 +160,10 @@ bool XIIlib::GameScene::DrawScreen(bool on_curtain)
 			for (int j = 0; j < s_x; ++j) {
 				if (m_curtain[i][j] == 1)
 				{
-					const float ct = 0.5f / 2.0f;
-					float newSize = (float)Easing::EaseOutBack((double)time_curtain[j + (i * s_x)], 0, (double)tex_size, (double)ct);
+					float newSize = (float)Easing::EaseOutBack((double)time_curtain[j + (i * s_x)], 0, (double)tex_size, 0.5);
 					time_curtain[j + (i * s_x)] += (1.0f / 60.0f);
 					screen_curtain[j + (i * s_x)]->SetSize({ newSize ,newSize });
-					if (time_curtain[j + (i * s_x)] >= ct) {
+					if (time_curtain[j + (i * s_x)] >= 0.5f) {
 						time_curtain[j + (i * s_x)] = 0.0f;
 						m_curtain[i][j] = 2;
 					}
@@ -205,12 +204,11 @@ bool XIIlib::GameScene::DrawScreen(bool on_curtain)
 			for (int j = 0; j < s_x; ++j) {
 				if (m_curtain[i][j] == 1)
 				{
-					const float ct = 0.5f/2.0f;
-					float newSize = (float)Easing::EaseInBack((double)time_curtain[j + (i * s_x)], 0, (double)tex_size, ct);
+					float newSize = (float)Easing::EaseInBack((double)time_curtain[j + (i * s_x)], 0, (double)tex_size, 0.5);
 					time_curtain[j + (i * s_x)] += (1.0f / 60.0f);
 					float result = (float)tex_size - newSize;
 					screen_curtain[j + (i * s_x)]->SetSize({ result ,result });
-					if (time_curtain[j + (i * s_x)] >= ct) {
+					if (time_curtain[j + (i * s_x)] >= 0.5f) {
 						time_curtain[j + (i * s_x)] = 0.0f;
 						screen_curtain[j + (i * s_x)]->SetColor(0, 0, 0, 0);
 						m_curtain[i][j] = 0;

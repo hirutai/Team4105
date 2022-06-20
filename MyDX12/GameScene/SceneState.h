@@ -56,8 +56,6 @@ namespace XIIlib
 		virtual void Draw() = 0;// 描画
 		virtual void DrawTex() = 0;//スプライト描画
 		virtual void DrawBackground() = 0;
-
-		void CommonUpdate(GameScene* p_game_scene);
 	public: // Setter関数
 		void SetGamePad(GamePAD_XInput* gamePad) { this->gamePad_ = gamePad; } // GamePadの設定
 	protected: // 静的メンバ変数
