@@ -384,6 +384,13 @@ void Sprite::Draw()
 	cmdList->DrawInstanced(4, 1, 0, 0);
 }
 
+void Sprite::SetAlpha(float alpha)
+{
+	color.w = alpha; // α値の設定
+
+	TransferVertices(); // 頂点データ転送
+}
+
 void Sprite::TransferVertices()
 {
 	HRESULT result = S_FALSE;
