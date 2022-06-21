@@ -1,5 +1,6 @@
 #include "GameScene.h"
 #include "Title.h"
+#include "Select.h"
 #include "Play.h"
 #include "../2D/Sprite.h"
 #include "../Tool/DigitalNumberText.h"
@@ -26,7 +27,7 @@
 XIIlib::GameScene::GameScene()
 { 
 	// コンストラクタ!
-	state = new Title; // 初期状態の格納・設定
+	state = new Select; // 初期状態の格納・設定
 
 	// GamePadの生成と初期化とStateに設定
 	gamePad = new GamePAD_XInput();

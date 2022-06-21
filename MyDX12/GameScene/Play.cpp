@@ -5,12 +5,6 @@
 #include "Over.h"
 #include "../Input/KeyInput.h"
 #include "../Tool/DebugJISText.h"
-#include "../GameObject/King.h"
-#include "../GameObject/Rook.h"
-#include "../GameObject/Bishop.h"
-#include "../GameObject/Knight.h"
-#include "../GameObject/Yankee.h"
-#include "../GameObject/Stone.h"
 #include "../GameObject/UnitManager.h"
 #include"../GameObject/AttackAreaManager.h"
 #include "../GameObject/IntervalTimer.h"
@@ -68,21 +62,7 @@ void XIIlib::Play::Update(GameScene* p_game_scene)
 {
 #pragma region メニュー処理
 
-	// メニュー画面を展開、閉じる
-	if (KeyInput::GetInstance()->Trigger(DIK_TAB))
-	{
-		p_game_scene->ChangeState(new Menu); // クリアシーンへ
-		if (menuExists && easingCount >= MAX_EASING_COUNT)
-		{
-			// ゼロClear
-			easingCount = 0;
-			menuExists = false;
-		}
-		else
-		{
-			menuExists = true;
-		}
-	}
+	
 
 	if (menuExists)
 	{
@@ -98,6 +78,12 @@ void XIIlib::Play::Update(GameScene* p_game_scene)
 		enemyGuides->SetPosition({ posX,posY });
 	}
 
+	// メニュー画面を展開、閉じる
+	if (KeyInput::GetInstance()->Trigger(DIK_TAB))
+	{
+		p_game_scene->ChangeState(new Menu); // クリアシーンへ
+		menuExists = true;
+	}
 	// メニューが展開されているならreturn
 	if (menuExists)return;
 #pragma endregion 

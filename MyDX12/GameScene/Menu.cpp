@@ -4,6 +4,9 @@
 #include "../Input/KeyInput.h"
 #include "../Tool/DebugJISText.h"
 #include "../Audio/Audio.h"
+#include "Play.h"
+#include "../GameObject/UnitManager.h"
+#include"../GameObject/AttackAreaManager.h"
 
 XIIlib::Menu::Menu()
 {
@@ -26,10 +29,12 @@ void XIIlib::Menu::Initialize(GameScene* p_game_scene)
 void XIIlib::Menu::Update(GameScene* p_game_scene)
 {
 	// 更新
-	if (KeyInput::GetInstance()->Trigger(DIK_SPACE)) {
-		p_game_scene->ChangeState(new Select);
+	if (KeyInput::GetInstance()->Trigger(DIK_TAB)) {
+		p_game_scene->ChangeState(new Play);
 	}
 
+
+	// テスト用
 	if (gamePad_->Button_Down(X_A)) {
 		p_game_scene->ChangeState(new Select);
 	}
@@ -39,7 +44,8 @@ void XIIlib::Menu::Update(GameScene* p_game_scene)
 void XIIlib::Menu::Draw()
 {
 	// 3D描画
-
+	AttackAreaManager::GetInstance()->Draw();
+	UnitManager::GetInstance()->Draw();
 }
 
 void XIIlib::Menu::DrawTex()

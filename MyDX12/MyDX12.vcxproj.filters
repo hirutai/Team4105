@@ -370,7 +370,7 @@
       <Filter>GameScene\StateScene</Filter>
     </ClCompile>
     <ClCompile Include="2D\SpriteLoader.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>2D</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -624,7 +624,7 @@
       <Filter>GameScene\StateScene</Filter>
     </ClInclude>
     <ClInclude Include="2D\SpriteLoader.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>2D</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
