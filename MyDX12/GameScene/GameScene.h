@@ -24,6 +24,7 @@ namespace XIIlib
 		void DrawBackground();
 
 		bool DrawScreen(bool on_curtain);
+
 		//void SetGamePad();
 
 		Audio* GetAudio()const;

@@ -1,5 +1,7 @@
 #include "GameScene.h"
 #include "Title.h"
+#include "Select.h"
+#include "Play.h"
 #include "../2D/Sprite.h"
 #include "../Tool/DigitalNumberText.h"
 #include "../Audio/Audio.h"
@@ -16,6 +18,8 @@
 #include "../Tool/DebugJISText.h"
 #include "../GameObject/UnitManager.h"
 #include "../Tool/Easing.h"
+
+#include "../2D/SpriteLoader.h"
 #include <Xinput.h>
 
 #pragma comment(lib, "xinput.lib")
@@ -23,7 +27,7 @@
 XIIlib::GameScene::GameScene()
 { 
 	// コンストラクタ!
-	state = new Title; // 初期状態の格納・設定
+	state = new Select; // 初期状態の格納・設定
 
 	// GamePadの生成と初期化とStateに設定
 	gamePad = new GamePAD_XInput();
@@ -53,7 +57,7 @@ void XIIlib::GameScene::Initialize()
 {
 	// Audioの初期化
 	audio = new Audio();
-
+	UnitManager::GetInstance()->SetAudio(audio);
 	// 前景テクスチャの初期化
 	// サイズを設定
 	const unsigned int tex_size = 128;
@@ -72,7 +76,7 @@ void XIIlib::GameScene::Initialize()
 		for (int j = 0; j < s_x; ++j) {
 			m_curtain[i][j] = 0;
 			screen_curtain[j + (i * s_x)] =
-				Sprite::Create(21, { (float)(j * tex_size) + (float)(tex_size / 2.0f),(float)(i * tex_size) + (float)(tex_size / 2.0f) }, { 1,1,1,1 }, { 0.5f,0.5f });
+				Sprite::Create(BAN_TEX, { (float)(j * tex_size) + (float)(tex_size / 2.0f),(float)(i * tex_size) + (float)(tex_size / 2.0f) }, { 1,1,1,1 }, { 0.5f,0.5f });
 			screen_curtain[j + (i * s_x)]->SetSize({ 0.0f,0.0f });
 			time_curtain[j + (i * s_x)] = 0.0f;
 		}
@@ -81,7 +85,7 @@ void XIIlib::GameScene::Initialize()
 	// シーンの初期化
 	state->Initialize(this);
 
-	UnitManager::GetInstance()->SetAudio(audio);
+
 	// コメントしました。
 }
 

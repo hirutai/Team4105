@@ -61,10 +61,10 @@ void XIIlib::Yankee::Update()
 	attackTimer->Timer();
 
 	// 位置座標の更新
-	attackTimer->SetPosition(object3d->position);
 	object3d->position = { Common::ConvertTilePosition(element_stock.a),1.0f, Common::ConvertTilePosition(element_stock.b) };
-
 	object3d->Update();
+	// 座標設定
+	attackTimer->SetPosition(object3d->position);
 }
 
 void XIIlib::Yankee::Action()

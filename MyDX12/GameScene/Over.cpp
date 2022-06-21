@@ -23,9 +23,9 @@ XIIlib::Over::~Over()
 void XIIlib::Over::Initialize(GameScene* p_game_scene)
 {
 	// SceneØ‚è‘Ö‚¦Žž‚Éˆê“x’Ê‚éˆ—
-	UnitManager::GetInstance()->AllDestroy();
-	space = Sprite::Create(6, { 1280 / 2 - 300, 768 / 2 + 100 });
-	spGameOver = Sprite::Create((UINT)SpriteName::GAMEOVER_SP, {0.0f,0.0f});
+	//UnitManager::GetInstance()->AllDestroy();
+	space = Sprite::Create(SPACE_TEX, { 1280 / 2 - 300, 768 / 2 + 100 });
+	spGameOver = Sprite::Create(GAMEOVER_TEX, {0.0f,0.0f});
 	//p_game_scene->GetAudio()->PlayBGM("yankeeBGM.wav");
 }
 
@@ -57,7 +57,6 @@ void XIIlib::Over::Update(GameScene* p_game_scene)
 void XIIlib::Over::Draw()
 {
 	// 3D•`‰æ
-
 }
 
 void XIIlib::Over::DrawTex()

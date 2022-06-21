@@ -369,6 +369,9 @@
     <ClCompile Include="GameScene\Clear.cpp">
       <Filter>GameScene\StateScene</Filter>
     </ClCompile>
+    <ClCompile Include="2D\SpriteLoader.cpp">
+      <Filter>2D</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Base\DirectX12.h">
@@ -619,6 +622,9 @@
     </ClInclude>
     <ClInclude Include="GameScene\Clear.h">
       <Filter>GameScene\StateScene</Filter>
+    </ClInclude>
+    <ClInclude Include="2D\SpriteLoader.h">
+      <Filter>2D</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

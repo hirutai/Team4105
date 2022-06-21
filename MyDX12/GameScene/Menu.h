@@ -19,5 +19,7 @@ namespace XIIlib {
 		void Draw()override;
 		void DrawTex()override;
 		void DrawBackground()override;
+	private:
+
 	};
 }

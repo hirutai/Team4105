@@ -25,9 +25,9 @@ XIIlib::Title::~Title()
 void XIIlib::Title::Initialize(GameScene* p_game_scene)
 {
 	// SceneØ‚è‘Ö‚¦Žž‚Éˆê“x’Ê‚éˆ—
-	space = Sprite::Create(6, { 1280 / 2 - 300, 768 / 2 + 100 });
-	spTitleBG = Sprite::Create((UINT)SpriteName::TITLEBG_SP, { 0.0f,0.0f });
-	spTitleLog = Sprite::Create((UINT)SpriteName::TITLELOG_SP, { 320.0f,0.0f });
+	space = Sprite::Create(SPACE_TEX, { 1280 / 2 - 300, 768 / 2 + 100 });
+	spTitleBG = Sprite::Create(TITLEBG_TEX, { 0.0f,0.0f });
+	spTitleLog = Sprite::Create(TITLELOG_TEX, { 320.0f,0.0f });
 	p_game_scene->GetAudio()->PlayBGM("yankeeBGM.wav");
 }
 

@@ -14,6 +14,7 @@
 #include "../Light/LightGroup.h"
 #include "../3D/Line.h"
 #include "../2D/TextureInstance.h"
+#include "../2D/SpriteLoader.h"
 #include "../Particle/ParticleManager.h"
 #include "../3D/CollCapsule.h"
 #include "../3D/CollBox.h"
