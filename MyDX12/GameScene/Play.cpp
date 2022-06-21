@@ -1,5 +1,6 @@
 #include "Play.h"
 #include "GameScene.h"
+#include "Menu.h"
 #include "Clear.h"
 #include "Over.h"
 #include "../Input/KeyInput.h"
@@ -43,51 +44,16 @@ void XIIlib::Play::Initialize(GameScene* p_game_scene)
 	
 	if (stageNum == StageNumber::EASY)
 	{
-		// Scene切り替え時に一度通る処理
-		std::shared_ptr<King> king = std::move(King::CreateKing(1, 0));
-		std::shared_ptr<Bishop> bishop = std::move(Bishop::Create(2, 3));
-		std::shared_ptr<Rook> rook = std::move(Rook::Create(4, 6));
-		std::shared_ptr<Yankee> yankee = std::move(Yankee::Create(3, 6));
-
-		UnitManager::GetInstance()->AddUnit(std::move(king));
-		UnitManager::GetInstance()->AddUnit(std::move(bishop));
-		UnitManager::GetInstance()->AddUnit(std::move(rook));
-		UnitManager::GetInstance()->AddUnit(std::move(yankee));
-
 		// 背景画像生成
 		spStageBG1 = Sprite::Create(STAGEBG1_TEX, { 0.0f,0.0f });
 	}
 	else if (stageNum == StageNumber::NORMAL)
 	{
-		// Scene切り替え時に一度通る処理
-		std::shared_ptr<King> king = std::move(King::CreateKing(1, 0));
-		//std::shared_ptr<Knight> knight = std::move(Knight::Create(7, 7));
-		//std::shared_ptr<Knight> knight2 = std::move(Knight::Create(6, 2));
-		//std::shared_ptr<Knight> knight3 = std::move(Knight::Create(7, 0));
-		std::shared_ptr<Bishop> bishop = std::move(Bishop::Create(2, 3));
-		//std::shared_ptr<Bishop> bishop2 = std::move(Bishop::Create(3, 5));
-		std::shared_ptr<Rook> rook = std::move(Rook::Create(3, 6));
-		//std::shared_ptr<Rook> rook2 = std::move(Rook::Create(6, 6));
-		std::shared_ptr<Yankee> yankee = std::move(Yankee::Create(3, 3));
-		std::shared_ptr<Yankee> yankee2 = std::move(Yankee::Create(5, 1));
-		std::shared_ptr<Yankee> yankee3 = std::move(Yankee::Create(5, 6));
-		std::shared_ptr<Yankee> yankee4 = std::move(Yankee::Create(5, 7));
-		//std::shared_ptr<Stone> stone = std::move(Stone::Create(6, 6));
-
-		UnitManager::GetInstance()->AddUnit(std::move(king));
-		//UnitManager::GetInstance()->AddUnit(std::move(knight));
-		//UnitManager::GetInstance()->AddUnit(std::move(knight2));
-		//UnitManager::GetInstance()->AddUnit(std::move(knight3));
-		UnitManager::GetInstance()->AddUnit(std::move(bishop));
-		//UnitManager::GetInstance()->AddUnit(std::move(bishop2));
-		UnitManager::GetInstance()->AddUnit(std::move(rook));
-		//UnitManager::GetInstance()->AddUnit(std::move(rook2));
-		UnitManager::GetInstance()->AddUnit(std::move(yankee));
-		UnitManager::GetInstance()->AddUnit(std::move(yankee2));
-		UnitManager::GetInstance()->AddUnit(std::move(yankee3));
-		UnitManager::GetInstance()->AddUnit(std::move(yankee4));
-		//UnitManager::GetInstance()->AddUnit(std::move(stone));
-
+		// 背景画像生成
+		spStageBG1 = Sprite::Create(STAGEBG1_TEX, { 0.0f,0.0f });
+	}
+	else if (stageNum == StageNumber::HARD)
+	{
 		// 背景画像生成
 		spStageBG1 = Sprite::Create(STAGEBG1_TEX, { 0.0f,0.0f });
 	}
@@ -96,7 +62,6 @@ void XIIlib::Play::Initialize(GameScene* p_game_scene)
 	menu = Sprite::Create(MENU_TEX, { 0.0f,10.0f }); // メニュー
 	enemyGuides = Sprite::Create(ENEMYGUIDES_TEX, {0.0f,0.0f});; // 敵の説明
 	p_game_scene->GetAudio()->PlayBGM("yankeeBGM.wav");
-	UnitManager::GetInstance()->Update();
 }
 
 void XIIlib::Play::Update(GameScene* p_game_scene)
@@ -106,7 +71,7 @@ void XIIlib::Play::Update(GameScene* p_game_scene)
 	// メニュー画面を展開、閉じる
 	if (KeyInput::GetInstance()->Trigger(DIK_TAB))
 	{
-
+		p_game_scene->ChangeState(new Menu); // クリアシーンへ
 		if (menuExists && easingCount >= MAX_EASING_COUNT)
 		{
 			// ゼロClear
@@ -131,19 +96,6 @@ void XIIlib::Play::Update(GameScene* p_game_scene)
 			easingCount++;
 		}
 		enemyGuides->SetPosition({ posX,posY });
-	}
-
-
-	if (menuExists)
-	{
-		float posX = 0;
-		// countがマックスに到達するまで
-		if (easingCount <= MAX_EASING_COUNT)
-		{
-			posX = Easing::EaseInOutCubic(easingCount, -winSize.x, winSize.x, MAX_EASING_COUNT);
-		}
-		enemyGuides->SetPosition({ posX,0 });
-		easingCount++;
 	}
 
 	// メニューが展開されているならreturn
