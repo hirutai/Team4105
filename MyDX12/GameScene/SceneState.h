@@ -41,7 +41,7 @@ namespace XIIlib
 		virtual void DrawBackground() = 0;
 		void CommonUpdate(GameScene* p_game_scene);
 	protected: // ‹¤’Êˆ—
-		static void CreateUnitFormation();
+		void CreateUnitsPosition(StageNumber stageNum);
 	public: // SetterŠÖ”
 		void SetGamePad(GamePAD_XInput* gamePad) { this->gamePad_ = gamePad; } // GamePad‚Ìİ’è
 	protected: // Ã“Iƒƒ“ƒo•Ï”

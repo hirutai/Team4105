@@ -90,14 +90,12 @@ void XIIlib::Select::Update(GameScene* p_game_scene)
 		if (edgePos.x == HOMEL_POS.x)
 		{
 			p_game_scene->GetAudio()->PlaySE("stageSelect.wav", 0.3f);
-			stageNum = StageNumber::EASY;
-			SceneState::CreateUnitFormation();
+			SceneState::CreateUnitsPosition(StageNumber::EASY);
 		}
 		else if (edgePos.x == HOMEC_POS.x)
 		{
 			p_game_scene->GetAudio()->PlaySE("stageSelect.wav", 0.3f);
-			stageNum = StageNumber::NORMAL;
-			SceneState::CreateUnitFormation();
+			SceneState::CreateUnitsPosition(StageNumber::NORMAL);
 		}
 		else if (edgePos.x == HOMER_POS.x)
 		{

@@ -26,8 +26,12 @@ void XIIlib::SceneState::CommonUpdate(GameScene* p_game_scene)
 	}
 }
 
-void XIIlib::SceneState::CreateUnitFormation()
+void XIIlib::SceneState::CreateUnitsPosition(StageNumber stageNum)
 {
+	// ステージ番号を格納
+	this->stageNum = stageNum;
+
+	// ステージ番号によって生成
 	if (stageNum == StageNumber::EASY)
 	{
 		// Scene切り替え時に一度通る処理
@@ -74,6 +78,5 @@ void XIIlib::SceneState::CreateUnitFormation()
 	}
 
 	// 一度だけ更新
-	// (Updateが一回だけだとゲージが原点にしか表示されないので、解決策教えてください)
 	UnitManager::GetInstance()->Update();
 }
