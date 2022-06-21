@@ -20,12 +20,12 @@ XIIlib::Select::~Select()
 void XIIlib::Select::Initialize(GameScene* p_game_scene)
 {
 	// SceneØ‚è‘Ö‚¦Žž‚Éˆê“x’Ê‚éˆ—
-	easyButton.reset(Sprite::Create((UINT)SpriteName::EASY_BUTTON_SP, HOMEL_POS));
-	normalButton.reset(Sprite::Create((UINT)SpriteName::NORMAL_BUTTON_SP, HOMEC_POS));
-	hardButton.reset(Sprite::Create((UINT)SpriteName::HARD_BUTTON_SP, HOMER_POS));
-	edge.reset(Sprite::Create((UINT)SpriteName::EDGE_SP, HOMEL_POS));
-	bg_sp.reset(Sprite::Create((UINT)SpriteName::BG_SP, { 0, 0}));
-	stageSelect_sp.reset(Sprite::Create((UINT)SpriteName::STAGESELECT_SP, { 250, 0}));
+	easyButton.reset(Sprite::Create(EASY_BUTTON_TEX, HOMEL_POS));
+	normalButton.reset(Sprite::Create(NORMAL_BUTTON_TEX, HOMEC_POS));
+	hardButton.reset(Sprite::Create(HARD_BUTTON_TEX, HOMER_POS));
+	edge.reset(Sprite::Create(EDGE_TEX, HOMEL_POS));
+	bg_sp.reset(Sprite::Create(BG_TEX, { 0, 0}));
+	stageSelect_sp.reset(Sprite::Create(STAGESELECT_TEX, { 250, 0}));
 
 	p_game_scene->GetAudio()->PlayBGM("yankeeBGM.wav");
 }

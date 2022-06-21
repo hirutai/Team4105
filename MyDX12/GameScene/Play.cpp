@@ -27,8 +27,8 @@ XIIlib::Play::~Play()
 {
 	// ポインタ使ったやつの埋葬場
 	delete enemyGuides; // 敵の説明
+	delete operatorGuide; // 操作説明
 	delete menu; // メニュー
-	delete playerGuide; // 操作説明
 	delete spStageBG1;
 	delete intervalTimter;
 }
@@ -55,7 +55,7 @@ void XIIlib::Play::Initialize(GameScene* p_game_scene)
 		UnitManager::GetInstance()->AddUnit(std::move(yankee));
 
 		// 背景画像生成
-		spStageBG1 = Sprite::Create((UINT)SpriteName::STAGEBG1_SP, { 0.0f,0.0f });
+		spStageBG1 = Sprite::Create(STAGEBG1_TEX, { 0.0f,0.0f });
 	}
 	else if (stageNum == StageNumber::NORMAL)
 	{
@@ -89,12 +89,12 @@ void XIIlib::Play::Initialize(GameScene* p_game_scene)
 		//UnitManager::GetInstance()->AddUnit(std::move(stone));
 
 		// 背景画像生成
-		spStageBG1 = Sprite::Create((UINT)SpriteName::STAGEBG1_SP, { 0.0f,0.0f });
+		spStageBG1 = Sprite::Create(STAGEBG1_TEX, { 0.0f,0.0f });
 	}
 
-	playerGuide = Sprite::Create((UINT)SpriteName::PLAYERGUIDE_SP, { 1000.0f,600.0f }); // 操作説明
-	menu = Sprite::Create((UINT)SpriteName::MENU_SP, { 0.0f,10.0f }); // メニュー
-	enemyGuides = Sprite::Create((UINT)SpriteName::ENEMYGUIDES_SP, {0.0f,0.0f});; // 敵の説明
+	operatorGuide = Sprite::Create(PLAYERGUIDE_TEX, { 1000.0f,600.0f }); // 操作説明
+	menu = Sprite::Create(MENU_TEX, { 0.0f,10.0f }); // メニュー
+	enemyGuides = Sprite::Create(ENEMYGUIDES_TEX, {0.0f,0.0f});; // 敵の説明
 	p_game_scene->GetAudio()->PlayBGM("yankeeBGM.wav");
 	UnitManager::GetInstance()->Update();
 }
@@ -106,11 +106,11 @@ void XIIlib::Play::Update(GameScene* p_game_scene)
 	// メニュー画面を展開、閉じる
 	if (KeyInput::GetInstance()->Trigger(DIK_TAB))
 	{
+
 		if (menuExists && easingCount >= MAX_EASING_COUNT)
 		{
 			// ゼロClear
 			easingCount = 0;
-			exitFlag = true;
 			menuExists = false;
 		}
 		else
@@ -133,24 +133,6 @@ void XIIlib::Play::Update(GameScene* p_game_scene)
 		enemyGuides->SetPosition({ posX,posY });
 	}
 
-	if (exitFlag)
-	{
-		float posX = 0;
-		float posY = 0;
-		// countがマックスに到達するまで
-		if (easingCount <= MAX_EASING_COUNT)
-		{
-			posX = Easing::EaseInOutBounce(easingCount, enemyGuides->GetPosition().x, -winSize.x, MAX_EASING_COUNT);
-			posY = Easing::EaseInOutBounce(easingCount, enemyGuides->GetPosition().y, -winSize.y, MAX_EASING_COUNT);
-			easingCount++;
-			enemyGuides->SetPosition({ posX,posY });
-		}
-		else {
-			easingCount = 0;
-			exitFlag = false;
-			menuExists = false;
-		}
-	}
 
 	if (menuExists)
 	{
@@ -213,10 +195,10 @@ void XIIlib::Play::DrawTex()
 {
 	// スプライト描画
 	//intervalTimter->Draw();
-	playerGuide->Draw();
+	operatorGuide->Draw();
 	menu->Draw();
 	// メニューが展開されていないならreturn
-	if (!menuExists || exitFlag)return;
+	if (!menuExists)return;
 	enemyGuides->Draw();
 	menu->Draw();
 }

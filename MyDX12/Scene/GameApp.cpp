@@ -17,6 +17,7 @@
 #include "../3D/CollCircle.h"
 #include "../GameScene/GameScene.h"
 #include "../GameScene/SceneState.h"
+#include "../2D/SpriteLoader.h"
 /*仮置き*/
 #include "../System/RenderTarget.h"
 #include "../2D/Point2D.h"
@@ -91,44 +92,20 @@ void GameApp::Initialize()
 	Tessellation::SetDebugCamera(d_camera);
 	BillObj::SetDebugCamera(d_camera);
 
-	Sprite::LoadTexture(debugTextTexNumber, L"Resources/ASCIItex_ver2.png");
+	SpriteLoader::Load();
 
 	debugText = DebugText::GetInstance();
-	debugText->Initialize(debugTextTexNumber);
+	debugText->Initialize(DEBUG_TEXT_TEX);
 
 	particles = ParticleManager::GetInstance();
 	particles->SetDebugCamera(d_camera);
 	d_camera->_Update();
-	int texind = 2;
-	Sprite::LoadTexture(debugJISTextTexNumber, L"Resources/JIS_Code_ver.1.02.png");
-	Sprite::LoadTexture(texind, L"Resources/digitalNum.png"); texind++;
-	Sprite::LoadTexture(texind, L"Resources/effect1.png");	  texind++;
-	Sprite::LoadTexture(texind, L"Resources/timer.png");      texind++;
-	Sprite::LoadTexture(texind, L"Resources/timer_bar.png");  texind++;
-	Sprite::LoadTexture(texind, L"Resources/Space.png");      texind++;
-	Sprite::LoadTexture(texind, L"Resources/GameOver.png");   texind++;
-	Sprite::LoadTexture(texind, L"Resources/stage_BG1.png");   texind++;
-	Sprite::LoadTexture(texind, L"Resources/Easy.png"); texind++;
-	Sprite::LoadTexture(texind, L"Resources/Normal.png"); texind++;
-	Sprite::LoadTexture(texind, L"Resources/coming soon.png"); texind++;
-	Sprite::LoadTexture(texind, L"Resources/waku.png"); texind++;
-	Sprite::LoadTexture(texind, L"Resources/TitleBG.png"); texind++;
-	Sprite::LoadTexture(texind, L"Resources/TitleLog.png"); texind++;
-	Sprite::LoadTexture(texind, L"Resources/GameClear.png"); texind++;
-
-	Sprite::LoadTexture(texind, L"Resources/explanation.png"); texind++;
-	Sprite::LoadTexture(texind, L"Resources/tabkey.png"); texind++;
-	Sprite::LoadTexture(texind, L"Resources/Menu.png"); texind++;
-
-	Sprite::LoadTexture(texind, L"Resources/BG.png"); texind++;
-	Sprite::LoadTexture(texind, L"Resources/StageSelect.png"); texind++;
-	Sprite::LoadTexture(texind, L"Resources/banTex.png"); texind++;
-
+	
 	debugJIS = DebugJISText::GetInstance();
-	debugJIS->Initialize(debugJISTextTexNumber);
+	debugJIS->Initialize(DEBUG_JISTEXT_TEX);
 
 	digitalN = DigitalNumberText::GetInstance();
-	digitalN->Initialize(2);
+	digitalN->Initialize(DIGITALNUMBER_TEX);
 
 	msger = XIIlib::Messenger::GetInstance();
 
@@ -160,6 +137,7 @@ void GameApp::Initialize()
 	attackAreaManager->Initialize();
 
 	VariableInit();
+
 	game_scene = new XIIlib::GameScene();
 	game_scene->Initialize();
 }

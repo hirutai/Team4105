@@ -1,28 +1,11 @@
 #pragma once
 #include "../Input/GamePAD_XInput.h"
+#include "../2D/SpriteLoader.h"
+
 namespace XIIlib
 {
 	class GameScene;
 
-	// スプライトの名前
-	enum class SpriteName : int
-	{
-		PUSHA_SP = 6,
-		GAMEOVER_SP,
-		STAGEBG1_SP,
-		EASY_BUTTON_SP,
-		NORMAL_BUTTON_SP,
-		HARD_BUTTON_SP,
-		EDGE_SP,
-		TITLEBG_SP,
-		TITLELOG_SP,
-		GAMECLEAR_SP,
-		PLAYERGUIDE_SP,
-		MENU_SP,
-		ENEMYGUIDES_SP,
-		BG_SP,
-		STAGESELECT_SP,
-	};
 
 	// ステージナンバー
 	enum class StageNumber : int

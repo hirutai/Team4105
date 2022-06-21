@@ -23,9 +23,9 @@ XIIlib::Over::~Over()
 void XIIlib::Over::Initialize(GameScene* p_game_scene)
 {
 	// Scene切り替え時に一度通る処理
-	UnitManager::GetInstance()->AllDestroy();
-	space = Sprite::Create(6, { 1280 / 2 - 300, 768 / 2 + 100 });
-	spGameOver = Sprite::Create((UINT)SpriteName::GAMEOVER_SP, {0.0f,0.0f});
+	//UnitManager::GetInstance()->AllDestroy();
+	space = Sprite::Create(SPACE_TEX, { 1280 / 2 - 300, 768 / 2 + 100 });
+	spGameOver = Sprite::Create(GAMEOVER_TEX, {0.0f,0.0f});
 	//p_game_scene->GetAudio()->PlayBGM("yankeeBGM.wav");
 }
 
@@ -57,14 +57,14 @@ void XIIlib::Over::Update(GameScene* p_game_scene)
 void XIIlib::Over::Draw()
 {
 	// 3D描画
-
+	UnitManager::GetInstance()->Draw();
 }
 
 void XIIlib::Over::DrawTex()
 {
 	// スプライト描画
-	spGameOver->Draw();
-	space->Draw();
+	//spGameOver->Draw();
+	//space->Draw();
 }
 
 void XIIlib::Over::DrawBackground()

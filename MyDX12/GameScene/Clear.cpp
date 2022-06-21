@@ -23,8 +23,8 @@ void Clear::Initialize(GameScene* p_game_scene)
 {
 	// SceneØ‚è‘Ö‚¦Žž‚Éˆê“x’Ê‚éˆ—
 	UnitManager::GetInstance()->AllDestroy();
-	space = Sprite::Create(6, { 1280 / 2 - 300, 768 / 2 + 100 });
-	gameClear = Sprite::Create((UINT)SpriteName::GAMECLEAR_SP, { 0.0f,0.0f });
+	space = Sprite::Create(SPACE_TEX, { 1280 / 2 - 300, 768 / 2 + 100 });
+	gameClear = Sprite::Create(GAMECLEAR_TEX, { 0.0f,0.0f });
 }
 
 void Clear::Update(GameScene* p_game_scene)
