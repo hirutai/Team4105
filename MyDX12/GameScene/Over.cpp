@@ -57,14 +57,13 @@ void XIIlib::Over::Update(GameScene* p_game_scene)
 void XIIlib::Over::Draw()
 {
 	// 3D•`‰æ
-	UnitManager::GetInstance()->Draw();
 }
 
 void XIIlib::Over::DrawTex()
 {
 	// ƒXƒvƒ‰ƒCƒg•`‰æ
-	//spGameOver->Draw();
-	//space->Draw();
+	spGameOver->Draw();
+	space->Draw();
 }
 
 void XIIlib::Over::DrawBackground()
