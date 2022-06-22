@@ -189,6 +189,7 @@
     <ClCompile Include="GameObject\Bishop.cpp" />
     <ClCompile Include="GameObject\BoardMap.cpp" />
     <ClCompile Include="GameObject\Common.cpp" />
+    <ClCompile Include="GameObject\Curtain.cpp" />
     <ClCompile Include="GameObject\IntervalTimer.cpp" />
     <ClCompile Include="GameObject\King.cpp" />
     <ClCompile Include="GameObject\Knight.cpp" />
@@ -266,6 +267,7 @@
     <ClInclude Include="GameObject\Bishop.h" />
     <ClInclude Include="GameObject\BoardMap.h" />
     <ClInclude Include="GameObject\Common.h" />
+    <ClInclude Include="GameObject\Curtain.h" />
     <ClInclude Include="GameObject\IntervalTimer.h" />
     <ClInclude Include="GameObject\King.h" />
     <ClInclude Include="GameObject\Knight.h" />

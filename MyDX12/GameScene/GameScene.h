@@ -7,6 +7,7 @@ namespace XIIlib
 {
 	class Audio;
 	class SceneState;
+	class Curtain;
 
 	class GameScene
 	{
@@ -24,6 +25,8 @@ namespace XIIlib
 		void DrawBackground();
 
 		bool DrawScreen(bool on_curtain);
+		bool OpenedCurtain();
+		bool ClosedCurtain();
 
 		//void SetGamePad();
 
@@ -50,9 +53,6 @@ namespace XIIlib
 		int _timer = 0;
 		int at_type = 0;
 
-		std::vector<std::vector<unsigned int>> m_curtain;
-		std::vector<Sprite*> screen_curtain;
-		std::vector<float> time_curtain;
-
+		std::vector<Curtain*> curtain;
 	};
 }
