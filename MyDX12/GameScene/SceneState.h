@@ -11,6 +11,7 @@ namespace XIIlib
 	enum class StageNumber : int
 	{
 		DEBUG = -1,
+		NONE,
 		EASY,
 		NORMAL,
 		HARD,
