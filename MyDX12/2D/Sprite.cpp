@@ -384,11 +384,16 @@ void Sprite::Draw()
 	cmdList->DrawInstanced(4, 1, 0, 0);
 }
 
+void Sprite::SetColorRGB(float r, float g, float b)
+{
+	color.x = r;
+	color.y = g;
+	color.z = b;
+}
+
 void Sprite::SetAlpha(float alpha)
 {
 	color.w = alpha; // α値の設定
-
-	TransferVertices(); // 頂点データ転送
 }
 
 void Sprite::TransferVertices()
