@@ -124,8 +124,8 @@ void XIIlib::Menu::EasingMove(int i)
 	if (easingCounts[i] > MAX_EASING_COUNT) return;
 
 	Math::Vector2 size = { 0,0 };
-	size.x = Easing::EaseInOutCubic(easingCounts[i], 0, 94, MAX_EASING_COUNT);
-	size.y = Easing::EaseInOutCubic(easingCounts[i], 0, 34, MAX_EASING_COUNT);
+	size.x = Easing::InOutCubic(easingCounts[i], 0, 94, MAX_EASING_COUNT);
+	size.y = Easing::InOutCubic(easingCounts[i], 0, 34, MAX_EASING_COUNT);
 	buttons[i]->SetSize(size);
 }
 
