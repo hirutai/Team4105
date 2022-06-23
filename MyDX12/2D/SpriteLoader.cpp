@@ -20,8 +20,15 @@ void XIIlib::SpriteLoader::Load()
 	Sprite::LoadTexture(TITLEBG_TEX,       L"Resources/TitleBG.png");
 	Sprite::LoadTexture(TITLELOG_TEX,      L"Resources/TitleLog.png");
 	Sprite::LoadTexture(GAMECLEAR_TEX,     L"Resources/GameClear.png");
-	Sprite::LoadTexture(PLAYERGUIDE_TEX,   L"Resources/explanation.png");
+	Sprite::LoadTexture(OPERATORGUIDE_TEX, L"Resources/explanation.png");
 	Sprite::LoadTexture(MENU_TEX,          L"Resources/tabkey.png");
+	Sprite::LoadTexture(CURSOR_TEX,        L"Resources/cursor.png");
+	Sprite::LoadTexture(BUTTON_PLAY_TEX,   L"Resources/test.png");
+	Sprite::LoadTexture(BUTTON_SELECT_TEX, L"Resources/test.png");
+	Sprite::LoadTexture(BUTTON_TITLE_TEX,  L"Resources/test.png");
+	Sprite::LoadTexture(BUTTON_PLAYER_TEX, L"Resources/test.png");
+	Sprite::LoadTexture(BUTTON_ENEMY_TEX,  L"Resources/test.png");
+	Sprite::LoadTexture(PLAYERGUIDES_TEX,  L"Resources/Menu.png");
 	Sprite::LoadTexture(ENEMYGUIDES_TEX,   L"Resources/Menu.png");
 	Sprite::LoadTexture(BG_TEX,            L"Resources/BG.png");
 	Sprite::LoadTexture(STAGESELECT_TEX,   L"Resources/StageSelect.png");

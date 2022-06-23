@@ -21,9 +21,8 @@ XIIlib::Play::Play()
 XIIlib::Play::~Play()
 {
 	// ポインタ使ったやつの埋葬場
-	delete enemyGuides; // 敵の説明
 	delete operatorGuide; // 操作説明
-	delete menu; // メニュー
+	delete menuButton; // メニュー
 	delete spStageBG1;
 	delete intervalTimter;
 }
@@ -35,8 +34,14 @@ void XIIlib::Play::Initialize(GameScene* p_game_scene)
 	intervalTimter = new IntervalTimer();
 	intervalTimter->Initialize(4, 5);
 	UnitManager::GetInstance()->SetIntervalTimer(intervalTimter);
-	
-	if (stageNum == StageNumber::EASY)
+	if (stageNum == StageNumber::DEBUG)
+	{
+		// それ以外の数値が入っていたら、仮生成
+		SceneState::CreateUnitsPosition(StageNumber::DEBUG);
+		spStageBG1 = Sprite::Create(STAGEBG1_TEX, { 0.0f,0.0f });
+		stageNum = StageNumber::NONE;
+	}
+	else if (stageNum == StageNumber::EASY)
 	{
 		// 背景画像生成
 		spStageBG1 = Sprite::Create(STAGEBG1_TEX, { 0.0f,0.0f });
@@ -51,40 +56,27 @@ void XIIlib::Play::Initialize(GameScene* p_game_scene)
 		// 背景画像生成
 		spStageBG1 = Sprite::Create(STAGEBG1_TEX, { 0.0f,0.0f });
 	}
+	else
+	{
+		spStageBG1 = Sprite::Create(STAGEBG1_TEX, { 0.0f,0.0f });
+	}
+	
 
-	operatorGuide = Sprite::Create(PLAYERGUIDE_TEX, { 1000.0f,600.0f }); // 操作説明
-	menu = Sprite::Create(MENU_TEX, { 0.0f,10.0f }); // メニュー
-	enemyGuides = Sprite::Create(ENEMYGUIDES_TEX, {0.0f,0.0f});; // 敵の説明
+	operatorGuide = Sprite::Create(OPERATORGUIDE_TEX, { 1000.0f,600.0f }); // 操作説明
+	menuButton = Sprite::Create(MENU_TEX, { 0.0f,10.0f }); // メニュー
 	p_game_scene->GetAudio()->PlayBGM("yankeeBGM.wav");
 }
 
 void XIIlib::Play::Update(GameScene* p_game_scene)
 {
 #pragma region メニュー処理
-
-	
-
-	if (menuExists)
-	{
-		float posX = 0;
-		float posY = 0;
-		// countがマックスに到達するまで
-		if (easingCount <= MAX_EASING_COUNT)
-		{
-			posX = Easing::EaseInOutElastic(easingCount, -winSize.x, winSize.x, MAX_EASING_COUNT);
-			posY = Easing::EaseInOutElastic(easingCount, -winSize.y, winSize.y, MAX_EASING_COUNT);
-			easingCount++;
-		}
-		enemyGuides->SetPosition({ posX,posY });
-	}
-
 	// メニュー画面を展開、閉じる
 	if (KeyInput::GetInstance()->Trigger(DIK_TAB))
 	{
 		p_game_scene->ChangeState(new Menu); // クリアシーンへ
 		menuExists = true;
 	}
-	// メニューが展開されているならreturn
+	// メニュー画面を展開するなら即return
 	if (menuExists)return;
 #pragma endregion 
 
@@ -104,7 +96,7 @@ void XIIlib::Play::Update(GameScene* p_game_scene)
 	{
 		trigSpace = true;
 	}
-#pragma endregion
+
 	if (trigSpace) {
 		if (p_game_scene->DrawScreen(false)) {
 			if (UnitManager::GetInstance()->GetUnitIDElements("King") >= 0) // プレイヤが存在している場合
@@ -120,6 +112,7 @@ void XIIlib::Play::Update(GameScene* p_game_scene)
 			}
 		}
 	}
+#pragma endregion
 }
 
 void XIIlib::Play::Draw()
@@ -134,11 +127,7 @@ void XIIlib::Play::DrawTex()
 	// スプライト描画
 	//intervalTimter->Draw();
 	operatorGuide->Draw();
-	menu->Draw();
-	// メニューが展開されていないならreturn
-	if (!menuExists)return;
-	enemyGuides->Draw();
-	menu->Draw();
+	menuButton->Draw();
 }
 
 void XIIlib::Play::DrawBackground()

@@ -11,7 +11,7 @@
 // Message to the person tempted to delete this file when integrating Dear ImGui into their codebase:
 // Do NOT remove this file from your project! Think again! It is the most useful reference code that you and other
 // coders will want to refer to and call. Have the ImGui::ShowDemoWindow() function wired in an always-available
-// debug menu of your game/app! Removing this file from your project is hindering access to documentation for everyone
+// debug menuButton of your game/app! Removing this file from your project is hindering access to documentation for everyone
 // in your team, likely leading you to poorer usage of the library.
 // Everything in this file will be stripped out by the linker if you don't call ImGui::ShowDemoWindow().
 // If you want to link core Dear ImGui in your shipped builds but want a thorough guarantee that the demo will not be
@@ -273,7 +273,7 @@ void ImGui::ShowDemoWindow(bool* p_open)
     // Most ImGui functions would normally just crash if the context is missing.
     IM_ASSERT(ImGui::GetCurrentContext() != NULL && "Missing dear imgui context. Refer to examples app!");
 
-    // Examples Apps (accessible from the "Examples" menu)
+    // Examples Apps (accessible from the "Examples" menuButton)
     static bool show_app_main_menu_bar = false;
     static bool show_app_dockspace = false;
     static bool show_app_documents = false;
@@ -306,7 +306,7 @@ void ImGui::ShowDemoWindow(bool* p_open)
     if (show_app_window_titles)       ShowExampleAppWindowTitles(&show_app_window_titles);
     if (show_app_custom_rendering)    ShowExampleAppCustomRendering(&show_app_custom_rendering);
 
-    // Dear ImGui Apps (accessible from the "Tools" menu)
+    // Dear ImGui Apps (accessible from the "Tools" menuButton)
     static bool show_app_metrics = false;
     static bool show_app_style_editor = false;
     static bool show_app_about = false;
@@ -1561,7 +1561,7 @@ static void ShowDemoWindowWidgets()
 
             if (ImGui::BeginTabBar("MyTabBar", tab_bar_flags))
             {
-                // Demo a Leading TabItemButton(): click the "?" button to open a menu
+                // Demo a Leading TabItemButton(): click the "?" button to open a menuButton
                 if (show_leading_button)
                     if (ImGui::TabItemButton("?", ImGuiTabItemFlags_Leading | ImGuiTabItemFlags_NoTooltip))
                         ImGui::OpenPopup("MyHelpMenu");
@@ -2255,7 +2255,7 @@ static void ShowDemoWindowWidgets()
         if (item_type == 6) { ret = ImGui::InputFloat("ITEM: InputFloat", col4f, 1.0f); }               // Testing +/- buttons on scalar input
         if (item_type == 7) { ret = ImGui::InputFloat3("ITEM: InputFloat3", col4f); }                   // Testing multi-component items (IsItemXXX flags are reported merged)
         if (item_type == 8) { ret = ImGui::ColorEdit4("ITEM: ColorEdit4", col4f); }                     // Testing multi-component items (IsItemXXX flags are reported merged)
-        if (item_type == 9) { ret = ImGui::MenuItem("ITEM: MenuItem"); }                                // Testing menu item (they use ImGuiButtonFlags_PressedOnRelease button policy)
+        if (item_type == 9) { ret = ImGui::MenuItem("ITEM: MenuItem"); }                                // Testing menuButton item (they use ImGuiButtonFlags_PressedOnRelease button policy)
         if (item_type == 10){ ret = ImGui::TreeNode("ITEM: TreeNode"); if (ret) ImGui::TreePop(); }     // Testing tree node
         if (item_type == 11){ ret = ImGui::TreeNodeEx("ITEM: TreeNode w/ ImGuiTreeNodeFlags_OpenOnDoubleClick", ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_NoTreePushOnOpen); } // Testing tree node with ImGuiButtonFlags_PressedOnDoubleClick button policy.
         if (item_type == 12){ const char* items[] = { "Apple", "Banana", "Cherry", "Kiwi" }; static int current = 1; ret = ImGui::Combo("ITEM: Combo", &current, items, IM_ARRAYSIZE(items)); }
@@ -2353,7 +2353,7 @@ static void ShowDemoWindowWidgets()
         ImGui::InputText("unused", unused_str, IM_ARRAYSIZE(unused_str), ImGuiInputTextFlags_ReadOnly);
 
         // Calling IsItemHovered() after begin returns the hovered status of the title bar.
-        // This is useful in particular if you want to create a context menu associated to the title bar of a window.
+        // This is useful in particular if you want to create a context menuButton associated to the title bar of a window.
         // This will also work when docked into a Tab (the Tab replace the Title Bar and guarantee the same properties).
         static bool test_window = false;
         ImGui::Checkbox("Hovered/Active tests after Begin() for title bar testing", &test_window);
@@ -3193,7 +3193,7 @@ static void ShowDemoWindowPopups()
             ImGui::EndPopup();
         }
 
-        // Showing a menu with toggles
+        // Showing a menuButton with toggles
         if (ImGui::Button("Toggle.."))
             ImGui::OpenPopup("my_toggle_popup");
         if (ImGui::BeginPopup("my_toggle_popup"))
@@ -3410,10 +3410,10 @@ static void ShowDemoWindowPopups()
         ImGui::TextWrapped("Below we are testing adding menu items to a regular window. It's rather unusual but should work!");
         ImGui::Separator();
 
-        // Note: As a quirk in this very specific example, we want to differentiate the parent of this menu from the
+        // Note: As a quirk in this very specific example, we want to differentiate the parent of this menuButton from the
         // parent of the various popup menus above. To do so we are encloding the items in a PushID()/PopID() block
-        // to make them two different menusets. If we don't, opening any popup above and hovering our menu here would
-        // open it. This is because once a menu is active, we allow to switch to a sibling menu by just hovering on it,
+        // to make them two different menusets. If we don't, opening any popup above and hovering our menuButton here would
+        // open it. This is because once a menuButton is active, we allow to switch to a sibling menuButton by just hovering on it,
         // which is the desired behavior for regular menus.
         ImGui::PushID("foo");
         ImGui::MenuItem("Menu item", "CTRL+M");
@@ -4749,8 +4749,8 @@ static void ShowDemoWindowTables()
         PopStyleCompact();
 
         // Context Menus: first example
-        // [1.1] Right-click on the TableHeadersRow() line to open the default table context menu.
-        // [1.2] Right-click in columns also open the default table context menu (if ImGuiTableFlags_ContextMenuInBody is set)
+        // [1.1] Right-click on the TableHeadersRow() line to open the default table context menuButton.
+        // [1.2] Right-click in columns also open the default table context menuButton (if ImGuiTableFlags_ContextMenuInBody is set)
         const int COLUMNS_COUNT = 3;
         if (ImGui::BeginTable("table_context_menu", COLUMNS_COUNT, flags1))
         {
@@ -4758,7 +4758,7 @@ static void ShowDemoWindowTables()
             ImGui::TableSetupColumn("Two");
             ImGui::TableSetupColumn("Three");
 
-            // [1.1]] Right-click on the TableHeadersRow() line to open the default table context menu.
+            // [1.1]] Right-click on the TableHeadersRow() line to open the default table context menuButton.
             ImGui::TableHeadersRow();
 
             // Submit dummy contents
@@ -4775,7 +4775,7 @@ static void ShowDemoWindowTables()
         }
 
         // Context Menus: second example
-        // [2.1] Right-click on the TableHeadersRow() line to open the default table context menu.
+        // [2.1] Right-click on the TableHeadersRow() line to open the default table context menuButton.
         // [2.2] Right-click on the ".." to open a custom popup
         // [2.3] Right-click in columns to open another custom popup
         HelpMarker("Demonstrate mixing table context menu (over header), item context button (over button) and custom per-colum context menu (over column body).");
@@ -4786,7 +4786,7 @@ static void ShowDemoWindowTables()
             ImGui::TableSetupColumn("Two");
             ImGui::TableSetupColumn("Three");
 
-            // [2.1] Right-click on the TableHeadersRow() line to open the default table context menu.
+            // [2.1] Right-click on the TableHeadersRow() line to open the default table context menuButton.
             ImGui::TableHeadersRow();
             for (int row = 0; row < 4; row++)
             {
@@ -6224,10 +6224,10 @@ void ImGui::ShowStyleEditor(ImGuiStyle* ref)
 // - ShowExampleMenuFile()
 //-----------------------------------------------------------------------------
 
-// Demonstrate creating a "main" fullscreen menu bar and populating it.
+// Demonstrate creating a "main" fullscreen menuButton bar and populating it.
 // Note the difference between BeginMainMenuBar() and BeginMenuBar():
-// - BeginMenuBar() = menu-bar inside current window (which needs the ImGuiWindowFlags_MenuBar flag!)
-// - BeginMainMenuBar() = helper to create menu-bar-sized window at the top of the main viewport + call BeginMenuBar() into it.
+// - BeginMenuBar() = menuButton-bar inside current window (which needs the ImGuiWindowFlags_MenuBar flag!)
+// - BeginMainMenuBar() = helper to create menuButton-bar-sized window at the top of the main viewport + call BeginMenuBar() into it.
 static void ShowExampleAppMainMenuBar()
 {
     if (ImGui::BeginMainMenuBar())
@@ -6311,7 +6311,7 @@ static void ShowExampleMenuFile()
         ImGui::EndMenu();
     }
 
-    // Here we demonstrate appending again to the "Options" menu (which we already created above)
+    // Here we demonstrate appending again to the "Options" menuButton (which we already created above)
     // Of course in this demo it is a little bit silly that this function calls BeginMenu("Options") twice.
     // In a real code-base using it would make senses to use this feature from very different code locations.
     if (ImGui::BeginMenu("Options")) // <-- Append!
@@ -6404,7 +6404,7 @@ struct ExampleAppConsole
 
         // As a specific feature guaranteed by the library, after calling Begin() the last Item represent the title bar.
         // So e.g. IsItemHovered() will return true when hovering the title bar.
-        // Here we create a context menu only available from the title bar.
+        // Here we create a context menuButton only available from the title bar.
         if (ImGui::BeginPopupContextItem())
         {
             if (ImGui::MenuItem("Close Console"))
@@ -6430,7 +6430,7 @@ struct ExampleAppConsole
 
         ImGui::Separator();
 
-        // Options menu
+        // Options menuButton
         if (ImGui::BeginPopup("Options"))
         {
             ImGui::Checkbox("Auto-scroll", &AutoScroll);
@@ -6735,7 +6735,7 @@ struct ExampleAppLog
             return;
         }
 
-        // Options menu
+        // Options menuButton
         if (ImGui::BeginPopup("Options"))
         {
             ImGui::Checkbox("Auto-scroll", &AutoScroll);
@@ -7138,7 +7138,7 @@ static void ShowExampleAppConstrainedResize(bool* p_open)
 //-----------------------------------------------------------------------------
 
 // Demonstrate creating a simple static window with no decoration
-// + a context-menu to choose which corner of the screen to use.
+// + a context-menuButton to choose which corner of the screen to use.
 static void ShowExampleAppSimpleOverlay(bool* p_open)
 {
     static int corner = 0;
@@ -7148,7 +7148,7 @@ static void ShowExampleAppSimpleOverlay(bool* p_open)
     {
         const float PAD = 10.0f;
         const ImGuiViewport* viewport = ImGui::GetMainViewport();
-        ImVec2 work_pos = viewport->WorkPos; // Use work area to avoid menu-bar/task-bar, if any!
+        ImVec2 work_pos = viewport->WorkPos; // Use work area to avoid menuButton-bar/task-bar, if any!
         ImVec2 work_size = viewport->WorkSize;
         ImVec2 window_pos, window_pos_pivot;
         window_pos.x = (corner & 1) ? (work_pos.x + work_size.x - PAD) : (work_pos.x + PAD);
@@ -7192,7 +7192,7 @@ static void ShowExampleAppFullscreen(bool* p_open)
     static bool use_work_area = true;
     static ImGuiWindowFlags flags = ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoSavedSettings;
 
-    // We demonstrate using the full viewport area or the work area (without menu-bars, task-bars etc.)
+    // We demonstrate using the full viewport area or the work area (without menuButton-bars, task-bars etc.)
     // Based on your use case you may want one of the other.
     const ImGuiViewport* viewport = ImGui::GetMainViewport();
     ImGui::SetNextWindowPos(use_work_area ? viewport->WorkPos : viewport->Pos);
@@ -7430,7 +7430,7 @@ static void ShowExampleAppCustomRendering(bool* p_open)
                     adding_line = false;
             }
 
-            // Pan (we use a zero mouse threshold when there's no context menu)
+            // Pan (we use a zero mouse threshold when there's no context menuButton)
             // You may decide to make that threshold dynamic based on whether the mouse is hovering something etc.
             const float mouse_threshold_for_pan = opt_enable_context_menu ? -1.0f : 0.0f;
             if (is_active && ImGui::IsMouseDragging(ImGuiMouseButton_Right, mouse_threshold_for_pan))
@@ -7439,7 +7439,7 @@ static void ShowExampleAppCustomRendering(bool* p_open)
                 scrolling.y += io.MouseDelta.y;
             }
 
-            // Context menu (under default mouse threshold)
+            // Context menuButton (under default mouse threshold)
             ImVec2 drag_delta = ImGui::GetMouseDragDelta(ImGuiMouseButton_Right);
             if (opt_enable_context_menu && ImGui::IsMouseReleased(ImGuiMouseButton_Right) && drag_delta.x == 0.0f && drag_delta.y == 0.0f)
                 ImGui::OpenPopupOnItemClick("context");
@@ -7509,7 +7509,7 @@ void ShowExampleAppDockSpace(bool* p_open)
     // In this specific demo, we are not using DockSpaceOverViewport() because:
     // - we allow the host window to be floating/moveable instead of filling the viewport (when opt_fullscreen == false)
     // - we allow the host window to have padding (when opt_padding == true)
-    // - we have a local menu bar in the host window (vs. you could use BeginMainMenuBar() + DockSpaceOverViewport() in your code!)
+    // - we have a local menuButton bar in the host window (vs. you could use BeginMainMenuBar() + DockSpaceOverViewport() in your code!)
     // TL;DR; this demo is more complicated than what you would normally use.
     // If we removed all the options we are showcasing, this demo would become:
     //     void ShowExampleAppDockSpace()
@@ -7653,7 +7653,7 @@ struct MyDocument
         ImGui::PopID();
     }
 
-    // Display context menu for the Document
+    // Display context menuButton for the Document
     static void DisplayContextMenu(MyDocument* doc)
     {
         if (!ImGui::BeginPopupContextItem())

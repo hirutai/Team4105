@@ -10,7 +10,7 @@
 #include"../GameObject/AttackAreaManager.h"
 
 using namespace XIIlib;
-StageNumber SceneState::stageNum = StageNumber::EASY;
+StageNumber SceneState::stageNum = StageNumber::DEBUG;
 GamePAD_XInput* SceneState::gamePad_ = nullptr;
 
 void XIIlib::SceneState::CommonUpdate(GameScene* p_game_scene)
@@ -75,6 +75,19 @@ void XIIlib::SceneState::CreateUnitsPosition(StageNumber stageNum)
 		UnitManager::GetInstance()->AddUnit(std::move(yankee3));
 		UnitManager::GetInstance()->AddUnit(std::move(yankee4));
 		//UnitManager::GetInstance()->AddUnit(std::move(stone));
+	}
+	else if (stageNum == StageNumber::NORMAL)
+	{
+
+	}
+	else
+	{
+		// Scene切り替え時に一度通る処理
+		std::shared_ptr<King> king = std::move(King::CreateKing(1, 0));
+		std::shared_ptr<Yankee> yankee = std::move(Yankee::Create(3, 6));
+
+		UnitManager::GetInstance()->AddUnit(std::move(king));
+		UnitManager::GetInstance()->AddUnit(std::move(yankee));
 	}
 
 	// 一度だけ更新
