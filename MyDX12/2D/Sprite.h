@@ -96,6 +96,11 @@ public: // メンバ関数
 	/// </summary>
 	void SetAnchorPoint(Vector2 anchorpoint);
 
+	// RGB値の設定
+	void SetColorRGB(float r, float g, float b);
+	// α値の設定
+	void SetAlpha(float alpha);
+	// 色の四要素の設定
 	void SetColor(float r,float g,float b,float a);
 
 	/// <summary>
@@ -117,9 +122,6 @@ public: // メンバ関数
 	/// 描画
 	/// </summary>
 	void Draw();
-
-	// α値の設定
-	void SetAlpha(float alpha);
 
 private: // メンバ変数
 	// 頂点バッファ
