@@ -33,14 +33,15 @@ namespace XIIlib {
 		// ボタン画像
 		Sprite* spStageBG1  = nullptr; // 背景
 		Sprite* cursor = nullptr; // カーソル
-		Sprite* buttons[MAX_BUTTON] = {};
+		Sprite* buttons[MAX_BUTTON] = {}; // ボタン
 		// 説明画像
 		Sprite* playerGuide = nullptr; // 主人公の説明
 		Sprite* enemyGuides = nullptr; // 敵の説明
 		// その他
-		float easingCount = 0;
-		float easingCounts[MAX_BUTTON] = {};
+		float easingCounts[MAX_BUTTON] = {}; // ボタンの数分のカウンター
 		bool menuExists = true; // メニューが開かれてるかどうかの状態
+		bool cursorDisp = false; // カーソル表示
+
 	public:
 		Menu();
 		~Menu();
