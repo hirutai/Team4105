@@ -5,6 +5,8 @@
 #include "../Tool/DebugJISText.h"
 #include "../Audio/Audio.h"
 #include "Play.h"
+#include "Select.h"
+#include "Title.h"
 #include "../GameObject/UnitManager.h"
 #include"../GameObject/AttackAreaManager.h"
 #include "../2D/Sprite.h"
@@ -38,82 +40,141 @@ void XIIlib::Menu::Initialize(GameScene* p_game_scene)
 	// 生成
 	spStageBG1   = Sprite::Create(STAGEBG1_TEX, { 0.0f,0.0f }); // 背景
 	cursor       = Sprite::Create(CURSOR_TEX, { winCenter.x - 80.0f, winCenter.y - SPACE * 2 }, color, anchorPoint);
+	playerGuide = Sprite::Create(PLAYERGUIDES_TEX, winCenter, color, anchorPoint); // プレイヤーの説明
+	playerGuide->SetSize(winCenter);
+	enemyGuides = Sprite::Create(ENEMYGUIDES_TEX, winCenter, color, anchorPoint); // 敵の説明
+	enemyGuides->SetSize(winCenter);
 
-	buttons[(int)MenuState::CONTINUE] 
+	buttons[(int)CursorState::CONTINUE] 
 		= Sprite::Create(BUTTON_PLAY_TEX,  { winCenter.x, winCenter.y - SPACE * 2}, color, anchorPoint);
-	buttons[(int)MenuState::PLAYER_GUIDS] 
+	buttons[(int)CursorState::PLAYER_GUIDS] 
 		= Sprite::Create(BUTTON_PLAYER_TEX,{ winCenter.x, winCenter.y - SPACE}, color, anchorPoint);
-	buttons[(int)MenuState::ENEMY_GUIDS] 
+	buttons[(int)CursorState::ENEMY_GUIDS] 
 		= Sprite::Create(BUTTON_ENEMY_TEX, { winCenter.x, winCenter.y }, color, anchorPoint);
-	buttons[(int)MenuState::NEXT_SLECT] 
+	buttons[(int)CursorState::NEXT_SLECT] 
 		= Sprite::Create(BUTTON_SELECT_TEX,{ winCenter.x, winCenter.y + SPACE}, color, anchorPoint);
-	buttons[(int)MenuState::NEXT_TITLE] 
+	buttons[(int)CursorState::NEXT_TITLE] 
 		= Sprite::Create(BUTTON_TITLE_TEX, { winCenter.x, winCenter.y + SPACE * 2 }, color, anchorPoint);
 
-	// サイズを0に
+	// 最大最小値を決める
+	CheckLimitPos();
+
+	// 全てのサイズを0に
 	for (int i = 0; i < MAX_BUTTON; ++i)
 	{
 		buttons[i]->SetSize({0,0});
 	}
-
-	playerGuide = Sprite::Create(PLAYERGUIDES_TEX, winCenter, color, anchorPoint); // プレイヤーの説明
-	enemyGuides = Sprite::Create(ENEMYGUIDES_TEX, winCenter, color, anchorPoint); // 敵の説明
 }
 
 void XIIlib::Menu::Update(GameScene* p_game_scene)
 {
+#pragma region Easing処理
 	// 最後のカウンターがMAXに到達するまで、Easing処理
-	if (easingCounts[MAX_BUTTON -1] < MAX_EASING_COUNT)
+	if (easingState == EasingState::MOVE_IN || easingState == EasingState::MOVE_OUT)
 	{
+		// カーソルの非表示
+		if (cursorDisp) { cursorDisp = false; }
+		// Easing処理
 		for (int i = 0; i < MAX_BUTTON; ++i)
 		{
-			EasingMove(i);
+			EasingMove(i,easingState);
 		}
+		// カウントの更新
 		CountsUpdate();
-	}
-	else
-	{
-		// カーソルの表示
-		if (!cursorDisp) { cursorDisp = true; }
-		// 更新
-		if (KeyInput::GetInstance()->Trigger(DIK_TAB)) {
-			p_game_scene->ChangeState(new Play);
-			menuExists = false;
+
+		// 最後のカウントがマックスになったらEasingの状態をNONE
+		if (easingCounts[MAX_BUTTON - 1] > MAX_EASING_COUNT)
+		{
+			// EasingOutなら別シーンに移動
+			if (easingState == EasingState::MOVE_OUT)
+			{
+				switch (menuState)
+				{
+				case XIIlib::MenuState::CONTINUE:
+					p_game_scene->ChangeState(new Play);
+					break;
+				case XIIlib::MenuState::NEXT_SLECT:
+					// シーンを戻る際はUnitデータを消しておく
+					UnitManager::GetInstance()->AllDestroy();
+					p_game_scene->ChangeState(new Select);
+					break;
+				case XIIlib::MenuState::NEXT_TITLE:
+					// シーンを戻る際はUnitデータを消しておく
+					UnitManager::GetInstance()->AllDestroy();
+					p_game_scene->ChangeState(new Title);
+					break;
+				default:
+					// シーンを戻る際はUnitデータを消しておく
+					UnitManager::GetInstance()->AllDestroy();
+					p_game_scene->ChangeState(new Title);
+					break;
+				}
+				
+				menuExists = false;
+				return;
+			}
+			// カウントをすべて0
+			for (int i = 0; i < MAX_BUTTON; ++i)
+			{
+				easingCounts[i] = 0;
+			}
+			// 状態をNONEに
+			easingState = EasingState::NONE;
 		}
 	}
 	
-	// もしkeyを押したら
-	if (KeyInput::GetInstance()->Trigger(DIK_W) || KeyInput::GetInstance()->Trigger(DIK_S))
-	{
-		Math::Vector2 move = {0.0f,0.0f};
-		Math::Vector2 pos = cursor->GetPosition();
-		// それぞれの処理
-		if (KeyInput::GetInstance()->Trigger(DIK_W))
-		{
-			move.y = -SPACE;
-		}
-		else if (KeyInput::GetInstance()->Trigger(DIK_S))
-		{
-			move.y = SPACE;
-		}
-		pos.y += move.y;
-		// 枠を超えたら止める
-		if (pos.y < buttons[0]->GetPosition().y) 
-		{
-			pos.y = buttons[0]->GetPosition().y;
-		}
-		else if (pos.y > buttons[MAX_BUTTON - 1]->GetPosition().y)
-		{
-			pos.y = buttons[MAX_BUTTON - 1]->GetPosition().y;
-		}
+	if (easingState != EasingState::NONE)return;
+#pragma endregion
 
-		cursor->SetPosition(pos);
+#pragma region 説明
+	// menu状態が説明表示になっていたら
+	if (menuState == MenuState::PLAYER_GUIDS || menuState == MenuState::ENEMY_GUIDS)
+	{
+		if (KeyInput::GetInstance()->Trigger(DIK_SPACE) || KeyInput::GetInstance()->Trigger(DIK_TAB))
+		{
+			menuState = MenuState::NONE;
+		}
+		return;
+	}
+#pragma endregion
+
+#pragma region メニュー処理
+	// カーソルの表示
+	if (!cursorDisp) { cursorDisp = true; }
+	
+	// カーソル移動
+	MoveCursor();
+
+	if (KeyInput::GetInstance()->Trigger(DIK_SPACE))
+	{
+		menuState = (MenuState)cursorState;
+		if (menuState == MenuState::PLAYER_GUIDS)
+		{
+			playerGuide->SetPosition(winCenter);
+		}
+		else if (menuState == MenuState::ENEMY_GUIDS)
+		{
+			enemyGuides->SetPosition(winCenter);
+		}
+		// シーン移動関連なら
+		else if (cursorState == CursorState::CONTINUE ||
+			cursorState == CursorState::NEXT_SLECT ||
+			cursorState == CursorState::NEXT_TITLE)
+		{
+			easingState = EasingState::MOVE_OUT;
+		}
+		return;
 	}
 
+	// 更新
+	if (KeyInput::GetInstance()->Trigger(DIK_TAB)) {
+		easingState = EasingState::MOVE_OUT;
+	}
 	// テスト用
 	if (gamePad_->Button_Down(X_A)) {
 		p_game_scene->ChangeState(new Play);
 	}
+#pragma endregion 
 }
 
 void XIIlib::Menu::Draw()
@@ -133,8 +194,16 @@ void XIIlib::Menu::DrawTex()
 	{
 		buttons[i]->Draw();
 	}
-	//playerGuide->Draw();
-	//enemyGuides->Draw();
+
+	if (menuState == MenuState::PLAYER_GUIDS)
+	{
+		playerGuide->Draw();
+	}
+	else if (menuState == MenuState::ENEMY_GUIDS)
+	{
+		enemyGuides->Draw();
+	}
+
 }
 
 void XIIlib::Menu::DrawBackground()
@@ -142,18 +211,29 @@ void XIIlib::Menu::DrawBackground()
 	spStageBG1->Draw();
 }
 
-void XIIlib::Menu::EasingMove(int i)
+void XIIlib::Menu::EasingMove(int i,EasingState easingState)
 {
 	// countがマックスに到達するまで
 	if (easingCounts[i] > MAX_EASING_COUNT) return;
-
+	const Math::Vector2 defaultSize = {94.0f,34.0f};
 	Math::Vector2 size = { 0,0 };
 	float alpha = 0;
-	size.x = Easing::EaseInOutCubic(easingCounts[i], 0, 94, MAX_EASING_COUNT);
-	size.y = Easing::EaseInOutCubic(easingCounts[i], 0, 34, MAX_EASING_COUNT);
+	size.x = Easing::EaseInOutCubic(easingCounts[i], 0, defaultSize.x, MAX_EASING_COUNT);
+	size.y = Easing::EaseInOutCubic(easingCounts[i], 0, defaultSize.y, MAX_EASING_COUNT);
 	alpha = Easing::EaseInOutCubic(easingCounts[i], 0, 1, MAX_EASING_COUNT);
-	buttons[i]->SetSize(size);
-	buttons[i]->SetAlpha(alpha);
+	if (easingState == EasingState::MOVE_IN)
+	{
+		// 0 + ...なのでそのまま
+		buttons[i]->SetSize(size);
+		buttons[i]->SetAlpha(alpha);
+	}
+	else if (easingState == EasingState::MOVE_OUT)
+	{
+		// その分引く
+		buttons[i]->SetSize(defaultSize - size);
+		buttons[i]->SetAlpha(1 - alpha);
+	}
+	
 }
 
 void XIIlib::Menu::CountsUpdate()
@@ -171,5 +251,79 @@ void XIIlib::Menu::CountUpdate(int& count)
 	count++;
 	if (count >= MAX_BUTTON)return;
 	CountUpdate(count);
+}
+
+void XIIlib::Menu::CheckLimitPos()
+{
+	// 最大と最小を調べる
+	float min = buttons[0]->GetPosition().y;
+	float max = buttons[0]->GetPosition().y;
+	for (int i = 0; i < MAX_BUTTON; ++i)
+	{
+		if (min > buttons[i]->GetPosition().y)
+		{
+			min = buttons[i]->GetPosition().y;
+		}
+
+		if (max < buttons[i]->GetPosition().y)
+		{
+			max = buttons[i]->GetPosition().y;
+		}
+	}
+	// 代入
+	minPosY = min;
+	maxPosY = max;
+}
+
+void XIIlib::Menu::MoveCursor()
+{
+	prevPos = cursor->GetPosition();
+	// もしkeyを押したら
+	if (KeyInput::GetInstance()->Trigger(DIK_W) || KeyInput::GetInstance()->Trigger(DIK_S))
+	{
+		// 移動処理
+		float moveY = 0;
+		Math::Vector2 pos = cursor->GetPosition();
+		// それぞれの処理
+		if (KeyInput::GetInstance()->Trigger(DIK_W))
+		{
+			moveY = -SPACE;
+		}
+		else if (KeyInput::GetInstance()->Trigger(DIK_S))
+		{
+			moveY = SPACE;
+		}
+		pos.y += moveY;
+		// 枠を超えたら止める
+		if (pos.y < minPosY)
+		{
+			pos.y = minPosY;
+		}
+		else if (pos.y > maxPosY)
+		{
+			pos.y = maxPosY;
+		}
+		// 座標を設定
+		cursor->SetPosition(pos);
+	}
+	// メニューの情報
+	CheckMenuState();
+}
+
+void XIIlib::Menu::CheckMenuState()
+{
+	// 近似値
+	float nearValue = 5;
+	float posY = cursor->GetPosition().y;
+	// 前回と同じなら即リターン
+	if (posY == prevPos.y)return;
+	for (int i = 0; i < MAX_BUTTON; ++i)
+	{
+		if (posY <= buttons[i]->GetPosition().y + nearValue && posY >= buttons[i]->GetPosition().y - nearValue)
+		{
+			cursorState = (CursorState)i;
+			return;
+		}
+	}
 }
 
