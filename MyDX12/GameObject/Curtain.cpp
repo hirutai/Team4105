@@ -54,7 +54,7 @@ void XIIlib::Curtain::Open()
 	// ACTIVEで無ければ飛ばす
 	if (GetState() != ACTIVE)return;
 	// サイズの値を計算
-	float newSize = (float)Easing::EaseInBack((double)GetTime(), 0, (double)texSize, (double)maxTime);
+	float newSize = (float)Easing::InBack((double)GetTime(), 0, (double)texSize, (double)maxTime);
 	// 時間を進める
 	AddFrame();
 	// 結果を取得
@@ -74,7 +74,7 @@ void XIIlib::Curtain::Close()
 	// ACTIVEで無ければ飛ばす
 	if (GetState() != ACTIVE)return;
 	// サイズの値を計算
-	float newSize = (float)Easing::EaseOutBack((double)GetTime(), 0, (double)texSize, (double)maxTime);
+	float newSize = (float)Easing::OutBack((double)GetTime(), 0, (double)texSize, (double)maxTime);
 	// 時間を進める
 	AddFrame();
 	// サイズを更新
