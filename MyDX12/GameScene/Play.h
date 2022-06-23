@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "SceneState.h"
 #include "../Struct/Math.h"
 class Sprite;
@@ -6,17 +6,21 @@ class Sprite;
 namespace XIIlib {
 
 	class GameScene;
-	class IntervalTimer;
 
-	// ƒvƒŒƒCƒV[ƒ“‚ÌƒNƒ‰ƒX
+	enum class Timing
+	{
+		CameraDirecting, // ã‚«ãƒ¡ãƒ©æ¼”å‡º
+		Game, // ã‚²ãƒ¼ãƒ 
+	};
+
+	// ãƒ—ãƒ¬ã‚¤ã‚·ãƒ¼ãƒ³ã®ã‚¯ãƒ©ã‚¹
 	class Play : public SceneState {
 	private:
-		// ƒvƒŒƒC“à‚Åg‚¤•Ï”éŒ¾‚Ìê(Object/Sprite/ŠÔ/ƒtƒ‰ƒO“™)
-		IntervalTimer* intervalTimter = nullptr; // “G‚Ìs“®ŠÔŠu—pƒ^ƒCƒ}[
-		Sprite* spStageBG1 = nullptr; // ”wŒi
-		Sprite* menuButton = nullptr; // ƒƒjƒ…[
-		Sprite* operatorGuide = nullptr; // ‘€ìà–¾
-		bool menuExists = false; // ƒƒjƒ…[‚ªŠJ‚©‚ê‚Ä‚é‚©‚Ç‚¤‚©‚Ìó‘Ô
+		// ãƒ—ãƒ¬ã‚¤å†…ã§ä½¿ã†å¤‰æ•°å®£è¨€ã®å ´(Object/Sprite/æ™‚é–“/ãƒ•ãƒ©ã‚°ç­‰)
+		Sprite* spStageBG1 = nullptr; // èƒŒæ™¯
+		Sprite* menuButton = nullptr; // ãƒ¡ãƒ‹ãƒ¥ãƒ¼
+		Sprite* operatorGuide = nullptr; // æ“ä½œèª¬æ˜
+		bool menuExists = false; // ãƒ¡ãƒ‹ãƒ¥ãƒ¼ãŒé–‹ã‹ã‚Œã¦ã‚‹ã‹ã©ã†ã‹ã®çŠ¶æ…‹
 	public:
 		Play();
 		~Play();
@@ -26,5 +30,17 @@ namespace XIIlib {
 		void Draw()override;
 		void DrawTex()override;
 		void DrawBackground()override;
+
+#pragma region ã‚«ãƒ¡ãƒ©æ¼”å‡ºé–¢é€£
+	private: // ãƒ¡ãƒ³ãƒå¤‰æ•°
+		Timing timing = Timing::CameraDirecting; // ç¾åœ¨ã®ã‚¿ã‚¤ãƒŸãƒ³ã‚°
+
+		const float finalEye = 18.0f; // æ¼”å‡ºå¾Œã®è¦–ç‚¹
+
+		Math::Vector3 cameraEye{}; // ã‚«ãƒ¡ãƒ©ã®è¦–ç‚¹
+		Math::Vector3 cameraTarget{}; // ã‚«ãƒ¡ãƒ©æ³¨è¦–ç‚¹
+
+		float cameraRotation = -30.0f; // å›è»¢é‡
+#pragma endregion
 	};
 }

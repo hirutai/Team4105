@@ -7,7 +7,6 @@
 namespace XIIlib {
 
 	class BoardMap;
-	class IntervalTimer;
 	class Audio;
 
 	class UnitManager {
@@ -17,8 +16,6 @@ namespace XIIlib {
 
 		std::vector<std::shared_ptr<Unit>> units;
 		std::vector<std::shared_ptr<Unit>> add_units;
-
-		IntervalTimer* _intervalTimter = nullptr;// コピー用
 
 		BoardMap* map_board = nullptr;
 
@@ -75,19 +72,6 @@ namespace XIIlib {
 		std::vector<int> GetOnUnitElements(const Math::Point2& point);
 
 		Audio* GetAudio() { return audio_; };//音
-
-		// タイマーのGetSet関数
-		/// <summary>
-		/// IntervalTimer型を設定
-		/// </summary>
-		/// <param name="intervalTimer">インターバルタイム</param>
-		void SetIntervalTimer(IntervalTimer* intervalTimer) { _intervalTimter = intervalTimer; }
-
-		/// <summary>
-		/// Timerの取得
-		/// </summary>
-		/// <returns> unsigned int タイマーを返す</returns>
-		const unsigned int GetIntervalTimer();
 
 		// 管理しているユニット数(全て)
 		int GetAllUnitCount()const;
