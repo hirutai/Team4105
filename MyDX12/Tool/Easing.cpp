@@ -1,47 +1,47 @@
 #include "Easing.h"
 
-double Easing::ease_in_cubic(double x)
+float Easing::DefaultInCubic(float x)
 {
 	return x * x * x;
 }
 
-double Easing::EaseInCubic(double t, double b, double c, double d)
+float Easing::InCubic(float t, float b, float c, float d)
 {
-	double x = t / d;
-	double v = ease_in_cubic(x);
-	double ret = c * v + b;
+	float x = t / d;
+	float v = DefaultInCubic(x);
+	float ret = c * v + b;
 	return ret;
 }
 
-double Easing::ease_out_cubic(double x)
+float Easing::DefaultOutCubic(float x)
 {
 	return 1 - std::pow(1 - x, 3);
 }
 
-double Easing::EaseOutCubic(double t, double b, double c, double d)
+float Easing::OutCubic(float t, float b, float c, float d)
 {
-	double x = t / d;
-	double v = ease_out_cubic(x);
-	double ret = c * v + b;
+	float x = t / d;
+	float v = DefaultOutCubic(x);
+	float ret = c * v + b;
 	return ret;
 }
 
-double Easing::ease_inout_cubic(double x)
+float Easing::DefaultInOutCubic(float x)
 {
 	return x < 0.5 ? 4 * x * x * x : 1 - pow(-2 * x + 2, 3) / 2;
 }
 
-double Easing::EaseInOutCubic(double t, double b, double c, double d)
+float Easing::InOutCubic(float t, float b, float c, float d)
 {
-	double x = t / d;
-	double v = ease_inout_cubic(x);
-	double ret = c * v + b;
+	float x = t / d;
+	float v = DefaultInOutCubic(x);
+	float ret = c * v + b;
 	return ret;
 }
 
-double Easing::ease_in_elastic(double x)
+float Easing::DefaultInElastic(float x)
 {
-	double  c4 = (2 * PI) / 3;
+	float c4 = (2 * PI) / 3;
 
 	return x == 0
 		? 0
@@ -50,17 +50,17 @@ double Easing::ease_in_elastic(double x)
 		: -pow(2, 10 * x - 10) * sin((x * 10 - 10.75) * c4);
 }
 
-double Easing::EaseInElastic(double t, double b, double c, double d)
+float Easing::InElastic(float t, float b, float c, float d)
 {
-	double x = t / d;
-	double v = ease_in_elastic(x);
-	double ret = c * v + b;
+	float x = t / d;
+	float v = DefaultInElastic(x);
+	float ret = c * v + b;
 	return ret;
 }
 
-double Easing::ease_out_elastic(double x)
+float Easing::DefaultOutElastic(float x)
 {
-	double c4 = (2 * PI) / 3;
+	float c4 = (2 * PI) / 3;
 
 	return x == 0
 		? 0
@@ -69,17 +69,17 @@ double Easing::ease_out_elastic(double x)
 		: pow(2, -10 * x) * sin((x * 10 - 0.75) * c4) + 1;
 }
 
-double Easing::EaseOutElastic(double t, double b, double c, double d)
+float Easing::OutElastic(float t, float b, float c, float d)
 {
-	double x = t / d;
-	double v = ease_out_elastic(x);
-	double ret = c * v + b;
+	float x = t / d;
+	float v = DefaultOutElastic(x);
+	float ret = c * v + b;
 	return ret;
 }
 
-double Easing::ease_inout_elastic(double x)
+float Easing::DefaultInOutElastic(float x)
 {
-	double c5 = (2 * PI) / 4.5;
+	float c5 = (2 * PI) / 4.5;
 
 	return x == 0
 		? 0
@@ -90,18 +90,18 @@ double Easing::ease_inout_elastic(double x)
 		: (pow(2, -20 * x + 10) * sin((20 * x - 11.125) * c5)) / 2 + 1;
 }
 
-double Easing::EaseInOutElastic(double t, double b, double c, double d)
+float Easing::InOutElastic(float t, float b, float c, float d)
 {
-	double x = t / d;
-	double v = ease_inout_elastic(x);
-	double ret = c * v + b;
+	float x = t / d;
+	float v = DefaultInOutElastic(x);
+	float ret = c * v + b;
 	return ret;
 }
 
-double Easing::ease_out_bounce(double x)
+float Easing::DefaultOutBounce(float x)
 {
-	const double n1 = 7.5625;
-	const double d1 = 2.75;
+	const float n1 = 7.5625;
+	const float d1 = 2.75;
 
 	return x < 1 / d1 ?
 		n1 * x * x :
@@ -111,94 +111,94 @@ double Easing::ease_out_bounce(double x)
 		n1 * (x -= 2.25 / d1) * x + 0.9375 : n1 * (x -= 2.625 / d1) * x + 0.984375;
 }
 
-double Easing::EaseOutBounce(double t, double b, double c, double d)
+float Easing::OutBounce(float t, float b, float c, float d)
 {
-	double x = t / d;
-	double v = ease_out_bounce(x);
-	double ret = c * v + b;
+	float x = t / d;
+	float v = DefaultOutBounce(x);
+	float ret = c * v + b;
 	return ret;
 }
 
-double Easing::ease_in_bounce(double x)
+float Easing::DefaultInBounce(float x)
 {
-	return 1 - ease_out_bounce(1 - x);
+	return 1 - DefaultOutBounce(1 - x);
 }
 
-double Easing::EaseInBounce(double t, double b, double c, double d)
+float Easing::InBounce(float t, float b, float c, float d)
 {
-	double x = t / d;
-	double v = ease_in_bounce(x);
-	double ret = c * v + b;
+	float x = t / d;
+	float v = DefaultInBounce(x);
+	float ret = c * v + b;
 	return ret;
 }
 
-double Easing::ease_inout_bounce(double x)
+float Easing::DefaultInOutBounce(float x)
 {
 	return x < 0.5
-		? (1 - ease_out_bounce(1 - 2 * x)) / 2
-		: (1 + ease_out_bounce(2 * x - 1)) / 2;
+		? (1 - DefaultOutBounce(1 - 2 * x)) / 2
+		: (1 + DefaultOutBounce(2 * x - 1)) / 2;
 }
 
-double Easing::EaseInOutBounce(double t, double b, double c, double d)
+float Easing::InOutBounce(float t, float b, float c, float d)
 {
-	double x = t / d;
-	double v = ease_inout_bounce(x);
-	double ret = c * v + b;
+	float x = t / d;
+	float v = DefaultInOutBounce(x);
+	float ret = c * v + b;
 	return ret;
 }
 
-double Easing::ease_in_back(double x)
+float Easing::DefaultInBack(float x)
 {
-	const double c1 = 1.70158;
-	const double c3 = c1 + 1;
+	const float c1 = 1.70158;
+	const float c3 = c1 + 1;
 
-	double x2 = x * x;
-	double x3 = x2 * x;
+	float x2 = x * x;
+	float x3 = x2 * x;
 
 	return c3 * x3 - c1 * x2;
 }
 
-double Easing::EaseInBack(double t, double b, double c, double d)
+float Easing::InBack(float t, float b, float c, float d)
 {
-	double x = t / d;
-	double v = ease_in_back(x);
-	double ret = c * v + b;
+	float x = t / d;
+	float v = DefaultInBack(x);
+	float ret = c * v + b;
 	return ret;
 }
 
-double Easing::ease_out_back(double x)
+float Easing::DefaultOutBack(float x)
 {
-	const double c1 = 1.70158;
-	const double c3 = c1 + 1;
+	const float c1 = 1.70158;
+	const float c3 = c1 + 1;
 
-	double pow2 = (x - 1) * (x - 1);
-	double pow3 = pow2 * (x - 1);
+	float pow2 = (x - 1) * (x - 1);
+	float pow3 = pow2 * (x - 1);
 	
 	return 1 + c3 * pow3 + c1 * pow2;
 }
 
-double Easing::EaseOutBack(double t, double b, double c, double d)
+float Easing::OutBack(float t, float b, float c, float d)
 {
-	double x = t / d;
-	double v = ease_out_back(x);
-	double ret = c * v + b;
+	float x = t / d;
+	float v = DefaultOutBack(x);
+	float ret = c * v + b;
 	return ret;
 }
 
-double Easing::ease_inout_back(double x)
+float Easing::DefaultInOutBack(float x)
 {
-	const double c1 = 1.70158;
-	const double c2 = c1 * 1.525;
+	const float c1 = 1.70158;
+	const float c2 = c1 * 1.525;
 
 	return x < 0.5
 		? (std::pow(2 * x, 2) * ((c2 + 1) * 2 * x - c2)) / 2
 		: (std::pow(2 * x - 2, 2) * ((c2 + 1) * (x * 2 - 2) + c2) + 2) / 2;
 }
 
-double Easing::EaseInOutBack(double t, double b, double c, double d)
+float Easing::InOutBack(float t, float b, float c, float d)
 {
-	double x = t / d;
-	double v = ease_inout_back(x);
-	double ret = c * v + b;
+	float x = t / d;
+	float v = DefaultInOutBack(x);
+	float ret = c * v + b;
 	return ret;
 }

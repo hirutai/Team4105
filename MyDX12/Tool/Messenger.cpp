@@ -49,13 +49,13 @@ void Messenger::DrawMessage()
 			m_x = start;
 		// 終点時間を過ぎていなければ
 		else
-			m_x = (float)EaseInOutCubic((double)addStr[i].s_time, 0, (double)(start), endtime);
+			m_x = (float)InOutCubic((double)addStr[i].s_time, 0, (double)(start), endtime);
 
 		addStr[i].s_time += cframe;
 		// 7秒あたりでエンドカウントをスタートする
 		if (addStr[i].s_time >= 7.5f)
 		{
-			m_x = (float)EaseInOutCubic((double)addStr[i].e_time, (double)(start), (double)(-start), endtime);
+			m_x = (float)InOutCubic((double)addStr[i].e_time, (double)(start), (double)(-start), endtime);
 			addStr[i].e_time += cframe;
 		}
 		// 順番に情報を入れていく

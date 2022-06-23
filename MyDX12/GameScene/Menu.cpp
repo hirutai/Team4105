@@ -218,9 +218,9 @@ void XIIlib::Menu::EasingMove(int i,EasingState easingState)
 	const Math::Vector2 defaultSize = {94.0f,34.0f};
 	Math::Vector2 size = { 0,0 };
 	float alpha = 0;
-	size.x = Easing::EaseInOutCubic(easingCounts[i], 0, defaultSize.x, MAX_EASING_COUNT);
-	size.y = Easing::EaseInOutCubic(easingCounts[i], 0, defaultSize.y, MAX_EASING_COUNT);
-	alpha = Easing::EaseInOutCubic(easingCounts[i], 0, 1, MAX_EASING_COUNT);
+	size.x = Easing::InOutCubic(easingCounts[i], 0, defaultSize.x, MAX_EASING_COUNT);
+	size.y = Easing::InOutCubic(easingCounts[i], 0, defaultSize.y, MAX_EASING_COUNT);
+	alpha = Easing::InOutCubic(easingCounts[i], 0, 1, MAX_EASING_COUNT);
 	if (easingState == EasingState::MOVE_IN)
 	{
 		// 0 + ...‚È‚Ì‚Å‚»‚Ì‚Ü‚Ü
@@ -233,7 +233,6 @@ void XIIlib::Menu::EasingMove(int i,EasingState easingState)
 		buttons[i]->SetSize(defaultSize - size);
 		buttons[i]->SetAlpha(1 - alpha);
 	}
-	
 }
 
 void XIIlib::Menu::CountsUpdate()

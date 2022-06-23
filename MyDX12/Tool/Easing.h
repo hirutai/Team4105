@@ -3,55 +3,41 @@
 
 namespace Easing
 {
-	const double PI = 3.14159265358979323846;
-
+	const float PI = 3.141592;
 	// EasingÇÃä÷êîÇçÏÇÈ
-	double ease_in_cubic(double x);
+	float DefaultInCubic(float x);
+	float InCubic(float t, float b, float c, float d);
 
-	double EaseInCubic(double t, double b, double c, double d);
+	float DefaultOutCubic(float x);
+	float OutCubic(float t, float b, float c, float d);
 
-	double ease_out_cubic(double x);
+	float DefaultInOutCubic(float x);
+	float InOutCubic(float t, float b, float c, float d);
 
-	double EaseOutCubic(double t, double b, double c, double d);
-
-	double ease_inout_cubic(double x);
+	float DefaultInElastic(float x);
+	float InElastic(float t, float b, float c, float d);
 	
-	double EaseInOutCubic(double t, double b, double c, double d);
+	float DefaultOutElastic(float x);
+	float OutElastic(float t, float b, float c, float d);
+
+	float DefaultInOutElastic(float x);
+	float InOutElastic(float t, float b, float c, float d);
+
+	float DefaultOutBounce(float x);
+	float OutBounce(float t, float b, float c, float d);
+
+	float DefaultInBounce(float x);
+	float InBounce(float t, float b, float c, float d);
 	
-	double ease_in_elastic(double x);
+	float DefaultInOutBounce(float x);
+	float InOutBounce(float t, float b, float c, float d);
 
-	double EaseInElastic(double t, double b, double c, double d);
-	
-	double ease_out_elastic(double x);
+	float DefaultInBack(float x);
+	float InBack(float t, float b, float c, float d);
 
-	double EaseOutElastic(double t, double b, double c, double d);
+	float DefaultOutBack(float x);
+	float OutBack(float t, float b, float c, float d);
 
-	double ease_inout_elastic(double x);
-	
-	double EaseInOutElastic(double t, double b, double c, double d);
-
-	double ease_out_bounce(double x);
-	
-	double EaseOutBounce(double t, double b, double c, double d);
-
-	double ease_in_bounce(double x);
-
-	double EaseInBounce(double t, double b, double c, double d);
-	
-	double ease_inout_bounce(double x);
-	
-	double EaseInOutBounce(double t, double b, double c, double d);
-
-	double ease_in_back(double x);
-
-	double EaseInBack(double t, double b, double c, double d);
-
-	double ease_out_back(double x);
-
-	double EaseOutBack(double t, double b, double c, double d);
-
-	double ease_inout_back(double x);
-	
-	double EaseInOutBack(double t, double b, double c, double d);
-	
+	float DefaultInOutBack(float x);
+	float InOutBack(float t, float b, float c, float d);
 }
