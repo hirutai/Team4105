@@ -7,7 +7,6 @@
 #include "../Tool/DebugJISText.h"
 #include "../GameObject/UnitManager.h"
 #include"../GameObject/AttackAreaManager.h"
-#include "../GameObject/IntervalTimer.h"
 #include "../2D/Sprite.h"
 #include "../Audio/Audio.h"
 #include "../Tool/Easing.h"
@@ -24,16 +23,10 @@ XIIlib::Play::~Play()
 	delete operatorGuide; // 操作説明
 	delete menuButton; // メニュー
 	delete spStageBG1;
-	delete intervalTimter;
 }
 
 void XIIlib::Play::Initialize(GameScene* p_game_scene)
 {
-	
-	// IntervalTimer newと初期化
-	intervalTimter = new IntervalTimer();
-	intervalTimter->Initialize(4, 5);
-	UnitManager::GetInstance()->SetIntervalTimer(intervalTimter);
 	if (stageNum == StageNumber::DEBUG)
 	{
 		// それ以外の数値が入っていたら、仮生成
@@ -69,50 +62,69 @@ void XIIlib::Play::Initialize(GameScene* p_game_scene)
 
 void XIIlib::Play::Update(GameScene* p_game_scene)
 {
-#pragma region メニュー処理
-	// メニュー画面を展開、閉じる
-	if (KeyInput::GetInstance()->Trigger(DIK_TAB))
+	switch (timing)
 	{
-		p_game_scene->ChangeState(new Menu); // クリアシーンへ
-		menuExists = true;
-	}
-	// メニュー画面を展開するなら即return
-	if (menuExists)return;
+	case XIIlib::Timing::CameraDirecting: // カメラ演出
+		if (cameraEye.x > finalEye)
+		{
+			cameraEye.x -= cameraRotation; // 縦向きになるまで回転
+		}
+		else
+		{
+			cameraEye.x = finalEye; // 縦向きに固定
+			timing = XIIlib::Timing::Game; // キックオフ演出へ
+		}
+
+		//Camera::GetInstance()->SetEye(XMFLOAT3(cameraEye.x, 30.0f, VERTICALEYE - cameraEye.x));
+
+		//Camera::GetInstance()->SetTarget(XMFLOAT3(cameraEye.x / 4, 0.0f, 0.0f));
+		break;
+	case XIIlib::Timing::Game: // ゲーム
+#pragma region メニュー処理
+		// メニュー画面を展開、閉じる
+		if (KeyInput::GetInstance()->Trigger(DIK_TAB))
+		{
+			p_game_scene->ChangeState(new Menu); // クリアシーンへ
+			menuExists = true;
+		}
+		// メニュー画面を展開するなら即return
+		if (menuExists)return;
 #pragma endregion 
 
 #pragma region Game Update処理
-	// 更新
-	UnitManager::GetInstance()->Update();
-	intervalTimter->Timer();
-	// シーン移動
-	if (UnitManager::GetInstance()->GetUnitIDElements("King") >= 0) // プレイヤが存在している場合
-	{
-		if (UnitManager::GetInstance()->GetAllUnitCount() - 1 == 0) // 敵を全滅させた時
+		// 更新
+		UnitManager::GetInstance()->Update();
+		// シーン移動
+		if (UnitManager::GetInstance()->GetUnitIDElements("King") >= 0) // プレイヤが存在している場合
+		{
+			if (UnitManager::GetInstance()->GetAllUnitCount() - 1 == 0) // 敵を全滅させた時
+			{
+				trigSpace = true;
+			}
+		}
+		else if (UnitManager::GetInstance()->GetUnitIDElements("King") < 0) // プレイヤが存在していない場合
 		{
 			trigSpace = true;
 		}
-	}
-	else if (UnitManager::GetInstance()->GetUnitIDElements("King") < 0) // プレイヤが存在していない場合
-	{
-		trigSpace = true;
-	}
 
-	if (trigSpace) {
-		if (p_game_scene->DrawScreen(false)) {
-			if (UnitManager::GetInstance()->GetUnitIDElements("King") >= 0) // プレイヤが存在している場合
-			{
-				if (UnitManager::GetInstance()->GetAllUnitCount() - 1 == 0) // 敵を全滅させた時
+		if (trigSpace) {
+			if (p_game_scene->DrawScreen(false)) {
+				if (UnitManager::GetInstance()->GetUnitIDElements("King") >= 0) // プレイヤが存在している場合
 				{
-					p_game_scene->ChangeState(new Clear); // クリアシーンへ
+					if (UnitManager::GetInstance()->GetAllUnitCount() - 1 == 0) // 敵を全滅させた時
+					{
+						p_game_scene->ChangeState(new Clear); // クリアシーンへ
+					}
+				}
+				else if (UnitManager::GetInstance()->GetUnitIDElements("King") < 0) // プレイヤが存在していない場合
+				{
+					p_game_scene->ChangeState(new Over); // オーバーシーンへ
 				}
 			}
-			else if (UnitManager::GetInstance()->GetUnitIDElements("King") < 0) // プレイヤが存在していない場合
-			{
-				p_game_scene->ChangeState(new Over); // オーバーシーンへ
-			}
 		}
-	}
 #pragma endregion
+		break;
+	}
 }
 
 void XIIlib::Play::Draw()
@@ -125,7 +137,6 @@ void XIIlib::Play::Draw()
 void XIIlib::Play::DrawTex()
 {
 	// スプライト描画
-	//intervalTimter->Draw();
 	operatorGuide->Draw();
 	menuButton->Draw();
 }

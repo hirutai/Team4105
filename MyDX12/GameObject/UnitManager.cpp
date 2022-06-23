@@ -2,7 +2,6 @@
 #include "../3D/CollCapsule.h"
 #include <iostream>
 #include "BoardMap.h"
-#include "IntervalTimer.h"
 #include "../Struct/Math.h"
 #include "../3D/Object3D.h"
 #include "../3D/BillObj.h"
@@ -205,11 +204,6 @@ std::vector<int> XIIlib::UnitManager::GetOnUnitElements(const Math::Point2& poin
 		i++;
 	}
 	return unit_elements;
-}
-
-const unsigned int XIIlib::UnitManager::GetIntervalTimer()
-{
-	return _intervalTimter->GetTimer();
 }
 
 int XIIlib::UnitManager::GetAllUnitCount() const

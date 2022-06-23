@@ -300,9 +300,6 @@
     <ClCompile Include="GameObject\Tile.cpp">
       <Filter>GameObject\Tile</Filter>
     </ClCompile>
-    <ClCompile Include="GameObject\IntervalTimer.cpp">
-      <Filter>GameObject\GameTimer</Filter>
-    </ClCompile>
     <ClCompile Include="GameObject\Rook.cpp">
       <Filter>GameObject\Unit</Filter>
     </ClCompile>
@@ -556,9 +553,6 @@
     </ClInclude>
     <ClInclude Include="GameObject\Tile.h">
       <Filter>GameObject\Tile</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObject\IntervalTimer.h">
-      <Filter>GameObject\GameTimer</Filter>
     </ClInclude>
     <ClInclude Include="GameObject\Unit.h">
       <Filter>GameObject\Unit</Filter>

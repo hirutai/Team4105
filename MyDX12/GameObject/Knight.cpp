@@ -204,10 +204,10 @@ void XIIlib::Knight::Action()
 		Move();
 	}
 
-	if (UnitManager::GetInstance()->GetIntervalTimer() == 420)
+	/*if (UnitManager::GetInstance()->GetIntervalTimer() == 420)
 	{
 		notAttackflag = 1;
-	}
+	}*/
 
 	if (isAttack == true && notAttackflag == 1)
 	{
@@ -240,7 +240,7 @@ void XIIlib::Knight::Attack()
 void XIIlib::Knight::Move()
 {
 	if (isAttack == true)return;
-	if (UnitManager::GetInstance()->GetIntervalTimer() < 420)return;
+	//if (UnitManager::GetInstance()->GetIntervalTimer() < 420)return;
 	notAttackflag = true;
 
 	Math::Point2 dif = kingPos - element_stock;
