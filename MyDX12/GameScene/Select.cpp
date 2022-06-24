@@ -85,7 +85,9 @@ void XIIlib::Select::Update(GameScene* p_game_scene)
 
 	// 更新
 	if (KeyInput::GetInstance()->Trigger(DIK_SPACE)) {
+		if (trigSpace)return;
 		trigSpace = true;
+
 		// ポジションによってステージナンバーを代入
 		if (edgePos.x == HOMEL_POS.x)
 		{
@@ -103,6 +105,8 @@ void XIIlib::Select::Update(GameScene* p_game_scene)
 			return;
 			//stageNum = StageNumber::HARD;
 		}
+		
+		
 	}
 
 	if (trigSpace) {
