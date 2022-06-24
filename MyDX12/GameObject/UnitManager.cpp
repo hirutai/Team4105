@@ -226,3 +226,13 @@ void XIIlib::UnitManager::ResetCount()
 {
 	deadCount = 0;
 }
+
+void XIIlib::UnitManager::ObjectUpdate()
+{
+	map_board->Update();
+
+	for (auto unit : units)
+	{
+		unit->ObjectUpdate();
+	}
+}

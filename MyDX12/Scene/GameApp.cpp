@@ -136,9 +136,10 @@ void GameApp::Initialize()
 	manager->Initialize();
 	attackAreaManager->Initialize();
 
-	VariableInit();
+	//VariableInit();
 
 	game_scene = new XIIlib::GameScene();
+	game_scene->SetDebugCamera(d_camera); // カメラの設定
 	game_scene->Initialize();
 }
 
@@ -153,8 +154,6 @@ void GameApp::Update()
 	lightGroup->Update();
 
 	// カメラの動きの処理
-	Math::Vector3 c_pos = { 0,45,-5 };
-	d_camera->SetPosition(c_pos.x, c_pos.y, c_pos.z);
 	d_camera->SetLookAtRange(0,-1, 0);
 
 	// タグネーム「Player」が存在するかどうか
