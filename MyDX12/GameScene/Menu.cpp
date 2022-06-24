@@ -104,9 +104,7 @@ void XIIlib::Menu::Update(GameScene* p_game_scene)
 					p_game_scene->ChangeState(new Title);
 					break;
 				default:
-					// シーンを戻る際はUnitデータを消しておく
-					UnitManager::GetInstance()->AllDestroy();
-					p_game_scene->ChangeState(new Title);
+					p_game_scene->ChangeState(new Play);
 					break;
 				}
 				
