@@ -42,6 +42,8 @@ namespace XIIlib {
 
 		void SetOnTile();
 
+		void Flat();
+
 		bool IsPlayerAttackValid()const { return is_attack_player; }
 		bool IsEnemyAttackValid()const { return is_attack_enemy; }
 		bool IsMovePointValid()const { return is_move_point; }

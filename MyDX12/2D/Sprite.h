@@ -123,6 +123,8 @@ public: // メンバ関数
 	/// </summary>
 	void Draw();
 
+	Vector2 GetDefault()const { return defaultSize; }
+
 private: // メンバ変数
 	// 頂点バッファ
 	Microsoft::WRL::ComPtr<ID3D12Resource> vertBuff;
@@ -139,6 +141,7 @@ private: // メンバ変数
 	Vector2 position{};
 	// スプライト幅、高さ
 	Vector2 size = { 100.0f, 100.0f };
+	Vector2 defaultSize = { 100.0f, 100.0f };
 	// アンカーポイント
 	Vector2 anchorpoint = { 0, 0 };
 	// ワールド行列

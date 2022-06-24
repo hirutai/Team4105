@@ -73,6 +73,15 @@ void XIIlib::BoardMap::Draw()
 	}
 }
 
+void XIIlib::BoardMap::AllFlat()
+{
+	for (auto y : map_board) {
+		for (auto x : y) {
+			x->Flat();
+		}
+	}
+}
+
 void XIIlib::BoardMap::SetBackVector(const Math::Point2& element, const Math::Point2& point)
 {
 	map_board[element.b][element.a]->SetBackVector(point);

@@ -25,6 +25,9 @@ namespace XIIlib {
 
 		void Draw();
 
+		// ”»’èˆ—‚Ì‰Šú‰»(‘S‚Ä)
+		void AllFlat();
+
 		void SetBackVector(const Math::Point2& element,const Math::Point2& point);
 
 		void ChangeAttackValidTile(const Math::Point2& element,int type_positioning);

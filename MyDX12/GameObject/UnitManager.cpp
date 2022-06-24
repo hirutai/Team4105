@@ -166,6 +166,11 @@ void XIIlib::UnitManager::SetBackVector(const Math::Point2& element, const Math:
 	map_board->SetBackVector(element, point);
 }
 
+void XIIlib::UnitManager::FlatTileState()
+{
+	map_board->AllFlat();
+}
+
 void XIIlib::UnitManager::ChangeAttackValidTile(const Math::Point2& element, int type_positioning)
 {
 	map_board->ChangeAttackValidTile(element,type_positioning);
