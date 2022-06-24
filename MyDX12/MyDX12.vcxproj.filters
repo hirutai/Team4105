@@ -372,6 +372,9 @@
     <ClCompile Include="GameObject\Curtain.cpp">
       <Filter>GameObject\Common</Filter>
     </ClCompile>
+    <ClCompile Include="GameObject\Boss.cpp">
+      <Filter>GameObject\Unit</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Base\DirectX12.h">
@@ -625,6 +628,9 @@
     </ClInclude>
     <ClInclude Include="GameObject\Curtain.h">
       <Filter>GameObject\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\Boss.h">
+      <Filter>GameObject\Unit</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
