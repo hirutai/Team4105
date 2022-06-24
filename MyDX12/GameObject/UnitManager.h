@@ -56,6 +56,8 @@ namespace XIIlib {
 
 		void SetBackVector(const Math::Point2& element, const Math::Point2& point);
 
+		void FlatTileState();
+
 		// 指定マスの攻撃判定を有効化
 		void ChangeAttackValidTile(const Math::Point2& element, int type_positioning);
 

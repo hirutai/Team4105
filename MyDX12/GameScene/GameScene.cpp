@@ -28,7 +28,7 @@
 XIIlib::GameScene::GameScene()
 { 
 	// コンストラクタ!
-	state = new Play; // 初期状態の格納・設定
+	state = new Title; // 初期状態の格納・設定
 
 	// GamePadの生成と初期化とStateに設定
 	gamePad = new GamePAD_XInput();

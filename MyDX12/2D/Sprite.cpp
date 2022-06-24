@@ -237,6 +237,7 @@ Sprite::Sprite(UINT texNumber, Math::Vector2 position, Math::Vector2 size, XMFLO
 	this->isFlipX = isFlipX;
 	this->isFlipY = isFlipY;
 	this->texSize = size;
+	this->defaultSize = size;
 }
 
 bool Sprite::Initialize()

@@ -93,3 +93,13 @@ void XIIlib::Tile::SetOnTile()
 {
 	on_tile = true;
 }
+
+void XIIlib::Tile::Flat()
+{
+	on_tile = false;
+
+	is_attack_player = false;
+	is_attack_enemy = false;
+	is_move_point = false;
+	is_attack_point = false;
+}
