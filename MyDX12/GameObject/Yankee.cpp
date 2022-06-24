@@ -6,6 +6,8 @@
 #include "../3D/Object3D.h"
 #include "../Audio/Audio.h"
 #include "../GameObject/AttackTimer.h"
+#include "../Tool/DebugText.h"
+#include "../Tool/Easing.h"
 
 XIIlib::Yankee::Yankee()
 {
@@ -53,16 +55,53 @@ void XIIlib::Yankee::Initialize()
 
 void XIIlib::Yankee::Update()
 {
-
-	// 駒の行動
-	Action();
-
-	// タイマーの更新
-	attackTimer->Timer();
-
 	// 位置座標の更新
 	object3d->position = { Common::ConvertTilePosition(element_stock.a),1.0f, Common::ConvertTilePosition(element_stock.b) };
+
+	if (!determinateMoveAction) {
+		// 駒の行動
+		Action();
+
+		// タイマーの更新
+		attackTimer->Timer();
+
+		pos = object3d->position;
+	}
+	else {
+		const float maxTime = 1.0f;
+		movingTimer += (1.0f / 40.0f);
+		Math::Vector3 nowP = { Common::ConvertTilePosition(element_stock.a),1.0f, Common::ConvertTilePosition(element_stock.b) };
+		Math::Vector3 nextP = { Common::ConvertTilePosition(nextPoint.a),1.0f, Common::ConvertTilePosition(nextPoint.b) };
+		Math::Vector3 v = nextP - nowP;
+
+		bool isVx = false,isVz = false;
+		if (v.x < 0.0f){
+			isVx = true;
+			v.x *= -1.0f;
+		}
+		if (v.z < 0.0f){
+			isVz = true;
+			v.z *= -1.0f;
+		}
+
+		float resultX = Easing::InOutCubic(movingTimer,0.0f,v.x, maxTime);
+		float resultZ = Easing::InOutCubic(movingTimer,0.0f,v.z, maxTime);
+		if (isVx)resultX *= -1.0f;
+		if (isVz)resultZ *= -1.0f;
+
+		object3d->position.x = pos.x + resultX;
+		object3d->position.z = pos.z + resultZ;
+
+		if (movingTimer >= maxTime) {
+			determinateMoveAction = false;
+			element_stock = nextPoint;
+			movingTimer = 0.0f;
+			nextPoint = Math::Point2(0, 0);
+			pos = Math::Vector3();
+		}
+	}
 	object3d->Update();
+
 	// 座標設定
 	attackTimer->SetPosition(object3d->position);
 }
@@ -72,6 +111,8 @@ void XIIlib::Yankee::Action()
 	// 未来への栄光のロードを初期化
 	nextPoint = { 0,0 };
 
+	// ノックバック(共通処理)
+	KnockBack();
 	// 範囲に入ってるかのチェック
 	if (AttackAreaExists())
 	{
@@ -123,8 +164,6 @@ void XIIlib::Yankee::Action()
 		AttackAreaDraw();
 	}
 
-	// ノックバック(共通処理)
-	KnockBack();
 
 }
 
@@ -139,10 +178,12 @@ void XIIlib::Yankee::Attack()
 		Math::Point2 temp = element_stock;
 
 		// 攻撃
-		element_stock = preElement_stock;
+		nextPoint = preElement_stock;
 		audio_->PlaySE("yankeeVoice.wav");
 		IniState();
-		//notAttackflag = false;
+		
+		// 移動ますが決定されました。
+		determinateMoveAction = true;
 	}
 }
 
@@ -154,6 +195,7 @@ void XIIlib::Yankee::Move()
 	if (!attackTimer->SizeZeroFlag())return;
 	//ヤンキーの座標
 	Math::Point2 temp = element_stock;
+	nextPoint = element_stock;
 	notAttackflag = TRUE;
 
 
@@ -167,7 +209,7 @@ void XIIlib::Yankee::Move()
 		temp.b -= 1;
 		if (ThreeCheckArea(temp))return;
 
-		//element_stock.b -= 1;
+		nextPoint.b -= 1;
 		audio_->PlaySE("yankeeVoice.wav");
 	}
 	// 自分とキングの間を1マスづつ調べる
@@ -176,7 +218,7 @@ void XIIlib::Yankee::Move()
 		//下に1進む
 		temp.b += 1;
 		if (ThreeCheckArea(temp))return;
-		element_stock.b += 1;
+		nextPoint.b += 1;
 		audio_->PlaySE("yankeeVoice.wav");
 	}
 	// 自分とキングの間を1マスづつ調べる
@@ -185,7 +227,7 @@ void XIIlib::Yankee::Move()
 		//右に１進む
 		temp.a -= 1;
 		if (ThreeCheckArea(temp))return;
-		element_stock.a -= 1;
+		nextPoint.a -= 1;
 		audio_->PlaySE("yankeeVoice.wav");
 	}
 	else if (dif.a > 0 && dif.b == 0)// 0より大きければKingより右にいる
@@ -193,7 +235,7 @@ void XIIlib::Yankee::Move()
 		//左に１進む
 		temp.a += 1;
 		if (ThreeCheckArea(temp))return;
-		element_stock.a += 1;
+		nextPoint.a += 1;
 		audio_->PlaySE("yankeeVoice.wav");
 	}
 	// 自分とキングの間を1マスづつ調べる
@@ -203,8 +245,8 @@ void XIIlib::Yankee::Move()
 		temp.a -= 1;
 		temp.b -= 1;
 		if (ThreeCheckArea(temp))return;
-		element_stock.a -= 1;
-		element_stock.b -= 1;
+		nextPoint.a -= 1;
+		nextPoint.b -= 1;
 		audio_->PlaySE("yankeeVoice.wav");
 	}
 	// 自分とキングの間を1マスづつ調べる
@@ -214,8 +256,8 @@ void XIIlib::Yankee::Move()
 		temp.a -= 1;
 		temp.b += 1;
 		if (ThreeCheckArea(temp))return;
-		element_stock.a -= 1;
-		element_stock.b += 1;
+		nextPoint.a -= 1;
+		nextPoint.b += 1;
 		audio_->PlaySE("yankeeVoice.wav");
 	}
 	// 自分とキングの間を1マスづつ調べる
@@ -225,8 +267,8 @@ void XIIlib::Yankee::Move()
 		temp.a += 1;
 		temp.b -= 1;
 		if (ThreeCheckArea(temp))return;
-		element_stock.a += 1;
-		element_stock.b -= 1;
+		nextPoint.a += 1;
+		nextPoint.b -= 1;
 		audio_->PlaySE("yankeeVoice.wav");
 	}
 	// 自分とキングの間を1マスづつ調べる
@@ -236,10 +278,13 @@ void XIIlib::Yankee::Move()
 		temp.a += 1;
 		temp.b += 1;
 		if (ThreeCheckArea(temp))return;
-		element_stock.a += 1;
-		element_stock.b += 1;
+		nextPoint.a += 1;
+		nextPoint.b += 1;
 		audio_->PlaySE("yankeeVoice.wav");
 	}
+
+	// 移動ますが決定されました。
+	determinateMoveAction = true;
 }
 
 bool XIIlib::Yankee::AttackAreaExists()

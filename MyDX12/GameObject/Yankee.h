@@ -1,15 +1,13 @@
 #pragma once
 #include "Unit.h"
 #include <memory>
+#include "../Struct/Math.h"
 
 namespace XIIlib {
 
 	class Yankee : public Unit {
 	private:
 		Math::Point2 point_attack;
-		float movingTimer = 0.0f;
-		bool determinateMoveAction = false;
-		Math::Point2 nextPoint;
 
 	public:
 		Yankee();

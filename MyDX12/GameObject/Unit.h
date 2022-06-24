@@ -3,6 +3,7 @@
 #include <vector>
 #include <string>
 #include"AttackAreaManager.h"
+#include "../Struct/Math.h"
 class Object3D;
 
 namespace XIIlib {
@@ -73,6 +74,11 @@ namespace XIIlib {
 
 		AttackTimer* attackTimer = nullptr; // 攻撃タイマー
 		BillObj* attackAreasBillboard = nullptr;
+
+		float movingTimer = 0.0f;
+		bool determinateMoveAction = false;
+		Math::Point2 nextPoint;
+		Math::Vector3 pos;
 	public:
 		Unit() = default;
 		virtual ~Unit(){}
