@@ -87,8 +87,6 @@ void XIIlib::Play::Update(GameScene* p_game_scene)
 			break;
 		}
 
-		cameraEye.x = x; cameraEye.z = z; // 
-
 		debugCamera->SetPosition(cameraEye.x, cameraEye.y, cameraEye.z); // 視点座標の設定
 
 		UnitManager::GetInstance()->ObjectUpdate(); // 3Dオブジェクトの更新
@@ -167,7 +165,7 @@ void XIIlib::Play::ToTheRight()
 {
 	if (cameraEye.x < rightEye.x) // 右側カメラまで
 	{
-		x += moveValue;
+		cameraEye.x += moveValue;
 	}
 	else
 	{
@@ -176,7 +174,7 @@ void XIIlib::Play::ToTheRight()
 
 	if (cameraEye.z < rightEye.z) // 右側カメラまで
 	{
-		z += moveValue;
+		cameraEye.z += moveValue;
 	}
 	else
 	{
@@ -193,7 +191,7 @@ void XIIlib::Play::ToTheBack()
 {
 	if (cameraEye.x > backEye.x) // 後ろ側カメラまで
 	{
-		x -= moveValue;
+		cameraEye.x -= moveValue;
 	}
 	else
 	{
@@ -203,7 +201,7 @@ void XIIlib::Play::ToTheBack()
 	if (cameraEye.z < backEye.z) // 後ろ側カメラまで
 	{
 
-		z += moveValue;
+		cameraEye.z += moveValue;
 	}
 	else
 	{
@@ -220,7 +218,7 @@ void XIIlib::Play::ToTheLeft()
 {
 	if (cameraEye.x > leftEye.x) // 左側カメラまで
 	{
-		x -= moveValue; // 移動
+		cameraEye.x -= moveValue; // 移動
 	}
 	else
 	{
@@ -230,7 +228,7 @@ void XIIlib::Play::ToTheLeft()
 	if (cameraEye.z > leftEye.z) // 左側カメラまで
 	{
 
-		z -= moveValue; // 移動
+		cameraEye.z -= moveValue; // 移動
 	}
 	else
 	{
@@ -247,7 +245,7 @@ void XIIlib::Play::ToTheFront()
 {
 	if (cameraEye.x < frontEye.x) // 前側カメラまで
 	{
-		x += moveValue; // 移動
+		cameraEye.x += moveValue; // 移動
 	}
 	else
 	{
@@ -257,7 +255,7 @@ void XIIlib::Play::ToTheFront()
 	if (cameraEye.z > frontEye.z) // 前側カメラまで
 	{
 
-		z -= moveValue; // 移動
+		cameraEye.z -= moveValue; // 移動
 	}
 	else
 	{
@@ -274,7 +272,7 @@ void XIIlib::Play::ToTheUp()
 {
 	if (cameraEye.y < upperEye.y) // 上カメラまで
 	{
-		y += moveValue;
+		cameraEye.y += moveValue;
 	}
 	else
 	{
