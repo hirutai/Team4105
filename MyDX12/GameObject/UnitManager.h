@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include <memory>
 #include <vector>
 #include <string>
@@ -29,36 +29,36 @@ namespace XIIlib {
 
 		static UnitManager* GetInstance();
 
-		void Initialize(); // ‰Šú‰»
+		void Initialize(); // åˆæœŸåŒ–
 
-		void Update(); // XV
+		void Update(); // æ›´æ–°
 
-		void Draw(); // •`‰æ
+		void Draw(); // æç”»
 
-		void AddUnit(const std::shared_ptr<Unit>& spObject); // ƒ†ƒjƒbƒg‚Ì’Ç‰Á
+		void AddUnit(const std::shared_ptr<Unit>& spObject); // ãƒ¦ãƒ‹ãƒƒãƒˆã®è¿½åŠ 
 
 		void DeadUnit();
 
-		// ƒRƒ“ƒeƒi‚©‚ç‚·‚×‚Äíœ
+		// ã‚³ãƒ³ãƒ†ãƒŠã‹ã‚‰ã™ã¹ã¦å‰Šé™¤
 		void AllDestroy();
 
-		// w’èƒ}ƒX‚Éƒ†ƒjƒbƒg‚ªÚ‚Á‚Ä‚¢‚é‚©?
+		// æŒ‡å®šãƒã‚¹ã«ãƒ¦ãƒ‹ãƒƒãƒˆãŒè¼‰ã£ã¦ã„ã‚‹ã‹?
 		bool AllOnUnit(const Math::Point2& point);
-		// ‚»‚Ìƒ}ƒX‚ÉƒvƒŒƒCƒ„[‚ª‘¶İ‚·‚é‚©”Û‚©
+		// ãã®ãƒã‚¹ã«ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãŒå­˜åœ¨ã™ã‚‹ã‹å¦ã‹
 		bool IsPlayerOnTile(const Math::Point2& point);
 
-		// w’è•¶š—ñ‚©‚çƒ†ƒjƒbƒg‚Ì"ID(ƒNƒ‰ƒX–¼)"‚ªƒqƒbƒg‚µ‚½—v‘f”‚ğ•Ô‚·
+		// æŒ‡å®šæ–‡å­—åˆ—ã‹ã‚‰ãƒ¦ãƒ‹ãƒƒãƒˆã®"ID(ã‚¯ãƒ©ã‚¹å)"ãŒãƒ’ãƒƒãƒˆã—ãŸè¦ç´ æ•°ã‚’è¿”ã™
 		int GetUnitIDElements(std::string name)const;
-		// ƒ†ƒjƒbƒg‚ğæ“¾
+		// ãƒ¦ãƒ‹ãƒƒãƒˆã‚’å–å¾—
 		std::shared_ptr<Unit> GetUnit(int index)const;
-		// •¡”‚Ì—v‘f”‚ğæ“¾
+		// è¤‡æ•°ã®è¦ç´ æ•°ã‚’å–å¾—
 		std::vector<int> GetUnitNumbers(std::string name)const;
 
 		void SetBackVector(const Math::Point2& element, const Math::Point2& point);
 
 		void FlatTileState();
 
-		// w’èƒ}ƒX‚ÌUŒ‚”»’è‚ğ—LŒø‰»
+		// æŒ‡å®šãƒã‚¹ã®æ”»æ’ƒåˆ¤å®šã‚’æœ‰åŠ¹åŒ–
 		void ChangeAttackValidTile(const Math::Point2& element, int type_positioning);
 
 		void SetOnTile(const Math::Point2& element);
@@ -73,18 +73,19 @@ namespace XIIlib {
 
 		std::vector<int> GetOnUnitElements(const Math::Point2& point);
 
-		Audio* GetAudio() { return audio_; };//‰¹
+		Audio* GetAudio() { return audio_; };//éŸ³
 
-		// ŠÇ—‚µ‚Ä‚¢‚éƒ†ƒjƒbƒg”(‘S‚Ä)
+		// ç®¡ç†ã—ã¦ã„ã‚‹ãƒ¦ãƒ‹ãƒƒãƒˆæ•°(å…¨ã¦)
 		int GetAllUnitCount()const;
 
-		// “G‚ª€‚ñ‚¾‚ÉƒJƒEƒ“ƒgŠÖ”
+		// æ•µãŒæ­»ã‚“ã æ™‚ã«ã‚«ã‚¦ãƒ³ãƒˆé–¢æ•°
 		void AddCountDead();
-		// ƒJƒEƒ“ƒg‚ÌƒŠƒZƒbƒg
+		// ã‚«ã‚¦ãƒ³ãƒˆã®ãƒªã‚»ãƒƒãƒˆ
 		void ResetCount();
-		// ƒJƒEƒ“ƒg‚ÌƒQƒbƒ^[
+		// ã‚«ã‚¦ãƒ³ãƒˆã®ã‚²ãƒƒã‚¿ãƒ¼
 		int GetDeadCount()const { return deadCount; }
-
+		// Object3Dã®æ›´æ–°
+		void ObjectUpdate();
 	};
 
 }

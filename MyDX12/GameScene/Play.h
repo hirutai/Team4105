@@ -7,10 +7,19 @@ namespace XIIlib {
 
 	class GameScene;
 
-	enum class Timing
+	enum class Phase
 	{
 		CameraDirecting, // カメラ演出
 		Game, // ゲーム
+	};
+
+	enum class Timing
+	{
+		ToTheRight, // 右へ
+		ToTheBack, // 後ろへ
+		ToTheLeft, // 左へ
+		ToTheFront, // 前へ
+		ToTheUp, // 上へ
 	};
 
 	// プレイシーンのクラス
@@ -33,14 +42,33 @@ namespace XIIlib {
 
 #pragma region カメラ演出関連
 	private: // メンバ変数
-		Timing timing = Timing::CameraDirecting; // 現在のタイミング
+		const Math::Vector3 rightEye{ 30,10,0 }; // 右側カメラ座標
+		const Math::Vector3 backEye{ 0,10,30 }; // 後ろ側カメラ座標
+		const Math::Vector3 leftEye{ -30,10,0 }; // 左側カメラ座標
+		const Math::Vector3 frontEye{ 0,10,-30 }; // 前側カメラ座標
+		const Math::Vector3 upperEye{ 0,45, -30 }; // 上側カメラ座標
 
-		const float finalEye = 18.0f; // 演出後の視点
+		const float moveValue = 0.5f;
 
-		Math::Vector3 cameraEye{}; // カメラの視点
-		Math::Vector3 cameraTarget{}; // カメラ注視点
+		float x = 0;
+		float y = 0;
+		float z = 0;
 
-		float cameraRotation = -30.0f; // 回転量
+		Math::Vector3 cameraEye{ frontEye.x, frontEye.y, frontEye.z }; // カメラの視点
+
+		Phase phase = Phase::CameraDirecting; // 現在のフェーズ
+
+		Timing timing = Timing::ToTheRight; // 現在のタイミング
+
+		void ToTheRight(); // 右へ
+
+		void ToTheBack(); // 後ろへ
+
+		void ToTheLeft(); // 左へ
+
+		void ToTheFront(); // 前へ
+
+		void ToTheUp(); // 上へ
 #pragma endregion
 	};
 }

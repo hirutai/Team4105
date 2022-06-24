@@ -1,7 +1,9 @@
-#pragma once
+ï»¿#pragma once
 #include <vector>
 #include "../Input/GamePAD_XInput.h"
 class Sprite;
+
+class DebugCamera;
 
 namespace XIIlib
 {
@@ -14,10 +16,10 @@ namespace XIIlib
 	public:
 		GameScene();
 		~GameScene();
-		// ƒV[ƒ“‚ÌØ‚è‘Ö‚¦
+		// ã‚·ãƒ¼ãƒ³ã®åˆ‡ã‚Šæ›¿ãˆ
 		void ChangeState(SceneState* different_state);
 
-		// Šî–{ŠÖ”(RegularFunction)
+		// åŸºæœ¬é–¢æ•°(RegularFunction)
 		void Initialize();
 		void Update();
 		void Draw();
@@ -30,23 +32,30 @@ namespace XIIlib
 
 		//void SetGamePad();
 
+		// ã‚«ãƒ¡ãƒ©ã®è¨­å®š
+		void SetDebugCamera(DebugCamera* debugCamera_) { debugCamera = debugCamera_; }
+		// ã‚«ãƒ¡ãƒ©ã®å–å¾—
+		DebugCamera* GetCamera() { return debugCamera; }
+
 		Audio* GetAudio()const;
 
 	private:
-		// ó‘Ô
+		// çŠ¶æ…‹
 		SceneState* state = nullptr;
-		// ‰¹
+		// éŸ³
 		Audio* audio = nullptr;
+		// ã‚«ãƒ¡ãƒ©
+		DebugCamera* debugCamera = nullptr;
 		// GamePad
 		GamePAD_XInput* gamePad = nullptr;
 
-		// §Œä
+		// åˆ¶å¾¡
 		int isTurn = 0;
 
-		// UŒ‚—pƒtƒŒ[ƒ€ƒJƒEƒ“ƒg
+		// æ”»æ’ƒç”¨ãƒ•ãƒ¬ãƒ¼ãƒ ã‚«ã‚¦ãƒ³ãƒˆ
 		int attackFrame = 0;
 
-		// ƒ}ƒXƒ|ƒCƒ“ƒ^
+		// ãƒã‚¹ãƒã‚¤ãƒ³ã‚¿
 		int squareX = 0;
 		int squareZ = 0;
 

@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include <DirectXMath.h>
 #include "../Struct/Math.h"
 
@@ -27,89 +27,89 @@ private:
 
 	float range;
 
-	float c_fov;//‰æŠp(“x”–@)(FOV)
+	float c_fov;//ç”»è§’(åº¦æ•°æ³•)(FOV)
 
-	float c_near;//‘O’[(near)
+	float c_near;//å‰ç«¯(near)
 
-	float c_far;//‰œ’[(far)
+	float c_far;//å¥¥ç«¯(far)
 
 	Math::Vector3 at = Math::Vector3();
 
-	DirectX::XMMATRIX matView; // ƒrƒ…[•ÏŠ·s—ñ
+	DirectX::XMMATRIX matView; // ãƒ“ãƒ¥ãƒ¼å¤‰æ›è¡Œåˆ—
 
-	DirectX::XMMATRIX matProjection;			//Ë‰e•ÏŠ·s—ñ
+	DirectX::XMMATRIX matProjection;			//å°„å½±å¤‰æ›è¡Œåˆ—
 
-	// ƒrƒ‹ƒ{[ƒhs—ñ
+	// ãƒ“ãƒ«ãƒœãƒ¼ãƒ‰è¡Œåˆ—
 	DirectX::XMMATRIX matBillboard;
-	// Y²‰ñ‚èƒrƒ‹ƒ{[ƒhs—ñ
+	// Yè»¸å›ã‚Šãƒ“ãƒ«ãƒœãƒ¼ãƒ‰è¡Œåˆ—
 	DirectX::XMMATRIX matBillboardY;
 
 public:
 	DebugCamera();
 	~DebugCamera();
-	// ƒJƒƒ‰‰Šú‰»
+	// ã‚«ãƒ¡ãƒ©åˆæœŸåŒ–
 	void _Initialize(float lookatrange, float rotaterad, float moverange);
-	// ƒJƒƒ‰ˆÊ’uXV
+	// ã‚«ãƒ¡ãƒ©ä½ç½®æ›´æ–°
 	void _Update();
 
-	// phi’l‚Ìİ’è
+	// phiå€¤ã®è¨­å®š
 	void SetPhi(float s_phi);
 	void SetAdderPhi(float adder_phi);
-	// theta’l‚Ìİ’è
+	// thetaå€¤ã®è¨­å®š
 	void SetTheta(float s_theta);
 	void SetAdderTheta(float adder_theta);
-	// lookatrange‚Ìİ’è
+	// lookatrangeã®è¨­å®š
 	void SetLookAtRange(float s_lookat_x, float s_lookat_y, float s_lookat_z);
 	void SetAdderLookAt(float adder_lookat_x, float adder_lookat_y, float adder_lookat_z);
-	// position‚Ìİ’è
+	// positionã®è¨­å®š
 	void SetPosition(float s_pos_x, float s_pos_y, float s_pos_z);
-	// MoveRange‚Ìİ’è
+	// MoveRangeã®è¨­å®š
 	void SetMoveRange(float move_range);
-	// at‚Ìİ’è
+	// atã®è¨­å®š
 	void SetAt(float s_at_x,float s_at_y,float s_at_z);
-	// ã•ûŒü‚ÌƒxƒNƒgƒ‹
+	// ä¸Šæ–¹å‘ã®ãƒ™ã‚¯ãƒˆãƒ«
 	void SetUpVector(float x, float y, float z);
 
-	// eye‚ÌGet()...x,y,z‚ÍŒÂX‚Éì‚é
+	// eyeã®Get()...x,y,zã¯å€‹ã€…ã«ä½œã‚‹
 	float GetEye_X()const { return eye.x; }
 	float GetEye_Y()const { return eye.y; }
 	float GetEye_Z()const { return eye.z; }
-	// at‚ÌGet()...x,y,z‚ÍŒÂX‚Éì‚é
+	// atã®Get()...x,y,zã¯å€‹ã€…ã«ä½œã‚‹
 	float GetAt_X()const { return at.x; }
 	float GetAt_Y()const { return at.y; }
 	float GetAt_Z()const { return at.z; }
-	// rotated‚ÌGet()
+	// rotatedã®Get()
 	float GetRotaterad();
-	// phi‚ÌGet()
+	// phiã®Get()
 	float GetPhi()const { return data.phi; }
-	// theta‚ÌGet()
+	// thetaã®Get()
 	float GetTheta()const { return data.theta; }
-	// lookAt‚ÌGet()...x,y,z‚ÍŒÂX‚Éì‚é
+	// lookAtã®Get()...x,y,zã¯å€‹ã€…ã«ä½œã‚‹
 	float GetLookAtRange_X()const { return data.lookat.x; }
 	float GetLookAtRange_Y()const { return data.lookat.y; }
 	float GetLookAtRange_Z()const { return data.lookat.z; }
-	// position‚ÌGet()...x,y,z‚ÍŒÂX‚Éì‚é
+	// positionã®Get()...x,y,zã¯å€‹ã€…ã«ä½œã‚‹
 	float GetPos_X()const { return data.position.x; }
 	float GetPos_Y()const { return data.position.y; }
 	float GetPos_Z()const { return data.position.z; }
-	// rightVec‚ÌGet()...x,y,z‚ÍŒÂX‚Éì‚é
+	// rightVecã®Get()...x,y,zã¯å€‹ã€…ã«ä½œã‚‹
 	float GetRightVector_X()const;
 	float GetRightVector_Y()const;
 	float GetRightVector_Z()const;
-	// upVec‚ÌGet()...x,y,z‚ÍŒÂX‚Éì‚é
+	// upVecã®Get()...x,y,zã¯å€‹ã€…ã«ä½œã‚‹
 	float GetUpVector_X()const;
 	float GetUpVector_Y()const;
 	float GetUpVector_Z()const;
-	// moverange‚ÌGet()
+	// moverangeã®Get()
 	float GetMoveRange()const { return moverange; }
 
-	// ƒvƒƒWƒFƒNƒVƒ‡ƒ“s—ñ‚ÌGet()
+	// ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ã‚·ãƒ§ãƒ³è¡Œåˆ—ã®Get()
 	DirectX::XMMATRIX GetMatProjection()const { return matProjection; }
-	// ƒrƒ…[s—ñ‚ÌGet()
+	// ãƒ“ãƒ¥ãƒ¼è¡Œåˆ—ã®Get()
 	DirectX::XMMATRIX GetMatView()const { return matView; }
-	// ƒrƒ…[ƒvƒƒWƒFƒNƒVƒ‡ƒ“s—ñ‚ÌGet()
+	// ãƒ“ãƒ¥ãƒ¼ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ã‚·ãƒ§ãƒ³è¡Œåˆ—ã®Get()
 	DirectX::XMMATRIX GetMatViewProjection()const { return matView * matProjection; }
-	// ƒrƒ‹ƒ{[ƒhê—ps—ñ‚ÌGet()
+	// ãƒ“ãƒ«ãƒœãƒ¼ãƒ‰å°‚ç”¨è¡Œåˆ—ã®Get()
 	DirectX::XMMATRIX GetMatBillboard()const { return matBillboard; }
 	DirectX::XMMATRIX GetMatYBillboard()const { return matBillboardY; }
 };
