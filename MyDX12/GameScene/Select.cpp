@@ -6,6 +6,7 @@
 #include "../Tool/DebugJISText.h"
 #include "../2D/Sprite.h"
 #include "../Audio/Audio.h"
+#include "../GameObject/UnitManager.h"
 
 XIIlib::Select::Select()
 {
@@ -26,7 +27,7 @@ void XIIlib::Select::Initialize(GameScene* p_game_scene)
 	edge.reset(Sprite::Create(EDGE_TEX, HOMEL_POS));
 	bg_sp.reset(Sprite::Create(BG_TEX, { 0, 0}));
 	stageSelect_sp.reset(Sprite::Create(STAGESELECT_TEX, { 250, 0}));
-
+	UnitManager::GetInstance()->FlatTileState();
 	p_game_scene->GetAudio()->PlayBGM("yankeeBGM.wav");
 }
 

@@ -33,4 +33,7 @@ void XIIlib::SpriteLoader::Load()
 	Sprite::LoadTexture(BG_TEX,            L"Resources/BG.png");
 	Sprite::LoadTexture(STAGESELECT_TEX,   L"Resources/StageSelect.png");
 	Sprite::LoadTexture(BAN_TEX,           L"Resources/banTex.png");
+	Sprite::LoadTexture(STORY0_SP,         L"Resources/.png");
+	Sprite::LoadTexture(STORY1_SP,         L"Resources/.png");
+	Sprite::LoadTexture(STORY2_SP,         L"Resources/.png");
 }
