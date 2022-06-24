@@ -213,7 +213,7 @@ void XIIlib::Menu::EasingMove(int i,EasingState easingState)
 {
 	// countがマックスに到達するまで
 	if (easingCounts[i] > MAX_EASING_COUNT) return;
-	const Math::Vector2 defaultSize = {94.0f,34.0f};
+	const Math::Vector2 defaultSize = buttons[i]->GetDefault();
 	Math::Vector2 size = { 0,0 };
 	float alpha = 0;
 	size.x = Easing::InOutCubic(easingCounts[i], 0, defaultSize.x, MAX_EASING_COUNT);
