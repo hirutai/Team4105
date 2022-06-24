@@ -372,6 +372,9 @@
     <ClCompile Include="GameObject\Curtain.cpp">
       <Filter>GameObject\Common</Filter>
     </ClCompile>
+    <ClCompile Include="GameScene\Story.cpp">
+      <Filter>GameScene\StateScene</Filter>
+	</ClCompile>
     <ClCompile Include="GameObject\Boss.cpp">
       <Filter>GameObject\Unit</Filter>
     </ClCompile>
@@ -629,6 +632,9 @@
     <ClInclude Include="GameObject\Curtain.h">
       <Filter>GameObject\Common</Filter>
     </ClInclude>
+    <ClInclude Include="GameScene\Story.h">
+      <Filter>GameScene\StateScene</Filter>
+	</ClInclude>
     <ClInclude Include="GameObject\Boss.h">
       <Filter>GameObject\Unit</Filter>
     </ClInclude>

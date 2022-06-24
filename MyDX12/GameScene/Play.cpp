@@ -15,7 +15,7 @@
 XIIlib::Play::Play()
 {
 	// Initializeとほぼ同じ
-
+	// うんち
 }
 
 XIIlib::Play::~Play()
