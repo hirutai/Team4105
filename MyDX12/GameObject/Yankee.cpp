@@ -111,8 +111,6 @@ void XIIlib::Yankee::Action()
 	// 未来への栄光のロードを初期化
 	nextPoint = { 0,0 };
 
-	// ノックバック(共通処理)
-	KnockBack();
 	// 範囲に入ってるかのチェック
 	if (AttackAreaExists())
 	{
@@ -164,7 +162,8 @@ void XIIlib::Yankee::Action()
 		AttackAreaDraw();
 	}
 
-
+	// ノックバック(共通処理)
+	KnockBack();
 }
 
 void XIIlib::Yankee::Attack()
