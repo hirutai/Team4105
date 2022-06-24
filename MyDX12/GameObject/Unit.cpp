@@ -208,3 +208,8 @@ void XIIlib::Unit::SetAttackTimer(int countNum)
 	attackTimer = new AttackTimer(countNum);
 	attackTimer->Initialize();
 }
+
+void XIIlib::Unit::ObjectUpdate()
+{
+	object3d->Update();
+}

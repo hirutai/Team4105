@@ -188,6 +188,7 @@
     <ClCompile Include="GameObject\AttackTimer.cpp" />
     <ClCompile Include="GameObject\Bishop.cpp" />
     <ClCompile Include="GameObject\BoardMap.cpp" />
+    <ClCompile Include="GameObject\Boss.cpp" />
     <ClCompile Include="GameObject\Common.cpp" />
     <ClCompile Include="GameObject\Curtain.cpp" />
     <ClCompile Include="GameObject\King.cpp" />
@@ -205,6 +206,7 @@
     <ClCompile Include="GameScene\Play.cpp" />
     <ClCompile Include="GameScene\SceneState.cpp" />
     <ClCompile Include="GameScene\Select.cpp" />
+    <ClCompile Include="GameScene\Story.cpp" />
     <ClCompile Include="GameScene\Title.cpp" />
     <ClCompile Include="ImGui\Docking\imgui.cpp" />
     <ClCompile Include="ImGui\Docking\imgui_demo.cpp" />
@@ -265,6 +267,7 @@
     <ClInclude Include="GameObject\AttackTimer.h" />
     <ClInclude Include="GameObject\Bishop.h" />
     <ClInclude Include="GameObject\BoardMap.h" />
+    <ClInclude Include="GameObject\Boss.h" />
     <ClInclude Include="GameObject\Common.h" />
     <ClInclude Include="GameObject\Curtain.h" />
     <ClInclude Include="GameObject\King.h" />
@@ -282,6 +285,7 @@
     <ClInclude Include="GameScene\Play.h" />
     <ClInclude Include="GameScene\SceneState.h" />
     <ClInclude Include="GameScene\Select.h" />
+    <ClInclude Include="GameScene\Story.h" />
     <ClInclude Include="GameScene\Title.h" />
     <ClInclude Include="ImGui\Docking\imconfig.h" />
     <ClInclude Include="ImGui\Docking\imgui.h" />

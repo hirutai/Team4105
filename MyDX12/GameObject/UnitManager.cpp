@@ -169,6 +169,7 @@ void XIIlib::UnitManager::SetBackVector(const Math::Point2& element, const Math:
 void XIIlib::UnitManager::FlatTileState()
 {
 	map_board->AllFlat();
+	map_board->Update();
 }
 
 void XIIlib::UnitManager::ChangeAttackValidTile(const Math::Point2& element, int type_positioning)
@@ -224,4 +225,14 @@ void XIIlib::UnitManager::AddCountDead()
 void XIIlib::UnitManager::ResetCount()
 {
 	deadCount = 0;
+}
+
+void XIIlib::UnitManager::ObjectUpdate()
+{
+	map_board->Update();
+
+	for (auto unit : units)
+	{
+		unit->ObjectUpdate();
+	}
 }
