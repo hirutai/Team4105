@@ -1,4 +1,4 @@
-#pragma once
+Ôªø#pragma once
 #include <string>
 #include <memory>
 
@@ -79,7 +79,7 @@ private:
 	std::string destoryName;
 	XIIlib::GameScene* game_scene = nullptr;
 
-	// LookatRangeäiî[(x,y,z)
+	// LookatRangeÊ†ºÁ¥ç(x,y,z)
 	float old_lookatrangeX = 0.0f;
 	float old_lookatrangeY = 0.0f;
 	float old_lookatrangeZ = 0.0f;

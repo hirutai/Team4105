@@ -1,8 +1,9 @@
-#pragma once
+ï»¿#pragma once
 #include "../Struct/Point2.h"
 #include <vector>
 #include <string>
 #include"AttackAreaManager.h"
+#include "../Struct/Math.h"
 class Object3D;
 
 namespace XIIlib {
@@ -10,7 +11,7 @@ namespace XIIlib {
 	class AttackTimer;
 	class BillObj;
 
-	// UŒ‚ƒGƒŠƒA
+	// æ”»æ’ƒã‚¨ãƒªã‚¢
 	enum struct AREA : int {
 		NONE =-1,
 		UP,
@@ -29,22 +30,22 @@ namespace XIIlib {
 		ENEMY = 1
 	};
 
-	// ‹î‚ÌŠî’êƒNƒ‰ƒX
+	// é§’ã®åŸºåº•ã‚¯ãƒ©ã‚¹
 	class Unit {
 	protected:
-		unsigned int _cost; // ‹î‚É‚©‚©‚éƒRƒXƒg
+		unsigned int _cost; // é§’ã«ã‹ã‹ã‚‹ã‚³ã‚¹ãƒˆ
 
-		std::string ID; // ƒNƒ‰ƒXƒl[ƒ€
+		std::string ID; // ã‚¯ãƒ©ã‚¹ãƒãƒ¼ãƒ 
 
-		int _hit_point; // ‘Ì—Í
-		int _attack_point; // UŒ‚—Í
-		int _defense_point; // ç”õ—Í
+		int _hit_point; // ä½“åŠ›
+		int _attack_point; // æ”»æ’ƒåŠ›
+		int _defense_point; // å®ˆå‚™åŠ›
 
-		int is_hit = 0;// 0 : ó‚¯‚Ä‚È‚¢A1 : ó‚¯‚Ä‚¢‚é
+		int is_hit = 0;// 0 : å—ã‘ã¦ãªã„ã€1 : å—ã‘ã¦ã„ã‚‹
 		int damage_counter = 0;
 
-		//—”—p
-		//3ˆÈ‰º‚µ‚©“®‚¯‚È‚¢‚Ì—”
+		//ä¹±æ•°ç”¨
+		//3ä»¥ä¸‹ã—ã‹å‹•ã‘ãªã„æ™‚ã®ä¹±æ•°
 		int jMin = 1;
 		int jMax = 3;
 		int tileRand = 1;
@@ -54,25 +55,30 @@ namespace XIIlib {
 		int SwitchRand = 0;
 
 		unsigned int attackInterval = 180;
-		//UŒ‚flag
+		//æ”»æ’ƒflag
 		bool notAttackflag = true;
 		bool isAttack = false;
-		bool is_dead = false;// €–S‚µ‚Ä‚é‚©‚Ç‚¤‚©‚ğŠÇ—
+		bool is_dead = false;// æ­»äº¡ã—ã¦ã‚‹ã‹ã©ã†ã‹ã‚’ç®¡ç†
 
 		Math::Point2 kingPos{0,0};
 		Math::Point2 preElement_stock{0,0};
-		Math::Point2 element_stock;// ƒ}ƒX‚ÌÀ•W(Vector2‚¶‚á‚È‚¢‚æ)
-		std::vector<std::vector<Math::Point2>> attack_area; // ‹î‚ª‚ÂUŒ‚”ÍˆÍ‚Ìî•ñ
+		Math::Point2 element_stock;// ãƒã‚¹ã®åº§æ¨™(Vector2ã˜ã‚ƒãªã„ã‚ˆ)
+		std::vector<std::vector<Math::Point2>> attack_area; // é§’ãŒæŒã¤æ”»æ’ƒç¯„å›²ã®æƒ…å ±
 
 		Audio* audio_ = nullptr;
 
-		_PositionType type = _PositionType::MINE; // “G–¡•û”»•Ê—p
+		_PositionType type = _PositionType::MINE; // æ•µå‘³æ–¹åˆ¤åˆ¥ç”¨
 
 		Object3D* object3d = nullptr;
 		Object3D* daiza = nullptr;
 
-		AttackTimer* attackTimer = nullptr; // UŒ‚ƒ^ƒCƒ}[
+		AttackTimer* attackTimer = nullptr; // æ”»æ’ƒã‚¿ã‚¤ãƒãƒ¼
 		BillObj* attackAreasBillboard = nullptr;
+
+		float movingTimer = 0.0f;
+		bool determinateMoveAction = false;
+		Math::Point2 nextPoint;
+		Math::Vector3 pos;
 	public:
 		Unit() = default;
 		virtual ~Unit(){}
@@ -82,11 +88,11 @@ namespace XIIlib {
 		virtual void Draw();
 		virtual void OriginBillDraw();
 
-		virtual void Move() = 0;							// ˆÚ“®—p
-		virtual void Attack() = 0;							// UŒ‚—p(¡‚Íg‚Á‚Ä‚È‚¢)
+		virtual void Move() = 0;							// ç§»å‹•ç”¨
+		virtual void Attack() = 0;							// æ”»æ’ƒç”¨(ä»Šã¯ä½¿ã£ã¦ãªã„)
 		
-		virtual void Action() = 0;							// s“®
-		virtual bool AttackAreaExists() = 0;                // UŒ‚”ÍˆÍ‚É‚¢‚é‚©
+		virtual void Action() = 0;							// è¡Œå‹•
+		virtual bool AttackAreaExists() = 0;                // æ”»æ’ƒç¯„å›²ã«ã„ã‚‹ã‹
 		virtual void IniState() = 0;
 
 		virtual void CreateAttackArea() = 0;
@@ -96,8 +102,10 @@ namespace XIIlib {
 		virtual bool MoveAreaCheck(Math::Point2 crPos, Math::Point2 vec, int tileNum) = 0;
 
 		bool ThreeCheckArea(Math::Point2 element_stock);
+		// Object3Dã®æ›´æ–°
+		void ObjectUpdate();
 
-	public:// GetŠÖ”ŒQ
+	public:// Geté–¢æ•°ç¾¤
 		int GetPatternElement(int pattern)const { return attack_area[pattern].size(); }
 		int GetTypePositioning()const { return (int)type; }
 		int IsDead()const { return is_dead; }
@@ -105,18 +113,18 @@ namespace XIIlib {
 		Math::Point2 GetElementStock()const { return element_stock; }
 		Math::Point2 GetAttackArea(int pattern, int element)const { return attack_area[pattern][element]; }
 
-	public:// SetŠÖ”ŒQ
+	public:// Seté–¢æ•°ç¾¤
 		void SetTypePositioning(_PositionType changeType);
-		void SetHitDamage(int attackPoint);				// ƒ_ƒ[ƒW‚ğó‚¯‚éŠÖ”
+		void SetHitDamage(int attackPoint);				// ãƒ€ãƒ¡ãƒ¼ã‚¸ã‚’å—ã‘ã‚‹é–¢æ•°
 		void OnDead() { is_dead = true; }
 
 		void SetAttackTimer(int countNum);
 
-	public:// ‹¤’ÊŠÖ”
+	public:// å…±é€šé–¢æ•°
 		void BillObjectDraw();
 
-	protected:// ‹¤’ÊŠÖ”(private)
+	protected:// å…±é€šé–¢æ•°(private)
 		void KnockBack();
-		void SetElementStock(int x, int z);		// ƒ}ƒXÀ•W‚Ìİ’è
+		void SetElementStock(int x, int z);		// ãƒã‚¹åº§æ¨™ã®è¨­å®š
 	};
 }

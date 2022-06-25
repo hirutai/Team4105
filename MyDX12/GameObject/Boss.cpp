@@ -1,4 +1,4 @@
-#include "Yankee.h"
+#include "Boss.h"
 #include "King.h"
 #include "Common.h"
 #include "UnitManager.h"
@@ -6,10 +6,8 @@
 #include "../3D/Object3D.h"
 #include "../Audio/Audio.h"
 #include "../GameObject/AttackTimer.h"
-#include "../Tool/DebugText.h"
-#include "../Tool/Easing.h"
 
-XIIlib::Yankee::Yankee()
+XIIlib::Boss::Boss()
 {
 	// 各ステータスの初期化
 	_cost = 0;
@@ -18,28 +16,28 @@ XIIlib::Yankee::Yankee()
 	_defense_point = 1;
 }
 
-XIIlib::Yankee::~Yankee()
+XIIlib::Boss::~Boss()
 {
 	delete attackTimer;
 	delete object3d;
 }
 
-std::shared_ptr<XIIlib::Yankee> XIIlib::Yankee::Create(int point_x, int point_z)
+std::shared_ptr<XIIlib::Boss> XIIlib::Boss::Create(int point_x, int point_z)
 {
-	std::shared_ptr<Yankee> rook = std::make_shared<Yankee>();
+	std::shared_ptr<Boss> rook = std::make_shared<Boss>();
 	rook.get()->SetElementStock(point_x, point_z);
 	rook.get()->Initialize();
 
 	return std::move(rook);
 }
 
-void XIIlib::Yankee::Initialize()
+void XIIlib::Boss::Initialize()
 {
 	// 特になし
 	_hit_point = 2;
 
 	// クラスネーム取得
-	const type_info& id = typeid(Yankee);
+	const type_info& id = typeid(Boss);
 	std::string path = id.name();
 	ID = Common::SeparateFilePath(path).second;
 	type = _PositionType::ENEMY;
@@ -53,60 +51,23 @@ void XIIlib::Yankee::Initialize()
 	nextPoint = { 0,0 };
 }
 
-void XIIlib::Yankee::Update()
+void XIIlib::Boss::Update()
 {
+
+	// 駒の行動
+	Action();
+
+	// タイマーの更新
+	attackTimer->Timer();
+
 	// 位置座標の更新
 	object3d->position = { Common::ConvertTilePosition(element_stock.a),1.0f, Common::ConvertTilePosition(element_stock.b) };
-
-	if (!determinateMoveAction) {
-		// 駒の行動
-		Action();
-
-		// タイマーの更新
-		attackTimer->Timer();
-
-		pos = object3d->position;
-	}
-	else {
-		const float maxTime = 1.0f;
-		movingTimer += (1.0f / 40.0f);
-		Math::Vector3 nowP = { Common::ConvertTilePosition(element_stock.a),1.0f, Common::ConvertTilePosition(element_stock.b) };
-		Math::Vector3 nextP = { Common::ConvertTilePosition(nextPoint.a),1.0f, Common::ConvertTilePosition(nextPoint.b) };
-		Math::Vector3 v = nextP - nowP;
-
-		bool isVx = false,isVz = false;
-		if (v.x < 0.0f){
-			isVx = true;
-			v.x *= -1.0f;
-		}
-		if (v.z < 0.0f){
-			isVz = true;
-			v.z *= -1.0f;
-		}
-
-		float resultX = Easing::InOutCubic(movingTimer,0.0f,v.x, maxTime);
-		float resultZ = Easing::InOutCubic(movingTimer,0.0f,v.z, maxTime);
-		if (isVx)resultX *= -1.0f;
-		if (isVz)resultZ *= -1.0f;
-
-		object3d->position.x = pos.x + resultX;
-		object3d->position.z = pos.z + resultZ;
-
-		if (movingTimer >= maxTime) {
-			determinateMoveAction = false;
-			element_stock = nextPoint;
-			movingTimer = 0.0f;
-			nextPoint = Math::Point2(0, 0);
-			pos = Math::Vector3();
-		}
-	}
 	object3d->Update();
-
 	// 座標設定
 	attackTimer->SetPosition(object3d->position);
 }
 
-void XIIlib::Yankee::Action()
+void XIIlib::Boss::Action()
 {
 	// 未来への栄光のロードを初期化
 	nextPoint = { 0,0 };
@@ -164,9 +125,10 @@ void XIIlib::Yankee::Action()
 
 	// ノックバック(共通処理)
 	KnockBack();
+
 }
 
-void XIIlib::Yankee::Attack()
+void XIIlib::Boss::Attack()
 {
 	// カウントを減らす
 	attackInterval--;
@@ -177,16 +139,14 @@ void XIIlib::Yankee::Attack()
 		Math::Point2 temp = element_stock;
 
 		// 攻撃
-		nextPoint = preElement_stock;
+		element_stock = preElement_stock;
 		audio_->PlaySE("yankeeVoice.wav");
 		IniState();
-		
-		// 移動ますが決定されました。
-		determinateMoveAction = true;
+		//notAttackflag = false;
 	}
 }
 
-void XIIlib::Yankee::Move()
+void XIIlib::Boss::Move()
 {
 	//攻撃フラグ
 	if (isAttack == true)return;
@@ -194,7 +154,6 @@ void XIIlib::Yankee::Move()
 	if (!attackTimer->SizeZeroFlag())return;
 	//ヤンキーの座標
 	Math::Point2 temp = element_stock;
-	nextPoint = element_stock;
 	notAttackflag = TRUE;
 
 
@@ -208,7 +167,7 @@ void XIIlib::Yankee::Move()
 		temp.b -= 1;
 		if (ThreeCheckArea(temp))return;
 
-		nextPoint.b -= 1;
+		//element_stock.b -= 1;
 		audio_->PlaySE("yankeeVoice.wav");
 	}
 	// 自分とキングの間を1マスづつ調べる
@@ -217,7 +176,7 @@ void XIIlib::Yankee::Move()
 		//下に1進む
 		temp.b += 1;
 		if (ThreeCheckArea(temp))return;
-		nextPoint.b += 1;
+		element_stock.b += 1;
 		audio_->PlaySE("yankeeVoice.wav");
 	}
 	// 自分とキングの間を1マスづつ調べる
@@ -226,7 +185,7 @@ void XIIlib::Yankee::Move()
 		//右に１進む
 		temp.a -= 1;
 		if (ThreeCheckArea(temp))return;
-		nextPoint.a -= 1;
+		element_stock.a -= 1;
 		audio_->PlaySE("yankeeVoice.wav");
 	}
 	else if (dif.a > 0 && dif.b == 0)// 0より大きければKingより右にいる
@@ -234,7 +193,7 @@ void XIIlib::Yankee::Move()
 		//左に１進む
 		temp.a += 1;
 		if (ThreeCheckArea(temp))return;
-		nextPoint.a += 1;
+		element_stock.a += 1;
 		audio_->PlaySE("yankeeVoice.wav");
 	}
 	// 自分とキングの間を1マスづつ調べる
@@ -244,8 +203,8 @@ void XIIlib::Yankee::Move()
 		temp.a -= 1;
 		temp.b -= 1;
 		if (ThreeCheckArea(temp))return;
-		nextPoint.a -= 1;
-		nextPoint.b -= 1;
+		element_stock.a -= 1;
+		element_stock.b -= 1;
 		audio_->PlaySE("yankeeVoice.wav");
 	}
 	// 自分とキングの間を1マスづつ調べる
@@ -255,8 +214,8 @@ void XIIlib::Yankee::Move()
 		temp.a -= 1;
 		temp.b += 1;
 		if (ThreeCheckArea(temp))return;
-		nextPoint.a -= 1;
-		nextPoint.b += 1;
+		element_stock.a -= 1;
+		element_stock.b += 1;
 		audio_->PlaySE("yankeeVoice.wav");
 	}
 	// 自分とキングの間を1マスづつ調べる
@@ -266,8 +225,8 @@ void XIIlib::Yankee::Move()
 		temp.a += 1;
 		temp.b -= 1;
 		if (ThreeCheckArea(temp))return;
-		nextPoint.a += 1;
-		nextPoint.b -= 1;
+		element_stock.a += 1;
+		element_stock.b -= 1;
 		audio_->PlaySE("yankeeVoice.wav");
 	}
 	// 自分とキングの間を1マスづつ調べる
@@ -277,16 +236,13 @@ void XIIlib::Yankee::Move()
 		temp.a += 1;
 		temp.b += 1;
 		if (ThreeCheckArea(temp))return;
-		nextPoint.a += 1;
-		nextPoint.b += 1;
+		element_stock.a += 1;
+		element_stock.b += 1;
 		audio_->PlaySE("yankeeVoice.wav");
 	}
-
-	// 移動ますが決定されました。
-	determinateMoveAction = true;
 }
 
-bool XIIlib::Yankee::AttackAreaExists()
+bool XIIlib::Boss::AttackAreaExists()
 {
 	int element = UnitManager::GetInstance()->GetUnitIDElements("King");
 	if (element != -1)
@@ -308,23 +264,23 @@ bool XIIlib::Yankee::AttackAreaExists()
 	return false;
 }
 
-void XIIlib::Yankee::AttackAreaDraw()
+void XIIlib::Boss::AttackAreaDraw()
 {
 	//左方向に駒があるか
 
 	if (UnitManager::GetInstance()->AllOnUnit(Math::Point2(element_stock.a - 1, element_stock.b)) || element_stock.a - 1 < 0)
 	{
-		
+
 	}
 	//なかったら移動範囲描画
 	else
 	{
 		AttackAreaManager::GetInstance()->SetAttackAreas(Math::Point2(element_stock.a - 1, element_stock.b));
-	}	
+	}
 	//右方向に駒があるか
 	if (UnitManager::GetInstance()->AllOnUnit(Math::Point2(element_stock.a + 1, element_stock.b)) || element_stock.a + 1 > 7)
 	{
-		
+
 	}
 	else
 	{
@@ -333,16 +289,16 @@ void XIIlib::Yankee::AttackAreaDraw()
 	//下方向に駒があるか
 	if (UnitManager::GetInstance()->AllOnUnit(Math::Point2(element_stock.a, element_stock.b - 1)) || element_stock.b - 1 < 0)
 	{
-		
+
 	}
 	else
 	{
-		AttackAreaManager::GetInstance()->SetAttackAreas(Math::Point2(element_stock.a , element_stock.b - 1));
+		AttackAreaManager::GetInstance()->SetAttackAreas(Math::Point2(element_stock.a, element_stock.b - 1));
 	}
 	//上方向に駒があるか
 	if (UnitManager::GetInstance()->AllOnUnit(Math::Point2(element_stock.a, element_stock.b + 1)) || element_stock.b + 1 > 7)
 	{
-		
+
 	}
 	else
 	{
@@ -351,7 +307,7 @@ void XIIlib::Yankee::AttackAreaDraw()
 	//左下方向に駒があるか
 	if (UnitManager::GetInstance()->AllOnUnit(Math::Point2(element_stock.a - 1, element_stock.b - 1)) || element_stock.a - 1 < 0 || element_stock.b - 1 < 0)
 	{
-		
+
 	}
 	else
 	{
@@ -360,7 +316,7 @@ void XIIlib::Yankee::AttackAreaDraw()
 	//右下方向に駒があるか
 	if (UnitManager::GetInstance()->AllOnUnit(Math::Point2(element_stock.a + 1, element_stock.b - 1)) || element_stock.a + 1 > 7 || element_stock.b - 1 < 0)
 	{
-		
+
 	}
 	else
 	{
@@ -369,16 +325,16 @@ void XIIlib::Yankee::AttackAreaDraw()
 	//左上方向に駒があるか
 	if (UnitManager::GetInstance()->AllOnUnit(Math::Point2(element_stock.a - 1, element_stock.b + 1)) || element_stock.a - 1 < 0 || element_stock.b + 1 > 7)
 	{
-		
+
 	}
 	else
 	{
 		AttackAreaManager::GetInstance()->SetAttackAreas(Math::Point2(element_stock.a - 1, element_stock.b + 1));
 	}
 	//右上方向に駒があるか
-	if (UnitManager::GetInstance()->AllOnUnit(Math::Point2(element_stock.a + 1, element_stock.b +1)) || element_stock.a + 1 > 7 || element_stock.b + 1 > 7)
+	if (UnitManager::GetInstance()->AllOnUnit(Math::Point2(element_stock.a + 1, element_stock.b + 1)) || element_stock.a + 1 > 7 || element_stock.b + 1 > 7)
 	{
-	
+
 	}
 	else
 	{
@@ -386,18 +342,18 @@ void XIIlib::Yankee::AttackAreaDraw()
 	}
 }
 
-void XIIlib::Yankee::IniState()
+void XIIlib::Boss::IniState()
 {
 	isAttack = false;
 	attackInterval = 180;
 }
 
-void XIIlib::Yankee::CreateAttackArea()
+void XIIlib::Boss::CreateAttackArea()
 {
 
 }
 
-bool XIIlib::Yankee::MoveAreaCheck(Math::Point2 crPos, Math::Point2 vec, int tileNum)
+bool XIIlib::Boss::MoveAreaCheck(Math::Point2 crPos, Math::Point2 vec, int tileNum)
 {
 	Math::Point2 pos = crPos;
 	for (int i = 0; i < abs(tileNum) - 1; ++i)

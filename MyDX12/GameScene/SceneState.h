@@ -1,13 +1,14 @@
-#pragma once
+ï»¿#pragma once
 #include "../Input/GamePAD_XInput.h"
 #include "../2D/SpriteLoader.h"
+
+class DebugCamera;
 
 namespace XIIlib
 {
 	class GameScene;
 
-
-	// ƒXƒe[ƒWƒiƒ“ƒo[
+	// ã‚¹ãƒ†ãƒ¼ã‚¸ãƒŠãƒ³ãƒãƒ¼
 	enum class StageNumber : int
 	{
 		DEBUG = -1,
@@ -17,37 +18,42 @@ namespace XIIlib
 		HARD,
 	};
 
-	// Šî’êó‘ÔƒNƒ‰ƒX
+	// åŸºåº•çŠ¶æ…‹ã‚¯ãƒ©ã‚¹
 	class SceneState
 	{
-	protected:// ƒƒ“ƒo•Ï”
+	protected:// ãƒ¡ãƒ³ãƒå¤‰æ•°
 		bool trigSpace = false;
 		bool movingScene = false;
 
 	protected:
 		SceneState(){}
 	public:
-		// ƒRƒs[‹Ö~
+		// ã‚³ãƒ”ãƒ¼ç¦æ­¢
 		SceneState(const SceneState&) = delete;
 		SceneState& operator=(const SceneState&) = delete;
 
-		// ‰¼‘zƒfƒXƒgƒ‰ƒNƒ^
+		// ä»®æƒ³ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 		virtual ~SceneState() = default;
 
-	public: // Œp³
-		virtual void Initialize(GameScene* p_game_scene) = 0;// ‰Šú‰»
-		virtual void Update(GameScene* p_game_scene) = 0;//@XV
-		virtual void Draw() = 0;// •`‰æ
-		virtual void DrawTex() = 0;//ƒXƒvƒ‰ƒCƒg•`‰æ
+	public: // ç¶™æ‰¿
+		virtual void Initialize(GameScene* p_game_scene) = 0;// åˆæœŸåŒ–
+		virtual void Update(GameScene* p_game_scene) = 0;//ã€€æ›´æ–°
+		virtual void Draw() = 0;// æç”»
+		virtual void DrawTex() = 0;//ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆæç”»
 		virtual void DrawBackground() = 0;
 		void CommonUpdate(GameScene* p_game_scene);
-	protected: // ‹¤’Êˆ—
+	protected: // å…±é€šå‡¦ç†
 		void CreateUnitsPosition(StageNumber stageNum);
-	public: // SetterŠÖ”
-		void SetGamePad(GamePAD_XInput* gamePad) { this->gamePad_ = gamePad; } // GamePad‚Ìİ’è
-	protected: // Ã“Iƒƒ“ƒo•Ï”
-		static StageNumber stageNum; // ƒXƒe[ƒWƒiƒ“ƒo[
-		// GamePad‚ÌØ‚è•¨•Ï”
+	public: // Setteré–¢æ•°
+		void SetGamePad(GamePAD_XInput* gamePad) { this->gamePad_ = gamePad; } // GamePadã®è¨­å®š
+
+		// ã‚«ãƒ¡ãƒ©ã®è¨­å®š
+		void SetDebugCamera(DebugCamera* debugCamera_) { debugCamera = debugCamera_; }
+	protected: // é™çš„ãƒ¡ãƒ³ãƒå¤‰æ•°
+		static StageNumber stageNum; // ã‚¹ãƒ†ãƒ¼ã‚¸ãƒŠãƒ³ãƒãƒ¼
+		// GamePadã®å€Ÿã‚Šç‰©å¤‰æ•°
 		static GamePAD_XInput* gamePad_;
+
+		DebugCamera* debugCamera = nullptr; // ã‚«ãƒ¡ãƒ©
 	};
 }

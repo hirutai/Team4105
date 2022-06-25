@@ -7,6 +7,7 @@
 #include "../3D/Object3D.h"
 #include "../Audio/Audio.h"
 #include "../3D/BillObj.h"
+#include "../Tool/Easing.h"
 
 XIIlib::King::King()
 {
@@ -62,8 +63,50 @@ void XIIlib::King::Initialize()
 
 void XIIlib::King::Update()
 {
+	// 位置座標の更新
+	object3d->position = { Common::ConvertTilePosition(element_stock.a),2.0f, Common::ConvertTilePosition(element_stock.b) };
+	daiza->position = { Common::ConvertTilePosition(element_stock.a),1.0f, Common::ConvertTilePosition(element_stock.b) };
 	
-	Action();
+	if (!determinateMoveAction) {
+		Action();
+
+		pos = object3d->position;
+	}
+	else {
+		const float maxTime = 1.0f/3.0f;
+		movingTimer += (1.0f / 40.0f);
+		Math::Vector3 nowP = { Common::ConvertTilePosition(element_stock.a),1.0f, Common::ConvertTilePosition(element_stock.b) };
+		Math::Vector3 nextP = { Common::ConvertTilePosition(nextPoint.a),1.0f, Common::ConvertTilePosition(nextPoint.b) };
+		Math::Vector3 v = nextP - nowP;
+
+		bool isVx = false, isVz = false;
+		if (v.x < 0.0f) {
+			isVx = true;
+			v.x *= -1.0f;
+		}
+		if (v.z < 0.0f) {
+			isVz = true;
+			v.z *= -1.0f;
+		}
+
+		float resultX = Easing::InOutCubic(movingTimer, 0.0f, v.x, maxTime);
+		float resultZ = Easing::InOutCubic(movingTimer, 0.0f, v.z, maxTime);
+		if (isVx)resultX *= -1.0f;
+		if (isVz)resultZ *= -1.0f;
+
+		object3d->position.x = pos.x + resultX;
+		object3d->position.z = pos.z + resultZ;
+		daiza->position.x = object3d->position.x;
+		daiza->position.z = object3d->position.z;
+
+		if (movingTimer >= maxTime) {
+			determinateMoveAction = false;
+			element_stock = nextPoint;
+			movingTimer = 0.0f;
+			nextPoint = Math::Point2(0, 0);
+			pos = Math::Vector3();
+		}
+	}
 
 	if (moveCount <= 0) {
 		if (type_attack != AREA::NONE) {
@@ -102,10 +145,6 @@ void XIIlib::King::Update()
 		}
 	}
 
-	// 位置座標の更新
-
-	object3d->position = { Common::ConvertTilePosition(element_stock.a),2.0f, Common::ConvertTilePosition(element_stock.b) };
-	daiza->position = { Common::ConvertTilePosition(element_stock.a),1.0f, Common::ConvertTilePosition(element_stock.b) };
 
 	object3d->Update();
 	daiza->Update();
@@ -143,16 +182,20 @@ void XIIlib::King::Move()
 		next_state += move_vec[0];
 		object3d->rotation.y = 180.0f;
 		if (!UnitManager::GetInstance()->AllOnUnit(next_state)) {
-			element_stock = next_state;
+			nextPoint = next_state;
 			moveCount = moveLag;
+			// 移動ますが決定されました。
+			determinateMoveAction = true;
 		}
 	}
 	else if (KeyInput::GetInstance()->Push(DIK_S)) {
 		next_state += move_vec[1];
 		object3d->rotation.y = 0.0f;
 		if (!UnitManager::GetInstance()->AllOnUnit(next_state)) {
-			element_stock = next_state;
+			nextPoint = next_state;
 			moveCount = moveLag;
+			// 移動ますが決定されました。
+			determinateMoveAction = true;
 		}
 	}
 
@@ -160,20 +203,24 @@ void XIIlib::King::Move()
 		next_state += move_vec[2];
 		object3d->rotation.y = 90.0f;
 		if (!UnitManager::GetInstance()->AllOnUnit(next_state)) {
-			element_stock = next_state;
+			nextPoint = next_state;
 			moveCount = moveLag;
+			// 移動ますが決定されました。
+			determinateMoveAction = true;
 		}
 	}
 	else if (KeyInput::GetInstance()->Push(DIK_D)) {
 		next_state += move_vec[3];
 		object3d->rotation.y = -90.0f;
 		if (!UnitManager::GetInstance()->AllOnUnit(next_state)) {
-			element_stock = next_state;
+			nextPoint = next_state;
 			moveCount = moveLag;
+			// 移動ますが決定されました。
+			determinateMoveAction = true;
 		}
 	}
 
-	element_stock = Common::OffsetTilePosition2(element_stock);
+	nextPoint = Common::OffsetTilePosition2(nextPoint);
 }
 
 void XIIlib::King::Attack()

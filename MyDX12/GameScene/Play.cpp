@@ -1,4 +1,4 @@
-#include "Play.h"
+ï»¿#include "Play.h"
 #include "GameScene.h"
 #include "Menu.h"
 #include "Clear.h"
@@ -10,43 +10,46 @@
 #include "../2D/Sprite.h"
 #include "../Audio/Audio.h"
 #include "../Tool/Easing.h"
+#include "../Camera/DebugCamera.h"
 
 XIIlib::Play::Play()
 {
-	// Initialize‚Æ‚Ù‚Ú“¯‚¶
-
+	// Initializeã¨ã»ã¼åŒã˜
+	// ã†ã‚“ã¡
 }
 
 XIIlib::Play::~Play()
 {
-	// ƒ|ƒCƒ“ƒ^g‚Á‚½‚â‚Â‚Ì–„‘’ê
-	delete operatorGuide; // ‘€ìà–¾
-	delete menuButton; // ƒƒjƒ…[
+	// ãƒã‚¤ãƒ³ã‚¿ä½¿ã£ãŸã‚„ã¤ã®åŸ‹è‘¬å ´
+	delete operatorGuide; // æ“ä½œèª¬æ˜
+	delete menuButton; // ãƒ¡ãƒ‹ãƒ¥ãƒ¼
 	delete spStageBG1;
 }
 
 void XIIlib::Play::Initialize(GameScene* p_game_scene)
 {
+	SetDebugCamera(p_game_scene->GetCamera());
+
 	if (stageNum == StageNumber::DEBUG)
 	{
-		// ‚»‚êˆÈŠO‚Ì”’l‚ª“ü‚Á‚Ä‚¢‚½‚çA‰¼¶¬
+		// ãã‚Œä»¥å¤–ã®æ•°å€¤ãŒå…¥ã£ã¦ã„ãŸã‚‰ã€ä»®ç”Ÿæˆ
 		SceneState::CreateUnitsPosition(StageNumber::DEBUG);
 		spStageBG1 = Sprite::Create(STAGEBG1_TEX, { 0.0f,0.0f });
 		stageNum = StageNumber::NONE;
 	}
 	else if (stageNum == StageNumber::EASY)
 	{
-		// ”wŒi‰æ‘œ¶¬
+		// èƒŒæ™¯ç”»åƒç”Ÿæˆ
 		spStageBG1 = Sprite::Create(STAGEBG1_TEX, { 0.0f,0.0f });
 	}
 	else if (stageNum == StageNumber::NORMAL)
 	{
-		// ”wŒi‰æ‘œ¶¬
+		// èƒŒæ™¯ç”»åƒç”Ÿæˆ
 		spStageBG1 = Sprite::Create(STAGEBG1_TEX, { 0.0f,0.0f });
 	}
 	else if (stageNum == StageNumber::HARD)
 	{
-		// ”wŒi‰æ‘œ¶¬
+		// èƒŒæ™¯ç”»åƒç”Ÿæˆ
 		spStageBG1 = Sprite::Create(STAGEBG1_TEX, { 0.0f,0.0f });
 	}
 	else
@@ -55,94 +58,229 @@ void XIIlib::Play::Initialize(GameScene* p_game_scene)
 	}
 	
 
-	operatorGuide = Sprite::Create(OPERATORGUIDE_TEX, { 1000.0f,600.0f }); // ‘€ìà–¾
-	menuButton = Sprite::Create(MENU_TEX, { 0.0f,10.0f }); // ƒƒjƒ…[
+	operatorGuide = Sprite::Create(OPERATORGUIDE_TEX, { 1000.0f,600.0f }); // æ“ä½œèª¬æ˜
+	menuButton = Sprite::Create(MENU_TEX, { 0.0f,10.0f }); // ãƒ¡ãƒ‹ãƒ¥ãƒ¼
 	p_game_scene->GetAudio()->PlayBGM("yankeeBGM.wav");
 }
 
 void XIIlib::Play::Update(GameScene* p_game_scene)
 {
-	switch (timing)
+	switch (phase)
 	{
-	case XIIlib::Timing::CameraDirecting: // ƒJƒƒ‰‰‰o
-		if (cameraEye.x > finalEye)
+	case XIIlib::Phase::CameraDirecting: // ã‚«ãƒ¡ãƒ©æ¼”å‡º
+		switch (timing)
 		{
-			cameraEye.x -= cameraRotation; // cŒü‚«‚É‚È‚é‚Ü‚Å‰ñ“]
-		}
-		else
-		{
-			cameraEye.x = finalEye; // cŒü‚«‚ÉŒÅ’è
-			timing = XIIlib::Timing::Game; // ƒLƒbƒNƒIƒt‰‰o‚Ö
+		case XIIlib::Timing::ToTheRight: // å³ã‚«ãƒ¡ãƒ©ã¸
+			ToTheRight();
+			break;
+		case XIIlib::Timing::ToTheBack: // å¾Œã‚ã‚«ãƒ¡ãƒ©ã¸
+			ToTheBack();
+			break;
+		case XIIlib::Timing::ToTheLeft: // å·¦ã‚«ãƒ¡ãƒ©ã¸
+			ToTheLeft();
+			break;
+		case XIIlib::Timing::ToTheFront: // å‰ã‚«ãƒ¡ãƒ©ã¸
+			ToTheFront();
+			break;
+		case XIIlib::Timing::ToTheUp: // ä¸Šã‚«ãƒ¡ãƒ©ã¸
+			ToTheUp();
+			break;
 		}
 
-		//Camera::GetInstance()->SetEye(XMFLOAT3(cameraEye.x, 30.0f, VERTICALEYE - cameraEye.x));
+		debugCamera->SetPosition(cameraEye.x, cameraEye.y, cameraEye.z); // è¦–ç‚¹åº§æ¨™ã®è¨­å®š
 
-		//Camera::GetInstance()->SetTarget(XMFLOAT3(cameraEye.x / 4, 0.0f, 0.0f));
+		UnitManager::GetInstance()->ObjectUpdate(); // 3Dã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®æ›´æ–°
 		break;
-	case XIIlib::Timing::Game: // ƒQ[ƒ€
-#pragma region ƒƒjƒ…[ˆ—
-		// ƒƒjƒ…[‰æ–Ê‚ğ“WŠJA•Â‚¶‚é
+	case XIIlib::Phase::Game: // ã‚²ãƒ¼ãƒ 
+#pragma region ãƒ¡ãƒ‹ãƒ¥ãƒ¼å‡¦ç†
+		// ãƒ¡ãƒ‹ãƒ¥ãƒ¼ç”»é¢ã‚’å±•é–‹ã€é–‰ã˜ã‚‹
 		if (KeyInput::GetInstance()->Trigger(DIK_TAB))
 		{
-			p_game_scene->ChangeState(new Menu); // ƒNƒŠƒAƒV[ƒ“‚Ö
+			p_game_scene->ChangeState(new Menu); // ã‚¯ãƒªã‚¢ã‚·ãƒ¼ãƒ³ã¸
 			menuExists = true;
 		}
-		// ƒƒjƒ…[‰æ–Ê‚ğ“WŠJ‚·‚é‚È‚ç‘¦return
+		// ãƒ¡ãƒ‹ãƒ¥ãƒ¼ç”»é¢ã‚’å±•é–‹ã™ã‚‹ãªã‚‰å³return
 		if (menuExists)return;
 #pragma endregion 
 
-#pragma region Game Updateˆ—
-		// XV
+#pragma region Game Updateå‡¦ç†
+		// æ›´æ–°
 		UnitManager::GetInstance()->Update();
-		// ƒV[ƒ“ˆÚ“®
-		if (UnitManager::GetInstance()->GetUnitIDElements("King") >= 0) // ƒvƒŒƒCƒ„‚ª‘¶İ‚µ‚Ä‚¢‚éê‡
+		// ã‚·ãƒ¼ãƒ³ç§»å‹•
+		if (UnitManager::GetInstance()->GetUnitIDElements("King") >= 0) // ãƒ—ãƒ¬ã‚¤ãƒ¤ãŒå­˜åœ¨ã—ã¦ã„ã‚‹å ´åˆ
 		{
-			if (UnitManager::GetInstance()->GetAllUnitCount() - 1 == 0) // “G‚ğ‘S–Å‚³‚¹‚½
+			if (UnitManager::GetInstance()->GetAllUnitCount() - 1 == 0) // æ•µã‚’å…¨æ»…ã•ã›ãŸæ™‚
 			{
 				trigSpace = true;
 			}
 		}
-		else if (UnitManager::GetInstance()->GetUnitIDElements("King") < 0) // ƒvƒŒƒCƒ„‚ª‘¶İ‚µ‚Ä‚¢‚È‚¢ê‡
+		else if (UnitManager::GetInstance()->GetUnitIDElements("King") < 0) // ãƒ—ãƒ¬ã‚¤ãƒ¤ãŒå­˜åœ¨ã—ã¦ã„ãªã„å ´åˆ
 		{
 			trigSpace = true;
 		}
 
 		if (trigSpace) {
 			if (p_game_scene->DrawScreen(false)) {
-				if (UnitManager::GetInstance()->GetUnitIDElements("King") >= 0) // ƒvƒŒƒCƒ„‚ª‘¶İ‚µ‚Ä‚¢‚éê‡
+				if (UnitManager::GetInstance()->GetUnitIDElements("King") >= 0) // ãƒ—ãƒ¬ã‚¤ãƒ¤ãŒå­˜åœ¨ã—ã¦ã„ã‚‹å ´åˆ
 				{
-					if (UnitManager::GetInstance()->GetAllUnitCount() - 1 == 0) // “G‚ğ‘S–Å‚³‚¹‚½
+					if (UnitManager::GetInstance()->GetAllUnitCount() - 1 == 0) // æ•µã‚’å…¨æ»…ã•ã›ãŸæ™‚
 					{
-						p_game_scene->ChangeState(new Clear); // ƒNƒŠƒAƒV[ƒ“‚Ö
+						p_game_scene->ChangeState(new Clear); // ã‚¯ãƒªã‚¢ã‚·ãƒ¼ãƒ³ã¸
 					}
 				}
-				else if (UnitManager::GetInstance()->GetUnitIDElements("King") < 0) // ƒvƒŒƒCƒ„‚ª‘¶İ‚µ‚Ä‚¢‚È‚¢ê‡
+				else if (UnitManager::GetInstance()->GetUnitIDElements("King") < 0) // ãƒ—ãƒ¬ã‚¤ãƒ¤ãŒå­˜åœ¨ã—ã¦ã„ãªã„å ´åˆ
 				{
-					p_game_scene->ChangeState(new Over); // ƒI[ƒo[ƒV[ƒ“‚Ö
+					p_game_scene->ChangeState(new Over); // ã‚ªãƒ¼ãƒãƒ¼ã‚·ãƒ¼ãƒ³ã¸
 				}
 			}
 		}
 #pragma endregion
 		break;
 	}
+
+	debugCamera->_Update(); // æ›´æ–°
 }
 
 void XIIlib::Play::Draw()
 {
 	AttackAreaManager::GetInstance()->Draw();
-	// 3D•`‰æ
+	// 3Dæç”»
 	UnitManager::GetInstance()->Draw();
 }
 
 void XIIlib::Play::DrawTex()
 {
-	// ƒXƒvƒ‰ƒCƒg•`‰æ
+	// ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆæç”»
 	operatorGuide->Draw();
 	menuButton->Draw();
 }
 
 void XIIlib::Play::DrawBackground()
 {
-	// ”wŒiƒXƒvƒ‰ƒCƒg•`‰æ
+	// èƒŒæ™¯ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆæç”»
 	spStageBG1->Draw();
+}
+
+void XIIlib::Play::ToTheRight()
+{
+	if (cameraEye.x < rightEye.x) // å³å´ã‚«ãƒ¡ãƒ©ã¾ã§
+	{
+		cameraEye.x += moveValue;
+	}
+	else
+	{
+		cameraEye.x = rightEye.x;
+	}
+
+	if (cameraEye.z < rightEye.z) // å³å´ã‚«ãƒ¡ãƒ©ã¾ã§
+	{
+		cameraEye.z += moveValue;
+	}
+	else
+	{
+		cameraEye.z = rightEye.z;
+	}
+
+	if (cameraEye.x == rightEye.x && cameraEye.z == rightEye.z) // å³å´ã‚«ãƒ¡ãƒ©ã«é”ã—ãŸã‚‰
+	{
+		timing = XIIlib::Timing::ToTheBack; // å¾Œã‚å´ã‚«ãƒ¡ãƒ©ã¸
+	}
+}
+
+void XIIlib::Play::ToTheBack()
+{
+	if (cameraEye.x > backEye.x) // å¾Œã‚å´ã‚«ãƒ¡ãƒ©ã¾ã§
+	{
+		cameraEye.x -= moveValue;
+	}
+	else
+	{
+		cameraEye.x = backEye.x;
+	}
+
+	if (cameraEye.z < backEye.z) // å¾Œã‚å´ã‚«ãƒ¡ãƒ©ã¾ã§
+	{
+
+		cameraEye.z += moveValue;
+	}
+	else
+	{
+		cameraEye.z = backEye.z;
+	}
+
+	if (cameraEye.x == backEye.x && cameraEye.z == backEye.z) // å¾Œã‚å´ã‚«ãƒ¡ãƒ©é”ã—ãŸã‚‰
+	{
+		timing = XIIlib::Timing::ToTheLeft; // å·¦ã¸
+	}
+}
+
+void XIIlib::Play::ToTheLeft()
+{
+	if (cameraEye.x > leftEye.x) // å·¦å´ã‚«ãƒ¡ãƒ©ã¾ã§
+	{
+		cameraEye.x -= moveValue; // ç§»å‹•
+	}
+	else
+	{
+		cameraEye.x = leftEye.x;
+	}
+
+	if (cameraEye.z > leftEye.z) // å·¦å´ã‚«ãƒ¡ãƒ©ã¾ã§
+	{
+
+		cameraEye.z -= moveValue; // ç§»å‹•
+	}
+	else
+	{
+		cameraEye.z = leftEye.z;
+	}
+
+	if (cameraEye.x == leftEye.x && cameraEye.z == leftEye.z) // å·¦å´ã‚«ãƒ¡ãƒ©ã«é”ã—ãŸã‚‰
+	{
+		timing = XIIlib::Timing::ToTheFront; // å‰ã¸
+	}
+}
+
+void XIIlib::Play::ToTheFront()
+{
+	if (cameraEye.x < frontEye.x) // å‰å´ã‚«ãƒ¡ãƒ©ã¾ã§
+	{
+		cameraEye.x += moveValue; // ç§»å‹•
+	}
+	else
+	{
+		cameraEye.x = frontEye.x;
+	}
+
+	if (cameraEye.z > frontEye.z) // å‰å´ã‚«ãƒ¡ãƒ©ã¾ã§
+	{
+
+		cameraEye.z -= moveValue; // ç§»å‹•
+	}
+	else
+	{
+		cameraEye.z = frontEye.z;
+	}
+
+	if (cameraEye.x == frontEye.x && cameraEye.z == frontEye.z) // å‰å´ã‚«ãƒ¡ãƒ©ã«é”ã—ãŸã‚‰
+	{
+		timing = XIIlib::Timing::ToTheUp; // ä¸Šã‚«ãƒ¡ãƒ©ã¸
+	}
+}
+
+void XIIlib::Play::ToTheUp()
+{
+	if (cameraEye.y < upperEye.y) // ä¸Šã‚«ãƒ¡ãƒ©ã¾ã§
+	{
+		cameraEye.y += moveValue;
+	}
+	else
+	{
+		cameraEye.y = upperEye.y;
+	}
+
+	if (cameraEye.y == upperEye.y) // ä¸Šå´ã‚«ãƒ¡ãƒ©ã«é”ã—ãŸã‚‰
+	{
+		phase = XIIlib::Phase::Game; // ã‚²ãƒ¼ãƒ ã¸
+	}
 }

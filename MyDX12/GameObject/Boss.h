@@ -1,19 +1,21 @@
 #pragma once
 #include "Unit.h"
 #include <memory>
-#include "../Struct/Math.h"
 
 namespace XIIlib {
 
-	class Yankee : public Unit {
+	class Boss : public Unit {
 	private:
 		Math::Point2 point_attack;
+		float movingTimer = 0.0f;
+		bool determinateMoveAction = false;
+		Math::Point2 nextPoint;
 
 	public:
-		Yankee();
-		~Yankee();
+		Boss();
+		~Boss();
 		// ê∂ê¨ä÷êî
-		static std::shared_ptr<Yankee> Create(int point_x, int point_z);
+		static std::shared_ptr<Boss> Create(int point_x, int point_z);
 
 		void Initialize()override;
 		void Update()override;

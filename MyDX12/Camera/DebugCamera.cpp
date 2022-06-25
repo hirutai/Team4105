@@ -76,7 +76,7 @@ void DebugCamera::_Update()
 	target.z = data.lookat.z;
 
 	// ã•ûŒüƒxƒNƒgƒ‹
-	up = { 0.0f, 0.0f, 1.0f };
+	up = { 0.0f, 1.0f, 0.0f };
 
 	XMFLOAT3 eyes =    Vector3fromXMFLOAT3(eye);
 	XMFLOAT3 targets = Vector3fromXMFLOAT3(target);
