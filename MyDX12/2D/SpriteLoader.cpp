@@ -24,7 +24,7 @@ void XIIlib::SpriteLoader::Load()
 	Sprite::LoadTexture(MENU_TEX,          L"Resources/tabkey.png");
 	Sprite::LoadTexture(CURSOR_TEX,        L"Resources/cursor.png");
 	Sprite::LoadTexture(BUTTON_PLAY_TEX,   L"Resources/test.png");
-	Sprite::LoadTexture(BUTTON_SELECT_TEX, L"Resources/test.png");
+	Sprite::LoadTexture(BUTTON_SELECT_TEX, L"Resources/sute.png");
 	Sprite::LoadTexture(BUTTON_TITLE_TEX,  L"Resources/taitleni.png");
 	Sprite::LoadTexture(BUTTON_PLAYER_TEX, L"Resources/test.png");
 	Sprite::LoadTexture(BUTTON_ENEMY_TEX,  L"Resources/test.png");
