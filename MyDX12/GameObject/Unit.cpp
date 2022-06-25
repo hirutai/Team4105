@@ -64,133 +64,27 @@ void XIIlib::Unit::KnockBack()
 
 	// ノックバック
 	const int countLoop = 2;
+	Math::Point2 myTemp = element_stock;
+
 	for (int i = 0; i < countLoop; i++) {
 		Math::Point2 movePoint = backVector / 2.0f;
-		if (Common::GetExceptionPoint(element_stock.a + movePoint.a) || Common::GetExceptionPoint(element_stock.b + movePoint.b)) {
-			movePoint *= 0;
-		}
-		element_stock += movePoint;
-	}
-	Math::Point2 dif = kingPos - element_stock;
-	Math::Point2 temp = kingPos;
-	// ノックバック時に間に他の駒がいる場合、その間の駒の位置に止まる
-	// 縦にノックバック
-	if (dif.a == 0)
-	{
-		// 0より小さければKingより上にいる
-		if (dif.b < 0)
-		{
-			// 自分とキングの間を1マスづつ調べる
-			for (int i = 0; i < abs(dif.b) - 1; ++i)
-			{
-				temp.b++;
-				if (UnitManager::GetInstance()->AllOnUnit(temp))
-				{
-					element_stock = temp;
-				}
-			}
-		}
-		else // 0より大きければKingより下にいる
-		{
-			// 自分とキングの間を1マスづつ調べる
-			for (int i = 0; i < abs(dif.b) - 1; ++i)
-			{
-				temp.b--;
-				if (UnitManager::GetInstance()->AllOnUnit(temp))
-				{
-					element_stock = temp;
-				}
-			}
-		}
-	}
-	else if (dif.b == 0) // 横にノックバック
-	{
-		// 0より小さければKingより右
-		if (dif.a < 0)
-		{
-			// 自分とキングの間を1マスづつ調べる
-			for (int i = 0; i < abs(dif.a) - 1; ++i)
-			{
-				temp.a++;
-				if (UnitManager::GetInstance()->AllOnUnit(temp))
-				{
-					element_stock = temp;
-				}
-			}
-		}
-		else// 0より大きければKingより左
-		{
-			// 自分とキングの間を1マスづつ調べる
-			for (int i = 0; i < abs(dif.a) - 1; ++i)
-			{
-				temp.a--;
-				if (UnitManager::GetInstance()->AllOnUnit(temp))
-				{
-					element_stock = temp;
-				}
-			}
-		}
-	}
-	else	// 斜めにノックバック
-	{
-		// 左上にノックバック
-		if (dif.a > 0 && dif.b < 0)
-		{
-			// 自分とキングの間を1マスづつ調べる
-			for (int i = 0; i < abs(dif.a) - 1; ++i)
-			{
-				temp.a--;
-				temp.b++;
-				if (UnitManager::GetInstance()->AllOnUnit(temp))
-				{
-					element_stock = temp;
 
-				}
-			}
+		// 移動先に駒があるのかどうか?
+		if(UnitManager::GetInstance()->AllOnUnit(myTemp + movePoint)) {
+			myTemp += movePoint;
+			break;
 		}
-		else if (dif.a < 0 && dif.b < 0)	// 右上にノックバック
-		{
-			// 自分とキングの間を1マスづつ調べる
-			for (int i = 0; i < abs(dif.a) - 1; ++i)
-			{
-				temp.a++;
-				temp.b++;
-				if (UnitManager::GetInstance()->AllOnUnit(temp))
-				{
-					element_stock = temp;
-					break;
-				}
-			}
+		// 例外かどうか
+		if (Common::GetExceptionPoint(myTemp.a + movePoint.a) || Common::GetExceptionPoint(myTemp.b + movePoint.b)) {
+			movePoint *= 0;// 一マス分の移動量を0にする
 		}
-		else if (dif.a > 0 && dif.b > 0)	// 左下にノックバック
-		{
-			// 自分とキングの間を1マスづつ調べる
-			for (int i = 0; i < abs(dif.a) - 1; ++i)
-			{
-				temp.a--;
-				temp.b--;
-				if (UnitManager::GetInstance()->AllOnUnit(temp))
-				{
-					element_stock = temp;
-					break;
-				}
-			}
-		}
-		else if (dif.a < 0 && dif.b > 0)	// 右下にノックバック
-		{
-			// 自分とキングの間を1マスづつ調べる
-			for (int i = 0; i < abs(dif.a) - 1; ++i)
-			{
-				temp.a++;
-				temp.b--;
-				if (UnitManager::GetInstance()->AllOnUnit(temp))
-				{
-					element_stock = temp;
-					break;
-				}
-			}
-		}
+
+		myTemp += movePoint;
 	}
+	nextPoint = myTemp;
+
+	// 移動ますが決定されました。
+	determinateMoveAction = true;
 }
 
 void XIIlib::Unit::SetElementStock(int x, int z)
