@@ -1,15 +1,17 @@
 #pragma once
 #include "Unit.h"
 #include <memory>
+#include "../Struct/Math.h"
 
 namespace XIIlib {
 
 	class Boss : public Unit {
 	private:
 		Math::Point2 point_attack;
-		float movingTimer = 0.0f;
-		bool determinateMoveAction = false;
-		Math::Point2 nextPoint;
+		AREA type_attack = AREA::NONE;
+		const int defaultHp = 6;
+		BillObj* hpBar = nullptr; // HPバーのオブジェクト
+		BillObj* hpEdge = nullptr; // HPの縁のオブジェクト
 
 	public:
 		Boss();

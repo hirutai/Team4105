@@ -6,12 +6,14 @@
 #include "../3D/Object3D.h"
 #include "../Audio/Audio.h"
 #include "../GameObject/AttackTimer.h"
+#include "../Tool/DebugText.h"
+#include "../Tool/Easing.h"
 
 XIIlib::Boss::Boss()
 {
 	// 各ステータスの初期化
 	_cost = 0;
-	_hit_point = 2;
+	_hit_point = defaultHp;
 	_attack_point = 2;
 	_defense_point = 1;
 }
@@ -34,7 +36,7 @@ std::shared_ptr<XIIlib::Boss> XIIlib::Boss::Create(int point_x, int point_z)
 void XIIlib::Boss::Initialize()
 {
 	// 特になし
-	_hit_point = 2;
+	_hit_point = defaultHp;
 
 	// クラスネーム取得
 	const type_info& id = typeid(Boss);
@@ -46,23 +48,60 @@ void XIIlib::Boss::Initialize()
 	// Audioの初期化
 	audio_ = UnitManager::GetInstance()->GetAudio();
 
-	SetAttackTimer(5);
+	SetAttackTimer(2);
 
 	nextPoint = { 0,0 };
 }
 
 void XIIlib::Boss::Update()
 {
-
-	// 駒の行動
-	Action();
-
-	// タイマーの更新
-	attackTimer->Timer();
-
 	// 位置座標の更新
 	object3d->position = { Common::ConvertTilePosition(element_stock.a),1.0f, Common::ConvertTilePosition(element_stock.b) };
+
+	if (!determinateMoveAction) {
+		// 駒の行動
+		Action();
+
+		// タイマーの更新
+		attackTimer->Timer();
+
+		pos = object3d->position;
+	}
+	else {
+		const float maxTime = 1.0f;
+		movingTimer += (1.0f / 40.0f);
+		Math::Vector3 nowP = { Common::ConvertTilePosition(element_stock.a),1.0f, Common::ConvertTilePosition(element_stock.b) };
+		Math::Vector3 nextP = { Common::ConvertTilePosition(nextPoint.a),1.0f, Common::ConvertTilePosition(nextPoint.b) };
+		Math::Vector3 v = nextP - nowP;
+
+		bool isVx = false, isVz = false;
+		if (v.x < 0.0f) {
+			isVx = true;
+			v.x *= -1.0f;
+		}
+		if (v.z < 0.0f) {
+			isVz = true;
+			v.z *= -1.0f;
+		}
+
+		float resultX = Easing::InOutCubic(movingTimer, 0.0f, v.x, maxTime);
+		float resultZ = Easing::InOutCubic(movingTimer, 0.0f, v.z, maxTime);
+		if (isVx)resultX *= -1.0f;
+		if (isVz)resultZ *= -1.0f;
+
+		object3d->position.x = pos.x + resultX;
+		object3d->position.z = pos.z + resultZ;
+
+		if (movingTimer >= maxTime) {
+			determinateMoveAction = false;
+			element_stock = nextPoint;
+			movingTimer = 0.0f;
+			nextPoint = Math::Point2(0, 0);
+			pos = Math::Vector3();
+		}
+	}
 	object3d->Update();
+
 	// 座標設定
 	attackTimer->SetPosition(object3d->position);
 }
@@ -115,6 +154,20 @@ void XIIlib::Boss::Action()
 		//攻撃マスの色を変える
 		UnitManager::GetInstance()->ChangeAttackValidTile(point_attack, (int)type);
 		Attack();
+		if (type_attack != AREA::NONE) {
+			std::vector<Math::Point2> container = attack_area[(int)type_attack];
+			int add_element = 0;
+			Math::Vector2 at[3];
+			for (int i = 0; i < 3; i++) {
+				container[i] += element_stock;
+				if ((container[i].a < 8 && container[i].a >= 0) && (container[i].b < 8 && container[i].b >= 0)) {
+					audio_->PlaySE("swing.wav");
+					UnitManager::GetInstance()->ChangeAttackValidTile(container[i], (int)type);
+					Math::Point2 vec_point = container[i] - element_stock;
+					UnitManager::GetInstance()->SetBackVector(container[i], vec_point * 2);
+				}
+			}
+		}
 	}
 	else
 	{
@@ -123,26 +176,88 @@ void XIIlib::Boss::Action()
 		AttackAreaDraw();
 	}
 
-	// ノックバック(共通処理)
-	KnockBack();
-
+	// ノックバック
+	// 攻撃当たっていなければそく返す
+	if (UnitManager::GetInstance()->IsAttackValid(element_stock, (int)_PositionType::MINE))
+	{
+		_hit_point--;
+	}
 }
 
 void XIIlib::Boss::Attack()
 {
-	// カウントを減らす
-	attackInterval--;
 	//色を変える
 	if (attackTimer->SizeZeroFlag())
 	{
 		Math::Point2 dif = preElement_stock - element_stock;
 		Math::Point2 temp = element_stock;
 
+		//Math::Point2 tmpAttackArea;
+
+		/*if (KeyInput::GetInstance()->Push(DIK_UP)) {
+			type_attack = AREA::UP;
+			tmpAttackArea = attack_area[(int)type_attack][1];
+			object3d->rotation.y = 180.0f;
+			attackAreasBillboard->SetRotation(0, 0, 0);
+			attackAreasBillboard->SetPosition(
+				Common::ConvertTilePosition(element_stock.a + tmpAttackArea.a),
+				-1.0f, Common::ConvertTilePosition(element_stock.b + tmpAttackArea.b)
+			);
+		}
+		else if (KeyInput::GetInstance()->Push(DIK_LEFT)) {
+			type_attack = AREA::LEFT;
+			tmpAttackArea = attack_area[(int)type_attack][1];
+			object3d->rotation.y = 90.0f;
+			attackAreasBillboard->SetRotation(0, -90, 0);
+			attackAreasBillboard->SetPosition(
+				Common::ConvertTilePosition(element_stock.a + tmpAttackArea.a),
+				-1.0f, Common::ConvertTilePosition(element_stock.b + tmpAttackArea.b)
+			);
+		}
+		else if (KeyInput::GetInstance()->Push(DIK_DOWN)) {
+			type_attack = AREA::DOWN;
+			tmpAttackArea = attack_area[(int)type_attack][1];
+			object3d->rotation.y = 0.0f;
+			attackAreasBillboard->SetRotation(0, 180, 0);
+			attackAreasBillboard->SetPosition(
+				Common::ConvertTilePosition(element_stock.a + tmpAttackArea.a),
+				-1.0f, Common::ConvertTilePosition(element_stock.b + tmpAttackArea.b)
+			);
+		}
+		else if (KeyInput::GetInstance()->Push(DIK_RIGHT)) {
+			type_attack = AREA::RIGHT;
+			tmpAttackArea = attack_area[(int)type_attack][1];
+			object3d->rotation.y = -90.0f;
+			attackAreasBillboard->SetRotation(0, 90, 0);
+			attackAreasBillboard->SetPosition(
+				Common::ConvertTilePosition(element_stock.a + tmpAttackArea.a),
+				-1.0f, Common::ConvertTilePosition(element_stock.b + tmpAttackArea.b)
+			);
+		}
+		else {
+			type_attack = AREA::NONE;
+			attackAreasBillboard->SetPosition(
+				object3d->position.x,
+				-1.0f,
+				object3d->position.z
+			);
+		}*/
+
+		/*type_attack = AREA::DOWN;
+		tmpAttackArea = attack_area[(int)type_attack][1];
+		object3d->rotation.y = 0.0f;
+		attackAreasBillboard->SetRotation(0, 180, 0);
+		attackAreasBillboard->SetPosition(
+			Common::ConvertTilePosition(element_stock.a + tmpAttackArea.a),
+			-1.0f, Common::ConvertTilePosition(element_stock.b + tmpAttackArea.b)
+		);*/
 		// 攻撃
-		element_stock = preElement_stock;
+		nextPoint = preElement_stock;
 		audio_->PlaySE("yankeeVoice.wav");
 		IniState();
-		//notAttackflag = false;
+
+		// 移動ますが決定されました。
+		determinateMoveAction = true;
 	}
 }
 
@@ -154,6 +269,7 @@ void XIIlib::Boss::Move()
 	if (!attackTimer->SizeZeroFlag())return;
 	//ヤンキーの座標
 	Math::Point2 temp = element_stock;
+	nextPoint = element_stock;
 	notAttackflag = TRUE;
 
 
@@ -167,7 +283,7 @@ void XIIlib::Boss::Move()
 		temp.b -= 1;
 		if (ThreeCheckArea(temp))return;
 
-		//element_stock.b -= 1;
+		nextPoint.b -= 1;
 		audio_->PlaySE("yankeeVoice.wav");
 	}
 	// 自分とキングの間を1マスづつ調べる
@@ -176,7 +292,7 @@ void XIIlib::Boss::Move()
 		//下に1進む
 		temp.b += 1;
 		if (ThreeCheckArea(temp))return;
-		element_stock.b += 1;
+		nextPoint.b += 1;
 		audio_->PlaySE("yankeeVoice.wav");
 	}
 	// 自分とキングの間を1マスづつ調べる
@@ -185,7 +301,7 @@ void XIIlib::Boss::Move()
 		//右に１進む
 		temp.a -= 1;
 		if (ThreeCheckArea(temp))return;
-		element_stock.a -= 1;
+		nextPoint.a -= 1;
 		audio_->PlaySE("yankeeVoice.wav");
 	}
 	else if (dif.a > 0 && dif.b == 0)// 0より大きければKingより右にいる
@@ -193,7 +309,7 @@ void XIIlib::Boss::Move()
 		//左に１進む
 		temp.a += 1;
 		if (ThreeCheckArea(temp))return;
-		element_stock.a += 1;
+		nextPoint.a += 1;
 		audio_->PlaySE("yankeeVoice.wav");
 	}
 	// 自分とキングの間を1マスづつ調べる
@@ -203,8 +319,8 @@ void XIIlib::Boss::Move()
 		temp.a -= 1;
 		temp.b -= 1;
 		if (ThreeCheckArea(temp))return;
-		element_stock.a -= 1;
-		element_stock.b -= 1;
+		nextPoint.a -= 1;
+		nextPoint.b -= 1;
 		audio_->PlaySE("yankeeVoice.wav");
 	}
 	// 自分とキングの間を1マスづつ調べる
@@ -214,8 +330,8 @@ void XIIlib::Boss::Move()
 		temp.a -= 1;
 		temp.b += 1;
 		if (ThreeCheckArea(temp))return;
-		element_stock.a -= 1;
-		element_stock.b += 1;
+		nextPoint.a -= 1;
+		nextPoint.b += 1;
 		audio_->PlaySE("yankeeVoice.wav");
 	}
 	// 自分とキングの間を1マスづつ調べる
@@ -225,8 +341,8 @@ void XIIlib::Boss::Move()
 		temp.a += 1;
 		temp.b -= 1;
 		if (ThreeCheckArea(temp))return;
-		element_stock.a += 1;
-		element_stock.b -= 1;
+		nextPoint.a += 1;
+		nextPoint.b -= 1;
 		audio_->PlaySE("yankeeVoice.wav");
 	}
 	// 自分とキングの間を1マスづつ調べる
@@ -236,10 +352,13 @@ void XIIlib::Boss::Move()
 		temp.a += 1;
 		temp.b += 1;
 		if (ThreeCheckArea(temp))return;
-		element_stock.a += 1;
-		element_stock.b += 1;
+		nextPoint.a += 1;
+		nextPoint.b += 1;
 		audio_->PlaySE("yankeeVoice.wav");
 	}
+
+	// 移動ますが決定されました。
+	determinateMoveAction = true;
 }
 
 bool XIIlib::Boss::AttackAreaExists()
@@ -345,7 +464,6 @@ void XIIlib::Boss::AttackAreaDraw()
 void XIIlib::Boss::IniState()
 {
 	isAttack = false;
-	attackInterval = 180;
 }
 
 void XIIlib::Boss::CreateAttackArea()
