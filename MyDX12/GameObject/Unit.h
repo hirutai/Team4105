@@ -103,7 +103,7 @@ namespace XIIlib {
 
 		bool ThreeCheckArea(Math::Point2 element_stock);
 		// Object3Dの更新
-		void ObjectUpdate();
+		virtual void ObjectUpdate();
 
 	public:// Get関数群
 		int GetPatternElement(int pattern)const { return attack_area[pattern].size(); }

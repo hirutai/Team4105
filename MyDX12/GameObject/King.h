@@ -34,5 +34,7 @@ namespace XIIlib{
 
 		void CreateAttackArea()override;
 		bool MoveAreaCheck(Math::Point2 crPos, Math::Point2 vec, int tileNum)override;
+		// 3Dオブジェクトの更新
+		void ObjectUpdate()override;
 	};
 }
