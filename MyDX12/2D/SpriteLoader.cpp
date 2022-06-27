@@ -23,11 +23,11 @@ void XIIlib::SpriteLoader::Load()
 	Sprite::LoadTexture(OPERATORGUIDE_TEX, L"Resources/explanation.png");
 	Sprite::LoadTexture(MENU_TEX,          L"Resources/tabkey.png");
 	Sprite::LoadTexture(CURSOR_TEX,        L"Resources/cursor.png");
-	Sprite::LoadTexture(BUTTON_PLAY_TEX,   L"Resources/modoru.png");
+	Sprite::LoadTexture(BUTTON_PLAY_TEX,   L"Resources/test.png");
 	Sprite::LoadTexture(BUTTON_SELECT_TEX, L"Resources/sute.png");
 	Sprite::LoadTexture(BUTTON_TITLE_TEX,  L"Resources/taitleni.png");
-	Sprite::LoadTexture(BUTTON_PLAYER_TEX, L"Resources/sousa.png");
-	Sprite::LoadTexture(BUTTON_ENEMY_TEX,  L"Resources/enemyPic.png");
+	Sprite::LoadTexture(BUTTON_PLAYER_TEX, L"Resources/test.png");
+	Sprite::LoadTexture(BUTTON_ENEMY_TEX,  L"Resources/test.png");
 	Sprite::LoadTexture(PLAYERGUIDES_TEX,  L"Resources/Menu.png");
 	Sprite::LoadTexture(ENEMYGUIDES_TEX,   L"Resources/Menu.png");
 	Sprite::LoadTexture(BG_TEX,            L"Resources/BG.png");
