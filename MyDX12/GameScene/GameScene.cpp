@@ -72,6 +72,11 @@ void XIIlib::GameScene::Initialize()
 			curtain[j + (i * s_x)] = Curtain::Create(BAN_TEX, (float)(j * tex_size) + (float)(tex_size / 2.0f), (float)(i * tex_size) + (float)(tex_size / 2.0f));
 		}
 	}
+
+	functions.push_back(&XIIlib::GameScene::OpenedCurtain);
+	functions.push_back(&XIIlib::GameScene::ClosedCurtain);
+	functions.push_back(&XIIlib::GameScene::WhiteOut);
+	functions.push_back(&XIIlib::GameScene::BlackOut);
 	
 	// シーンの初期化
 	state->Initialize(this);
@@ -123,16 +128,10 @@ void XIIlib::GameScene::DrawBackground()
 	state->DrawBackground();
 }
 
-bool XIIlib::GameScene::DrawScreen(bool on_curtain)
+bool XIIlib::GameScene::DrawScreen(const TransitionType& tType)
 {
-	// クローズ
-	if (!on_curtain) {
-		return ClosedCurtain();
-	}
-	// オープン
-	else {
-		return OpenedCurtain();
-	}
+	// 要素内の関数を実行
+	return (this->*functions[static_cast<int>(tType)])();
 }
 
 bool XIIlib::GameScene::OpenedCurtain()
@@ -209,6 +208,17 @@ bool XIIlib::GameScene::ClosedCurtain()
 		if (spr->GetState() == OPEN || spr->GetState() == ACTIVE)return false;
 	}
 
+	return true;
+}
+
+bool XIIlib::GameScene::WhiteOut()
+{
+	// アルファ値がMAX(1.0f)になっていればtrueを返す!!
+	return true;
+}
+
+bool XIIlib::GameScene::BlackOut()
+{
 	return true;
 }
 

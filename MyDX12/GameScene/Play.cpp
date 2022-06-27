@@ -123,7 +123,7 @@ void XIIlib::Play::Update(GameScene* p_game_scene)
 		}
 
 		if (trigSpace) {
-			if (p_game_scene->DrawScreen(false)) {
+			if (p_game_scene->DrawScreen(TransitionType::CLOSE)) {
 				if (UnitManager::GetInstance()->GetUnitIDElements("King") >= 0) // プレイヤが存在している場合
 				{
 					if (UnitManager::GetInstance()->GetAllUnitCount() - 1 == 0) // 敵を全滅させた時
