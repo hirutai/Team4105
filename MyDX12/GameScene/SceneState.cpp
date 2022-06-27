@@ -22,7 +22,7 @@ void XIIlib::SceneState::CommonUpdate(GameScene* p_game_scene)
 	}
 	else {
 		// ƒV[ƒ“‚Ì‘JˆÚ‚ªŠ®—¹‚µ‚Ä‚¢‚é‚©H
-		if (p_game_scene->DrawScreen(true)) {
+		if (p_game_scene->DrawScreen(TransitionType::OPEN)) {
 			movingScene = true;
 		}
 	}

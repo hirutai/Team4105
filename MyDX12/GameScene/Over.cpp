@@ -48,7 +48,7 @@ void XIIlib::Over::Update(GameScene* p_game_scene)
 	}
 
 	if (trigSpace) {
-		if (p_game_scene->DrawScreen(false)) {
+		if (p_game_scene->DrawScreen(TransitionType::CLOSE)) {
 			p_game_scene->ChangeState(new Title);
 		}
 	}
