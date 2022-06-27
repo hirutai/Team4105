@@ -343,3 +343,9 @@ bool XIIlib::King::MoveAreaCheck(Math::Point2 crPos, Math::Point2 vec, int tileN
 {
 	return false;
 }
+
+void XIIlib::King::ObjectUpdate()
+{
+	object3d->Update();
+	daiza->Update();
+}
