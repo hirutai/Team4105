@@ -44,6 +44,7 @@ void XIIlib::Rook::Initialize()
 	type = _PositionType::ENEMY;
 	CreateAttackArea();
 	object3d = Object3D::Create(Model::CreateFromOBJ("cars"));
+	object3d->scale = Math::Vector3({ 2.0f,2.0f,2.0f });
 	// Audio‚Ì‰Šú‰»
 	audio_ = UnitManager::GetInstance()->GetAudio();
 

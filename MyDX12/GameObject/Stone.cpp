@@ -40,6 +40,7 @@ void XIIlib::Stone::Initialize()
 	type = _PositionType::ENEMY;
 	CreateAttackArea();
 	object3d = Object3D::Create(Model::CreateFromOBJ("Badboy_Enemy"));
+	object3d->scale = Math::Vector3({2.0f,2.0f,2.0f});
 
 }
 

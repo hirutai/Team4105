@@ -54,6 +54,7 @@ void XIIlib::King::Initialize()
 	CreateAttackArea();
 
 	object3d = Object3D::Create(Model::CreateFromOBJ("Badboy_Bat_1"));
+	object3d->scale = Math::Vector3({2.0f,2.0f,2.0f});
 	daiza = Object3D::Create(Model::CreateFromOBJ("daiza"));
 
 	attackAreasBillboard = BillObj::Create({0,-1,0},"swing_L.png");
