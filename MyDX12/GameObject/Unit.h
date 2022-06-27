@@ -125,6 +125,7 @@ namespace XIIlib {
 
 	protected:// 共通関数(private)
 		void KnockBack();
+		void Motion();
 		void SetElementStock(int x, int z);		// マス座標の設定
 	};
 }
