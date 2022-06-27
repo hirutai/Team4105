@@ -18,7 +18,7 @@ namespace XIIlib
 		DirectX12* dx12;
 		KeyInput* keyInput;
 		//ControllerInput* pad_input;
-		const float MIN_FREAM_TIME = 1.0f / 60;
+		const float MIN_FREAM_TIME = 1.0f / 60.0f;
 		float frameTime = 0;
 		LARGE_INTEGER timeStart;
 		LARGE_INTEGER timeEnd;

@@ -1,5 +1,6 @@
 #include "Title.h"
 #include "GameScene.h"
+#include "Story.h"
 #include "Menu.h"
 #include "Select.h"
 #include "Play.h"
@@ -41,7 +42,7 @@ void XIIlib::Title::Update(GameScene* p_game_scene)
 
 	if (trigSpace) {
 		if (p_game_scene->DrawScreen(false)) {
-			p_game_scene->ChangeState(new Select);
+			p_game_scene->ChangeState(new Story);
 		}
 	}
 
