@@ -13,6 +13,7 @@
 using namespace XIIlib;
 StageNumber SceneState::stageNum = StageNumber::DEBUG;
 GamePAD_XInput* SceneState::gamePad_ = nullptr;
+Phase SceneState::phase = Phase::CameraDirecting;
 
 void XIIlib::SceneState::CommonUpdate(GameScene* p_game_scene)
 {
@@ -41,14 +42,14 @@ void XIIlib::SceneState::CreateUnitsPosition(StageNumber stageNum)
 		std::shared_ptr<Rook> rook = std::move(Rook::Create(4, 6));
 		std::shared_ptr<Yankee> yankee = std::move(Yankee::Create(3, 6));
 		//std::shared_ptr<Yankee> yankee1 = std::move(Yankee::Create(1, 6));
-		//std::shared_ptr<Boss> boss = std::move(Boss::Create(2, 3));
+		
 
 		UnitManager::GetInstance()->AddUnit(std::move(king));
 		UnitManager::GetInstance()->AddUnit(std::move(bishop));
 		UnitManager::GetInstance()->AddUnit(std::move(rook));
 		UnitManager::GetInstance()->AddUnit(std::move(yankee));
 		//UnitManager::GetInstance()->AddUnit(std::move(yankee1));
-		//UnitManager::GetInstance()->AddUnit(std::move(boss));
+		
 	}
 	else if (stageNum == StageNumber::NORMAL)
 	{
@@ -90,9 +91,15 @@ void XIIlib::SceneState::CreateUnitsPosition(StageNumber stageNum)
 		// Scene切り替え時に一度通る処理
 		std::shared_ptr<King> king = std::move(King::CreateKing(1, 0));
 		std::shared_ptr<Yankee> yankee = std::move(Yankee::Create(3, 6));
+		std::shared_ptr<Bishop> bishop = std::move(Bishop::Create(2, 3));
+		std::shared_ptr<Rook> rook = std::move(Rook::Create(4, 6));
+		std::shared_ptr<Boss> boss = std::move(Boss::Create(7, 7));
 
 		UnitManager::GetInstance()->AddUnit(std::move(king));
 		UnitManager::GetInstance()->AddUnit(std::move(yankee));
+		UnitManager::GetInstance()->AddUnit(std::move(bishop));
+		UnitManager::GetInstance()->AddUnit(std::move(rook));
+		UnitManager::GetInstance()->AddUnit(std::move(boss));
 	}
 
 	// 一度だけ更新

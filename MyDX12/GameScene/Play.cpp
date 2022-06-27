@@ -36,6 +36,8 @@ void XIIlib::Play::Initialize(GameScene* p_game_scene)
 		SceneState::CreateUnitsPosition(StageNumber::DEBUG);
 		spStageBG1 = Sprite::Create(STAGEBG1_TEX, { 0.0f,0.0f });
 		stageNum = StageNumber::NONE;
+		phase = Phase::Game;
+		debugCamera->SetPosition(upperEye.x, upperEye.y, upperEye.z); // 視点座標の設定
 	}
 	else if (stageNum == StageNumber::EASY)
 	{
@@ -104,6 +106,7 @@ void XIIlib::Play::Update(GameScene* p_game_scene)
 #pragma endregion 
 
 #pragma region Game Update処理
+		
 		// 更新
 		UnitManager::GetInstance()->Update();
 		// シーン移動

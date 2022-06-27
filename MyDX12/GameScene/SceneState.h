@@ -8,6 +8,12 @@ namespace XIIlib
 {
 	class GameScene;
 
+	enum class Phase
+	{
+		CameraDirecting, // カメラ演出
+		Game, // ゲーム
+	};
+
 	// ステージナンバー
 	enum class StageNumber : int
 	{
@@ -53,6 +59,7 @@ namespace XIIlib
 		static StageNumber stageNum; // ステージナンバー
 		// GamePadの借り物変数
 		static GamePAD_XInput* gamePad_;
+		static Phase phase; // 現在のフェーズ
 
 		DebugCamera* debugCamera = nullptr; // カメラ
 	};

@@ -28,6 +28,7 @@ void XIIlib::Select::Initialize(GameScene* p_game_scene)
 	bg_sp.reset(Sprite::Create(BG_TEX, { 0, 0}));
 	stageSelect_sp.reset(Sprite::Create(STAGESELECT_TEX, { 250, 0}));
 	UnitManager::GetInstance()->FlatTileState();
+	phase = Phase::CameraDirecting;
 	p_game_scene->GetAudio()->PlayBGM("yankeeBGM.wav");
 }
 

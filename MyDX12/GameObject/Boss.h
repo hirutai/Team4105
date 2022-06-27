@@ -9,7 +9,7 @@ namespace XIIlib {
 	private:
 		Math::Point2 point_attack;
 		AREA type_attack = AREA::NONE;
-		const int defaultHp = 6;
+		const int defaultHp = 100;
 		BillObj* hpBar = nullptr; // HPバーのオブジェクト
 		BillObj* hpEdge = nullptr; // HPの縁のオブジェクト
 
