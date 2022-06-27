@@ -7,12 +7,6 @@ namespace XIIlib {
 
 	class GameScene;
 
-	enum class Phase
-	{
-		CameraDirecting, // カメラ演出
-		Game, // ゲーム
-	};
-
 	enum class Timing
 	{
 		ToTheRight, // 右へ
@@ -55,8 +49,6 @@ namespace XIIlib {
 		float z = 0;
 
 		Math::Vector3 cameraEye{ frontEye.x, frontEye.y, frontEye.z }; // カメラの視点
-
-		Phase phase = Phase::CameraDirecting; // 現在のフェーズ
 
 		Timing timing = Timing::ToTheRight; // 現在のタイミング
 
