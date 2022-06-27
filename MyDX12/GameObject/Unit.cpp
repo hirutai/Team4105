@@ -6,6 +6,7 @@
 #include "../3D/BillObj.h"
 #include "../Audio/Audio.h"
 #include "../GameObject/AttackTimer.h"
+#include "../Tool/Easing.h"
 
 bool XIIlib::Unit::ThreeCheckArea(Math::Point2 element_stock)
 {
@@ -85,6 +86,49 @@ void XIIlib::Unit::KnockBack()
 
 	// à⁄ìÆÇ‹Ç∑Ç™åàíËÇ≥ÇÍÇ‹ÇµÇΩÅB
 	determinateMoveAction = true;
+}
+
+void XIIlib::Unit::Motion()
+{
+	const float maxTime = 1.0f;
+	movingTimer += (1.0f / 40.0f);
+	Math::Vector3 nowP = { Common::ConvertTilePosition(element_stock.a),1.0f, Common::ConvertTilePosition(element_stock.b) };
+	Math::Vector3 nextP = { Common::ConvertTilePosition(nextPoint.a),1.0f, Common::ConvertTilePosition(nextPoint.b) };
+	Math::Vector3 v = nextP - nowP;
+
+	bool isVx = false, isVz = false;
+	if (v.x < 0.0f) {
+		isVx = true;
+		v.x *= -1.0f;
+	}
+	if (v.z < 0.0f) {
+		isVz = true;
+		v.z *= -1.0f;
+	}
+
+	float resultX = Easing::InOutCubic(movingTimer, 0.0f, v.x, maxTime);
+	float resultZ = Easing::InOutCubic(movingTimer, 0.0f, v.z, maxTime);
+	if (isVx)resultX *= -1.0f;
+	if (isVz)resultZ *= -1.0f;
+
+	object3d->position.x = pos.x + resultX;
+	object3d->position.z = pos.z + resultZ;
+
+	if (movingTimer >= maxTime) {
+		determinateMoveAction = false;
+		element_stock = nextPoint;
+		movingTimer = 0.0f;
+		nextPoint = Math::Point2(0, 0);
+		pos = Math::Vector3();
+	}
+
+	if (Math::MatchPoint2(element_stock, nextPoint)) {
+		determinateMoveAction = false;
+		element_stock = nextPoint;
+		movingTimer = 0.0f;
+		nextPoint = Math::Point2(0, 0);
+		pos = Math::Vector3();
+	}
 }
 
 void XIIlib::Unit::SetElementStock(int x, int z)

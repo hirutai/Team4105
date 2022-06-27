@@ -63,37 +63,8 @@ void XIIlib::Rook::Update()
 		pos = object3d->position;
 	}
 	else {
-		const float maxTime = 1.0f;
-		movingTimer += (1.0f / 40.0f);
-		Math::Vector3 nowP = { Common::ConvertTilePosition(element_stock.a),1.0f, Common::ConvertTilePosition(element_stock.b) };
-		Math::Vector3 nextP = { Common::ConvertTilePosition(nextPoint.a),1.0f, Common::ConvertTilePosition(nextPoint.b) };
-		Math::Vector3 v = nextP - nowP;
-
-		bool isVx = false, isVz = false;
-		if (v.x < 0.0f) {
-			isVx = true;
-			v.x *= -1.0f;
-		}
-		if (v.z < 0.0f) {
-			isVz = true;
-			v.z *= -1.0f;
-		}
-
-		float resultX = Easing::InOutCubic(movingTimer, 0.0f, v.x, maxTime);
-		float resultZ = Easing::InOutCubic(movingTimer, 0.0f, v.z, maxTime);
-		if (isVx)resultX *= -1.0f;
-		if (isVz)resultZ *= -1.0f;
-
-		object3d->position.x = pos.x + resultX;
-		object3d->position.z = pos.z + resultZ;
-
-		if (movingTimer >= maxTime) {
-			determinateMoveAction = false;
-			element_stock = nextPoint;
-			movingTimer = 0.0f;
-			nextPoint = Math::Point2(0, 0);
-			pos = Math::Vector3();
-		}
+		// ƒ‚[ƒVƒ‡ƒ“ˆ—
+		Motion();
 	}
 
 	object3d->Update();
