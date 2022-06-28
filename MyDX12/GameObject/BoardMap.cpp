@@ -40,18 +40,20 @@ void XIIlib::BoardMap::Initialize()
 		map_board.at(i).resize(elementX);
 	}
 	
-	Math::Vector2 pos_start = { -17.5f,-17.5f };
-	const Math::Vector3 startPoint = { 0.5f,0.5f,0.5f };
-	const Math::Vector3 endPoint = startPoint * -1.0f;
+	// À•WŒˆ‚ß‚é’è”ŒQ
+	const float tileDistance = 5.0f,startValue = -17.5f;
+	// À•WŠi”[—p
+	Math::Vector2 pos = { startValue,startValue };
 
+	// À•W‚Ì‘ã“ü
 	for (int i = 0; i < elementZ; i++) {
 		for (int j = 0; j < elementX; j++) {
-			map_board[i][j] = Tile::Create(pos_start.x, pos_start.y);
-			pos_start.x += 5.0f;
+			map_board[i][j] = Tile::Create(pos.x, pos.y);
+			pos.x += tileDistance;
 		}
 
-		pos_start.y += 5.0f;
-		pos_start.x = -17.5f;
+		pos.y += tileDistance;
+		pos.x = startValue;
 	}
 }
 
