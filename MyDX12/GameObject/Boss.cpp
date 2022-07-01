@@ -8,6 +8,11 @@
 #include "../GameObject/AttackTimer.h"
 #include "../Tool/DebugText.h"
 #include "../Tool/Easing.h"
+#include <algorithm>
+#include <iostream>
+#include <numeric>
+#include <iterator>
+#include <random>
 
 XIIlib::Boss::Boss()
 {
@@ -98,7 +103,34 @@ void XIIlib::Boss::Action()
 
 void XIIlib::Boss::Attack()
 {
-	UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(1,1), (int)type);
+	int BossjMin = bossMin;
+	int BossjMax = bossMax;
+	bossTileRand = bossMin + (int)(rand() * (bossMax - bossMin + 1) / (1 + RAND_MAX));
+
+	std::vector<int> v(8);
+	std::iota(v.begin(), v.end(), 0);
+	// シャッフル
+	std::random_device seed_gen;
+	std::mt19937 engine(seed_gen());
+	std::shuffle(v.begin(), v.end(), engine);
+
+	bossTileRand = v[bossTileRand];
+	////左方向に駒があるか
+	//for (int i = 0; i <= 7; i++)
+	//{
+	//	AttackAreaManager::GetInstance()->SetAttackAreas(Math::Point2(element_stock.a - i, element_stock.b));
+	//}
+	////右方向に駒があるか
+	//for (int i = 0; i <= 7; i++)
+	//{
+	//	AttackAreaManager::GetInstance()->SetAttackAreas(Math::Point2(element_stock.a + i, element_stock.b));
+	//}
+	//下方向に駒があるか
+	for (int i = 0; i <= 7; i++)
+	{
+		UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(bossTileRand, i), (int)type);
+	}
+	//UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(1, 1), (int)type);
 }
 
 void XIIlib::Boss::Move()

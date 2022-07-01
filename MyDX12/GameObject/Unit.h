@@ -49,6 +49,10 @@ namespace XIIlib {
 		int jMin = 1;
 		int jMax = 3;
 		int tileRand = 1;
+
+		int bossMin = 0;
+		int bossMax = 7;
+		int bossTileRand = 0 ;
 		
 		int SwitchRandiMin = 0;
 		int SwitchRandiMax = 3;
