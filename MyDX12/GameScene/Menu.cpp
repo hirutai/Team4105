@@ -39,7 +39,7 @@ void XIIlib::Menu::Initialize(GameScene* p_game_scene)
 
 	// ¶¬
 	spStageBG1   = Sprite::Create(STAGEBG1_TEX, { 0.0f,0.0f }); // ”wŒi
-	cursor       = Sprite::Create(CURSOR_TEX, { winCenter.x - 80.0f, winCenter.y - SPACE * 2 }, color, anchorPoint);
+	cursor       = Sprite::Create(CURSOR_TEX, { winCenter.x - CURSOR_SPACE, winCenter.y - SPACE * 2 }, color, anchorPoint);
 	playerGuide = Sprite::Create(PLAYERGUIDES_TEX, winCenter, color, anchorPoint); // ƒvƒŒƒCƒ„[‚Ìà–¾
 	playerGuide->SetSize(winCenter);
 	enemyGuides = Sprite::Create(ENEMYGUIDES_TEX, winCenter, color, anchorPoint); // “G‚Ìà–¾
