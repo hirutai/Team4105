@@ -148,6 +148,33 @@ void XIIlib::Yankee::Attack()
 
 		// 攻撃
 		nextPoint = preElement_stock;
+		Math::Point2 addResult = element_stock - nextPoint;
+		
+		if (Math::MatchPoint2(addResult,pointArray[static_cast<int>(RotState::UP_LEFT)])) {
+			object3d->rotation.y = rotArray[static_cast<int>(RotState::UP_LEFT)];
+		}
+		else if (Math::MatchPoint2(addResult, pointArray[static_cast<int>(RotState::UP)])) {
+			object3d->rotation.y = rotArray[static_cast<int>(RotState::UP)];
+		}
+		else if (Math::MatchPoint2(addResult, pointArray[static_cast<int>(RotState::UP_RIGHT)])) {
+			object3d->rotation.y = rotArray[static_cast<int>(RotState::UP_RIGHT)];
+		}
+		else if (Math::MatchPoint2(addResult, pointArray[static_cast<int>(RotState::RIGHT)])) {
+			object3d->rotation.y = rotArray[static_cast<int>(RotState::RIGHT)];
+		}
+		else if (Math::MatchPoint2(addResult, pointArray[static_cast<int>(RotState::DOWN_RIGHT)])) {
+			object3d->rotation.y = rotArray[static_cast<int>(RotState::DOWN_RIGHT)];
+		}
+		else if (Math::MatchPoint2(addResult, pointArray[static_cast<int>(RotState::DOWN)])) {
+			object3d->rotation.y = rotArray[static_cast<int>(RotState::DOWN)];
+		}
+		else if (Math::MatchPoint2(addResult, pointArray[static_cast<int>(RotState::DOWN_LEFT)])) {
+			object3d->rotation.y = rotArray[static_cast<int>(RotState::DOWN_LEFT)];
+		}
+		else if (Math::MatchPoint2(addResult, pointArray[static_cast<int>(RotState::LEFT)])) {
+			object3d->rotation.y = rotArray[static_cast<int>(RotState::LEFT)];
+		}
+
 		audio_->PlaySE("yankeeVoice.wav");
 		IniState();
 
@@ -179,7 +206,7 @@ void XIIlib::Yankee::Move()
 		if (ThreeCheckArea(temp))return;
 
 		nextPoint.b -= 1;
-		object3d->rotation.y = 0.0f;
+		object3d->rotation.y = rotArray[static_cast<int>(RotState::UP)];
 		audio_->PlaySE("yankeeVoice.wav");
 	}
 	// 自分とキングの間を1マスづつ調べる
@@ -189,7 +216,7 @@ void XIIlib::Yankee::Move()
 		temp.b += 1;
 		if (ThreeCheckArea(temp))return;
 		nextPoint.b += 1;
-		object3d->rotation.y = 180.0f;
+		object3d->rotation.y = rotArray[static_cast<int>(RotState::DOWN)];
 		audio_->PlaySE("yankeeVoice.wav");
 	}
 	// 自分とキングの間を1マスづつ調べる
@@ -199,7 +226,7 @@ void XIIlib::Yankee::Move()
 		temp.a -= 1;
 		if (ThreeCheckArea(temp))return;
 		nextPoint.a -= 1;
-		object3d->rotation.y = 90.0f;
+		object3d->rotation.y = rotArray[static_cast<int>(RotState::RIGHT)];
 		audio_->PlaySE("yankeeVoice.wav");
 	}
 	else if (dif.a > 0 && dif.b == 0)// 0より大きければKingより右にいる
@@ -208,7 +235,7 @@ void XIIlib::Yankee::Move()
 		temp.a += 1;
 		if (ThreeCheckArea(temp))return;
 		nextPoint.a += 1;
-		object3d->rotation.y = -90.0f;
+		object3d->rotation.y = rotArray[static_cast<int>(RotState::LEFT)];
 		audio_->PlaySE("yankeeVoice.wav");
 	}
 	// 自分とキングの間を1マスづつ調べる
@@ -220,7 +247,7 @@ void XIIlib::Yankee::Move()
 		if (ThreeCheckArea(temp))return;
 		nextPoint.a -= 1;
 		nextPoint.b -= 1;
-		object3d->rotation.y = 45.0f;
+		object3d->rotation.y = rotArray[static_cast<int>(RotState::UP_RIGHT)];
 		audio_->PlaySE("yankeeVoice.wav");
 	}
 	// 自分とキングの間を1マスづつ調べる
@@ -232,7 +259,7 @@ void XIIlib::Yankee::Move()
 		if (ThreeCheckArea(temp))return;
 		nextPoint.a -= 1;
 		nextPoint.b += 1;
-		object3d->rotation.y = 135.0f;
+		object3d->rotation.y = rotArray[static_cast<int>(RotState::DOWN_RIGHT)];
 		audio_->PlaySE("yankeeVoice.wav");
 	}
 	// 自分とキングの間を1マスづつ調べる
@@ -244,7 +271,8 @@ void XIIlib::Yankee::Move()
 		if (ThreeCheckArea(temp))return;
 		nextPoint.a += 1;
 		nextPoint.b -= 1;
-		object3d->rotation.y = -45.0f;
+		object3d->rotation.y =
+			rotArray[static_cast<int>(RotState::UP_LEFT)];
 		audio_->PlaySE("yankeeVoice.wav");
 	}
 	// 自分とキングの間を1マスづつ調べる
@@ -256,7 +284,7 @@ void XIIlib::Yankee::Move()
 		if (ThreeCheckArea(temp))return;
 		nextPoint.a += 1;
 		nextPoint.b += 1;
-		object3d->rotation.y = -135.0f;
+		object3d->rotation.y = rotArray[static_cast<int>(RotState::DOWN_LEFT)];
 		audio_->PlaySE("yankeeVoice.wav");
 	}
 
