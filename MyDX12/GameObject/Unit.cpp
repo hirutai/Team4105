@@ -131,6 +131,12 @@ void XIIlib::Unit::Motion()
 	}
 }
 
+void XIIlib::Unit::Direction(const Math::Point2& v)
+{
+	float vX = static_cast<float>(v.a),vY = static_cast<float>(v.b);
+	object3d->rotation.y = Math::Vector2ConversionToAngle(vX, vY) + correctionAngle;
+}
+
 void XIIlib::Unit::SetElementStock(int x, int z)
 {
 	element_stock = Math::Point2(x, z);

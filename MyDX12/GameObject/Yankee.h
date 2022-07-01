@@ -5,32 +5,9 @@
 
 namespace XIIlib {
 
-	enum struct RotState : int {
-		UP_LEFT = 0,
-		UP,
-		UP_RIGHT,
-		RIGHT,
-		DOWN_RIGHT,
-		DOWN,
-		DOWN_LEFT,
-		LEFT
-	};
-
 	class Yankee : public Unit {
 	private:
 		Math::Point2 point_attack;
-
-		float rotArray[8] = {
-			-45.0f,0.0f,45.0f,90.0f,
-			135.0f,180.0f,-135.0f,-90.0f,
-		};
-
-		Math::Point2 pointArray[8] = {
-			Math::Point2(-1,1),Math::Point2(0,1),
-			Math::Point2(1,1),Math::Point2(1,0),
-			Math::Point2(1,-1),Math::Point2(0,-1),
-			Math::Point2(-1,-1),Math::Point2(-1,0),
-		};
 
 	public:
 		Yankee();

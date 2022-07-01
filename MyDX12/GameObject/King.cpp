@@ -60,6 +60,7 @@ void XIIlib::King::Initialize()
 	attackAreasBillboard = BillObj::Create({0,-1,0},"swing_L.png");
 	const float mullPower = 0.8f;
 	attackAreasBillboard->SetSize({19.2f * mullPower,6.4f * mullPower });
+	correctionAngle = 180.0f;
 }
 
 void XIIlib::King::Update()
@@ -181,20 +182,26 @@ void XIIlib::King::Move()
 	if (KeyInput::GetInstance()->Push(DIK_W)) {
 
 		next_state += move_vec[0];
-		object3d->rotation.y = 180.0f;
 		if (!UnitManager::GetInstance()->AllOnUnit(next_state)) {
 			nextPoint = next_state;
 			moveCount = moveLag;
+			// 移動量を取得
+			Math::Point2 v = nextPoint - element_stock;
+			//移動量から角度を求めて設定
+			Direction(v);
 			// 移動ますが決定されました。
 			determinateMoveAction = true;
 		}
 	}
 	else if (KeyInput::GetInstance()->Push(DIK_S)) {
 		next_state += move_vec[1];
-		object3d->rotation.y = 0.0f;
 		if (!UnitManager::GetInstance()->AllOnUnit(next_state)) {
 			nextPoint = next_state;
 			moveCount = moveLag;
+			// 移動量を取得
+			Math::Point2 v = nextPoint - element_stock;
+			//移動量から角度を求めて設定
+			Direction(v);
 			// 移動ますが決定されました。
 			determinateMoveAction = true;
 		}
@@ -202,20 +209,26 @@ void XIIlib::King::Move()
 
 	if (KeyInput::GetInstance()->Push(DIK_A)) {
 		next_state += move_vec[2];
-		object3d->rotation.y = 90.0f;
 		if (!UnitManager::GetInstance()->AllOnUnit(next_state)) {
 			nextPoint = next_state;
 			moveCount = moveLag;
+			// 移動量を取得
+			Math::Point2 v = nextPoint - element_stock;
+			//移動量から角度を求めて設定
+			Direction(v);
 			// 移動ますが決定されました。
 			determinateMoveAction = true;
 		}
 	}
 	else if (KeyInput::GetInstance()->Push(DIK_D)) {
 		next_state += move_vec[3];
-		object3d->rotation.y = -90.0f;
 		if (!UnitManager::GetInstance()->AllOnUnit(next_state)) {
 			nextPoint = next_state;
 			moveCount = moveLag;
+			// 移動量を取得
+			Math::Point2 v = nextPoint - element_stock;
+			//移動量から角度を求めて設定
+			Direction(v);
 			// 移動ますが決定されました。
 			determinateMoveAction = true;
 		}

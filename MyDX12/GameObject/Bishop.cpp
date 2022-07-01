@@ -7,7 +7,6 @@
 #include "../Audio/Audio.h"
 #include "../GameObject/AttackTimer.h"
 #include "../Tool/Easing.h"
-#include <cmath>
 
 XIIlib::Bishop::Bishop()
 {
@@ -49,6 +48,7 @@ void XIIlib::Bishop::Initialize()
 	object3d->rotation.y = 45.0f;
 	// Audio‚Ì‰Šú‰»
 	audio_ = UnitManager::GetInstance()->GetAudio();
+	correctionAngle = 90.0f;
 
 	SetAttackTimer(countingNum);
 }
@@ -152,12 +152,13 @@ void XIIlib::Bishop::Attack()
 				return;
 			}
 		}
-		//if (AttackAreaExists()) { preElement_stock = kingPos; }
-		float angle = (float)std::atan2(preElement_stock.a - element_stock.a, preElement_stock.b - element_stock.b);
-		angle *= 180.0f / 3.14f;
-		object3d->rotation.y = angle + 90.0f;
 		// UŒ‚
 		nextPoint = preElement_stock;
+		// ˆÚ“®—Ê‚ğæ“¾
+		Math::Point2 v = preElement_stock - element_stock;
+		//ˆÚ“®—Ê‚©‚çŠp“x‚ğ‹‚ß‚Äİ’è
+		Direction(v);
+
 		audio_->PlaySE("yankeeVoice.wav");
 		IniState();
 		
@@ -196,7 +197,6 @@ void XIIlib::Bishop::Move()
 
 		temp.a -= tileRand;
 		temp.b -= tileRand;
-		object3d->rotation.y = -45.0f;
 		if (temp.a <= -1 && temp.b <= -1)
 		{
 			nextPoint.a = 0;
@@ -224,7 +224,6 @@ void XIIlib::Bishop::Move()
 
 		temp.a += tileRand;
 		temp.b -= tileRand;
-		object3d->rotation.y = 225.0f;
 		if (temp.a >= 8 && temp.b <= -1)
 		{
 			nextPoint.a = 8;
@@ -252,7 +251,6 @@ void XIIlib::Bishop::Move()
 
 		temp.a -= tileRand;
 		temp.b += tileRand;
-		object3d->rotation.y = 45.0f;
 		if (temp.a <= -1 && temp.b >= 8)
 		{
 			nextPoint.a = 0;
@@ -280,7 +278,6 @@ void XIIlib::Bishop::Move()
 
 		temp.a += tileRand;
 		temp.b += tileRand;
-		object3d->rotation.y = 135.0f;
 		if (temp.a >= 8 && temp.b >= 8)
 		{
 			nextPoint.a = 7;
@@ -303,6 +300,10 @@ void XIIlib::Bishop::Move()
 		audio_->PlaySE("yankeeVoice.wav");
 		break;
 	}
+	// ˆÚ“®—Ê‚ğæ“¾
+	Math::Point2 v = nextPoint - element_stock;
+	//ˆÚ“®—Ê‚©‚çŠp“x‚ğ‹‚ß‚Äİ’è
+	Direction(v);
 
 	// ˆÚ“®‚Ü‚·‚ªŒˆ’è‚³‚ê‚Ü‚µ‚½B
 	determinateMoveAction = true;
