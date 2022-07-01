@@ -7,6 +7,7 @@
 #include "../Audio/Audio.h"
 #include "../GameObject/AttackTimer.h"
 #include "../Tool/Easing.h"
+#include <cmath>
 
 XIIlib::Bishop::Bishop()
 {
@@ -152,6 +153,9 @@ void XIIlib::Bishop::Attack()
 			}
 		}
 		//if (AttackAreaExists()) { preElement_stock = kingPos; }
+		float angle = (float)std::atan2(preElement_stock.a - element_stock.a, preElement_stock.b - element_stock.b);
+		angle *= 180.0f / 3.14f;
+		object3d->rotation.y = angle + 90.0f;
 		// UŒ‚
 		nextPoint = preElement_stock;
 		audio_->PlaySE("yankeeVoice.wav");
