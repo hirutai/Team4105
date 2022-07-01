@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include <vector>
 #include "../Input/GamePAD_XInput.h"
+#include "../Struct/Math.h"
 class Sprite;
 
 class DebugCamera;
@@ -52,6 +53,8 @@ namespace XIIlib
 
 		Audio* GetAudio()const;
 
+		// a値のリセット
+		void ResetAlpha();
 	private:
 		// 状態
 		SceneState* state = nullptr;
@@ -79,5 +82,17 @@ namespace XIIlib
 
 		// 返り値がbool型の関数のvectorコンテナ
 		std::vector<FLAGFUNC> functions;
+
+		// ホワイトアウト、ブラックアウト演出関連
+		Sprite* outTex = nullptr; // 白画像
+
+		const Math::Vector3 white{ 1.0f, 1.0f, 1.0f }; // 白
+		const Math::Vector3 black{ 0.0f, 0.0f,0.0f }; // 黒
+
+		const float incValue = 0.01f; // a値の増加量
+		const float maxAlpha = 1.0f; // a値の最大値
+
+		Math::Vector3 outColor; // 色保存用
+		float outAlpha = 0.0f; // α値保存用
 	};
 }
