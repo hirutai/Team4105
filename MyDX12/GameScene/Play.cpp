@@ -33,7 +33,7 @@ void XIIlib::Play::Initialize(GameScene* p_game_scene)
 	if (stageNum == StageNumber::DEBUG)
 	{
 		// それ以外の数値が入っていたら、仮生成
-		SceneState::CreateUnitsPosition(StageNumber::DEBUG);
+		SceneState::CreateUnitsPosition(StageNumber::DEBUG,"stage0");
 		spStageBG1 = Sprite::Create(STAGEBG1_TEX, { 0.0f,0.0f });
 		stageNum = StageNumber::NONE;
 		phase = Phase::Game;
