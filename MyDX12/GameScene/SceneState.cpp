@@ -26,6 +26,7 @@ void XIIlib::SceneState::CommonUpdate(GameScene* p_game_scene)
 			movingScene = true;
 		}
 	}
+
 }
 
 void XIIlib::SceneState::CreateUnitsPosition(StageNumber stageNum)
