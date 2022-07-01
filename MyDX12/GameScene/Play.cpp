@@ -123,20 +123,53 @@ void XIIlib::Play::Update(GameScene* p_game_scene)
 		}
 
 		if (trigSpace) {
-			if (p_game_scene->DrawScreen(TransitionType::CLOSE)) {
 				if (UnitManager::GetInstance()->GetUnitIDElements("King") >= 0) // プレイヤが存在している場合
 				{
 					if (UnitManager::GetInstance()->GetAllUnitCount() - 1 == 0) // 敵を全滅させた時
 					{
-						p_game_scene->ChangeState(new Clear); // クリアシーンへ
-						return;
+						if (p_game_scene->DrawScreen(TransitionType::WHITE)) {
+							p_game_scene->ResetAlpha();
+							p_game_scene->ChangeState(new Clear); // クリアシーンへ
+							return;
+						}
 					}
 				}
 				else if (UnitManager::GetInstance()->GetUnitIDElements("King") < 0) // プレイヤが存在していない場合
 				{
-					p_game_scene->ChangeState(new Over); // オーバーシーンへ
-					return;
+					if (p_game_scene->DrawScreen(TransitionType::BLACK)) {
+						p_game_scene->ResetAlpha();
+						p_game_scene->ChangeState(new Over); // オーバーシーンへ
+						return;
+					}
 				}
+		}
+
+		if (KeyInput::GetInstance()->Trigger(DIK_C))
+		{
+			cPushFlag = true;
+		}
+
+		if (KeyInput::GetInstance()->Trigger(DIK_O))
+		{
+			oPushFlag = true;
+		}
+
+		if (cPushFlag)
+		{
+			if (p_game_scene->DrawScreen(TransitionType::WHITE)) {
+				p_game_scene->ChangeState(new Clear); // クリアシーンへ
+
+				cPushFlag = false;
+				return;
+			}
+		}
+		if (oPushFlag)
+		{
+			if (p_game_scene->DrawScreen(TransitionType::BLACK)) {
+				p_game_scene->ChangeState(new Over); // クリアシーンへ
+
+				oPushFlag = false;
+				return;
 			}
 		}
 #pragma endregion

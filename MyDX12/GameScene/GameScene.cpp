@@ -1,4 +1,4 @@
-#include "GameScene.h"
+ï»¿#include "GameScene.h"
 #include "Title.h"
 #include "Select.h"
 #include "Play.h"
@@ -27,10 +27,10 @@
 
 XIIlib::GameScene::GameScene()
 { 
-	// ƒRƒ“ƒXƒgƒ‰ƒNƒ^!
-	state = new Play; // ‰Šúó‘Ô‚ÌŠi”[Eİ’è
+	// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿!
+	state = new Play; // åˆæœŸçŠ¶æ…‹ã®æ ¼ç´ãƒ»è¨­å®š
 
-	// GamePad‚Ì¶¬‚Æ‰Šú‰»‚ÆState‚Éİ’è
+	// GamePadã®ç”Ÿæˆã¨åˆæœŸåŒ–ã¨Stateã«è¨­å®š
 	gamePad = new GamePAD_XInput();
 	gamePad->Initialize();
 	state->SetGamePad(gamePad);
@@ -43,6 +43,8 @@ XIIlib::GameScene::~GameScene()
 	}
 	delete gamePad;
 	delete audio;
+
+	delete outTex;
 }
 
 void XIIlib::GameScene::ChangeState(SceneState* different_state)
@@ -56,15 +58,15 @@ void XIIlib::GameScene::ChangeState(SceneState* different_state)
 
 void XIIlib::GameScene::Initialize()
 {
-	// Audio‚Ì‰Šú‰»
+	// Audioã®åˆæœŸåŒ–
 	audio = new Audio();
 	UnitManager::GetInstance()->SetAudio(audio);
-	// ‘OŒiƒeƒNƒXƒ`ƒƒ‚Ì‰Šú‰»
-	// ƒTƒCƒY‚ğİ’è
+	// å‰æ™¯ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®åˆæœŸåŒ–
+	// ã‚µã‚¤ã‚ºã‚’è¨­å®š
 	const unsigned int tex_size = 128;
 	const unsigned int s_y = 768 / tex_size;
 	const unsigned int s_x = 1280 / tex_size;
-	// ƒeƒNƒXƒ`ƒƒ‚àŠÜ‚ß‚Ä‰Šú‰»
+	// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚‚å«ã‚ã¦åˆæœŸåŒ–
 	curtain.resize(s_y * s_x);
 	for (int i = 0; i < s_y; ++i)
 	{
@@ -78,49 +80,53 @@ void XIIlib::GameScene::Initialize()
 	functions.push_back(&XIIlib::GameScene::WhiteOut);
 	functions.push_back(&XIIlib::GameScene::BlackOut);
 	
-	// ƒV[ƒ“‚Ì‰Šú‰»
+	// ã‚·ãƒ¼ãƒ³ã®åˆæœŸåŒ–
 	state->Initialize(this);
 
-
-	// ƒRƒƒ“ƒg‚µ‚Ü‚µ‚½B
+	outTex = Sprite::Create(WHITEOUT, { 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f, 0.0f }); // ç™½ç”»åƒã®ä½œæˆ
+	// ã‚³ãƒ¡ãƒ³ãƒˆã—ã¾ã—ãŸã€‚
 }
 
 void XIIlib::GameScene::Update()
 {
+	outTex->SetAlpha(outAlpha); // aå€¤ã®æ›´æ–°
+
 	//SetCursorPos(0,0);
-	//‰¹
+	//éŸ³
 	if (KeyInput::GetInstance()->Trigger(DIK_RETURN)) {
 		//audio->PlaySE("yankeeVoice.wav");
 		//audio->PlaySE("swing.wav");
 		
 	}
 
-	// GamePad‚ÌXV
+	// GamePadã®æ›´æ–°
 	gamePad->Update();
 
 	int bai = 16,dist = 32;
 
-	//DebugJISText::GetInstance()->Print("Â‚ªƒ‹[ƒN", dist, dist * bai, 1); bai++;
-	//DebugJISText::GetInstance()->Print("—Î‚ªƒrƒVƒ‡ƒbƒv", dist, dist * bai,1); bai++;
-	//DebugJISText::GetInstance()->Print("‰©‚ªƒiƒCƒg", dist, dist * bai,1);
+	//DebugJISText::GetInstance()->Print("é’ãŒãƒ«ãƒ¼ã‚¯", dist, dist * bai, 1); bai++;
+	//DebugJISText::GetInstance()->Print("ç·‘ãŒãƒ“ã‚·ãƒ§ãƒƒãƒ—", dist, dist * bai,1); bai++;
+	//DebugJISText::GetInstance()->Print("é»„ãŒãƒŠã‚¤ãƒˆ", dist, dist * bai,1);
 
-	// ƒV[ƒ“‚ÌXV
+	// ã‚·ãƒ¼ãƒ³ã®æ›´æ–°
 	state->CommonUpdate(this);
 }
 
 void XIIlib::GameScene::Draw()
 {
-	// ƒV[ƒ“‚Ì•`‰æ
+	// ã‚·ãƒ¼ãƒ³ã®æç”»
 	state->Draw();
 }
 
 void XIIlib::GameScene::DrawSprite()
 {
-	// ƒV[ƒ“‚ÌƒeƒNƒXƒ`ƒƒ•`‰æ
+	// ã‚·ãƒ¼ãƒ³ã®ãƒ†ã‚¯ã‚¹ãƒãƒ£æç”»
 	state->DrawTex();
 	for (auto i : curtain) {
 		i->Draw();
 	}
+
+	outTex->Draw(); // ç™½ç”»åƒã®æç”»
 }
 
 void XIIlib::GameScene::DrawBackground()
@@ -130,7 +136,7 @@ void XIIlib::GameScene::DrawBackground()
 
 bool XIIlib::GameScene::DrawScreen(const TransitionType& tType)
 {
-	// —v‘f“à‚ÌŠÖ”‚ğÀs
+	// è¦ç´ å†…ã®é–¢æ•°ã‚’å®Ÿè¡Œ
 	return (this->*functions[static_cast<int>(tType)])();
 }
 
@@ -141,7 +147,7 @@ bool XIIlib::GameScene::OpenedCurtain()
 	const unsigned int s_x = 1280 / tex_size;
 
 	struct Index2 {
-		int y, x;// —v‘f”‚ÌŠi”[—p\‘¢‘Ì
+		int y, x;// è¦ç´ æ•°ã®æ ¼ç´ç”¨æ§‹é€ ä½“
 	};
 	std::vector<Index2> indecis;
 
@@ -179,7 +185,7 @@ bool XIIlib::GameScene::ClosedCurtain()
 	const unsigned int s_x = 1280 / tex_size;
 
 	struct Index2 {
-		int y, x;// —v‘f”‚ÌŠi”[—p\‘¢‘Ì
+		int y, x;// è¦ç´ æ•°ã®æ ¼ç´ç”¨æ§‹é€ ä½“
 	};
 	std::vector<Index2> indecis;
 
@@ -213,13 +219,26 @@ bool XIIlib::GameScene::ClosedCurtain()
 
 bool XIIlib::GameScene::WhiteOut()
 {
-	// ƒAƒ‹ƒtƒ@’l‚ªMAX(1.0f)‚É‚È‚Á‚Ä‚¢‚ê‚Îtrue‚ğ•Ô‚·!!
-	return true;
+	outColor = white;
+	outTex->SetColor(outColor.x, outColor.y, outColor.z, outAlpha); // åˆæœŸè‰²ã‚’ç™½ã«è¨­å®š
+
+	outAlpha += incValue;
+
+	if (outAlpha <= maxAlpha) return false; // Î±å€¤ãŒ1.0fä»¥ä¸‹ã®å ´åˆã¯falseã‚’è¿”ã™
+
+	return true; // Î±å€¤ãŒ1.0fä»¥ä¸Šã®å ´åˆã¯trueã‚’è¿”ã™
 }
 
 bool XIIlib::GameScene::BlackOut()
 {
-	return true;
+	outColor = black;
+	outTex->SetColor(outColor.x, outColor.y, outColor.z, outAlpha); // åˆæœŸè‰²ã‚’é»’ã«è¨­å®š
+
+	outAlpha += incValue;
+
+	if (outAlpha <= maxAlpha) return false; // Î±å€¤ãŒ1.0fä»¥ä¸‹ã®å ´åˆã¯falseã‚’è¿”ã™
+
+	return true; // Î±å€¤ãŒ1.0fä»¥ä¸Šã®å ´åˆã¯trueã‚’è¿”ã™
 }
 
 XIIlib::Audio* XIIlib::GameScene::GetAudio() const
@@ -227,4 +246,9 @@ XIIlib::Audio* XIIlib::GameScene::GetAudio() const
 	return audio;
 }
 
-//‚¤‚Ú‚Ÿ‚Ÿ‚Ÿ
+void XIIlib::GameScene::ResetAlpha()
+{
+	outAlpha = 0.0f; // aå€¤ã®ãƒªã‚»ãƒƒãƒˆ
+}
+
+//ã†ã¼ããã
