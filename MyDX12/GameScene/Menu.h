@@ -38,7 +38,8 @@ namespace XIIlib {
 	class Menu : public SceneState {
 	private: // メンバ定数
 		const float MAX_EASING_COUNT = 20.0f; // Easingのマックスカウント(20)
-		const float SPACE = 70.0f; // 間隔
+		const float CURSOR_SPACE = 250.0f; // カーソルと文字の間隔
+		const float SPACE = 120.0f; // 間隔
 		const int  EASING_SPACE = 3; // 間隔
 		const Math::Vector2 winSize = { 1280.0f,768.0f }; // 画面サイズ
 		const Math::Vector2 winCenter = { winSize.x/2,winSize.y / 2 }; // 画面の中央
