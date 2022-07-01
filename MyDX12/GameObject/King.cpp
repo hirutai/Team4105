@@ -283,11 +283,6 @@ void XIIlib::King::Attack()
 	}
 	else {
 		type_attack = AREA::NONE;
-		attackAreasBillboard->SetPosition(
-			object3d->position.x,
-			-1.0f,
-			object3d->position.z
-		);
 	}
 }
 
