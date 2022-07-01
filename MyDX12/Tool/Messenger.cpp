@@ -2,6 +2,7 @@
 #include <iostream>
 #include "DebugJISText.h"
 #include "Easing.h"
+#include <algorithm>
 using namespace std;
 using namespace Easing;
 using namespace XIIlib;
