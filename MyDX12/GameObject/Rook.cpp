@@ -153,8 +153,10 @@ void XIIlib::Rook::Attack()
 				for (int i = 0; i < abs(dif.b) - 1; ++i)
 				{
 					temp.b--;
+					object3d->rotation.y = -90.0f;
 					if (UnitManager::GetInstance()->AllOnUnit(temp))
 					{
+						
 						IniState();
 
 						return;
@@ -167,8 +169,10 @@ void XIIlib::Rook::Attack()
 				for (int i = 0; i < abs(dif.b) - 1; ++i)
 				{
 					temp.b++;
+					object3d->rotation.y = 90.0f;
 					if (UnitManager::GetInstance()->AllOnUnit(temp))
 					{
+						
 						IniState();
 						return;
 					}
@@ -185,6 +189,7 @@ void XIIlib::Rook::Attack()
 				for (int i = 0; i < abs(dif.a) - 1; ++i)
 				{
 					temp.a--;
+					object3d->rotation.y = 0.0f;
 					if (UnitManager::GetInstance()->AllOnUnit(temp))
 					{
 						IniState();
@@ -198,6 +203,7 @@ void XIIlib::Rook::Attack()
 				for (int i = 0; i < abs(dif.a) - 1; ++i)
 				{
 					temp.a++;
+					object3d->rotation.y = 180.0f;
 					if (UnitManager::GetInstance()->AllOnUnit(temp))
 					{
 						IniState();
@@ -244,7 +250,7 @@ void XIIlib::Rook::Move()
 		tileRand = jMin + (int)(rand() * (jMax - jMin + 1) / (1 + RAND_MAX));
 
 		temp.a -= tileRand;
-
+		object3d->rotation.y = 0.0f;
 		if (ThreeCheckArea(temp))
 		{
 			nextPoint.a = 0;
@@ -261,7 +267,7 @@ void XIIlib::Rook::Move()
 		tileRand = jMin + (int)(rand() * (jMax - jMin + 1) / (1 + RAND_MAX));
 
 		temp.a += tileRand;
-
+		object3d->rotation.y = 180.0f;
 		if (ThreeCheckArea(temp))
 		{
 			nextPoint.a = 7;
@@ -277,7 +283,7 @@ void XIIlib::Rook::Move()
 		tileRand = jMin + (int)(rand() * (jMax - jMin + 1) / (1 + RAND_MAX));
 
 		temp.b -= tileRand;
-
+		object3d->rotation.y = -90.0f;
 		if (ThreeCheckArea(temp))
 		{
 			nextPoint.b = 0;
@@ -293,7 +299,7 @@ void XIIlib::Rook::Move()
 		tileRand = jMin + (int)(rand() * (jMax - jMin + 1) / (1 + RAND_MAX));
 
 		temp.b += tileRand;
-
+		object3d->rotation.y = 90.0f;
 		if (ThreeCheckArea(temp))
 		{
 			nextPoint.b = 7;
