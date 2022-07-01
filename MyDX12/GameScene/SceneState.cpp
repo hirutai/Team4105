@@ -9,6 +9,7 @@
 #include "../GameObject/Stone.h"
 #include "../GameObject/UnitManager.h"
 #include"../GameObject/AttackAreaManager.h"
+#include "../Tool/CSVLoader.h"
 
 using namespace XIIlib;
 StageNumber SceneState::stageNum = StageNumber::DEBUG;
@@ -29,7 +30,7 @@ void XIIlib::SceneState::CommonUpdate(GameScene* p_game_scene)
 
 }
 
-void XIIlib::SceneState::CreateUnitsPosition(StageNumber stageNum)
+void XIIlib::SceneState::CreateUnitsPosition(StageNumber stageNum, std::string fileName)
 {
 	// ステージ番号を格納
 	this->stageNum = stageNum;
@@ -37,6 +38,9 @@ void XIIlib::SceneState::CreateUnitsPosition(StageNumber stageNum)
 	// ステージ番号によって生成
 	if (stageNum == StageNumber::EASY)
 	{
+
+		//CSVLoader::CSVLoad("stage1");
+
 		// Scene切り替え時に一度通る処理
 		std::shared_ptr<King> king = std::move(King::CreateKing(1, 0));
 		/*std::shared_ptr<Bishop> bishop = std::move(Bishop::Create(2, 3));
@@ -55,6 +59,7 @@ void XIIlib::SceneState::CreateUnitsPosition(StageNumber stageNum)
 	}
 	else if (stageNum == StageNumber::NORMAL)
 	{
+		//CSVLoader::CSVLoad("stage2");
 		// Scene切り替え時に一度通る処理
 		std::shared_ptr<King> king = std::move(King::CreateKing(1, 0));
 		//std::shared_ptr<Knight> knight = std::move(Knight::Create(7, 7));
@@ -84,24 +89,51 @@ void XIIlib::SceneState::CreateUnitsPosition(StageNumber stageNum)
 		UnitManager::GetInstance()->AddUnit(std::move(yankee4));
 		//UnitManager::GetInstance()->AddUnit(std::move(stone));
 	}
-	else if (stageNum == StageNumber::NORMAL)
+	else if (stageNum == StageNumber::HARD)
 	{
-
+		//CSVLoader::CSVLoad("stage3");
 	}
 	else
 	{
-		// Scene切り替え時に一度通る処理
-		std::shared_ptr<King> king = std::move(King::CreateKing(1, 0));
-		std::shared_ptr<Yankee> yankee = std::move(Yankee::Create(3, 6));
-		std::shared_ptr<Bishop> bishop = std::move(Bishop::Create(2, 3));
-		std::shared_ptr<Rook> rook = std::move(Rook::Create(4, 6));
-		std::shared_ptr<Boss> boss = std::move(Boss::Create(7, 7));
+		CSVLoader::CSVLoad(fileName);
+		std::vector<std::vector<int>>unitsPos(CSVLoader::BOARD_NUM,std::vector<int>(CSVLoader::BOARD_NUM));
+		unitsPos = CSVLoader::GetMapVector();
 
-		UnitManager::GetInstance()->AddUnit(std::move(king));
-		UnitManager::GetInstance()->AddUnit(std::move(yankee));
-		UnitManager::GetInstance()->AddUnit(std::move(bishop));
-		UnitManager::GetInstance()->AddUnit(std::move(rook));
-		UnitManager::GetInstance()->AddUnit(std::move(boss));
+		// Scene切り替え時に一度通る処理
+		for (int y = 0; y < unitsPos.size(); y++)
+		{
+			for (int x = 0; x < unitsPos.size(); x++)
+			{
+				if (unitsPos[y][x] == 1)
+				{
+					std::shared_ptr<King> king = std::move(King::CreateKing(x, y));
+					UnitManager::GetInstance()->AddUnit(std::move(king));
+				}
+				else if (unitsPos[y][x] == 2)
+				{
+					std::shared_ptr<Rook> rook = std::move(Rook::Create(x, y));
+					
+					UnitManager::GetInstance()->AddUnit(std::move(rook));
+					
+				}
+				else if (unitsPos[y][x] == 3)
+				{
+					std::shared_ptr<Bishop> bishop = std::move(Bishop::Create(x, y));
+					UnitManager::GetInstance()->AddUnit(std::move(bishop));
+				}
+				else if (unitsPos[y][x] == 4)
+				{
+					std::shared_ptr<Yankee> yankee = std::move(Yankee::Create(x, y));
+					UnitManager::GetInstance()->AddUnit(std::move(yankee));
+					
+				}
+				else if (unitsPos[y][x] == 5)
+				{
+					std::shared_ptr<Boss> boss = std::move(Boss::Create(x, y));
+					UnitManager::GetInstance()->AddUnit(std::move(boss));
+				}
+			}
+		}
 	}
 
 	// 一度だけ更新

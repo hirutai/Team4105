@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include "../Input/GamePAD_XInput.h"
 #include "../2D/SpriteLoader.h"
-
+#include <string>
 class DebugCamera;
 
 namespace XIIlib
@@ -49,7 +49,7 @@ namespace XIIlib
 		virtual void DrawBackground() = 0;
 		void CommonUpdate(GameScene* p_game_scene);
 	protected: // 共通処理
-		void CreateUnitsPosition(StageNumber stageNum);
+		void CreateUnitsPosition(StageNumber stageNum,std::string fileName);
 	public: // Setter関数
 		void SetGamePad(GamePAD_XInput* gamePad) { this->gamePad_ = gamePad; } // GamePadの設定
 

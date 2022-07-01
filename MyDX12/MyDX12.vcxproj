@@ -229,6 +229,7 @@
     <ClCompile Include="Struct\TypeCollision.cpp" />
     <ClCompile Include="System\RenderTarget.cpp" />
     <ClCompile Include="System\Texture.cpp" />
+    <ClCompile Include="Tool\CSVLoader.cpp" />
     <ClCompile Include="Tool\DebugJISText.cpp" />
     <ClCompile Include="Tool\DebugText.cpp" />
     <ClCompile Include="Tool\DigitalNumberText.cpp" />
@@ -316,6 +317,7 @@
     <ClInclude Include="Struct\TypeCollision.h" />
     <ClInclude Include="System\RenderTarget.h" />
     <ClInclude Include="System\Texture.h" />
+    <ClInclude Include="Tool\CSVLoader.h" />
     <ClInclude Include="Tool\DebugJISText.h" />
     <ClInclude Include="Tool\DebugText.h" />
     <ClInclude Include="Tool\DigitalNumberText.h" />

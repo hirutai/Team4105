@@ -374,9 +374,12 @@
     </ClCompile>
     <ClCompile Include="GameScene\Story.cpp">
       <Filter>GameScene\StateScene</Filter>
-	</ClCompile>
+    </ClCompile>
     <ClCompile Include="GameObject\Boss.cpp">
       <Filter>GameObject\Unit</Filter>
+    </ClCompile>
+    <ClCompile Include="Tool\CSVLoader.cpp">
+      <Filter>Tool</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -634,9 +637,12 @@
     </ClInclude>
     <ClInclude Include="GameScene\Story.h">
       <Filter>GameScene\StateScene</Filter>
-	</ClInclude>
+    </ClInclude>
     <ClInclude Include="GameObject\Boss.h">
       <Filter>GameObject\Unit</Filter>
+    </ClInclude>
+    <ClInclude Include="Tool\CSVLoader.h">
+      <Filter>Tool</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
