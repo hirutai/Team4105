@@ -36,4 +36,5 @@ void XIIlib::SpriteLoader::Load()
 	Sprite::LoadTexture(STORY0_SP,         L"Resources/story0.png");
 	//Sprite::LoadTexture(STORY1_SP,         L"Resources/.png");
 	//Sprite::LoadTexture(STORY2_SP,         L"Resources/.png");
+	Sprite::LoadTexture(WHITEOUT,          L"Resources/white.png");
 }

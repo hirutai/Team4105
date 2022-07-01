@@ -10,6 +10,13 @@ namespace XIIlib
 	class Audio;
 	class SceneState;
 	class Curtain;
+	
+	enum struct TransitionType : int {
+		OPEN,
+		CLOSE,
+		WHITE,
+		BLACK
+	};
 
 	class GameScene
 	{
@@ -26,9 +33,15 @@ namespace XIIlib
 		void DrawSprite();
 		void DrawBackground();
 
-		bool DrawScreen(bool on_curtain);
+		bool DrawScreen(const TransitionType& tType);
+
 		bool OpenedCurtain();
 		bool ClosedCurtain();
+
+		bool WhiteOut();
+		bool BlackOut();
+		// 関数配列用の定義
+		typedef bool (XIIlib::GameScene::*FLAGFUNC)();
 
 		//void SetGamePad();
 
@@ -63,5 +76,8 @@ namespace XIIlib
 		int at_type = 0;
 
 		std::vector<Curtain*> curtain;
+
+		// 返り値がbool型の関数のvectorコンテナ
+		std::vector<FLAGFUNC> functions;
 	};
 }
