@@ -136,7 +136,6 @@ void XIIlib::King::Update()
 			isDrawAtArea = false;
 		}
 	}
-
 	if (is_hit) {
 		damage_counter++;
 
@@ -146,6 +145,9 @@ void XIIlib::King::Update()
 		}
 	}
 
+	if (UnitManager::GetInstance()->IsAttackValid(element_stock, (int)_PositionType::ENEMY)) {
+		OnDead();
+	}
 
 	object3d->Update();
 	daiza->Update();
