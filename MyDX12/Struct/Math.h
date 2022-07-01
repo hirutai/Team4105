@@ -129,6 +129,9 @@ namespace Math
 	float Transform(float bnMax, float aMax,float bNow);
 
 	float ConvertToRadians(float rad);
+	float ConvertToAngle(float rad);
+	float Vector2ConversionToAngle(float x,float y);
+	float Vector2ConversionToAngle(const Vector2& v);
 
 	Vector4 AddVec4(const Vector4& v0, const Vector4& v1);
 	

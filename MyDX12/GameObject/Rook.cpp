@@ -47,6 +47,7 @@ void XIIlib::Rook::Initialize()
 	object3d->scale = Math::Vector3({ 2.0f,2.0f,2.0f });
 	// Audioの初期化
 	audio_ = UnitManager::GetInstance()->GetAudio();
+	correctionAngle = 90.0f;
 
 	SetAttackTimer(countingNum);
 }
@@ -153,7 +154,6 @@ void XIIlib::Rook::Attack()
 				for (int i = 0; i < abs(dif.b) - 1; ++i)
 				{
 					temp.b--;
-					object3d->rotation.y = -90.0f;
 					if (UnitManager::GetInstance()->AllOnUnit(temp))
 					{
 						
@@ -169,7 +169,6 @@ void XIIlib::Rook::Attack()
 				for (int i = 0; i < abs(dif.b) - 1; ++i)
 				{
 					temp.b++;
-					object3d->rotation.y = 90.0f;
 					if (UnitManager::GetInstance()->AllOnUnit(temp))
 					{
 						
@@ -189,7 +188,6 @@ void XIIlib::Rook::Attack()
 				for (int i = 0; i < abs(dif.a) - 1; ++i)
 				{
 					temp.a--;
-					object3d->rotation.y = 0.0f;
 					if (UnitManager::GetInstance()->AllOnUnit(temp))
 					{
 						IniState();
@@ -203,7 +201,6 @@ void XIIlib::Rook::Attack()
 				for (int i = 0; i < abs(dif.a) - 1; ++i)
 				{
 					temp.a++;
-					object3d->rotation.y = 180.0f;
 					if (UnitManager::GetInstance()->AllOnUnit(temp))
 					{
 						IniState();
@@ -218,6 +215,11 @@ void XIIlib::Rook::Attack()
 		audio_->PlaySE("yankeeVoice.wav");
 		IniState();
 		
+		// 移動量を取得
+		Math::Point2 v = nextPoint - element_stock;
+		//移動量から角度を求めて設定
+		Direction(v);
+
 		// 移動ますが決定されました。
 		determinateMoveAction = true;
 	}
@@ -250,7 +252,6 @@ void XIIlib::Rook::Move()
 		tileRand = jMin + (int)(rand() * (jMax - jMin + 1) / (1 + RAND_MAX));
 
 		temp.a -= tileRand;
-		object3d->rotation.y = 0.0f;
 		if (ThreeCheckArea(temp))
 		{
 			nextPoint.a = 0;
@@ -267,7 +268,6 @@ void XIIlib::Rook::Move()
 		tileRand = jMin + (int)(rand() * (jMax - jMin + 1) / (1 + RAND_MAX));
 
 		temp.a += tileRand;
-		object3d->rotation.y = 180.0f;
 		if (ThreeCheckArea(temp))
 		{
 			nextPoint.a = 7;
@@ -283,7 +283,6 @@ void XIIlib::Rook::Move()
 		tileRand = jMin + (int)(rand() * (jMax - jMin + 1) / (1 + RAND_MAX));
 
 		temp.b -= tileRand;
-		object3d->rotation.y = -90.0f;
 		if (ThreeCheckArea(temp))
 		{
 			nextPoint.b = 0;
@@ -299,7 +298,6 @@ void XIIlib::Rook::Move()
 		tileRand = jMin + (int)(rand() * (jMax - jMin + 1) / (1 + RAND_MAX));
 
 		temp.b += tileRand;
-		object3d->rotation.y = 90.0f;
 		if (ThreeCheckArea(temp))
 		{
 			nextPoint.b = 7;
@@ -311,6 +309,11 @@ void XIIlib::Rook::Move()
 		audio_->PlaySE("yankeeVoice.wav");
 		break;
 	}
+
+	// 移動量を取得
+	Math::Point2 v = nextPoint - element_stock;
+	//移動量から角度を求めて設定
+	Direction(v);
 
 	// 移動ますが決定されました。
 	determinateMoveAction = true;

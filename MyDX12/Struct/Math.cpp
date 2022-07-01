@@ -358,6 +358,21 @@ float Math::ConvertToRadians(float rad)
 	return rad * (PI / 180.0f);
 }
 
+float Math::ConvertToAngle(float rad)
+{
+	return rad * (180.0f / PI);
+}
+
+float Math::Vector2ConversionToAngle(float x, float y)
+{
+	return ConvertToAngle(std::atan2(x, y));
+}
+
+float Math::Vector2ConversionToAngle(const Vector2& v)
+{
+	return Vector2ConversionToAngle(v.x,v.y);
+}
+
 Vector4 Math::AddVec4(const Vector4& v0, const Vector4& v1)
 {
 	Vector4 r;

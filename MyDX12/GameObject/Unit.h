@@ -79,6 +79,8 @@ namespace XIIlib {
 		bool determinateMoveAction = false;
 		Math::Point2 nextPoint;
 		Math::Vector3 pos;
+
+		float correctionAngle = 0.0f;
 	public:
 		Unit() = default;
 		virtual ~Unit(){}
@@ -126,6 +128,7 @@ namespace XIIlib {
 	protected:// 共通関数(private)
 		void KnockBack();
 		void Motion();
+		void Direction(const Math::Point2& v);
 		void SetElementStock(int x, int z);		// マス座標の設定
 	};
 }
