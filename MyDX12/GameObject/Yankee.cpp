@@ -151,7 +151,7 @@ void XIIlib::Yankee::Attack()
 		nextPoint = preElement_stock;
 		audio_->PlaySE("yankeeVoice.wav");
 		IniState();
-		
+
 		// 移動ますが決定されました。
 		determinateMoveAction = true;
 	}
@@ -180,6 +180,7 @@ void XIIlib::Yankee::Move()
 		if (ThreeCheckArea(temp))return;
 
 		nextPoint.b -= 1;
+		object3d->rotation.y = 0.0f;
 		audio_->PlaySE("yankeeVoice.wav");
 	}
 	// 自分とキングの間を1マスづつ調べる
@@ -189,6 +190,7 @@ void XIIlib::Yankee::Move()
 		temp.b += 1;
 		if (ThreeCheckArea(temp))return;
 		nextPoint.b += 1;
+		object3d->rotation.y = 180.0f;
 		audio_->PlaySE("yankeeVoice.wav");
 	}
 	// 自分とキングの間を1マスづつ調べる
@@ -198,6 +200,7 @@ void XIIlib::Yankee::Move()
 		temp.a -= 1;
 		if (ThreeCheckArea(temp))return;
 		nextPoint.a -= 1;
+		object3d->rotation.y = 90.0f;
 		audio_->PlaySE("yankeeVoice.wav");
 	}
 	else if (dif.a > 0 && dif.b == 0)// 0より大きければKingより右にいる
@@ -206,6 +209,7 @@ void XIIlib::Yankee::Move()
 		temp.a += 1;
 		if (ThreeCheckArea(temp))return;
 		nextPoint.a += 1;
+		object3d->rotation.y = -90.0f;
 		audio_->PlaySE("yankeeVoice.wav");
 	}
 	// 自分とキングの間を1マスづつ調べる
@@ -217,6 +221,7 @@ void XIIlib::Yankee::Move()
 		if (ThreeCheckArea(temp))return;
 		nextPoint.a -= 1;
 		nextPoint.b -= 1;
+		object3d->rotation.y = 45.0f;
 		audio_->PlaySE("yankeeVoice.wav");
 	}
 	// 自分とキングの間を1マスづつ調べる
@@ -228,6 +233,7 @@ void XIIlib::Yankee::Move()
 		if (ThreeCheckArea(temp))return;
 		nextPoint.a -= 1;
 		nextPoint.b += 1;
+		object3d->rotation.y = 135.0f;
 		audio_->PlaySE("yankeeVoice.wav");
 	}
 	// 自分とキングの間を1マスづつ調べる
@@ -239,6 +245,7 @@ void XIIlib::Yankee::Move()
 		if (ThreeCheckArea(temp))return;
 		nextPoint.a += 1;
 		nextPoint.b -= 1;
+		object3d->rotation.y = -45.0f;
 		audio_->PlaySE("yankeeVoice.wav");
 	}
 	// 自分とキングの間を1マスづつ調べる
@@ -250,6 +257,7 @@ void XIIlib::Yankee::Move()
 		if (ThreeCheckArea(temp))return;
 		nextPoint.a += 1;
 		nextPoint.b += 1;
+		object3d->rotation.y = -135.0f;
 		audio_->PlaySE("yankeeVoice.wav");
 	}
 

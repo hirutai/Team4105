@@ -62,5 +62,8 @@ namespace XIIlib {
 
 		void ToTheUp(); // 上へ
 #pragma endregion
+
+		bool cPushFlag = false;
+		bool oPushFlag = false;
 	};
 }
