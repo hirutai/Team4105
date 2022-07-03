@@ -105,6 +105,10 @@ void XIIlib::BoardMap::ChangeAttackValidTile(const Math::Point2& element, int ty
 	else if (type_positioning == 3) {
 		map_board[element.b][element.a]->SetMovePointValid();
 	}
+	//ボスの攻撃マス
+	else if (type_positioning == 4) {
+		map_board[element.b][element.a]->SetBossAttackValid();
+	}
 	else {
 		map_board[element.b][element.a]->SetMovePointValid();
 	}
@@ -126,6 +130,10 @@ bool XIIlib::BoardMap::IsAttackValid(const Math::Point2& element, int type_posit
 	}
 	else if (type_positioning == 1) {
 		return map_board[element.b][element.a]->IsEnemyAttackValid();
+	}
+	else if(type_positioning==2)
+	{
+		return map_board[element.b][element.a]->IsBossAttackValid();
 	}
 }
 

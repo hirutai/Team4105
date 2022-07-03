@@ -1,4 +1,5 @@
 #include "Boss.h"
+#include "BossHP.h"
 #include "King.h"
 #include "Common.h"
 #include "UnitManager.h"
@@ -18,7 +19,7 @@ XIIlib::Boss::Boss()
 {
 	// 各ステータスの初期化
 	_cost = 0;
-	_hit_point = defaultHp;
+	_hit_point = BossHP::GetInstance()->GetBossHP();
 	_attack_point = 2;
 	_defense_point = 1;
 }
@@ -40,12 +41,11 @@ std::shared_ptr<XIIlib::Boss> XIIlib::Boss::Create(int point_x, int point_z)
 
 void XIIlib::Boss::Initialize()
 {
-	// 特になし
-	_hit_point = defaultHp;
-
+	BossHP::GetInstance()->Initialize();
 	// クラスネーム取得
 	const type_info& id = typeid(Boss);
 	std::string path = id.name();
+	_hit_point = BossHP::GetInstance()->GetBossHP();
 	ID = Common::SeparateFilePath(path).second;
 	type = _PositionType::ENEMY;
 	CreateAttackArea();
@@ -54,13 +54,17 @@ void XIIlib::Boss::Initialize()
 	// Audioの初期化
 	audio_ = UnitManager::GetInstance()->GetAudio();
 
-	SetAttackTimer(2);
+	SetAttackTimer(6);
 
 	nextPoint = { 0,0 };
 }
 
 void XIIlib::Boss::Update()
 {
+	std::cout << "HP" << _hit_point << std::endl;
+
+	_hit_point = BossHP::GetInstance()->GetBossHP();
+	BossHP::GetInstance()->Update();
 	// タイマーの更新
 	attackTimer->Timer();
 
@@ -79,11 +83,22 @@ void XIIlib::Boss::Action()
 	preElement_stock = kingPos;
 
 	Move();
-
+	
 	if (attackTimer->SizeZeroFlag())
 	{
 		Attack();
 		audio_->PlaySE("swing.wav");
+	}
+	else if (attackTimer->SizeThirdFlag())
+	{
+		Target();
+	}
+	else if (attackTimer->SizeThirdBelowFlag())
+	{
+		for (int i = 0; i <= 7; i++)
+		{
+			UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(bossTileRand, i), (int)_PositionType::ENEMY);
+		}
 	}
 
 	//if (attackTimer->SizeZeroFlag())
@@ -97,11 +112,11 @@ void XIIlib::Boss::Action()
 
 	if (UnitManager::GetInstance()->IsAttackValid(element_stock, (int)_PositionType::MINE))
 	{
-		_hit_point--;
+		BossHP::GetInstance()->Damage();
 	}
 }
 
-void XIIlib::Boss::Attack()
+void XIIlib::Boss::Target()
 {
 	int BossjMin = bossMin;
 	int BossjMax = bossMax;
@@ -115,6 +130,15 @@ void XIIlib::Boss::Attack()
 	std::shuffle(v.begin(), v.end(), engine);
 
 	bossTileRand = v[bossTileRand];
+	for (int i = 0; i <= 7; i++)
+	{
+		UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(bossTileRand, i), (int)_PositionType::ENEMY);
+	}
+}
+
+void XIIlib::Boss::Attack()
+{
+
 	////左方向に駒があるか
 	//for (int i = 0; i <= 7; i++)
 	//{
@@ -128,7 +152,7 @@ void XIIlib::Boss::Attack()
 	//下方向に駒があるか
 	for (int i = 0; i <= 7; i++)
 	{
-		UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(bossTileRand, i), (int)type);
+		UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(bossTileRand, i), (int)_PositionType::ENEMY);
 	}
 	//UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(1, 1), (int)type);
 }
@@ -178,4 +202,10 @@ bool XIIlib::Boss::MoveAreaCheck(Math::Point2 crPos, Math::Point2 vec, int tileN
 		if (UnitManager::GetInstance()->AllOnUnit(pos))return true;
 	}
 	return false;
+}
+
+void XIIlib::Boss::SetHitDamage(int attackPoint)
+{
+	_hit_point -= attackPoint;
+	BossHP::GetInstance()->SetBossHP(_hit_point);
 }

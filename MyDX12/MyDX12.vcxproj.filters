@@ -381,6 +381,12 @@
     <ClCompile Include="Tool\CSVLoader.cpp">
       <Filter>Tool</Filter>
     </ClCompile>
+    <ClCompile Include="GameObject\BossCollision.cpp">
+      <Filter>GameObject\Unit</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject\BossHP.cpp">
+      <Filter>GameObject\Unit</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Base\DirectX12.h">
@@ -643,6 +649,12 @@
     </ClInclude>
     <ClInclude Include="Tool\CSVLoader.h">
       <Filter>Tool</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\BossCollision.h">
+      <Filter>GameObject\Unit</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\BossHP.h">
+      <Filter>GameObject\Unit</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
