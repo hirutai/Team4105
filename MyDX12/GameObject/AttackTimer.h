@@ -40,6 +40,8 @@ namespace XIIlib
 		const unsigned int GetTimer() { return timerNum; }
 		// サイズの取得
 		bool SizeZeroFlag();
+		bool SizeThirdFlag();//三分の一
+		bool SizeThirdBelowFlag();//三分の一以下
 		// バーの座標の設定
 		void SetPosition(const Vector3& position);
 #pragma endregion

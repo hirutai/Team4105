@@ -189,6 +189,8 @@
     <ClCompile Include="GameObject\Bishop.cpp" />
     <ClCompile Include="GameObject\BoardMap.cpp" />
     <ClCompile Include="GameObject\Boss.cpp" />
+    <ClCompile Include="GameObject\BossCollision.cpp" />
+    <ClCompile Include="GameObject\BossHP.cpp" />
     <ClCompile Include="GameObject\Common.cpp" />
     <ClCompile Include="GameObject\Curtain.cpp" />
     <ClCompile Include="GameObject\King.cpp" />
@@ -269,6 +271,8 @@
     <ClInclude Include="GameObject\Bishop.h" />
     <ClInclude Include="GameObject\BoardMap.h" />
     <ClInclude Include="GameObject\Boss.h" />
+    <ClInclude Include="GameObject\BossCollision.h" />
+    <ClInclude Include="GameObject\BossHP.h" />
     <ClInclude Include="GameObject\Common.h" />
     <ClInclude Include="GameObject\Curtain.h" />
     <ClInclude Include="GameObject\King.h" />

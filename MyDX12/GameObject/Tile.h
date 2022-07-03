@@ -16,6 +16,7 @@ namespace XIIlib {
 		bool is_attack_enemy = false;
 		bool is_move_point = false;
 		bool is_attack_point = false;
+		bool is_attack_boss = false;
 
 		// UŒ‚”»’è‚Ì—L–³‚ğŒv‚é
 		int time_valid = 0; // 10f–Ú‚ÅÁ‚¦‚é
@@ -37,6 +38,7 @@ namespace XIIlib {
 		void SetEnemyAttackValid();
 		void SetMovePointValid();
 		void SetAttackPointValid();
+		void SetBossAttackValid();
 
 		void SetBackVector(const Math::Point2& point);
 
@@ -48,6 +50,7 @@ namespace XIIlib {
 		bool IsEnemyAttackValid()const { return is_attack_enemy; }
 		bool IsMovePointValid()const { return is_move_point; }
 		bool IsAttackPointValid()const { return is_attack_point; }
+		bool IsBossAttackValid()const { return is_attack_boss; }
 
 		Math::Point2 GetBackVector()const { return vec_back; }
 

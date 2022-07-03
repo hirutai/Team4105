@@ -27,7 +27,8 @@ namespace XIIlib {
 
 	enum struct _PositionType : int {
 		MINE = 0,
-		ENEMY = 1
+		ENEMY = 1,
+		Boss = 2
 	};
 
 	// 駒の基底クラス
@@ -95,8 +96,9 @@ namespace XIIlib {
 		virtual void OriginBillDraw();
 
 		virtual void Move() = 0;							// 移動用
-		virtual void Attack() = 0;							// 攻撃用(今は使ってない)
+		virtual void Attack() = 0;							// 攻撃用
 		
+
 		virtual void Action() = 0;							// 行動
 		virtual bool AttackAreaExists() = 0;                // 攻撃範囲にいるか
 		virtual void IniState() = 0;
@@ -121,7 +123,7 @@ namespace XIIlib {
 
 	public:// Set関数群
 		void SetTypePositioning(_PositionType changeType);
-		void SetHitDamage(int attackPoint);				// ダメージを受ける関数
+		virtual void SetHitDamage(int attackPoint);				// ダメージを受ける関数
 		void OnDead() { is_dead = true; }
 
 		void SetAttackTimer(int countNum);

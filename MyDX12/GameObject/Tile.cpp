@@ -41,10 +41,11 @@ void XIIlib::Tile::Update()
 
 	if (is_attack_player)tile->color = { 1,0,0};
 	if (is_attack_enemy)tile->color = { 1,0,0 };
+	if (is_attack_boss)tile->color = { 1,0,0 };
 	if (is_move_point)tile->color = { 0, 0.3f, 0.7f};
 	if (is_attack_point)tile->color = { 0, 0, 0 };
 
-	if (is_attack_player && is_attack_enemy)tile->color = { 1,0, 1 };
+	if (is_attack_player && is_attack_enemy && is_attack_boss)tile->color = { 1,0, 1 };
 
 	time_valid++;
 	if (time_valid > 10) {
@@ -84,6 +85,11 @@ void XIIlib::Tile::SetAttackPointValid()
 	is_attack_point = true;
 }
 
+void XIIlib::Tile::SetBossAttackValid()
+{
+	is_attack_boss = true;
+}
+
 void XIIlib::Tile::SetBackVector(const Math::Point2& point)
 {
 	vec_back = point;
@@ -100,6 +106,7 @@ void XIIlib::Tile::Flat()
 
 	is_attack_player = false;
 	is_attack_enemy = false;
+	is_attack_boss = false;
 	is_move_point = false;
 	is_attack_point = false;
 }

@@ -55,3 +55,11 @@ bool XIIlib::AttackTimer::SizeZeroFlag()
 {
 	return currentSize <= 0;
 }
+bool XIIlib::AttackTimer::SizeThirdFlag()
+{
+	return currentSize == maxSize / 3;
+}
+bool XIIlib::AttackTimer::SizeThirdBelowFlag()
+{
+	return currentSize <= maxSize / 3;
+}
