@@ -34,12 +34,6 @@ void XIIlib::Title::Initialize(GameScene* p_game_scene)
 
 void XIIlib::Title::Update(GameScene* p_game_scene)
 {
-	// XV
-	if (KeyInput::GetInstance()->Trigger(DIK_SPACE)) {
-		trigSpace = true;
-		p_game_scene->GetAudio()->PlaySE("kettei.wav", 0.3f);
-	}
-
 	if (trigSpace) {
 		if (p_game_scene->DrawScreen(TransitionType::CLOSE)) {
 			p_game_scene->ChangeState(new Story);
@@ -56,6 +50,13 @@ void XIIlib::Title::Update(GameScene* p_game_scene)
 
 	if (gamePad_->Button_Down(X_X)) {
 		stageNum = StageNumber::NORMAL;
+	}
+
+	if (trigSpace)return;
+
+	if (KeyInput::GetInstance()->Trigger(DIK_SPACE)) {
+		trigSpace = true;
+		p_game_scene->GetAudio()->PlaySE("kettei.wav", 0.3f);
 	}
 }
 
