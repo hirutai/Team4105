@@ -131,7 +131,7 @@ bool XIIlib::BoardMap::IsAttackValid(const Math::Point2& element, int type_posit
 	else if (type_positioning == 1) {
 		return map_board[element.b][element.a]->IsEnemyAttackValid();
 	}
-	else if(type_positioning==2)
+	else if(type_positioning==4)
 	{
 		return map_board[element.b][element.a]->IsBossAttackValid();
 	}

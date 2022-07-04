@@ -29,6 +29,97 @@ void XIIlib::Tile::Initialize(float _x, float _z)
 	tile->scale = Math::Vector3(4,1,4);
 }
 
+void XIIlib::Tile::AreaPlayer()
+{
+	// 判定がオンで無ければ即返す
+	if (!is_attack_player)return;
+
+	// 判定用の色に変える
+	if (is_attack_player)tile->color = { 1,0,0 };
+
+	// 時間を進める
+	time_valid_player++;
+
+	// 時間になったら初期化
+	if (time_valid_player > 10) {
+		is_attack_player = false;
+		vec_back = Math::Point2();
+		time_valid_player = 0;
+	}
+}
+
+void XIIlib::Tile::AreaEnemy()
+{
+	// 判定がオンで無ければ即返す
+	if (!is_attack_enemy)return;
+
+	// 判定用の色に変える
+	if (is_attack_enemy)tile->color = { 1,0,0 };
+
+	// 時間を進める
+	time_valid_enemy++;
+
+	// 時間になったら初期化
+	if (time_valid_enemy > 10) {
+		is_attack_enemy = false;
+		time_valid_enemy = 0;
+	}
+}
+
+void XIIlib::Tile::AreaMovePoint()
+{
+	// 判定がオンで無ければ即返す
+	if (!is_move_point)return;
+
+	// 判定用の色に変える
+	if (is_move_point)tile->color = { 0, 0.3f, 0.7f };
+
+	// 時間を進める
+	time_valid_move_point++;
+
+	// 時間になったら初期化
+	if (time_valid_move_point > 10) {
+		is_move_point = false;
+		time_valid_move_point = 0;
+	}
+}
+
+void XIIlib::Tile::AreaAttackPoint()
+{
+	// 判定がオンで無ければ即返す
+	if (!is_attack_point)return;
+
+	// 判定用の色に変える
+	if (is_attack_point)tile->color = { 0, 0, 0 };
+
+	// 時間を進める
+	time_valid_attack_point++;
+
+	// 時間になったら初期化
+	if (time_valid_attack_point > 10) {
+		is_attack_point = false;
+		time_valid_attack_point = 0;
+	}
+}
+
+void XIIlib::Tile::AreaAttackBoss()
+{
+	// 判定がオンで無ければ即返す
+	if (!is_attack_boss)return;
+
+	// 判定用の色に変える
+	if (is_attack_boss)tile->color = { 1,0,0 };
+
+	// 時間を進める
+	time_valid_attack_boss++;
+
+	// 時間になったら初期化
+	if (time_valid_attack_boss > 10) {
+		is_attack_boss = false;
+		time_valid_attack_boss = 0;
+	}
+}
+
 void XIIlib::Tile::Update()
 {
 	tile->Update();
@@ -36,26 +127,31 @@ void XIIlib::Tile::Update()
 	on_tile = false;
 
 	tile->color = { 1,1, 1 };
-	// フラグがオンで10f赤に
-	if (!is_attack_player && !is_attack_enemy && !is_move_point&&!is_attack_point)return;
+	AreaPlayer();
+	AreaEnemy();
+	AreaMovePoint();
+	AreaAttackPoint();
+	AreaAttackBoss();
+	//// フラグがオンで10f赤に
+	//if (!is_attack_player && !is_attack_enemy && !is_move_point&&!is_attack_point)return;
 
-	if (is_attack_player)tile->color = { 1,0,0};
-	if (is_attack_enemy)tile->color = { 1,0,0 };
-	if (is_attack_boss)tile->color = { 1,0,0 };
-	if (is_move_point)tile->color = { 0, 0.3f, 0.7f};
-	if (is_attack_point)tile->color = { 0, 0, 0 };
+	//if (is_attack_player)tile->color = { 1,0,0};
+	//if (is_attack_enemy)tile->color = { 1,0,0 };
+	//if (is_attack_boss)tile->color = { 1,0,0 };
+	//if (is_move_point)tile->color = { 0, 0.3f, 0.7f};
+	//if (is_attack_point)tile->color = { 0, 0, 0 };
 
-	if (is_attack_player && is_attack_enemy && is_attack_boss)tile->color = { 1,0, 1 };
+	//if (is_attack_player && is_attack_enemy && is_attack_boss)tile->color = { 1,0, 1 };
 
-	time_valid++;
-	if (time_valid > 10) {
-		is_attack_player = false;
-		is_attack_enemy = false;
-		is_move_point = false;
-		is_attack_point = false;
-		vec_back = Math::Point2();
-		time_valid = 0;
-	}
+	//time_valid++;
+	//if (time_valid > 10) {
+	//	is_attack_player = false;
+	//	is_attack_enemy = false;
+	//	is_move_point = false;
+	//	is_attack_point = false;
+	//	vec_back = Math::Point2();
+	//	time_valid = 0;
+	//}
 
 	// BoxのUpdateはDrawの内部に存在するためここには記述しない。
 }

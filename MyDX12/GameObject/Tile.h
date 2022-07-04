@@ -19,7 +19,11 @@ namespace XIIlib {
 		bool is_attack_boss = false;
 
 		// 攻撃判定の有無を計る
-		int time_valid = 0; // 10f目で消える
+		int time_valid_player = 0; // 10f目で消える
+		int time_valid_enemy = 0; // 10f目で消える
+		int time_valid_move_point = 0; // 10f目で消える
+		int time_valid_attack_point = 0; // 10f目で消える
+		int time_valid_attack_boss = 0; // 10f目で消える
 		// マス用のモデル
 		Object3D* tile = nullptr;
 	public:
@@ -29,6 +33,12 @@ namespace XIIlib {
 		~Tile();
 
 		void Initialize(float _x, float _z);
+
+		void AreaPlayer();
+		void AreaEnemy();
+		void AreaMovePoint();
+		void AreaAttackPoint();
+		void AreaAttackBoss();
 
 		void Update();
 
