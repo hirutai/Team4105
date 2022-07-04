@@ -34,12 +34,6 @@ void Clear::Update(GameScene* p_game_scene)
 		oneThrough = true;
 	}
 
-	// XV
-	if (KeyInput::GetInstance()->Trigger(DIK_SPACE)) {
-		trigSpace = true;
-		p_game_scene->GetAudio()->PlaySE("kettei.wav", 0.3f);
-	}
-
 	if (gamePad_->Button_Down(X_A)) {
 		p_game_scene->ChangeState(new Title);
 	}
@@ -48,6 +42,13 @@ void Clear::Update(GameScene* p_game_scene)
 		if (p_game_scene->DrawScreen(TransitionType::CLOSE)) {
 			p_game_scene->ChangeState(new Title);
 		}
+	}
+
+	if (trigSpace)return;
+
+	if (KeyInput::GetInstance()->Trigger(DIK_SPACE)) {
+		trigSpace = true;
+		p_game_scene->GetAudio()->PlaySE("kettei.wav", 0.3f);
 	}
 }
 

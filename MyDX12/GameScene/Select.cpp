@@ -85,7 +85,14 @@ void XIIlib::Select::Update(GameScene* p_game_scene)
 	// 情報の更新
 	edge->SetPosition(edgePos);
 
-	// 更新
+	if (trigSpace) {
+		if (p_game_scene->DrawScreen(TransitionType::CLOSE)) {
+			p_game_scene->ChangeState(new Play);
+		}
+	}
+
+	if (trigSpace)return;
+
 	if (KeyInput::GetInstance()->Trigger(DIK_SPACE)) {
 		if (trigSpace)return;
 		trigSpace = true;
@@ -106,14 +113,6 @@ void XIIlib::Select::Update(GameScene* p_game_scene)
 			//p_game_scene->GetAudio()->PlaySE("stageSelect.wav",0.3f);
 			return;
 			//stageNum = StageNumber::HARD;
-		}
-		
-		
-	}
-
-	if (trigSpace) {
-		if (p_game_scene->DrawScreen(TransitionType::CLOSE)) {
-			p_game_scene->ChangeState(new Play);
 		}
 	}
 }

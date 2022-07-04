@@ -15,7 +15,6 @@
 XIIlib::Play::Play()
 {
 	// Initializeとほぼ同じ
-	// うんち
 }
 
 XIIlib::Play::~Play()
@@ -95,14 +94,16 @@ void XIIlib::Play::Update(GameScene* p_game_scene)
 		break;
 	case XIIlib::Phase::Game: // ゲーム
 #pragma region メニュー処理
-		// メニュー画面を展開、閉じる
-		if (KeyInput::GetInstance()->Trigger(DIK_TAB))
-		{
-			p_game_scene->ChangeState(new Menu); // クリアシーンへ
-			menuExists = true;
+		if (!trigSpace) {
+			// メニュー画面を展開、閉じる
+			if (KeyInput::GetInstance()->Trigger(DIK_TAB))
+			{
+				p_game_scene->ChangeState(new Menu); // クリアシーンへ
+				menuExists = true;
+			}
+			// メニュー画面を展開するなら即return
+			if (menuExists)return;
 		}
-		// メニュー画面を展開するなら即return
-		if (menuExists)return;
 #pragma endregion 
 
 #pragma region Game Update処理

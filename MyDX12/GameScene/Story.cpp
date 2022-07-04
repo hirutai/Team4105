@@ -32,6 +32,14 @@ void XIIlib::Story::Update(GameScene* p_game_scene)
 	switch (storyState)
 	{
 	case XIIlib::Story::StoryState::NOEN:
+		if (trigSpace) {
+			if (p_game_scene->DrawScreen(TransitionType::CLOSE)) {
+				p_game_scene->ChangeState(new Select);
+				return;
+			}
+		}
+		if (trigSpace)return;
+
 		// 次のページ
 		if (KeyInput::GetInstance()->Trigger(DIK_SPACE))
 		{
@@ -47,7 +55,7 @@ void XIIlib::Story::Update(GameScene* p_game_scene)
 			{
 				defaultPos[i] = storys[i]->GetPosition();
 			}
-			
+
 		}
 		//スキップ
 		if (KeyInput::GetInstance()->Trigger(DIK_TAB))
@@ -55,12 +63,7 @@ void XIIlib::Story::Update(GameScene* p_game_scene)
 			p_game_scene->GetAudio()->PlaySE("kettei.wav", 0.3f);
 			trigSpace = true;
 		}
-		if (trigSpace) {
-			if (p_game_scene->DrawScreen(TransitionType::CLOSE)) {
-				p_game_scene->ChangeState(new Select);
-				return;
-			}
-		}
+
 		break;
 	case XIIlib::Story::StoryState::MOVE:
 		for (int i = 0; i < MAX_STORY; ++i)
