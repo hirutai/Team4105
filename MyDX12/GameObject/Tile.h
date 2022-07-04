@@ -4,6 +4,8 @@ class Object3D;
 
 namespace XIIlib {
 
+	class BillObj;
+
 	class Tile {
 	private:
 		// ノックバックのベクトル
@@ -26,6 +28,9 @@ namespace XIIlib {
 		int time_valid_attack_boss = 0; // 10f目で消える
 		// マス用のモデル
 		Object3D* tile = nullptr;
+
+		BillObj* warningTex = nullptr;
+		BillObj* scullTex   = nullptr;
 	public:
 		static Tile* Create(float _x,float _z);
 
@@ -43,6 +48,8 @@ namespace XIIlib {
 		void Update();
 
 		void Draw();
+
+		void DrawBillObj();
 
 		void SetPlayerAttackValid();
 		void SetEnemyAttackValid();

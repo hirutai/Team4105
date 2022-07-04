@@ -25,6 +25,8 @@ namespace XIIlib {
 
 		void Draw();
 
+		void DrawBillObj();
+
 		// ”»’èˆ—‚Ì‰Šú‰»(‘S‚Ä)
 		void AllFlat();
 

@@ -43,9 +43,9 @@ void BillObj::PostDraw()
 	BillObj::cmdList = nullptr;
 }
 
-BillObj* BillObj::Create(const Math::Vector3& position, const std::string& textureFilename)
+BillObj* BillObj::Create(const Math::Vector3& position, const std::string& textureFilename, bool outBill)
 {
-	BillObj* collisionbox = new BillObj(position, textureFilename);
+	BillObj* collisionbox = new BillObj(position, textureFilename,outBill);
 
 	if (collisionbox == nullptr) {
 		return nullptr;
@@ -55,12 +55,13 @@ BillObj* BillObj::Create(const Math::Vector3& position, const std::string& textu
 }
 
 // 静的メンバ変数の実体
-BillObj::BillObj(const Math::Vector3& position, const std::string& textureFilename)
+BillObj::BillObj(const Math::Vector3& position, const std::string& textureFilename, bool outBill)
 {
 	this->position = position;
 	scale = { 1,1,1 };
 	rotation = { 0,0,0 };
 	device = DirectX12::GetDevice();
+	outBillboard = outBill;
 
 	if (!Initialize()) {
 		assert(0);
@@ -263,7 +264,13 @@ void BillObj::Update()
 	if (SUCCEEDED(result)) {
 		constMap->mat = matWorld;
 		constMap->viewproj = matViewProjection;
-		constMap->matbillboard = d_camera->GetMatBillboard();
+		if (!outBillboard) {
+			constMap->matbillboard = d_camera->GetMatBillboard();
+		}
+		else {
+			constMap->matbillboard = XMMatrixIdentity();
+		}
+		
 		constMap->color = color;
 		constBuff->Unmap(0, nullptr);
 	}
@@ -361,5 +368,12 @@ void XIIlib::BillObj::SetIsFlipY(bool isFlipY)
 	this->isFlipY = isFlipY;
 
 	// 頂点バッファへのデータ転送
+	TransferVertices();
+}
+
+void XIIlib::BillObj::ReLoadTexture(const std::string& textureFilename)
+{
+	// もう一度読み込む
+	LoadTexture(textureFilename);
 	TransferVertices();
 }
