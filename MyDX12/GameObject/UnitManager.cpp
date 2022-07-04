@@ -83,6 +83,8 @@ void XIIlib::UnitManager::Draw()
 
 	// 板ポリビルボードオブジェクトの描画
 	BillObj::PreDraw();
+	map_board->DrawBillObj();
+
 	for (auto& obj : units)
 	{
 		obj->BillObjectDraw();

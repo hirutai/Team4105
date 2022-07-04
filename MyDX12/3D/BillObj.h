@@ -72,13 +72,13 @@ namespace XIIlib {
 		/// </summary>
 		static void PostDraw();
 
-		static BillObj* Create(const Math::Vector3& position, const std::string& textureFilename);
+		static BillObj* Create(const Math::Vector3& position, const std::string& textureFilename,bool outBill = false);
 
 	public:
 		/// <summary>
 		/// コンストラクタ
 		/// </summary>
-		BillObj(const Math::Vector3& position, const std::string& textureFilename);
+		BillObj(const Math::Vector3& position, const std::string& textureFilename, bool outBill);
 
 		bool LoadTexture(const std::string& textureFilename);
 
@@ -110,6 +110,8 @@ namespace XIIlib {
 		void SetAnchorPoint(Math::Vector2 anchorpoint);
 		void SetIsFlipX(bool isFlipX);
 		void SetIsFlipY(bool isFlipY);
+
+		void ReLoadTexture(const std::string& textureFilename);
 
 		Math::Vector3 GetPosition()const { return position; }
 
@@ -150,5 +152,8 @@ namespace XIIlib {
 		bool isFlipX = false;
 		// 上下反転
 		bool isFlipY = false;
+
+		// ビルボード行列をかけるかかけないか
+		bool outBillboard = false;
 	};
 }

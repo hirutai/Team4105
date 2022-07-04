@@ -75,6 +75,15 @@ void XIIlib::BoardMap::Draw()
 	}
 }
 
+void XIIlib::BoardMap::DrawBillObj()
+{
+	for (auto tiles : map_board) {
+		for (auto tile : tiles) {
+			tile->DrawBillObj();
+		}
+	}
+}
+
 void XIIlib::BoardMap::AllFlat()
 {
 	for (auto y : map_board) {
