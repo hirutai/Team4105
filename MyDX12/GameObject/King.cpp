@@ -146,7 +146,7 @@ void XIIlib::King::Update()
 		}
 	}
 
-	if (UnitManager::GetInstance()->IsAttackValid(element_stock, (int)_PositionType::ENEMY)) {
+	if (UnitManager::GetInstance()->IsAttackValid(element_stock, (int)_PositionType::BOSS)) {
 		OnDead();
 	}
 

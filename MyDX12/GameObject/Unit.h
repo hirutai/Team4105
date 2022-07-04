@@ -28,7 +28,7 @@ namespace XIIlib {
 	enum struct _PositionType : int {
 		MINE = 0,
 		ENEMY = 1,
-		Boss = 2
+		BOSS = 2
 	};
 
 	// 駒の基底クラス

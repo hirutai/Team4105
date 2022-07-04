@@ -152,7 +152,7 @@ void XIIlib::Boss::Attack()
 	//‰º•ûŒü‚É‹î‚ª‚ ‚é‚©
 	for (int i = 0; i <= 7; i++)
 	{
-		UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(bossTileRand, i), (int)_PositionType::ENEMY);
+		UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(bossTileRand, i), 4);
 	}
 	//UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(1, 1), (int)type);
 }
