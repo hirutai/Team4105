@@ -97,12 +97,12 @@ std::vector<std::vector<int>> XIIlib::CSVLoader::GetMapVector()
 
 int** XIIlib::CSVLoader::GetMapPointer()
 {
-	int mapBoard[8][8] = { {} };
-	for (int y = 0; y < 8; ++y)
+	int mapBoard[BOARD_NUM][BOARD_NUM] = { {} };
+	for (int y = 0; y < BOARD_NUM; ++y)
 	{
-		for (int x = 0; x < 8; ++x)
+		for (int x = 0; x < BOARD_NUM; ++x)
 		{
-			int temp = BOARD_NUM - y;
+			int temp = 7 - y;
 			mapBoard[temp][x] = csvArray[y][x];
 		}
 	}
