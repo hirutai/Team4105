@@ -12,6 +12,7 @@ namespace XIIlib {
 		BillObj* hpBar = nullptr; // HPバーのオブジェクト
 		BillObj* hpEdge = nullptr; // HPの縁のオブジェクト
 
+		int count = 0;
 	public:
 		Boss();
 		~Boss();
