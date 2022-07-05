@@ -22,11 +22,11 @@ XIIlib::BossCollision::~BossCollision()
 
 std::shared_ptr<XIIlib::BossCollision> XIIlib::BossCollision::Create(int point_x, int point_z)
 {
-	std::shared_ptr<BossCollision> rook = std::make_shared<BossCollision>();
-	rook.get()->SetElementStock(point_x, point_z);
-	rook.get()->Initialize();
+	std::shared_ptr<BossCollision> boss = std::make_shared<BossCollision>();
+	boss.get()->SetElementStock(point_x, point_z);
+	boss.get()->Initialize();
 
-	return std::move(rook);
+	return std::move(boss);
 }
 
 void XIIlib::BossCollision::Initialize()
