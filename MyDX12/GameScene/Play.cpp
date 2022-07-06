@@ -11,6 +11,7 @@
 #include "../Audio/Audio.h"
 #include "../Tool/Easing.h"
 #include "../Camera/DebugCamera.h"
+#include "../3D/Object3D.h"
 
 XIIlib::Play::Play()
 {
@@ -20,6 +21,7 @@ XIIlib::Play::Play()
 XIIlib::Play::~Play()
 {
 	// ポインタ使ったやつの埋葬場
+	delete backStage;
 	delete operatorGuide; // 操作説明
 	delete menuButton; // メニュー
 	delete spStageBG1;
@@ -58,7 +60,10 @@ void XIIlib::Play::Initialize(GameScene* p_game_scene)
 		spStageBG1 = Sprite::Create(STAGEBG1_TEX, { 0.0f,0.0f });
 	}
 	
-
+	backStage = Object3D::Create(Model::CreateFromOBJ("stage1_all"));
+	backStage->scale = Math::Vector3({ 3.0f,3.0f,3.0f });
+	backStage->position = Math::Vector3({ 0.0f,-1.0f,0.0f });
+	backStage->Update();
 	operatorGuide = Sprite::Create(OPERATORGUIDE_TEX, { 1000.0f,600.0f }); // 操作説明
 	menuButton = Sprite::Create(MENU_TEX, { 0.0f,10.0f }); // メニュー
 	p_game_scene->GetAudio()->PlayBGM("yankeeBGM.wav");
@@ -89,7 +94,7 @@ void XIIlib::Play::Update(GameScene* p_game_scene)
 		}
 
 		debugCamera->SetPosition(cameraEye.x, cameraEye.y, cameraEye.z); // 視点座標の設定
-
+		backStage->Update();
 		UnitManager::GetInstance()->ObjectUpdate(); // 3Dオブジェクトの更新
 		break;
 	case XIIlib::Phase::Game: // ゲーム
@@ -107,7 +112,7 @@ void XIIlib::Play::Update(GameScene* p_game_scene)
 #pragma endregion 
 
 #pragma region Game Update処理
-		
+		backStage->Update();
 		// 更新
 		UnitManager::GetInstance()->Update();
 		// シーン移動
@@ -182,8 +187,12 @@ void XIIlib::Play::Update(GameScene* p_game_scene)
 
 void XIIlib::Play::Draw()
 {
-	AttackAreaManager::GetInstance()->Draw();
+	// モデルの描画(.obj)
+	Object3D::PreDraw();
+	backStage->Draw();
+	Object3D::PostDraw();
 	// 3D描画
+	AttackAreaManager::GetInstance()->Draw();
 	UnitManager::GetInstance()->Draw();
 }
 

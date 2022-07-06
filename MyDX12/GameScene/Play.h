@@ -1,7 +1,9 @@
 ﻿#pragma once
 #include "SceneState.h"
 #include "../Struct/Math.h"
+#include <memory>
 class Sprite;
+class Object3D;
 
 namespace XIIlib {
 
@@ -24,6 +26,9 @@ namespace XIIlib {
 		Sprite* menuButton = nullptr; // メニュー
 		Sprite* operatorGuide = nullptr; // 操作説明
 		bool menuExists = false; // メニューが開かれてるかどうかの状態
+		Object3D* backStage = nullptr;
+		//std::unique_ptr<Object3D> backStage;
+		//std::unique_ptr<Object3D> backStage;
 	public:
 		Play();
 		~Play();
