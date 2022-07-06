@@ -54,7 +54,7 @@ void XIIlib::Boss::Initialize()
 	// Audio‚Ì‰Šú‰»
 	audio_ = UnitManager::GetInstance()->GetAudio();
 
-	SetAttackTimer(6);
+	SetAttackTimer(6,CountType::FRAME);
 
 	nextPoint = { 0,0 };
 }

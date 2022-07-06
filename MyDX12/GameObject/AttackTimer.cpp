@@ -5,16 +5,24 @@
 using namespace XIIlib;
 using namespace Math;
 
-AttackTimer::AttackTimer(float countingNum_)
+AttackTimer::AttackTimer(int countingNum_, CountType type)
 {
-	countingNum = countingNum_; // カウントしたい数の入力
-	decNum = baseDecNum / countingNum; //  // 減らす量の計算
-	timerNum = 0;
-	currentSize = maxSize;
+	if (type == CountType::FRAME)
+	{
+		countingNum = countingNum_; // カウントしたい数の入力
+	}
+	else if (type == CountType::SECOND)
+	{
+		countingNum = second * countingNum_; // カウントしたい数の入力
+	}
 }
 
 void AttackTimer::Initialize()
 {
+	decNum = maxSize / countingNum; //  // 減らす量の計算
+	timerNum = 0;
+	currentSize = maxSize;
+
 	timerBar = BillObj::Create({}, "timer_bar.png"); // バーのオブジェクトの作成
 	timerBar->SetAnchorPoint({ 0.0f, 0.5f });
 	timerBar->SetSize(barSize); // バーのサイズの設定

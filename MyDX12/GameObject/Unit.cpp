@@ -5,7 +5,7 @@
 #include "../3D/Object3D.h"
 #include "../3D/BillObj.h"
 #include "../Audio/Audio.h"
-#include "../GameObject/AttackTimer.h"
+//#include "../GameObject/AttackTimer.h"
 #include "../Tool/Easing.h"
 
 bool XIIlib::Unit::ThreeCheckArea(Math::Point2 element_stock)
@@ -147,9 +147,9 @@ void XIIlib::Unit::SetHitDamage(int attackPoint)
 	_hit_point -= attackPoint;
 }
 
-void XIIlib::Unit::SetAttackTimer(int countNum)
+void XIIlib::Unit::SetAttackTimer(int countNum, XIIlib::CountType type)
 {
-	attackTimer = new AttackTimer(countNum);
+	attackTimer = new AttackTimer(countNum, type);
 	attackTimer->Initialize();
 }
 
