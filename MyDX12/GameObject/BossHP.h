@@ -2,12 +2,13 @@
 #include <memory>
 
 namespace XIIlib {
+	class HPBar;
 	class BossHP  {
 	private:
 		BossHP();
 		~BossHP();
-		const int defaultHp = 50;
-		int bossHP = 50;
+		const int defaultHp = 60;
+		int bossHP = 60;
 
 		bool nodamage = false;
 		int nodamageTime = 0;

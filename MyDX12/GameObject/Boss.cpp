@@ -54,8 +54,8 @@ void XIIlib::Boss::Initialize()
 	// Audioの初期化
 	audio_ = UnitManager::GetInstance()->GetAudio();
 
-	//攻撃ゲージの秒数()の中変える
-	SetAttackTimer(6,CountType::FRAME);
+	//攻撃ゲージの秒数
+	SetAttackTimer(300,CountType::FRAME);
 
 	nextPoint = { 0,0 };
 }
@@ -107,28 +107,43 @@ void XIIlib::Boss::Action()
 		//	count = 0;
 		//}
 		//count++;
-		//for (int i = 0; i <= 7; i++)
-		//{
-		//	UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(bossTileRand, i), (int)_PositionType::ENEMY);
-		//	UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(bossTileRand + 1, i), (int)_PositionType::ENEMY);
-		//	UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(bossTileRand - 1, i), (int)_PositionType::ENEMY);
-		//}
-		for (int j = 0; j <= 7; j++)
+		if (bossAttackSelect == 0)
 		{
-			UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(j, bossTileRand), (int)_PositionType::ENEMY);
-			UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(j, bossTileRand + 1), (int)_PositionType::ENEMY);
-			UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(j, bossTileRand - 1), (int)_PositionType::ENEMY);
+			for (int i = 0; i <= 7; i++)
+			{
+				UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(bossTileRand, i), (int)_PositionType::ENEMY);
+				UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(bossTileRand + 1, i), (int)_PositionType::ENEMY);
+				UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(bossTileRand - 1, i), (int)_PositionType::ENEMY);
+			}
+		}
+		else
+		{
+			for (int j = 0; j <= 7; j++)
+			{
+				UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(j, bossTileRand), (int)_PositionType::ENEMY);
+				UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(j, bossTileRand + 1), (int)_PositionType::ENEMY);
+				UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(j, bossTileRand - 1), (int)_PositionType::ENEMY);
+			}
 		}
 	}
-
-	//if (attackTimer->SizeZeroFlag())
-	//{
-	//	notAttackflag = TRUE;
-	//}
-	//isAttack = false;
-	
-	//移動範囲の色付け
-	//AttackAreaDraw();
+	////タイル表示
+	//UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(element_stock.a - 3, element_stock.b), (int)_PositionType::ENEMY);
+	//UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(element_stock.a + 2, element_stock.b), (int)_PositionType::ENEMY);
+	//UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(element_stock.a - 2, element_stock.b - 1), (int)_PositionType::ENEMY);
+	//UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(element_stock.a - 1, element_stock.b - 1), (int)_PositionType::ENEMY);
+	//UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(element_stock.a, element_stock.b - 1), (int)_PositionType::ENEMY);
+	//UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(element_stock.a + 1, element_stock.b - 1), (int)_PositionType::ENEMY);
+	//UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(element_stock.a - 3, element_stock.b - 1), (int)_PositionType::ENEMY);
+	//UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(element_stock.a + 2, element_stock.b - 1), (int)_PositionType::ENEMY);
+	////密着したら弾く
+	//UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(element_stock.a - 3, element_stock.b), (int)_PositionType::BOSS_KNOCKBACK);
+	//UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(element_stock.a + 2, element_stock.b), (int)_PositionType::BOSS_KNOCKBACK);
+	//UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(element_stock.a - 2, element_stock.b - 1), (int)_PositionType::BOSS_KNOCKBACK);	
+	//UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(element_stock.a - 1, element_stock.b - 1), (int)_PositionType::BOSS_KNOCKBACK);
+	//UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(element_stock.a, element_stock.b - 1), (int)_PositionType::BOSS_KNOCKBACK);
+	//UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(element_stock.a + 1 , element_stock.b - 1), (int)_PositionType::BOSS_KNOCKBACK);
+	//UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(element_stock.a - 3, element_stock.b - 1), (int)_PositionType::BOSS_KNOCKBACK);
+	//UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(element_stock.a + 2, element_stock.b - 1), (int)_PositionType::BOSS_KNOCKBACK);
 
 	if (UnitManager::GetInstance()->IsAttackValid(element_stock, (int)_PositionType::MINE))
 	{
@@ -142,6 +157,10 @@ void XIIlib::Boss::Target()
 	int BossjMax = bossMax;
 	bossTileRand = bossMin + (int)(rand() * (bossMax - bossMin + 1) / (1 + RAND_MAX));
 
+	int BossAttackMin = bossAttackMin;
+	int BossAttackMax = bossAttackMax;
+	bossAttackSelect = bossAttackMin + (int)(rand() * (bossAttackMax - bossAttackMin + 1) / (1 + RAND_MAX));
+
 	std::vector<int> v(6);
 	std::iota(v.begin(), v.end(), 0);
 	// シャッフル
@@ -150,50 +169,49 @@ void XIIlib::Boss::Target()
 	std::shuffle(v.begin(), v.end(), engine);
 
 	bossTileRand = v[bossTileRand] + 1;
-	//for (int i = 0; i <= 7; i++)
-	//{
-	//	UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(bossTileRand, i), (int)_PositionType::ENEMY);
-	//	UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(bossTileRand + 1, i), (int)_PositionType::ENEMY);
-	//	UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(bossTileRand - 1, i), (int)_PositionType::ENEMY);
-	//}
-	for (int j = 0; j <= 7; j++)
+	if (bossAttackSelect == 0)
 	{
-		UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(j,bossTileRand), (int)_PositionType::ENEMY);
-		UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(j,bossTileRand + 1), (int)_PositionType::ENEMY);
-		UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(j,bossTileRand - 1), (int)_PositionType::ENEMY);
+		for (int i = 0; i <= 7; i++)
+		{
+			UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(bossTileRand, i), (int)_PositionType::ENEMY);
+			UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(bossTileRand + 1, i), (int)_PositionType::ENEMY);
+			UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(bossTileRand - 1, i), (int)_PositionType::ENEMY);
+		}
 	}
+	else
+	{
+		for (int j = 0; j <= 7; j++)
+		{
+			UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(j, bossTileRand), (int)_PositionType::ENEMY);
+			UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(j, bossTileRand + 1), (int)_PositionType::ENEMY);
+			UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(j, bossTileRand - 1), (int)_PositionType::ENEMY);
+		}
+	}
+	UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(element_stock.a - 3, element_stock.b), (int)_PositionType::ENEMY);
+
 }
 
 void XIIlib::Boss::Attack()
 {
-	////左方向に駒があるか
-	//for (int i = 0; i <= 7; i++)
-	//{
-	//	AttackAreaManager::GetInstance()->SetAttackAreas(Math::Point2(element_stock.a - i, element_stock.b));
-	//}
-	////右方向に駒があるか
-	//for (int i = 0; i <= 7; i++)
-	//{
-	//	AttackAreaManager::GetInstance()->SetAttackAreas(Math::Point2(element_stock.a + i, element_stock.b));
-	//}
-	//下方向に駒があるか
-	//for (int i = 0; i <= 7; i++)
-	//{
-	//	UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(bossTileRand, i), (int)_PositionType::BOSS);
-	//}
-	//for (int i = 0; i <= 7; i++)
-	//{
-	//	UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(bossTileRand, i), (int)_PositionType::BOSS);
-	//	UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(bossTileRand + 1, i), (int)_PositionType::BOSS);
-	//	UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(bossTileRand - 1, i), (int)_PositionType::BOSS);
-	//}
-	for (int j = 0; j <= 7; j++)
+	Math::Point2 temp = element_stock;
+	if (bossAttackSelect == 0)
 	{
-		UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(j, bossTileRand), (int)_PositionType::BOSS);
-		UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(j, bossTileRand + 1), (int)_PositionType::BOSS);
-		UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(j, bossTileRand - 1), (int)_PositionType::BOSS);
+		for (int i = 0; i <= 7; i++)
+		{
+			UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(bossTileRand, i), (int)_PositionType::BOSS);
+			UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(bossTileRand + 1, i), (int)_PositionType::BOSS);
+			UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(bossTileRand - 1, i), (int)_PositionType::BOSS);
+		}
 	}
-	//UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(1, 1), (int)type);
+	else
+	{
+		for (int j = 0; j <= 7; j++)
+		{
+			UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(j, bossTileRand), (int)_PositionType::BOSS);
+			UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(j, bossTileRand + 1), (int)_PositionType::BOSS);
+			UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(j, bossTileRand - 1), (int)_PositionType::BOSS);
+		}
+	}
 }
 
 void XIIlib::Boss::Move()

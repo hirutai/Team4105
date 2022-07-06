@@ -146,8 +146,15 @@ void XIIlib::King::Update()
 		}
 	}
 
-	if (UnitManager::GetInstance()->IsAttackValid(element_stock, (int)_PositionType::BOSS)) {
+	if (UnitManager::GetInstance()->IsAttackValid(element_stock, (int)_PositionType::BOSS))
+	{
 		OnDead();
+	}
+	if (UnitManager::GetInstance()->IsAttackValid(element_stock, (int)_PositionType::BOSS_KNOCKBACK))
+	{
+		//OnDead();
+		element_stock.b -= 3;
+		PlayerKnockBack();
 	}
 
 	object3d->Update();

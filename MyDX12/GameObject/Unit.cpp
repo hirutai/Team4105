@@ -88,6 +88,41 @@ void XIIlib::Unit::KnockBack()
 	determinateMoveAction = true;
 }
 
+void XIIlib::Unit::PlayerKnockBack()
+{
+	// 攻撃当たっていなければそく返す
+	if (!UnitManager::GetInstance()->IsAttackValid(element_stock, (int)_PositionType::BOSS_KNOCKBACK))return;
+
+	audio_->PlaySE("damage.wav", 0.3f);
+	isAttack = false;
+	// ノックバックの移動量
+	const Math::Point2 backVector = UnitManager::GetInstance()->GetBackVector(element_stock);
+
+	// ノックバック
+	const int countLoop = 2;
+	Math::Point2 myTemp = element_stock;
+
+	for (int i = 0; i < countLoop; i++) {
+		Math::Point2 movePoint = backVector / 2.0f;
+
+		// 移動先に駒があるのかどうか?
+		if (UnitManager::GetInstance()->AllOnUnit(myTemp + movePoint)) {
+			myTemp += movePoint;
+			break;
+		}
+		// 例外かどうか
+		if (Common::GetExceptionPoint(myTemp.a + movePoint.a) || Common::GetExceptionPoint(myTemp.b + movePoint.b)) {
+			movePoint *= 0;// 一マス分の移動量を0にする
+		}
+
+		myTemp += movePoint;
+	}
+	nextPoint = myTemp;
+
+	// 移動ますが決定されました。
+	determinateMoveAction = true;
+}
+
 void XIIlib::Unit::Motion()
 {
 	const float maxTime = 1.0f;
