@@ -9,9 +9,7 @@ namespace XIIlib {
 	private:
 		Math::Point2 point_attack;
 		AREA type_attack = AREA::NONE;
-		BillObj* hpBar = nullptr; // HPバーのオブジェクト
-		BillObj* hpEdge = nullptr; // HPの縁のオブジェクト
-
+		
 		int count = 0;
 	public:
 		Boss();
@@ -28,6 +26,7 @@ namespace XIIlib {
 		void Move()override;
 		bool AttackAreaExists()override;
 		void AttackAreaDraw();
+
 		void IniState()override;
 
 		void SetHitDamage(int attackPoint)override;				// ダメージを受ける関数

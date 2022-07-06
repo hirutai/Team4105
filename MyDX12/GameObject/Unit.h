@@ -32,7 +32,8 @@ namespace XIIlib {
 		ENEMY = 1,
 		WIDE_RANGE = 2,
 		MOVE_POINT = 3,
-		BOSS = 4
+		BOSS = 4,
+		BOSS_KNOCKBACK = 5
 	};
 
 	// 駒の基底クラス
@@ -58,6 +59,10 @@ namespace XIIlib {
 		int bossMin = 0;
 		int bossMax = 5;
 		int bossTileRand = 0 ;
+
+		int bossAttackMin = 0;
+		int bossAttackMax = 1;
+		int bossAttackSelect = 0;
 		
 		int SwitchRandiMin = 0;
 		int SwitchRandiMax = 3;
@@ -137,6 +142,7 @@ namespace XIIlib {
 
 	protected:// 共通関数(private)
 		void KnockBack();
+		void PlayerKnockBack();
 		void Motion();
 		void Direction(const Math::Point2& v);
 		void SetElementStock(int x, int z);		// マス座標の設定

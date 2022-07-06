@@ -11,6 +11,7 @@
 #include "../2D/Line2D.h"
 #include "../3D/Line.h"
 #include "../GameObject/UnitManager.h"
+#include "../GameObject/HPBar.h"
 #include "../GameObject/AttackAreaManager.h"
 #include "../3D/CollCapsule.h"
 #include "../3D/CollBox.h"
@@ -60,6 +61,7 @@ GameApp::~GameApp()
 void GameApp::Initialize()
 {
 	manager = UnitManager::GetInstance();
+	hpBar = HPBar::GetInstance();
 	attackAreaManager = AttackAreaManager::GetInstance();
 
 	DirectX12::SetClearColor(0.2f, 0.3f, 0.7f);
@@ -134,6 +136,7 @@ void GameApp::Initialize()
 	circle = Circle::Create();
 
 	manager->Initialize();
+	hpBar->Initialize();
 	attackAreaManager->Initialize();
 
 	//VariableInit();
