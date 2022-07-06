@@ -20,6 +20,7 @@ namespace XIIlib
 	class GameScene;
 	class Messenger;
 	class AttackAreaManager;
+	class HPBar;
 }
 
 class GameApp
@@ -75,6 +76,7 @@ private:
 	Circle* circle = nullptr;
 	
 	XIIlib::UnitManager* manager = nullptr;
+	XIIlib::HPBar* hpBar = nullptr;
 	XIIlib::AttackAreaManager* attackAreaManager = nullptr;
 	std::string destoryName;
 	XIIlib::GameScene* game_scene = nullptr;

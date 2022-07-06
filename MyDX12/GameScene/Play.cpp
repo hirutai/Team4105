@@ -6,12 +6,14 @@
 #include "../Input/KeyInput.h"
 #include "../Tool/DebugJISText.h"
 #include "../GameObject/UnitManager.h"
+#include "../GameObject/HPBar.h"
 #include"../GameObject/AttackAreaManager.h"
 #include "../2D/Sprite.h"
 #include "../Audio/Audio.h"
 #include "../Tool/Easing.h"
 #include "../Camera/DebugCamera.h"
 #include "../3D/Object3D.h"
+#include "../3D/BillObj.h"
 
 XIIlib::Play::Play()
 {
@@ -193,6 +195,9 @@ void XIIlib::Play::Draw()
 	Object3D::PostDraw();
 	// 3D描画
 	AttackAreaManager::GetInstance()->Draw();
+	BillObj::PreDraw();
+	HPBar::GetInstance()->Draw();
+	BillObj::PostDraw();
 	UnitManager::GetInstance()->Draw();
 }
 

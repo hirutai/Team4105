@@ -19,6 +19,7 @@ namespace XIIlib {
 		bool is_move_point = false;
 		bool is_attack_point = false;
 		bool is_attack_boss = false;
+		bool is_knockBack_boss = false;
 
 		// çUåÇîªíËÇÃóLñ≥ÇåvÇÈ
 		int time_valid_player = 0; // 10fñ⁄Ç≈è¡Ç¶ÇÈ
@@ -44,6 +45,7 @@ namespace XIIlib {
 		void AreaMovePoint();
 		void AreaAttackPoint();
 		void AreaAttackBoss();
+		void AreaKnockBackBoss();
 
 		void Update();
 
@@ -56,7 +58,7 @@ namespace XIIlib {
 		void SetMovePointValid();
 		void SetAttackPointValid();
 		void SetBossAttackValid();
-
+		void SetBossKnockBackValid();
 		void SetBackVector(const Math::Point2& point);
 
 		void SetOnTile();
@@ -68,6 +70,7 @@ namespace XIIlib {
 		bool IsMovePointValid()const { return is_move_point; }
 		bool IsAttackPointValid()const { return is_attack_point; }
 		bool IsBossAttackValid()const { return is_attack_boss; }
+		bool IsBossKnockBackValid()const { return is_knockBack_boss; }
 
 		Math::Point2 GetBackVector()const { return vec_back; }
 

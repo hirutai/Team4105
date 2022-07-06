@@ -129,6 +129,23 @@ void XIIlib::Tile::AreaAttackBoss()
 		time_valid_attack_boss = 0;
 	}
 }
+void XIIlib::Tile::AreaKnockBackBoss()
+{
+	// 判定がオンで無ければ即返す
+	if (!is_knockBack_boss)return;
+
+	// 判定用の色に変える
+	if (is_knockBack_boss)tile->color = { 1,0,0 };
+
+	// 時間を進める
+	time_valid_attack_boss++;
+
+	// 時間になったら初期化
+	if (time_valid_attack_boss > 10) {
+		is_knockBack_boss = false;
+		time_valid_attack_boss = 0;
+	}
+}
 
 void XIIlib::Tile::Update()
 {
@@ -142,6 +159,7 @@ void XIIlib::Tile::Update()
 	AreaMovePoint();
 	AreaAttackPoint();
 	AreaAttackBoss();
+	AreaKnockBackBoss();
 	//// フラグがオンで10f赤に
 	//if (!is_attack_player && !is_attack_enemy && !is_move_point&&!is_attack_point)return;
 
@@ -207,6 +225,11 @@ void XIIlib::Tile::SetBossAttackValid()
 	is_attack_boss = true;
 }
 
+void XIIlib::Tile::SetBossKnockBackValid()
+{
+	is_knockBack_boss = true;
+}
+
 void XIIlib::Tile::SetBackVector(const Math::Point2& point)
 {
 	vec_back = point;
@@ -226,4 +249,5 @@ void XIIlib::Tile::Flat()
 	is_attack_boss = false;
 	is_move_point = false;
 	is_attack_point = false;
+	is_knockBack_boss = false;
 }

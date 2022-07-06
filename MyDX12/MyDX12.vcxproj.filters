@@ -387,6 +387,9 @@
     <ClCompile Include="GameObject\BossHP.cpp">
       <Filter>GameObject\Unit</Filter>
     </ClCompile>
+    <ClCompile Include="GameObject\HPBar.cpp">
+      <Filter>GameObject\Unit</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Base\DirectX12.h">
@@ -654,6 +657,9 @@
       <Filter>GameObject\Unit</Filter>
     </ClInclude>
     <ClInclude Include="GameObject\BossHP.h">
+      <Filter>GameObject\Unit</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\HPBar.h">
       <Filter>GameObject\Unit</Filter>
     </ClInclude>
   </ItemGroup>

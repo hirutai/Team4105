@@ -193,6 +193,7 @@
     <ClCompile Include="GameObject\BossHP.cpp" />
     <ClCompile Include="GameObject\Common.cpp" />
     <ClCompile Include="GameObject\Curtain.cpp" />
+    <ClCompile Include="GameObject\HPBar.cpp" />
     <ClCompile Include="GameObject\King.cpp" />
     <ClCompile Include="GameObject\Knight.cpp" />
     <ClCompile Include="GameObject\Rook.cpp" />
@@ -275,6 +276,7 @@
     <ClInclude Include="GameObject\BossHP.h" />
     <ClInclude Include="GameObject\Common.h" />
     <ClInclude Include="GameObject\Curtain.h" />
+    <ClInclude Include="GameObject\HPBar.h" />
     <ClInclude Include="GameObject\King.h" />
     <ClInclude Include="GameObject\Knight.h" />
     <ClInclude Include="GameObject\Rook.h" />
