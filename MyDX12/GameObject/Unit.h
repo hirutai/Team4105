@@ -56,7 +56,7 @@ namespace XIIlib {
 		int tileRand = 1;
 
 		int bossMin = 0;
-		int bossMax = 7;
+		int bossMax = 5;
 		int bossTileRand = 0 ;
 		
 		int SwitchRandiMin = 0;

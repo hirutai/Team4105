@@ -1,5 +1,6 @@
 #include "Tile.h"
 #include "../3D/Object3D.h"
+#include "../3D/BillObj.h"
 
 XIIlib::Tile* XIIlib::Tile::Create(float _x, float _z)
 {
@@ -18,6 +19,9 @@ XIIlib::Tile::Tile(){
 }
 
 XIIlib::Tile::~Tile(){
+	delete scullTex;
+	delete warningTex;
+
 	delete tile;
 }
 
@@ -27,6 +31,12 @@ void XIIlib::Tile::Initialize(float _x, float _z)
 	tile = Object3D::Create(Model::CreateFromOBJ("bord"));
 	tile->position = { _x,0,_z };
 	tile->scale = Math::Vector3(4,1,4);
+	warningTex = BillObj::Create(tile->position + Math::Vector3(0, 0.4f, 0), "warningTex.png", true);
+	warningTex->SetRotation(90.0f, 0, 0);
+	warningTex->SetSize({ 4,4 });
+	scullTex = BillObj::Create(tile->position + Math::Vector3(0, 0.4f,0),"crashTex.png", true);
+	scullTex->SetRotation(90.0f, 0, 0);
+	scullTex->SetSize({ 4,4 });
 }
 
 void XIIlib::Tile::AreaPlayer()
@@ -159,6 +169,17 @@ void XIIlib::Tile::Update()
 void XIIlib::Tile::Draw()
 {
 	tile->Draw();
+}
+
+void XIIlib::Tile::DrawBillObj()
+{
+	if (is_attack_enemy) {
+		warningTex->Draw();
+	}
+
+	if (is_attack_point) {
+		scullTex->Draw();
+	}
 }
 
 void XIIlib::Tile::SetPlayerAttackValid()
