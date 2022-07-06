@@ -4,11 +4,13 @@
 #include <string>
 #include"AttackAreaManager.h"
 #include "../Struct/Math.h"
+#include "AttackTimer.h"
+
 class Object3D;
 
 namespace XIIlib {
 	class Audio;
-	class AttackTimer;
+	//class AttackTimer;
 	class BillObj;
 
 	// 攻撃エリア
@@ -128,7 +130,7 @@ namespace XIIlib {
 		virtual void SetHitDamage(int attackPoint);				// ダメージを受ける関数
 		void OnDead() { is_dead = true; }
 
-		void SetAttackTimer(int countNum);
+		void SetAttackTimer(int countNum, XIIlib::CountType type = XIIlib::CountType::SECOND);
 
 	public:// 共通関数
 		void BillObjectDraw();

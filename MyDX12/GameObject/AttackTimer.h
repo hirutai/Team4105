@@ -6,6 +6,11 @@ namespace XIIlib
 {
 	class BillObj;
 
+	enum class CountType
+	{
+		FRAME = 0,
+		SECOND,
+	};
 	/// <summary>
 	/// 敵の攻撃タイマー
 	/// </summary>
@@ -29,7 +34,7 @@ namespace XIIlib
 #pragma region メンバ関数
 	public:
 		// コンストラクタ
-		AttackTimer(float countingNum_);
+		AttackTimer(int countingNum_, XIIlib::CountType type);
 		// 初期化
 		void Initialize();
 		// タイマー関数

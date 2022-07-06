@@ -53,8 +53,9 @@ void XIIlib::Boss::Initialize()
 	object3d->scale = Math::Vector3({ 2.0f,2.0f,2.0f });
 	// Audio‚Ì‰Šú‰»
 	audio_ = UnitManager::GetInstance()->GetAudio();
+
 	//UŒ‚ƒQ[ƒW‚Ì•b”()‚Ì’†•Ï‚¦‚é
-	SetAttackTimer(6);
+	SetAttackTimer(6,CountType::FRAME);
 
 	nextPoint = { 0,0 };
 }
