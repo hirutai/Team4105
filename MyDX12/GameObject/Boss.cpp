@@ -59,6 +59,7 @@ void XIIlib::Boss::Initialize()
 	SetAttackTimer(300,CountType::FRAME);
 
 	nextPoint = { 0,0 };
+	isDrawTimer = true;
 }
 
 void XIIlib::Boss::Update()

@@ -94,6 +94,9 @@ namespace XIIlib {
 		Math::Point2 nextPoint;
 		Math::Vector3 pos;
 
+		// タイマードローFlag
+		bool isDrawTimer = false;
+
 		float correctionAngle = 0.0f;
 	public:
 		Unit() = default;
