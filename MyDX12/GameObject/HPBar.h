@@ -19,9 +19,7 @@ namespace XIIlib
 #pragma endregion
 
 #pragma region 定数
-		float countingNum = BossHP::GetInstance()->GetBossHP(); // 数えたいHP
-
-		const float maxSize = 30.0f; // 最大サイズ
+		const float maxSize = 60.0f; // 最大サイズ
 #pragma endregion
 
 #pragma region メンバ関数
@@ -35,11 +33,9 @@ namespace XIIlib
 		// 初期化
 		void Initialize();
 		// タイマー関数
-		void Timer(float attackPoint);
+		void Timer(float damage);
 		// 描画
 		void Draw();
-		// タイマーの取得
-		const unsigned int GetTimer() { return timerNum; }
 		// サイズの取得
 		bool SizeZeroFlag();
 		bool SizeThirdFlag();//三分の一
@@ -50,17 +46,17 @@ namespace XIIlib
 
 #pragma region メンバ変数
 	private:
-		unsigned int timerNum; // タイマー
+		float decNum; // 減らす量
 
 		float currentSize; // 現在のサイズ
 
 		BillObj* timerBar = nullptr; // タイマーバーのオブジェクト
 		BillObj* timerEdge = nullptr; // タイマーの縁のオブジェクト
 
-		Vector2 barSize{ 30.0f, 0.75f *5}; // バーのサイズ
-		Vector2 edgeSize{ 30.5f, 1.0f *5}; // 縁のサイズ
+		Vector2 barSize{ maxSize, 1.0f }; // バーのサイズ
+		Vector2 edgeSize{ maxSize + 1.0f, 2.0f }; // 縁のサイズ
 
-		float sumPoint;
+		const Vector3 hpBarPos{ 0, 0, -25 }; // HPバーの座標
 #pragma endregion
 	};
 }

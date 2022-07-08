@@ -72,7 +72,7 @@ void GameApp::Initialize()
 	//camera->SetTarget(Math::Vector3(0, 1, 0));
 
 	d_camera = new DebugCamera();
-	d_camera->_Initialize(100.0f, 0.05f, 10.0f);
+	d_camera->_Initialize(0, 10, -30);
 	d_camera->SetLookAtRange(0, 1, 0);
 
 	// ライト生成
