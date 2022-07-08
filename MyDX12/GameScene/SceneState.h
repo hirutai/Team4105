@@ -2,7 +2,9 @@
 #include "../Input/GamePAD_XInput.h"
 #include "../2D/SpriteLoader.h"
 #include <string>
+#include <memory>
 class DebugCamera;
+class Object3D;
 
 namespace XIIlib
 {
@@ -30,6 +32,7 @@ namespace XIIlib
 	protected:// メンバ変数
 		bool trigSpace = false;
 		bool movingScene = false;
+		DebugCamera* debugCamera = nullptr; // カメラ
 
 	protected:
 		SceneState(){}
@@ -55,12 +58,17 @@ namespace XIIlib
 
 		// カメラの設定
 		void SetDebugCamera(DebugCamera* debugCamera_) { debugCamera = debugCamera_; }
+
+	protected:
+		// 背景オブジェクト
+		static void BackStagesInit();
+		static void BackStagesDraw();
+
 	protected: // 静的メンバ変数
 		static StageNumber stageNum; // ステージナンバー
 		// GamePadの借り物変数
 		static GamePAD_XInput* gamePad_;
 		static Phase phase; // 現在のフェーズ
-
-		DebugCamera* debugCamera = nullptr; // カメラ
+		static std::unique_ptr<Object3D> backStages[];
 	};
 }
