@@ -33,7 +33,7 @@ void XIIlib::BossHP::Damage()
 	if (!nodamage)
 	{
 		bossHP--;
-		HPBar::GetInstance()->Timer(1);
+		HPBar::GetInstance()->Timer(2);
 		nodamageTime = defaultNodamageTime;
 		nodamage = true;
 	}

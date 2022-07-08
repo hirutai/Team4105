@@ -13,10 +13,21 @@ HPBar* XIIlib::HPBar::GetInstance()
 
 HPBar::HPBar()
 {
+	//if (type == CountType::FRAME)
+	//{
+	//	countingNum = countingNum_; // カウントしたい数の入力
+	//}
+	//else if (type == CountType::SECOND)
+	//{
+	//	countingNum = second * countingNum_; // カウントしたい数の入力
+	//}
+
 }
 
 void HPBar::Initialize()
 {
+	//decNum = maxSize / countingNum; //  // 減らす量の計算
+	timerNum = 0;
 	currentSize = maxSize;
 
 	timerBar = BillObj::Create({}, "timer_bar.png"); // バーのオブジェクトの作成
@@ -24,15 +35,17 @@ void HPBar::Initialize()
 	timerBar->SetSize(barSize); // バーのサイズの設定
 	timerEdge = BillObj::Create({}, "timer_edge.png"); // 縁のオブジェクトの作成
 	timerEdge->SetSize(edgeSize); // 縁のサイズの設定
-	timerBar->SetPosition(hpBarPos.x - barSize.x / 2, hpBarPos.y, hpBarPos.z); // バーの座標の設定(-はズレの修正)
-	timerEdge->SetPosition(hpBarPos.x, hpBarPos.y, hpBarPos.z); // 縁の座標の設定
+	timerBar->SetPosition(-15, 0, 0); // バーの座標の設定
+	timerEdge->SetPosition(0, 0, 0); // 縁の座標の設定
 }
 
-void XIIlib::HPBar::Timer(float damage)
+void XIIlib::HPBar::Timer(float attackPoint)
 {
-	decNum = damage; // 減らす量の計算
-
-	currentSize = currentSize - decNum; // 現在のサイズを計算
+	sumPoint += attackPoint / 2.0f;
+	//if (SizeZeroFlag()) // サイズが０になった時
+	//{
+	//}
+	currentSize = maxSize - sumPoint; // 現在のサイズを計算
 
 	barSize.x = currentSize; // バーのサイズの設定
 

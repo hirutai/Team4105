@@ -3,6 +3,7 @@
 #include "../Input/GamePAD_XInput.h"
 #include "../Struct/Math.h"
 class Sprite;
+
 class DebugCamera;
 
 namespace XIIlib

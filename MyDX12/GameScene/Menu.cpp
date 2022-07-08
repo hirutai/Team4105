@@ -11,7 +11,6 @@
 #include"../GameObject/AttackAreaManager.h"
 #include "../2D/Sprite.h"
 #include "../Tool/Easing.h"
-#include "../3D/Object3D.h"
 
 XIIlib::Menu::Menu()
 {
@@ -178,7 +177,6 @@ void XIIlib::Menu::Update(GameScene* p_game_scene)
 
 void XIIlib::Menu::Draw()
 {
-	SceneState::BackStagesDraw();
 	// 3D•`‰æ
 	AttackAreaManager::GetInstance()->Draw();
 	UnitManager::GetInstance()->Draw();

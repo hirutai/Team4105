@@ -7,9 +7,6 @@
 #include "../2D/Sprite.h"
 #include "../Audio/Audio.h"
 #include "../GameObject/UnitManager.h"
-#include "../Camera/DebugCamera.h"
-#include "../Struct/Math.h"
-#include "../3D/Object3D.h"
 
 XIIlib::Select::Select()
 {
@@ -33,14 +30,6 @@ void XIIlib::Select::Initialize(GameScene* p_game_scene)
 	UnitManager::GetInstance()->FlatTileState();
 	phase = Phase::CameraDirecting;
 	p_game_scene->GetAudio()->PlayBGM("yankeeBGM.wav");
-
-	// カメラ設定
-	// カメラの初期化
-	SetDebugCamera(p_game_scene->GetCamera());
-	Math::Vector3 cameraEye = { 0,10,-30 };
-	debugCamera->SetPosition(cameraEye.x, cameraEye.y, cameraEye.z); // 視点座標の設定
-	debugCamera->_Update();
-
 }
 
 void XIIlib::Select::Update(GameScene* p_game_scene)
@@ -141,6 +130,7 @@ void XIIlib::Select::DrawTex()
 	hardButton->Draw();
 	stageSelect_sp->Draw();
 	edge->Draw();
+
 }
 
 void XIIlib::Select::DrawBackground()

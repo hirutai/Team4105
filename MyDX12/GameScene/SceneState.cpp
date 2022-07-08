@@ -11,13 +11,11 @@
 #include "../GameObject/UnitManager.h"
 #include"../GameObject/AttackAreaManager.h"
 #include "../Tool/CSVLoader.h"
-#include "../3D/Object3D.h"
 
 using namespace XIIlib;
 StageNumber SceneState::stageNum = StageNumber::DEBUG;
 GamePAD_XInput* SceneState::gamePad_ = nullptr;
 Phase SceneState::phase = Phase::CameraDirecting;
-std::unique_ptr<Object3D> SceneState::backStages[3] = {};
 
 void XIIlib::SceneState::CommonUpdate(GameScene* p_game_scene)
 {
@@ -147,21 +145,4 @@ void XIIlib::SceneState::CreateUnitsPosition(StageNumber stageNum, std::string f
 
 	// 一度だけ更新
 	UnitManager::GetInstance()->Update();
-}
-
-void XIIlib::SceneState::BackStagesInit()
-{
-	backStages[0].reset(Object3D::Create(Model::CreateFromOBJ("stage1_all")));
-	backStages[0]->scale = Math::Vector3({ 3.0f,3.0f,3.0f });
-	backStages[0]->position = Math::Vector3({ 0.0f,-1.0f,0.0f });
-	backStages[0]->Update();
-}
-
-void XIIlib::SceneState::BackStagesDraw()
-{
-	backStages[0]->Update();
-	// モデルの描画(.obj)
-	Object3D::PreDraw();
-	backStages[0]->Draw();
-	Object3D::PostDraw();
 }

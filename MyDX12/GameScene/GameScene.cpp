@@ -251,3 +251,4 @@ void XIIlib::GameScene::ResetAlpha()
 	outAlpha = 0.0f; // a値のリセット
 }
 
+//うぼぁぁぁ
