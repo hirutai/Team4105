@@ -53,24 +53,24 @@ void XIIlib::BossCollision::Update()
 	if (UnitManager::GetInstance()->IsAttackValid(element_stock, (int)_PositionType::MINE))
 	{
 		BossHP::GetInstance()->Damage();
-		////タイル表示
-		//UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(1, 7), (int)_PositionType::ENEMY);
-		//UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(6, 7), (int)_PositionType::ENEMY);
-		//UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(1, 6), (int)_PositionType::ENEMY);
-		//UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(2, 6), (int)_PositionType::ENEMY);
-		//UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(3, 6), (int)_PositionType::ENEMY);
-		//UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(4, 6), (int)_PositionType::ENEMY);
-		//UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(5, 6), (int)_PositionType::ENEMY);
-		//UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(6, 6), (int)_PositionType::ENEMY);
-		////密着したら弾く
-		//UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(1, 7), (int)_PositionType::BOSS_KNOCKBACK);
-		//UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(6, 7), (int)_PositionType::BOSS_KNOCKBACK);
-		//UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(1, 6), (int)_PositionType::BOSS_KNOCKBACK);
-		//UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(2, 6), (int)_PositionType::BOSS_KNOCKBACK);
-		//UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(3, 6), (int)_PositionType::BOSS_KNOCKBACK);
-		//UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(4, 6), (int)_PositionType::BOSS_KNOCKBACK);
-		//UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(5, 6), (int)_PositionType::BOSS_KNOCKBACK);
-		//UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(6, 6), (int)_PositionType::BOSS_KNOCKBACK);
+		//タイル表示
+		UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(1, 7), (int)_PositionType::ENEMY);
+		UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(6, 7), (int)_PositionType::ENEMY);
+		UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(1, 6), (int)_PositionType::ENEMY);
+		UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(2, 6), (int)_PositionType::ENEMY);
+		UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(3, 6), (int)_PositionType::ENEMY);
+		UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(4, 6), (int)_PositionType::ENEMY);
+		UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(5, 6), (int)_PositionType::ENEMY);
+		UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(6, 6), (int)_PositionType::ENEMY);
+		//密着したら弾く
+		UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(1, 7), (int)_PositionType::BOSS_KNOCKBACK);
+		UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(6, 7), (int)_PositionType::BOSS_KNOCKBACK);
+		UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(1, 6), (int)_PositionType::BOSS_KNOCKBACK);
+		UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(2, 6), (int)_PositionType::BOSS_KNOCKBACK);
+		UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(3, 6), (int)_PositionType::BOSS_KNOCKBACK);
+		UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(4, 6), (int)_PositionType::BOSS_KNOCKBACK);
+		UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(5, 6), (int)_PositionType::BOSS_KNOCKBACK);
+		UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(6, 6), (int)_PositionType::BOSS_KNOCKBACK);
 	}
 
 	object3d->Update();

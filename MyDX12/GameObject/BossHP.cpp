@@ -26,6 +26,7 @@ void XIIlib::BossHP::Update()
 	{
 		nodamage = false;
 	}
+	HPBar::GetInstance()->Timer(bossHP);
 }
 
 void XIIlib::BossHP::Damage()
@@ -33,7 +34,6 @@ void XIIlib::BossHP::Damage()
 	if (!nodamage)
 	{
 		bossHP--;
-		HPBar::GetInstance()->Timer(1);
 		nodamageTime = defaultNodamageTime;
 		nodamage = true;
 	}
