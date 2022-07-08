@@ -25,7 +25,6 @@ XIIlib::Play::Play()
 XIIlib::Play::~Play()
 {
 	// ポインタ使ったやつの埋葬場
-	delete backStage;
 	delete operatorGuide; // 操作説明
 	delete menuButton; // メニュー
 	delete spStageBG1;
@@ -38,6 +37,9 @@ void XIIlib::Play::Initialize(GameScene* p_game_scene)
 	if (stageNum == StageNumber::DEBUG)
 	{
 		// それ以外の数値が入っていたら、仮生成
+		// Object3Dの初期化
+		SceneState::BackStagesInit();
+
 		SceneState::CreateUnitsPosition(StageNumber::DEBUG,"stage0");
 		spStageBG1 = Sprite::Create(STAGEBG1_TEX, { 0.0f,0.0f });
 		stageNum = StageNumber::NONE;
@@ -64,12 +66,9 @@ void XIIlib::Play::Initialize(GameScene* p_game_scene)
 		spStageBG1 = Sprite::Create(STAGEBG1_TEX, { 0.0f,0.0f });
 	}
 	
-	backStage = Object3D::Create(Model::CreateFromOBJ("stage1_all"));
-	backStage->scale = Math::Vector3({ 3.0f,3.0f,3.0f });
-	backStage->position = Math::Vector3({ 0.0f,-1.0f,0.0f });
-	backStage->Update();
 	operatorGuide = Sprite::Create(OPERATORGUIDE_TEX, { 1000.0f,600.0f }); // 操作説明
 	menuButton = Sprite::Create(MENU_TEX, { 0.0f,10.0f }); // メニュー
+
 	p_game_scene->GetAudio()->PlayBGM("yankeeBGM.wav");
 
 	count = 0;
@@ -100,7 +99,6 @@ void XIIlib::Play::Update(GameScene* p_game_scene)
 		}
 
 		debugCamera->SetPosition(cameraEye.x, cameraEye.y, cameraEye.z); // 視点座標の設定
-		backStage->Update();
 		UnitManager::GetInstance()->ObjectUpdate(); // 3Dオブジェクトの更新
 		break;
 	case XIIlib::Phase::Game: // ゲーム
@@ -118,7 +116,7 @@ void XIIlib::Play::Update(GameScene* p_game_scene)
 #pragma endregion 
 
 #pragma region Game Update処理
-		backStage->Update();
+		
 		count++;
 		// 更新
 		UnitManager::GetInstance()->Update();
@@ -213,10 +211,7 @@ void XIIlib::Play::Update(GameScene* p_game_scene)
 
 void XIIlib::Play::Draw()
 {
-	// モデルの描画(.obj)
-	Object3D::PreDraw();
-	backStage->Draw();
-	Object3D::PostDraw();
+	SceneState::BackStagesDraw();
 	// 3D描画
 	AttackAreaManager::GetInstance()->Draw();
 	BillObj::PreDraw();
