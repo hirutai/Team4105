@@ -13,8 +13,8 @@ void XIIlib::SpriteLoader::Load()
 	Sprite::LoadTexture(SPACE_TEX,         L"Resources/Space.png");
 	Sprite::LoadTexture(GAMEOVER_TEX,      L"Resources/GameOver.png");
 	Sprite::LoadTexture(STAGEBG1_TEX,      L"Resources/stage_BG1.png");
-	Sprite::LoadTexture(EASY_BUTTON_TEX,   L"Resources/Easy.png");
-	Sprite::LoadTexture(NORMAL_BUTTON_TEX, L"Resources/Normal.png");
+	Sprite::LoadTexture(EASY_BUTTON_TEX,   L"Resources/kantan.png");
+	Sprite::LoadTexture(NORMAL_BUTTON_TEX, L"Resources/futuu.png");
 	Sprite::LoadTexture(HARD_BUTTON_TEX,   L"Resources/bantyou.png");
 	Sprite::LoadTexture(EDGE_TEX,          L"Resources/waku.png");
 	Sprite::LoadTexture(TITLEBG_TEX,       L"Resources/TitleBG.png");
@@ -31,7 +31,7 @@ void XIIlib::SpriteLoader::Load()
 	Sprite::LoadTexture(PLAYERGUIDES_TEX,  L"Resources/Menu.png");
 	Sprite::LoadTexture(ENEMYGUIDES_TEX,   L"Resources/Menu.png");
 	Sprite::LoadTexture(BG_TEX,            L"Resources/BG.png");
-	Sprite::LoadTexture(STAGESELECT_TEX,   L"Resources/StageSelect.png");
+	Sprite::LoadTexture(STAGESELECT_TEX,   L"Resources/nanido.png");
 	Sprite::LoadTexture(BAN_TEX,           L"Resources/banTex.png");
 	Sprite::LoadTexture(STORY0_SP,         L"Resources/story0.png");
 	//Sprite::LoadTexture(STORY1_SP,         L"Resources/.png");
