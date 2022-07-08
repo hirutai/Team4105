@@ -80,7 +80,10 @@ void XIIlib::UnitManager::Draw()
 	}
 
 	Object3D::PostDraw();
+}
 
+void XIIlib::UnitManager::BillDraw()
+{
 	// 板ポリビルボードオブジェクトの描画
 	BillObj::PreDraw();
 	map_board->DrawBillObj();

@@ -35,6 +35,8 @@ namespace XIIlib {
 
 		void Draw(); // 描画
 
+		void BillDraw();
+
 		void AddUnit(const std::shared_ptr<Unit>& spObject); // ユニットの追加
 
 		void DeadUnit();
