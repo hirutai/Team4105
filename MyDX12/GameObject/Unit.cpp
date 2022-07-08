@@ -190,5 +190,7 @@ void XIIlib::Unit::SetAttackTimer(int countNum, XIIlib::CountType type)
 
 void XIIlib::Unit::ObjectUpdate()
 {
-	object3d->Update();
+	if (object3d != nullptr) {
+		object3d->Update();
+	}
 }

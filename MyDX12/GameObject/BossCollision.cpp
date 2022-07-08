@@ -17,7 +17,9 @@ XIIlib::BossCollision::BossCollision()
 
 XIIlib::BossCollision::~BossCollision()
 {
-	delete object3d;
+	if (object3d != nullptr) {
+		delete object3d;
+	}
 }
 
 std::shared_ptr<XIIlib::BossCollision> XIIlib::BossCollision::Create(int point_x, int point_z)
@@ -38,8 +40,8 @@ void XIIlib::BossCollision::Initialize()
 	ID = Common::SeparateFilePath(path).second;
 	type = _PositionType::ENEMY;
 	CreateAttackArea();
-	object3d = Object3D::Create(Model::CreateFromOBJ("Badboy_Enemy"));
-	object3d->scale = Math::Vector3({ 2.0f,2.0f,2.0f });
+	/*object3d = Object3D::Create(Model::CreateFromOBJ("Badboy_Enemy"));
+	object3d->scale = Math::Vector3({ 2.0f,2.0f,2.0f });*/
 
 }
 
@@ -49,7 +51,7 @@ void XIIlib::BossCollision::Update()
 	// 駒の行動
 	Action();
 	// 位置座標の更新
-	object3d->position = { Common::ConvertTilePosition(element_stock.a),1.0f, Common::ConvertTilePosition(element_stock.b) };
+	//object3d->position = { Common::ConvertTilePosition(element_stock.a),1.0f, Common::ConvertTilePosition(element_stock.b) };
 	if (UnitManager::GetInstance()->IsAttackValid(element_stock, (int)_PositionType::MINE))
 	{
 		BossHP::GetInstance()->Damage();
@@ -73,7 +75,7 @@ void XIIlib::BossCollision::Update()
 		UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(6, 6), (int)_PositionType::BOSS_KNOCKBACK);
 	}
 
-	object3d->Update();
+	//object3d->Update();
 }
 
 void XIIlib::BossCollision::Action()
@@ -114,4 +116,9 @@ void XIIlib::BossCollision::SetHitDamage(int attackPoint)
 {
 	_hit_point -= attackPoint;
 	BossHP::GetInstance()->SetBossHP(_hit_point);
+}
+
+void XIIlib::BossCollision::Draw() 
+{
+
 }
