@@ -19,7 +19,7 @@ void XIIlib::SpriteLoader::Load()
 	Sprite::LoadTexture(EDGE_TEX,          L"Resources/waku.png");
 	Sprite::LoadTexture(TITLEBG_TEX,       L"Resources/TitleBG.png");
 	Sprite::LoadTexture(TITLELOG_TEX,      L"Resources/TitleLog.png");
-	Sprite::LoadTexture(GAMECLEAR_TEX,     L"Resources/GameClear.png");
+	Sprite::LoadTexture(GAMECLEAR_TEX,     L"Resources/GameClear_1.png");
 	Sprite::LoadTexture(OPERATORGUIDE_TEX, L"Resources/explanation.png");
 	Sprite::LoadTexture(MENU_TEX,          L"Resources/tabkey.png");
 	Sprite::LoadTexture(CURSOR_TEX,        L"Resources/cursor.png");
@@ -28,7 +28,7 @@ void XIIlib::SpriteLoader::Load()
 	Sprite::LoadTexture(BUTTON_TITLE_TEX,  L"Resources/taitleni.png");
 	Sprite::LoadTexture(BUTTON_PLAYER_TEX, L"Resources/sousa.png");
 	Sprite::LoadTexture(BUTTON_ENEMY_TEX,  L"Resources/enemyPic.png");
-	Sprite::LoadTexture(PLAYERGUIDES_TEX,  L"Resources/Menu.png");
+	Sprite::LoadTexture(PLAYERGUIDES_TEX,  L"Resources/explanation.png");
 	Sprite::LoadTexture(ENEMYGUIDES_TEX,   L"Resources/Menu.png");
 	Sprite::LoadTexture(BG_TEX,            L"Resources/BG.png");
 	Sprite::LoadTexture(STAGESELECT_TEX,   L"Resources/nanido.png");
