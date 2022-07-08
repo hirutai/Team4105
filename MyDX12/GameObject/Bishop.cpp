@@ -12,7 +12,7 @@ XIIlib::Bishop::Bishop()
 {
 	// 各ステータスの初期化
 	_cost = 0;
-	_hit_point = 2;
+	_hit_point = 3;
 	_attack_point = 2;
 	_defense_point = 1;
 }
@@ -35,7 +35,7 @@ std::shared_ptr<XIIlib::Bishop> XIIlib::Bishop::Create(int point_x, int point_z)
 void XIIlib::Bishop::Initialize()
 {
 	// 特になし
-	_hit_point = 2;
+	_hit_point = 3;
 
 	// クラスネーム取得
 	const type_info& id = typeid(Bishop);

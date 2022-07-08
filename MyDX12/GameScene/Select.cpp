@@ -121,9 +121,8 @@ void XIIlib::Select::Update(GameScene* p_game_scene)
 		}
 		else if (edgePos.x == HOMER_POS.x)
 		{
-			//p_game_scene->GetAudio()->PlaySE("stageSelect.wav",0.3f);
-			return;
-			//stageNum = StageNumber::HARD;
+			p_game_scene->GetAudio()->PlaySE("stageSelect.wav",0.3f);
+			SceneState::CreateUnitsPosition(StageNumber::HARD, "stage0");
 		}
 	}
 }
