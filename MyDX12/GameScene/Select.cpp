@@ -29,7 +29,7 @@ void XIIlib::Select::Initialize(GameScene* p_game_scene)
 	hardButton.reset(Sprite::Create(HARD_BUTTON_TEX, HOMER_POS));
 	edge.reset(Sprite::Create(EDGE_TEX, HOMEL_POS));
 	bg_sp.reset(Sprite::Create(BG_TEX, { 0, 0}));
-	stageSelect_sp.reset(Sprite::Create(STAGESELECT_TEX, { 250, 0}));
+	stageSelect_sp.reset(Sprite::Create(STAGESELECT_TEX, { 320, 0}));
 	UnitManager::GetInstance()->FlatTileState();
 	phase = Phase::CameraDirecting;
 	p_game_scene->GetAudio()->PlayBGM("yankeeBGM.wav");
