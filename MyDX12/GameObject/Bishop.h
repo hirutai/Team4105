@@ -8,7 +8,7 @@ namespace XIIlib {
 	private:
 		Math::Point2 point_attack;
 
-		int countingNum = 5; // カウントしたい数
+		int countingNum = 6; // カウントしたい数
 	public:
 		Bishop();
 		~Bishop();

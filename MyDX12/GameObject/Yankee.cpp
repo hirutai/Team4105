@@ -48,7 +48,7 @@ void XIIlib::Yankee::Initialize()
 	// Audio‚Ì‰Šú‰»
 	audio_ = UnitManager::GetInstance()->GetAudio();
 	correctionAngle = 180.0f;
-	SetAttackTimer(5);
+	SetAttackTimer(3);
 
 	nextPoint = { 0,0 };
 }

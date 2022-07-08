@@ -40,7 +40,7 @@ void XIIlib::King::Initialize()
 	_hit_point = 2;
 	//行動タイマーとその遅延分の数値
 	moveCount = 0;
-	moveLag = 10;
+	moveLag = 5;
 
 	// クラスネーム取得
 	const type_info& id = typeid(King);

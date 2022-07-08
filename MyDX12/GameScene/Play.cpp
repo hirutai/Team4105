@@ -124,8 +124,8 @@ void XIIlib::Play::Update(GameScene* p_game_scene)
 		{
 			std::shared_ptr<Bishop> bishop = std::move(Bishop::Create(0, 7));
 			std::shared_ptr<Bishop> bishop1 = std::move(Bishop::Create(7, 7));
-			std::shared_ptr<Rook> rook = std::move(Rook::Create(7, 0));
-			std::shared_ptr<Rook> rook1 = std::move(Rook::Create(0, 0));
+			std::shared_ptr<Rook> rook = std::move(Rook::Create(4, 0));
+			std::shared_ptr<Rook> rook1 = std::move(Rook::Create(3, 0));
 			UnitManager::GetInstance()->AddUnit(std::move(bishop));
 			UnitManager::GetInstance()->AddUnit(std::move(rook));
 			UnitManager::GetInstance()->AddUnit(std::move(bishop1));
