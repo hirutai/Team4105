@@ -41,6 +41,8 @@ void XIIlib::Select::Initialize(GameScene* p_game_scene)
 	debugCamera->SetPosition(cameraEye.x, cameraEye.y, cameraEye.z); // Ž‹“_À•W‚ÌÝ’è
 	debugCamera->_Update();
 
+	SceneState::BackStagesInit();
+
 }
 
 void XIIlib::Select::Update(GameScene* p_game_scene)
