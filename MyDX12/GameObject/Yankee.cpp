@@ -12,7 +12,7 @@ XIIlib::Yankee::Yankee()
 {
 	// 各ステータスの初期化
 	_cost = 0;
-	_hit_point = 2;
+	_hit_point = 3;
 	_attack_point = 2;
 	_defense_point = 1;
 }

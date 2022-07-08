@@ -36,7 +36,8 @@ void XIIlib::Title::Update(GameScene* p_game_scene)
 {
 	if (trigSpace) {
 		if (p_game_scene->DrawScreen(TransitionType::CLOSE)) {
-			p_game_scene->ChangeState(new Story);
+			//p_game_scene->ChangeState(new Story);
+			p_game_scene->ChangeState(new Select);
 		}
 	}
 

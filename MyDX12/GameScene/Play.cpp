@@ -14,6 +14,8 @@
 #include "../Camera/DebugCamera.h"
 #include "../3D/Object3D.h"
 #include "../3D/BillObj.h"
+#include"../GameObject/Bishop.h"
+#include"../GameObject/Rook.h"
 
 XIIlib::Play::Play()
 {
@@ -69,6 +71,8 @@ void XIIlib::Play::Initialize(GameScene* p_game_scene)
 	operatorGuide = Sprite::Create(OPERATORGUIDE_TEX, { 1000.0f,600.0f }); // 操作説明
 	menuButton = Sprite::Create(MENU_TEX, { 0.0f,10.0f }); // メニュー
 	p_game_scene->GetAudio()->PlayBGM("yankeeBGM.wav");
+
+	count = 0;
 }
 
 void XIIlib::Play::Update(GameScene* p_game_scene)
@@ -115,10 +119,25 @@ void XIIlib::Play::Update(GameScene* p_game_scene)
 
 #pragma region Game Update処理
 		backStage->Update();
+		count++;
 		// 更新
 		UnitManager::GetInstance()->Update();
+		if (stageNum == StageNumber::HARD && count % 900 == 0)
+		{
+			std::shared_ptr<Bishop> bishop = std::move(Bishop::Create(0, 7));
+			std::shared_ptr<Bishop> bishop1 = std::move(Bishop::Create(7, 7));
+			std::shared_ptr<Rook> rook = std::move(Rook::Create(7, 0));
+			std::shared_ptr<Rook> rook1 = std::move(Rook::Create(0, 0));
+			UnitManager::GetInstance()->AddUnit(std::move(bishop));
+			UnitManager::GetInstance()->AddUnit(std::move(rook));
+			UnitManager::GetInstance()->AddUnit(std::move(bishop1));
+			UnitManager::GetInstance()->AddUnit(std::move(rook1));
+		}
 		// シーン移動
-		if (UnitManager::GetInstance()->GetUnitIDElements("King") >= 0) // プレイヤが存在している場合
+		if (stageNum == StageNumber::HARD && UnitManager::GetInstance()->GetUnitIDElements("Boss") < 0) {
+			trigSpace = true;
+		}
+		else  if (UnitManager::GetInstance()->GetUnitIDElements("King") >= 0) // プレイヤが存在している場合
 		{
 			if (UnitManager::GetInstance()->GetAllUnitCount() - 1 == 0) // 敵を全滅させた時
 			{
@@ -133,13 +152,18 @@ void XIIlib::Play::Update(GameScene* p_game_scene)
 		if (trigSpace) {
 				if (UnitManager::GetInstance()->GetUnitIDElements("King") >= 0) // プレイヤが存在している場合
 				{
-					if (UnitManager::GetInstance()->GetAllUnitCount() - 1 == 0) // 敵を全滅させた時
-					{
-						if (p_game_scene->DrawScreen(TransitionType::WHITE)) {
-							p_game_scene->ResetAlpha();
-							p_game_scene->ChangeState(new Clear); // クリアシーンへ
-							return;
-						}
+					//if (UnitManager::GetInstance()->GetAllUnitCount() - 1 == 0) // 敵を全滅させた時
+					//{
+					//	if (p_game_scene->DrawScreen(TransitionType::WHITE)) {
+					//		p_game_scene->ResetAlpha();
+					//		p_game_scene->ChangeState(new Clear); // クリアシーンへ
+					//		return;
+					//	}
+					//}
+					if (p_game_scene->DrawScreen(TransitionType::WHITE)) {
+						p_game_scene->ResetAlpha();
+						p_game_scene->ChangeState(new Clear); // クリアシーンへ
+						return;
 					}
 				}
 				else if (UnitManager::GetInstance()->GetUnitIDElements("King") < 0) // プレイヤが存在していない場合

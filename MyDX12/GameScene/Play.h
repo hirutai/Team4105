@@ -27,6 +27,7 @@ namespace XIIlib {
 		Sprite* operatorGuide = nullptr; // 操作説明
 		bool menuExists = false; // メニューが開かれてるかどうかの状態
 		Object3D* backStage = nullptr;
+		int count = 0;
 		//std::unique_ptr<Object3D> backStage;
 		//std::unique_ptr<Object3D> backStage;
 	public:
