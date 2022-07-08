@@ -43,8 +43,8 @@ void XIIlib::Rook::Initialize()
 	ID = Common::SeparateFilePath(path).second;
 	type = _PositionType::ENEMY;
 	CreateAttackArea();
-	object3d = Object3D::Create(Model::CreateFromOBJ("cars"));
-	object3d->scale = Math::Vector3({ 2.0f,2.0f,2.0f });
+	object3d = Object3D::Create(Model::CreateFromOBJ("bike2"));
+	object3d->scale = Math::Vector3({ 0.8f,0.8f,0.8f });
 	// Audio‚Ì‰Šú‰»
 	audio_ = UnitManager::GetInstance()->GetAudio();
 	correctionAngle = 90.0f;
