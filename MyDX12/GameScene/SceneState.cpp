@@ -171,10 +171,13 @@ void XIIlib::SceneState::CreateUnitsPosition(StageNumber stageNum, std::string f
 
 void XIIlib::SceneState::BackStagesInit()
 {
-	backStages[0].reset(Object3D::Create(Model::CreateFromOBJ("stage1_all")));
-	backStages[0]->scale = Math::Vector3({ 3.0f,3.0f,3.0f });
-	backStages[0]->position = Math::Vector3({ 0.0f,-1.0f,0.0f });
-	backStages[0]->Update();
+	for (int i = 0; i < 3; ++i)
+	{
+		backStages[i].reset(Object3D::Create(Model::CreateFromOBJ("stage1_all")));
+		backStages[i]->scale = Math::Vector3({ 3.0f,3.0f,3.0f });
+		backStages[i]->position = Math::Vector3({ 0.0f,-1.0f,0.0f });
+		backStages[i]->Update();
+	}
 }
 
 void XIIlib::SceneState::BackStagesDraw()
