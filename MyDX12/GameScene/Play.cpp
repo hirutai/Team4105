@@ -214,10 +214,18 @@ void XIIlib::Play::Draw()
 	SceneState::BackStagesDraw();
 	// 3D描画
 	AttackAreaManager::GetInstance()->Draw();
+	
+	UnitManager::GetInstance()->Draw();
+
+	// カメラが移動する際にビルボードオブジェクトの表示をしない
+	if (phase == XIIlib::Phase::CameraDirecting)return;
+	UnitManager::GetInstance()->BillDraw();
+
+	// ボス戦で無ければ描画処理はしない
+	if (stageNum != StageNumber::HARD)return;
 	BillObj::PreDraw();
 	HPBar::GetInstance()->Draw();
 	BillObj::PostDraw();
-	UnitManager::GetInstance()->Draw();
 }
 
 void XIIlib::Play::DrawTex()

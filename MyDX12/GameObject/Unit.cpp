@@ -28,6 +28,7 @@ void XIIlib::Unit::BillObjectDraw()
 	OriginBillDraw();
 
 	if (attackTimer == nullptr) return;
+	if (isDrawTimer)return;
 	// UŒ‚ƒ^ƒCƒ}[‚Ì•`‰æ
 	attackTimer->Draw();
 }
