@@ -96,14 +96,14 @@ void XIIlib::Unit::PlayerKnockBack()
 	audio_->PlaySE("damage.wav", 0.3f);
 	isAttack = false;
 	// ノックバックの移動量
-	const Math::Point2 backVector = UnitManager::GetInstance()->GetBackVector(element_stock);
+	const Math::Point2 backVector = Math::Point2{ 0,-5 };
 
 	// ノックバック
-	const int countLoop = 2;
+	const int countLoop = 5;
 	Math::Point2 myTemp = element_stock;
 
 	for (int i = 0; i < countLoop; i++) {
-		Math::Point2 movePoint = backVector / 2.0f;
+		Math::Point2 movePoint = backVector / 5.0f;
 
 		// 移動先に駒があるのかどうか?
 		if (UnitManager::GetInstance()->AllOnUnit(myTemp + movePoint)) {

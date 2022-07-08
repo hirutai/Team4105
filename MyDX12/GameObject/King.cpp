@@ -150,12 +150,7 @@ void XIIlib::King::Update()
 	{
 		OnDead();
 	}
-	if (UnitManager::GetInstance()->IsAttackValid(element_stock, (int)_PositionType::BOSS_KNOCKBACK))
-	{
-		//OnDead();
-		element_stock.b -= 3;
-		PlayerKnockBack();
-	}
+	
 
 	object3d->Update();
 	daiza->Update();
@@ -305,6 +300,10 @@ void XIIlib::King::Action()
 		moveCount--;
 	}
 	Attack();
+	if (UnitManager::GetInstance()->IsAttackValid(element_stock, (int)_PositionType::BOSS_KNOCKBACK))
+	{
+		PlayerKnockBack();
+	}
 }
 
 bool XIIlib::King::AttackAreaExists()
