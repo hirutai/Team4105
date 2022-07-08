@@ -35,17 +35,17 @@ void HPBar::Initialize()
 	timerBar->SetSize(barSize); // バーのサイズの設定
 	timerEdge = BillObj::Create({}, "timer_edge.png"); // 縁のオブジェクトの作成
 	timerEdge->SetSize(edgeSize); // 縁のサイズの設定
-	timerBar->SetPosition(-15, 0, 0); // バーの座標の設定
-	timerEdge->SetPosition(0, 0, 0); // 縁の座標の設定
+	timerBar->SetPosition(-15, 0, 30); // バーの座標の設定
+	timerEdge->SetPosition(0, 0, 30); // 縁の座標の設定
 }
 
-void XIIlib::HPBar::Timer(float attackPoint)
+void XIIlib::HPBar::Timer(float HP)
 {
-	sumPoint += attackPoint / 2.0f;
+	//sumPoint += HP / 2.0f;
 	//if (SizeZeroFlag()) // サイズが０になった時
 	//{
 	//}
-	currentSize = maxSize - sumPoint; // 現在のサイズを計算
+	currentSize = maxSize - (60 - HP) / 2.0f; // 現在のサイズを計算
 
 	barSize.x = currentSize; // バーのサイズの設定
 
