@@ -51,6 +51,7 @@ void XIIlib::Boss::Initialize()
 	CreateAttackArea();
 	object3d = Object3D::Create(Model::CreateFromOBJ("boss"));
 	object3d->scale = Math::Vector3({ 1.5f,1.5f,1.5f });
+	
 	// Audio‚Ì‰Šú‰»
 	audio_ = UnitManager::GetInstance()->GetAudio();
 
@@ -73,7 +74,7 @@ void XIIlib::Boss::Update()
 
 	object3d->Update();
 	object3d->position = { Common::ConvertTilePosition(element_stock.a),1.0f, Common::ConvertTilePosition(element_stock.b) };
-
+	object3d->position.x -= 2.7f;
 	// À•WÝ’è
 	attackTimer->SetPosition(object3d->position);
 }
