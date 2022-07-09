@@ -30,7 +30,9 @@ namespace XIIlib
 		PLAYER1,
 		PLAYER2,
 		BLOOD_BACK_GROUND,
-		SELECT_BACK_GROUND
+		SELECT_BACK_GROUND,
+		ZOKU,
+		SHITAPPA
 	};
 	class SpriteLoader
 	{	
