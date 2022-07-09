@@ -47,4 +47,6 @@ void XIIlib::SpriteLoader::Load()
 	Sprite::LoadTexture(PLAYER2,		   L"Resources/player2.png");
 	Sprite::LoadTexture(BLOOD_BACK_GROUND, L"Resources/bloodBG.png");
 	Sprite::LoadTexture(SELECT_BACK_GROUND, L"Resources/selectBG.png");
+	Sprite::LoadTexture(ZOKU, L"Resources/zokuText.png");
+	Sprite::LoadTexture(SHITAPPA, L"Resources/sitappaText.png");
 }

@@ -26,8 +26,10 @@ void XIIlib::Select::Initialize(GameScene* p_game_scene)
 	// SceneØ‚è‘Ö‚¦Žž‚Éˆê“x’Ê‚éˆ—
 
 	//‰æ‘œ
-	easyButton.reset(Sprite::Create(EASY_BUTTON_TEX, { HOMEL_POS.x,HOMEL_POS.y +100}));
-	normalButton.reset(Sprite::Create(NORMAL_BUTTON_TEX, { HOMEC_POS.x,HOMEC_POS.y + 100 }));
+	//easyButton.reset(Sprite::Create(EASY_BUTTON_TEX, { HOMEL_POS.x,HOMEL_POS.y +100}));
+	easyButton.reset(Sprite::Create(SHITAPPA, { HOMEL_POS.x,HOMEL_POS.y + 100 }));
+	//normalButton.reset(Sprite::Create(NORMAL_BUTTON_TEX, { HOMEC_POS.x,HOMEC_POS.y + 100 }));
+	normalButton.reset(Sprite::Create(ZOKU, { HOMEC_POS.x,HOMEC_POS.y + 100 }));
 	hardButton.reset(Sprite::Create(HARD_BUTTON_TEX, { HOMER_POS.x,HOMER_POS.y + 100 }));
 	easyYankeeSilhouette.reset(Sprite::Create(YANKEE_SILHOUETTE, HOMEL_POS));
 	easyYankee.reset(Sprite::Create(YANKEE, HOMEL_POS));
@@ -48,7 +50,7 @@ void XIIlib::Select::Initialize(GameScene* p_game_scene)
 
 	easyButton->SetSize({ 300,200 });
 	hardButton->SetSize({ 300,200 });
-	normalButton->SetSize({ 300,200 });
+	normalButton->SetSize({ 200,300 });
 
 	edge.reset(Sprite::Create(EDGE_TEX, HOMEL_POS));
 	yankee1.reset(Sprite::Create(PLAYER1, HOMEL_POS));
