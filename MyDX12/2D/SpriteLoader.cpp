@@ -15,7 +15,7 @@ void XIIlib::SpriteLoader::Load()
 	Sprite::LoadTexture(STAGEBG1_TEX,      L"Resources/stage_BG1.png");
 	Sprite::LoadTexture(EASY_BUTTON_TEX,   L"Resources/kantan.png");
 	Sprite::LoadTexture(NORMAL_BUTTON_TEX, L"Resources/futuu.png");
-	Sprite::LoadTexture(HARD_BUTTON_TEX,   L"Resources/bantyou.png");
+	Sprite::LoadTexture(HARD_BUTTON_TEX,   L"Resources/soutyou.png");
 	Sprite::LoadTexture(EDGE_TEX,          L"Resources/waku.png");
 	Sprite::LoadTexture(TITLEBG_TEX,       L"Resources/TitleBG.png");
 	Sprite::LoadTexture(TITLELOG_TEX,      L"Resources/TitleLog.png");
