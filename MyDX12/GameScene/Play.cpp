@@ -173,35 +173,6 @@ void XIIlib::Play::Update(GameScene* p_game_scene)
 					}
 				}
 		}
-
-		if (KeyInput::GetInstance()->Trigger(DIK_C))
-		{
-			cPushFlag = true;
-		}
-
-		if (KeyInput::GetInstance()->Trigger(DIK_O))
-		{
-			oPushFlag = true;
-		}
-
-		if (cPushFlag)
-		{
-			if (p_game_scene->DrawScreen(TransitionType::WHITE)) {
-				p_game_scene->ChangeState(new Clear); // クリアシーンへ
-
-				cPushFlag = false;
-				return;
-			}
-		}
-		if (oPushFlag)
-		{
-			if (p_game_scene->DrawScreen(TransitionType::BLACK)) {
-				p_game_scene->ChangeState(new Over); // クリアシーンへ
-
-				oPushFlag = false;
-				return;
-			}
-		}
 #pragma endregion
 		break;
 	}
