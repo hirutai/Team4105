@@ -37,4 +37,16 @@ void XIIlib::SpriteLoader::Load()
 	//Sprite::LoadTexture(STORY1_SP,         L"Resources/.png");
 	//Sprite::LoadTexture(STORY2_SP,         L"Resources/.png");
 	Sprite::LoadTexture(WHITEOUT,          L"Resources/white.png");
+	Sprite::LoadTexture(YANKEE,			   L"Resources/yankee.png");
+	Sprite::LoadTexture(YANKEE_SILHOUETTE, L"Resources/yankeeSilhouette.png");
+	Sprite::LoadTexture(BOSS,			   L"Resources/boss.png");
+	Sprite::LoadTexture(BOSS_SILHOUETTE,   L"Resources/bossSilhouette.png");
+	Sprite::LoadTexture(BIKE,			   L"Resources/bike.png");
+	Sprite::LoadTexture(BIKE_SILHOUETTE,   L"Resources/bikeSilhouette.png");
+	Sprite::LoadTexture(PLAYER1,           L"Resources/player1.png");
+	Sprite::LoadTexture(PLAYER2,		   L"Resources/player2.png");
+	Sprite::LoadTexture(BLOOD_BACK_GROUND, L"Resources/bloodBG.png");
+	Sprite::LoadTexture(SELECT_BACK_GROUND, L"Resources/selectBG.png");
+	Sprite::LoadTexture(ZOKU, L"Resources/zokuText.png");
+	Sprite::LoadTexture(SHITAPPA, L"Resources/sitappaText.png");
 }
