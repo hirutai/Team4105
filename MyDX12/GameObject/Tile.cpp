@@ -2,6 +2,7 @@
 #include "../3D/Object3D.h"
 #include "../3D/BillObj.h"
 #include "../GameScene/SceneState.h"
+#include "ModelLoader.h"
 
 XIIlib::Tile* XIIlib::Tile::Create(float _x, float _z)
 {
@@ -29,7 +30,7 @@ XIIlib::Tile::~Tile(){
 void XIIlib::Tile::Initialize(float _x, float _z)
 {
 	// オブジェクトの初期化
-	tile = Object3D::Create(Model::CreateFromOBJ("bord"));
+	tile = Object3D::Create(ModelLoader::GetInstance()->GetModel(MODEL_TILE));
 	tile->position = { _x,0,_z };
 	tile->scale = Math::Vector3(4,1,4);
 	warningTex = BillObj::Create(tile->position + Math::Vector3(0, 0.4f, 0), "warningTex.png", true);

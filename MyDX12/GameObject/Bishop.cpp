@@ -7,6 +7,7 @@
 #include "../Audio/Audio.h"
 #include "../GameObject/AttackTimer.h"
 #include "../Tool/Easing.h"
+#include "ModelLoader.h"
 
 XIIlib::Bishop::Bishop()
 {
@@ -43,7 +44,7 @@ void XIIlib::Bishop::Initialize()
 	ID = Common::SeparateFilePath(path).second;
 	type = _PositionType::ENEMY;
 	CreateAttackArea();
-	object3d = Object3D::Create(Model::CreateFromOBJ("bike"));
+	object3d = Object3D::Create(ModelLoader::GetInstance()->GetModel(MODEL_BISHOP));
 	object3d->scale = Math::Vector3({ 2.0f,2.0f,2.0f });
 	object3d->rotation.y = 45.0f;
 	// Audio‚Ì‰Šú‰»

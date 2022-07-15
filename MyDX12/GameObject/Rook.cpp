@@ -7,6 +7,7 @@
 #include "../Audio/Audio.h"
 #include "../GameObject/AttackTimer.h"
 #include "../Tool/Easing.h"
+#include "ModelLoader.h"
 
 XIIlib::Rook::Rook()
 {
@@ -43,7 +44,7 @@ void XIIlib::Rook::Initialize()
 	ID = Common::SeparateFilePath(path).second;
 	type = _PositionType::ENEMY;
 	CreateAttackArea();
-	object3d = Object3D::Create(Model::CreateFromOBJ("bike2"));
+	object3d = Object3D::Create(ModelLoader::GetInstance()->GetModel(MODEL_ROOK));
 	object3d->scale = Math::Vector3({ 0.8f,0.8f,0.8f });
 	// Audio‚Ì‰Šú‰»
 	audio_ = UnitManager::GetInstance()->GetAudio();

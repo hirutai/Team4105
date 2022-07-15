@@ -31,6 +31,7 @@
 
 #include "../3D/Object3D.h"
 #include "../3D/BillObj.h"
+#include "../GameObject/ModelLoader.h"
 /*仮置き(ここまで)*/
 
 using namespace Math;
@@ -134,6 +135,9 @@ void GameApp::Initialize()
 	l3z = Line::Create(st3_2, ed3_2);
 
 	circle = Circle::Create();
+
+	ModelLoader::GetInstance()->Initialize();
+	ModelLoader::GetInstance()->Load();
 
 	manager->Initialize();
 	hpBar->Initialize();
