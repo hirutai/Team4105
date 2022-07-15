@@ -32,7 +32,7 @@ void XIIlib::Over::Initialize(GameScene* p_game_scene)
 void XIIlib::Over::Update(GameScene* p_game_scene)
 {
 	if (!oneThrough) {
-		p_game_scene->GetAudio()->PlaySE("sakebi.wav", 0.5f);
+		p_game_scene->GetAudio()->PlaySE("sakebi.wav", 0.1f);
 		oneThrough = true;
 	}
 
