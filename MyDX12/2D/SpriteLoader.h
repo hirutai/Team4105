@@ -36,6 +36,7 @@ namespace XIIlib
 		ZOKU,
 		SHITAPPA,
 		CLEARCONDITION,
+		BOSSCLEARCONDITION
 	};
 	class SpriteLoader
 	{	
