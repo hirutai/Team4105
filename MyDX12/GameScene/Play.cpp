@@ -111,10 +111,10 @@ void XIIlib::Play::Update(GameScene* p_game_scene)
 		UnitManager::GetInstance()->ObjectUpdate(); // 3Dオブジェクトの更新
 		break;
 	case XIIlib::Phase::ClearCondDisplay: // クリア条件表示
-		if (stageNum == StageNumber::HARD) {
+		if (stageNum == StageNumber::HARD) { // HARD時
 			ClearCondDisplay(bossClearCond); // ボスクリア条件の表示
 		}
-		else {
+		else { // HARD以外
 			ClearCondDisplay(clearCond);// クリア条件の表示
 		}
 
@@ -223,10 +223,10 @@ void XIIlib::Play::DrawTex()
 	operatorGuide->Draw();
 	menuButton->Draw();
 	if (phase == XIIlib::Phase::ClearCondDisplay) {
-		if (stageNum == StageNumber::HARD) {
+		if (stageNum == StageNumber::HARD) { // HARD時
 			bossClearCond->Draw();
 		}
-		else {
+		else { //HARD以外
 			clearCond->Draw();
 		}
 	}
