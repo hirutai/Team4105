@@ -32,7 +32,8 @@ namespace XIIlib
 		BLOOD_BACK_GROUND,
 		SELECT_BACK_GROUND,
 		ZOKU,
-		SHITAPPA
+		SHITAPPA,
+		CLEARCONDITION,
 	};
 	class SpriteLoader
 	{	

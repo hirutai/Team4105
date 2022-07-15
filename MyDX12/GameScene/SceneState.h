@@ -13,6 +13,7 @@ namespace XIIlib
 	enum class Phase
 	{
 		CameraDirecting, // カメラ演出
+		ClearCondDisplay, // クリア条件表示
 		Game, // ゲーム
 	};
 

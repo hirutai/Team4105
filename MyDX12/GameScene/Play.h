@@ -29,6 +29,13 @@ namespace XIIlib {
 		int count = 0;
 		//std::unique_ptr<Object3D> backStage;
 		//std::unique_ptr<Object3D> backStage;
+
+		const int clearCondVel = 7.5f * 2;
+
+		Sprite* clearCond = nullptr; // クリア条件画像
+		Math::Vector2 clearCondPos{ 1280.0f, 768.0f / 2}; // クリア条件画像の座標
+
+		int stopTime = 0; // 停止時間の保存用
 	public:
 		Play();
 		~Play();

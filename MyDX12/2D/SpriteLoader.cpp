@@ -49,4 +49,5 @@ void XIIlib::SpriteLoader::Load()
 	Sprite::LoadTexture(SELECT_BACK_GROUND, L"Resources/selectBG.png");
 	Sprite::LoadTexture(ZOKU, L"Resources/zokuText.png");
 	Sprite::LoadTexture(SHITAPPA, L"Resources/sitappaText.png");
+	Sprite::LoadTexture(CLEARCONDITION, L"Resources/clearCondition.png");
 }
