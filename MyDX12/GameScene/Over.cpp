@@ -19,7 +19,6 @@ XIIlib::Over::~Over()
 	// ポインタ使ったやつの埋葬場
 	delete textTitle;
 	delete textRetry;
-	delete space;
 	delete spGameOver;
 }
 
@@ -27,8 +26,6 @@ void XIIlib::Over::Initialize(GameScene* p_game_scene)
 {
 	// Scene切り替え時に一度通る処理
 	UnitManager::GetInstance()->AllDestroy();
-	space = Sprite::Create(SPACE_TEX, { 1280 / 2, 768 * 0.9f }, { 1,1,1,1 }, {0.5f,0.5f});
-	space->SetSize(space->GetDefault() * 0.8f);
 	spGameOver = Sprite::Create(GAMEOVER_TEX, {0.0f,0.0f});
 
 	const float yMullValue1 = 0.5f, yMullValue2 = 0.7f,
@@ -99,7 +96,6 @@ void XIIlib::Over::DrawTex()
 {
 	// スプライト描画
 	spGameOver->Draw();
-	//space->Draw();
 	textRetry->Draw();
 	textTitle->Draw();
 }
