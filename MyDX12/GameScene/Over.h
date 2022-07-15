@@ -25,5 +25,8 @@ namespace XIIlib {
 		bool oneThrough = false;
 
 		Sprite* space = nullptr;
+		Sprite* textRetry = nullptr;
+		Sprite* textTitle = nullptr;
+		bool selectT_R = false;
 	};
 }
