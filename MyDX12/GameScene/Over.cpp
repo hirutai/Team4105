@@ -31,12 +31,12 @@ void XIIlib::Over::Initialize(GameScene* p_game_scene)
 	space->SetSize(space->GetDefault() * 0.8f);
 	spGameOver = Sprite::Create(GAMEOVER_TEX, {0.0f,0.0f});
 
-	const float x_y34 = 3.0f / 4.0f,
-		x_y12 = 0.5f,mulXY = 1.5f;
+	const float yMullValue1 = 0.5f, yMullValue2 = 0.7f,
+		xMullValue = 0.53f,mulXY = 2.0f;
 
-	textRetry = Sprite::Create(TEXT_RETRY, { 1280 * x_y34,768.0f * x_y34 });
+	textRetry = Sprite::Create(TEXT_RETRY, { 1280 * xMullValue,768.0f * yMullValue1 });
 	textRetry->SetSize(textRetry->GetDefault() * mulXY);
-	textTitle = Sprite::Create(TEXT_GO_TITLE, { 1280 * x_y12,768.0f * x_y34 });
+	textTitle = Sprite::Create(TEXT_GO_TITLE, { 1280 * xMullValue,768.0f * yMullValue2 });
 	textTitle->SetSize(textTitle->GetDefault() * mulXY);
 	textRetry->SetColor(0.5f, 0.5f, 0.5f, 1);
 	textTitle->SetColor(1, 1, 1, 1);
@@ -72,12 +72,12 @@ void XIIlib::Over::Update(GameScene* p_game_scene)
 
 	if (trigSpace)return;
 
-	if (KeyInput::GetInstance()->Trigger(DIK_D)) {
+	if (KeyInput::GetInstance()->Trigger(DIK_W)) {
 		selectT_R = true;
 		textRetry->SetColor(1,1,1,1);
 		textTitle->SetColor(0.5f, 0.5f, 0.5f, 1);
 	}
-	if (KeyInput::GetInstance()->Trigger(DIK_A)) {
+	if (KeyInput::GetInstance()->Trigger(DIK_S)) {
 		selectT_R = false;
 		textRetry->SetColor(0.5f, 0.5f, 0.5f, 1);
 		textTitle->SetColor(1, 1, 1, 1);
@@ -99,7 +99,7 @@ void XIIlib::Over::DrawTex()
 {
 	// スプライト描画
 	spGameOver->Draw();
-	space->Draw();
+	//space->Draw();
 	textRetry->Draw();
 	textTitle->Draw();
 }
