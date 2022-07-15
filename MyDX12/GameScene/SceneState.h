@@ -60,6 +60,8 @@ namespace XIIlib
 		// カメラの設定
 		void SetDebugCamera(DebugCamera* debugCamera_) { debugCamera = debugCamera_; }
 
+		static Phase GetPhase() { return phase; }
+
 	protected:
 		// 背景オブジェクト
 		static void BackStagesInit();
