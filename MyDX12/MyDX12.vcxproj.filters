@@ -390,6 +390,9 @@
     <ClCompile Include="GameObject\HPBar.cpp">
       <Filter>GameObject\Unit</Filter>
     </ClCompile>
+    <ClCompile Include="GameObject\ModelLoader.cpp">
+      <Filter>GameObject\Common</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Base\DirectX12.h">
@@ -661,6 +664,9 @@
     </ClInclude>
     <ClInclude Include="GameObject\HPBar.h">
       <Filter>GameObject\Unit</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\ModelLoader.h">
+      <Filter>GameObject\Common</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

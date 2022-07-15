@@ -7,6 +7,7 @@
 #include "../Audio/Audio.h"
 #include "../GameObject/AttackTimer.h"
 #include "../Tool/DebugText.h"
+#include "ModelLoader.h"
 
 XIIlib::Yankee::Yankee()
 {
@@ -43,7 +44,7 @@ void XIIlib::Yankee::Initialize()
 	ID = Common::SeparateFilePath(path).second;
 	type = _PositionType::ENEMY;
 	CreateAttackArea();
-	object3d = Object3D::Create(Model::CreateFromOBJ("Badboy_Enemy"));
+	object3d = Object3D::Create(ModelLoader::GetInstance()->GetModel(MODEL_YANKEE));
 	object3d->scale = Math::Vector3({2.0f,2.0f,2.0f});
 	// Audio‚Ì‰Šú‰»
 	audio_ = UnitManager::GetInstance()->GetAudio();

@@ -196,6 +196,7 @@
     <ClCompile Include="GameObject\HPBar.cpp" />
     <ClCompile Include="GameObject\King.cpp" />
     <ClCompile Include="GameObject\Knight.cpp" />
+    <ClCompile Include="GameObject\ModelLoader.cpp" />
     <ClCompile Include="GameObject\Rook.cpp" />
     <ClCompile Include="GameObject\Stone.cpp" />
     <ClCompile Include="GameObject\Tile.cpp" />
@@ -279,6 +280,7 @@
     <ClInclude Include="GameObject\HPBar.h" />
     <ClInclude Include="GameObject\King.h" />
     <ClInclude Include="GameObject\Knight.h" />
+    <ClInclude Include="GameObject\ModelLoader.h" />
     <ClInclude Include="GameObject\Rook.h" />
     <ClInclude Include="GameObject\Stone.h" />
     <ClInclude Include="GameObject\Tile.h" />
