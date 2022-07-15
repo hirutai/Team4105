@@ -30,6 +30,7 @@ XIIlib::Play::~Play()
 	delete spStageBG1;
 
 	delete clearCond;
+	delete bossClearCond;
 }
 
 void XIIlib::Play::Initialize(GameScene* p_game_scene)
@@ -77,6 +78,9 @@ void XIIlib::Play::Initialize(GameScene* p_game_scene)
 
 	clearCond = Sprite::Create(CLEARCONDITION, { 1280.0f, 768.0f / 2 }); // クリア条件画像の作成
 	clearCond->SetAnchorPoint({ 0.5f, 0.5f }); // 中心に設定
+
+	bossClearCond = Sprite::Create(BOSSCLEARCONDITION, { 1280.0f, 768.0f / 2 }); // ボスクリア条件画像の作成
+	bossClearCond->SetAnchorPoint({ 0.5f, 0.5f }); // 中心に設定
 }
 
 void XIIlib::Play::Update(GameScene* p_game_scene)
@@ -107,28 +111,13 @@ void XIIlib::Play::Update(GameScene* p_game_scene)
 		UnitManager::GetInstance()->ObjectUpdate(); // 3Dオブジェクトの更新
 		break;
 	case XIIlib::Phase::ClearCondDisplay: // クリア条件表示
-		if (clearCondPos.x > 1280.0f / 2) // クリア条件画像が画面中央に止まるまで
-		{
-			clearCondPos.x -= clearCondVel;
+		if (stageNum == StageNumber::HARD) { // HARD時
+			ClearCondDisplay(bossClearCond); // ボスクリア条件の表示
 		}
-		else
-		{
-			stopTime++; // 停止時間をカウント
-
-			if (stopTime > 120) // ２秒経過したら
-			{
-				if (clearCondPos.x > 0) // キックオフの文字が左端に到達するまで
-				{
-					clearCondPos.x -= clearCondVel;
-				}
-				else
-				{
-					phase = XIIlib::Phase::Game; // ゲームへ
-				}
-			}
+		else { // HARD以外
+			ClearCondDisplay(clearCond);// クリア条件の表示
 		}
 
-		clearCond->SetPosition({ clearCondPos.x, clearCondPos.y });
 		break;
 	case XIIlib::Phase::Game: // ゲーム
 #pragma region メニュー処理
@@ -234,7 +223,12 @@ void XIIlib::Play::DrawTex()
 	operatorGuide->Draw();
 	menuButton->Draw();
 	if (phase == XIIlib::Phase::ClearCondDisplay) {
-		clearCond->Draw();
+		if (stageNum == StageNumber::HARD) { // HARD時
+			bossClearCond->Draw();
+		}
+		else { //HARD以外
+			clearCond->Draw();
+		}
 	}
 }
 
@@ -366,4 +360,30 @@ void XIIlib::Play::ToTheUp()
 	{
 		phase = XIIlib::Phase::ClearCondDisplay; // ゲームへ
 	}
+}
+
+void XIIlib::Play::ClearCondDisplay(Sprite* clearCond)
+{
+	if (clearCondPos.x > 1280.0f / 2) // クリア条件画像が画面中央に止まるまで
+	{
+		clearCondPos.x -= clearCondVel;
+	}
+	else
+	{
+		stopTime++; // 停止時間をカウント
+
+		if (stopTime > 120) // ２秒経過したら
+		{
+			if (clearCondPos.x > 0) // キックオフの文字が左端に到達するまで
+			{
+				clearCondPos.x -= clearCondVel;
+			}
+			else
+			{
+				phase = XIIlib::Phase::Game; // ゲームへ
+			}
+		}
+	}
+
+	clearCond->SetPosition({ clearCondPos.x, clearCondPos.y });
 }
