@@ -1,6 +1,7 @@
 #include "Over.h"
 #include "GameScene.h"
 #include "Title.h"
+#include "Play.h"
 #include "../Input/KeyInput.h"
 #include "../Tool/DebugJISText.h"
 #include "../GameObject/UnitManager.h"
@@ -16,23 +17,33 @@ XIIlib::Over::Over()
 XIIlib::Over::~Over()
 {
 	// ポインタ使ったやつの埋葬場
+	delete textTitle;
+	delete textRetry;
 	delete spGameOver;
-	delete space;
 }
 
 void XIIlib::Over::Initialize(GameScene* p_game_scene)
 {
 	// Scene切り替え時に一度通る処理
 	UnitManager::GetInstance()->AllDestroy();
-	space = Sprite::Create(SPACE_TEX, { 1280 / 2 - 300, 768 / 2 + 100 });
 	spGameOver = Sprite::Create(GAMEOVER_TEX, {0.0f,0.0f});
+
+	const float yMullValue1 = 0.5f, yMullValue2 = 0.7f,
+		xMullValue = 0.53f,mulXY = 2.0f;
+
+	textRetry = Sprite::Create(TEXT_RETRY, { 1280 * xMullValue,768.0f * yMullValue1 });
+	textRetry->SetSize(textRetry->GetDefault() * mulXY);
+	textTitle = Sprite::Create(TEXT_GO_TITLE, { 1280 * xMullValue,768.0f * yMullValue2 });
+	textTitle->SetSize(textTitle->GetDefault() * mulXY);
+	textRetry->SetColor(0.5f, 0.5f, 0.5f, 1);
+	textTitle->SetColor(1, 1, 1, 1);
 	//p_game_scene->GetAudio()->PlayBGM("yankeeBGM.wav");
 }
 
 void XIIlib::Over::Update(GameScene* p_game_scene)
 {
 	if (!oneThrough) {
-		p_game_scene->GetAudio()->PlaySE("sakebi.wav", 0.5f);
+		p_game_scene->GetAudio()->PlaySE("sakebi.wav", 0.1f);
 		oneThrough = true;
 	}
 
@@ -42,11 +53,32 @@ void XIIlib::Over::Update(GameScene* p_game_scene)
 
 	if (trigSpace) {
 		if (p_game_scene->DrawScreen(TransitionType::CLOSE)) {
-			p_game_scene->ChangeState(new Title);
+			if (selectT_R) {
+				// RETRY
+				SceneState::phase = Phase::CameraDirecting;
+				SceneState::CreateUnitsPosition(SceneState::stageNum, "stage0");
+				p_game_scene->ChangeState(new Play());
+			}
+			else {
+				// タイトルに遷移
+				p_game_scene->ChangeState(new Title);
+			}
+			
 		}
 	}
 
 	if (trigSpace)return;
+
+	if (KeyInput::GetInstance()->Trigger(DIK_W)) {
+		selectT_R = true;
+		textRetry->SetColor(1,1,1,1);
+		textTitle->SetColor(0.5f, 0.5f, 0.5f, 1);
+	}
+	if (KeyInput::GetInstance()->Trigger(DIK_S)) {
+		selectT_R = false;
+		textRetry->SetColor(0.5f, 0.5f, 0.5f, 1);
+		textTitle->SetColor(1, 1, 1, 1);
+	}
 
 	if (KeyInput::GetInstance()->Trigger(DIK_SPACE)) {
 		trigSpace = true;
@@ -64,7 +96,8 @@ void XIIlib::Over::DrawTex()
 {
 	// スプライト描画
 	spGameOver->Draw();
-	space->Draw();
+	textRetry->Draw();
+	textTitle->Draw();
 }
 
 void XIIlib::Over::DrawBackground()

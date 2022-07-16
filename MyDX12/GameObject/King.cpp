@@ -8,6 +8,7 @@
 #include "../Audio/Audio.h"
 #include "../3D/BillObj.h"
 #include "../Tool/Easing.h"
+#include "ModelLoader.h"
 
 XIIlib::King::King()
 {
@@ -53,7 +54,7 @@ void XIIlib::King::Initialize()
 
 	CreateAttackArea();
 
-	object3d = Object3D::Create(Model::CreateFromOBJ("Badboy_Bat_1"));
+	object3d = Object3D::Create(ModelLoader::GetInstance()->GetModel(MODEL_KING));
 	object3d->scale = Math::Vector3({2.0f,2.0f,2.0f});
 	daiza = Object3D::Create(Model::CreateFromOBJ("daiza"));
 

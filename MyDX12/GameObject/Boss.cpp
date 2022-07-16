@@ -14,6 +14,7 @@
 #include <numeric>
 #include <iterator>
 #include <random>
+#include "ModelLoader.h"
 
 XIIlib::Boss::Boss()
 {
@@ -49,7 +50,7 @@ void XIIlib::Boss::Initialize()
 	ID = Common::SeparateFilePath(path).second;
 	type = _PositionType::ENEMY;
 	CreateAttackArea();
-	object3d = Object3D::Create(Model::CreateFromOBJ("boss"));
+	object3d = Object3D::Create(ModelLoader::GetInstance()->GetModel(MODEL_BOSS));
 	object3d->scale = Math::Vector3({ 1.5f,1.5f,1.5f });
 	
 	// Audio‚Ì‰Šú‰»

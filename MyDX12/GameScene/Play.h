@@ -68,6 +68,20 @@ namespace XIIlib {
 		void ToTheUp(); // 上へ
 #pragma endregion
 
+#pragma region クリア条件表示		
+		const int clearCondVel = 7.5f * 2; // クリア条件画像の移動量
+
+		Sprite* clearCond = nullptr; // クリア条件画像
+		Sprite* bossClearCond = nullptr; // 総長クリア条件画像
+
+		Math::Vector2 clearCondPos{ 1280.0f, 768.0f / 2 }; // クリア条件画像の座標
+
+		int stopTime = 0; // 停止時間の保存用
+
+		// クリア条件の表示
+		void ClearCondDisplay(Sprite* clearCond);
+#pragma endregion
+
 		bool cPushFlag = false;
 		bool oPushFlag = false;
 	};

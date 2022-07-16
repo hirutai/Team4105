@@ -28,6 +28,9 @@ XIIlib::Play::~Play()
 	delete operatorGuide; // 操作説明
 	delete menuButton; // メニュー
 	delete spStageBG1;
+
+	delete clearCond;
+	delete bossClearCond;
 }
 
 void XIIlib::Play::Initialize(GameScene* p_game_scene)
@@ -72,6 +75,12 @@ void XIIlib::Play::Initialize(GameScene* p_game_scene)
 	p_game_scene->GetAudio()->PlayBGM("yankeeBGM.wav");
 
 	count = 0;
+
+	clearCond = Sprite::Create(CLEARCONDITION, { 1280.0f, 768.0f / 2 }); // クリア条件画像の作成
+	clearCond->SetAnchorPoint({ 0.5f, 0.5f }); // 中心に設定
+
+	bossClearCond = Sprite::Create(BOSSCLEARCONDITION, { 1280.0f, 768.0f / 2 }); // ボスクリア条件画像の作成
+	bossClearCond->SetAnchorPoint({ 0.5f, 0.5f }); // 中心に設定
 }
 
 void XIIlib::Play::Update(GameScene* p_game_scene)
@@ -100,6 +109,15 @@ void XIIlib::Play::Update(GameScene* p_game_scene)
 
 		debugCamera->SetPosition(cameraEye.x, cameraEye.y, cameraEye.z); // 視点座標の設定
 		UnitManager::GetInstance()->ObjectUpdate(); // 3Dオブジェクトの更新
+		break;
+	case XIIlib::Phase::ClearCondDisplay: // クリア条件表示
+		if (stageNum == StageNumber::HARD) { // HARD時
+			ClearCondDisplay(bossClearCond); // ボスクリア条件の表示
+		}
+		else { // HARD以外
+			ClearCondDisplay(clearCond);// クリア条件の表示
+		}
+
 		break;
 	case XIIlib::Phase::Game: // ゲーム
 #pragma region メニュー処理
@@ -173,35 +191,6 @@ void XIIlib::Play::Update(GameScene* p_game_scene)
 					}
 				}
 		}
-
-		if (KeyInput::GetInstance()->Trigger(DIK_C))
-		{
-			cPushFlag = true;
-		}
-
-		if (KeyInput::GetInstance()->Trigger(DIK_O))
-		{
-			oPushFlag = true;
-		}
-
-		if (cPushFlag)
-		{
-			if (p_game_scene->DrawScreen(TransitionType::WHITE)) {
-				p_game_scene->ChangeState(new Clear); // クリアシーンへ
-
-				cPushFlag = false;
-				return;
-			}
-		}
-		if (oPushFlag)
-		{
-			if (p_game_scene->DrawScreen(TransitionType::BLACK)) {
-				p_game_scene->ChangeState(new Over); // クリアシーンへ
-
-				oPushFlag = false;
-				return;
-			}
-		}
 #pragma endregion
 		break;
 	}
@@ -233,6 +222,14 @@ void XIIlib::Play::DrawTex()
 	// スプライト描画
 	operatorGuide->Draw();
 	menuButton->Draw();
+	if (phase == XIIlib::Phase::ClearCondDisplay) {
+		if (stageNum == StageNumber::HARD) { // HARD時
+			bossClearCond->Draw();
+		}
+		else { //HARD以外
+			clearCond->Draw();
+		}
+	}
 }
 
 void XIIlib::Play::DrawBackground()
@@ -361,6 +358,32 @@ void XIIlib::Play::ToTheUp()
 
 	if (cameraEye.y == upperEye.y) // 上側カメラに達したら
 	{
-		phase = XIIlib::Phase::Game; // ゲームへ
+		phase = XIIlib::Phase::ClearCondDisplay; // ゲームへ
 	}
+}
+
+void XIIlib::Play::ClearCondDisplay(Sprite* clearCond)
+{
+	if (clearCondPos.x > 1280.0f / 2) // クリア条件画像が画面中央に止まるまで
+	{
+		clearCondPos.x -= clearCondVel;
+	}
+	else
+	{
+		stopTime++; // 停止時間をカウント
+
+		if (stopTime > 120) // ２秒経過したら
+		{
+			if (clearCondPos.x > 0) // キックオフの文字が左端に到達するまで
+			{
+				clearCondPos.x -= clearCondVel;
+			}
+			else
+			{
+				phase = XIIlib::Phase::Game; // ゲームへ
+			}
+		}
+	}
+
+	clearCond->SetPosition({ clearCondPos.x, clearCondPos.y });
 }

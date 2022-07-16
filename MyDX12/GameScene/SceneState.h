@@ -13,6 +13,7 @@ namespace XIIlib
 	enum class Phase
 	{
 		CameraDirecting, // カメラ演出
+		ClearCondDisplay, // クリア条件表示
 		Game, // ゲーム
 	};
 
@@ -58,6 +59,8 @@ namespace XIIlib
 
 		// カメラの設定
 		void SetDebugCamera(DebugCamera* debugCamera_) { debugCamera = debugCamera_; }
+
+		static Phase GetPhase() { return phase; }
 
 	protected:
 		// 背景オブジェクト

@@ -11,11 +11,13 @@ void XIIlib::SpriteLoader::Load()
 	Sprite::LoadTexture(EFEECT1_TEX,       L"Resources/effect1.png");
 	// ÉQÅ[ÉÄ
 	Sprite::LoadTexture(SPACE_TEX,         L"Resources/Space.png");
+	Sprite::LoadTexture(TEXT_GO_TITLE,     L"Resources/titleTex.png");
+	Sprite::LoadTexture(TEXT_RETRY,        L"Resources/retryTex.png");
 	Sprite::LoadTexture(GAMEOVER_TEX,      L"Resources/GameOver.png");
 	Sprite::LoadTexture(STAGEBG1_TEX,      L"Resources/stage_BG1.png");
 	Sprite::LoadTexture(EASY_BUTTON_TEX,   L"Resources/kantan.png");
 	Sprite::LoadTexture(NORMAL_BUTTON_TEX, L"Resources/futuu.png");
-	Sprite::LoadTexture(HARD_BUTTON_TEX,   L"Resources/bantyou.png");
+	Sprite::LoadTexture(HARD_BUTTON_TEX,   L"Resources/soutyou.png");
 	Sprite::LoadTexture(EDGE_TEX,          L"Resources/waku.png");
 	Sprite::LoadTexture(TITLEBG_TEX,       L"Resources/TitleBG.png");
 	Sprite::LoadTexture(TITLELOG_TEX,      L"Resources/TitleLog.png");
@@ -49,4 +51,6 @@ void XIIlib::SpriteLoader::Load()
 	Sprite::LoadTexture(SELECT_BACK_GROUND, L"Resources/selectBG.png");
 	Sprite::LoadTexture(ZOKU, L"Resources/zokuText.png");
 	Sprite::LoadTexture(SHITAPPA, L"Resources/sitappaText.png");
+	Sprite::LoadTexture(CLEARCONDITION, L"Resources/clearCondition.png");
+	Sprite::LoadTexture(BOSSCLEARCONDITION, L"Resources/bossClearCondition.png");
 }
