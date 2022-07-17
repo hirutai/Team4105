@@ -5,6 +5,7 @@
 #include"AttackAreaManager.h"
 #include "../Struct/Math.h"
 #include "AttackTimer.h"
+#include "../Input/GamePAD_XInput.h"
 
 class Object3D;
 
@@ -80,6 +81,7 @@ namespace XIIlib {
 		std::vector<std::vector<Math::Point2>> attack_area; // 駒が持つ攻撃範囲の情報
 
 		Audio* audio_ = nullptr;
+		GamePAD_XInput* gamePad_ = nullptr;
 
 		_PositionType type = _PositionType::MINE; // 敵味方判別用
 

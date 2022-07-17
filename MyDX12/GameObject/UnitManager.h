@@ -4,6 +4,8 @@
 #include <string>
 #include "Unit.h"
 
+class GamePAD_XInput;
+
 namespace XIIlib {
 
 	class BoardMap;
@@ -22,6 +24,7 @@ namespace XIIlib {
 		int deadCount = 0;
 
 		Audio* audio_ = nullptr;
+		GamePAD_XInput* gamePad_ = nullptr;
 
 	public:
 		UnitManager(const UnitManager& obj) = delete;
@@ -76,6 +79,9 @@ namespace XIIlib {
 		std::vector<int> GetOnUnitElements(const Math::Point2& point);
 
 		Audio* GetAudio() { return audio_; };//音
+
+		void SetGamePad(GamePAD_XInput* gamePad) { this->gamePad_ = gamePad; }
+		GamePAD_XInput* GetGamePad() {return gamePad_; }
 
 		// 管理しているユニット数(全て)
 		int GetAllUnitCount()const;

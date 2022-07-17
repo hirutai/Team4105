@@ -13,6 +13,8 @@ namespace XIIlib{
 
 		bool isDrawAtArea = false; // UŒ‚‚µ‚Ä‚¢‚é‚©‚Ç‚¤‚©
 		int drawAtArea = 0;
+
+		
 	public:
 		King();
 		~King();

@@ -51,6 +51,8 @@ void XIIlib::King::Initialize()
 
 	// Audio‚Ì‰Šú‰»
 	audio_ = UnitManager::GetInstance()->GetAudio();
+	// ƒQ[ƒ€Pad
+	gamePad_ = UnitManager::GetInstance()->GetGamePad();
 
 	CreateAttackArea();
 
@@ -184,7 +186,7 @@ void XIIlib::King::Move()
 		{1, 0}		// D|3
 	};
 
-	if (KeyInput::GetInstance()->Push(DIK_W)) {
+	if (KeyInput::GetInstance()->Push(DIK_W) || 0.0f < gamePad_->LStickYaxis()) {
 
 		next_state += move_vec[0];
 		if (!UnitManager::GetInstance()->AllOnUnit(next_state)) {
@@ -198,7 +200,7 @@ void XIIlib::King::Move()
 			determinateMoveAction = true;
 		}
 	}
-	else if (KeyInput::GetInstance()->Push(DIK_S)) {
+	else if (KeyInput::GetInstance()->Push(DIK_S) || gamePad_->LStickYaxis() < 0.0f) {
 		next_state += move_vec[1];
 		if (!UnitManager::GetInstance()->AllOnUnit(next_state)) {
 			nextPoint = next_state;
@@ -212,7 +214,7 @@ void XIIlib::King::Move()
 		}
 	}
 
-	if (KeyInput::GetInstance()->Push(DIK_A)) {
+	if (KeyInput::GetInstance()->Push(DIK_A) || gamePad_->LStickXaxis() < 0.0f) {
 		next_state += move_vec[2];
 		if (!UnitManager::GetInstance()->AllOnUnit(next_state)) {
 			nextPoint = next_state;
@@ -225,7 +227,7 @@ void XIIlib::King::Move()
 			determinateMoveAction = true;
 		}
 	}
-	else if (KeyInput::GetInstance()->Push(DIK_D)) {
+	else if (KeyInput::GetInstance()->Push(DIK_D) || 0.0f < gamePad_->LStickXaxis()) {
 		next_state += move_vec[3];
 		if (!UnitManager::GetInstance()->AllOnUnit(next_state)) {
 			nextPoint = next_state;
@@ -246,49 +248,57 @@ void XIIlib::King::Attack()
 {
 	Math::Point2 tmpAttackArea;
 	
-	if (KeyInput::GetInstance()->Push(DIK_UP)) {
-		type_attack = AREA::UP;
-		tmpAttackArea = attack_area[(int)type_attack][1];
-		object3d->rotation.y = 180.0f;
-		attackAreasBillboard->SetRotation(0,0,0);
-		attackAreasBillboard->SetPosition(
-			Common::ConvertTilePosition(element_stock.a + tmpAttackArea.a),
-			-1.0f, Common::ConvertTilePosition(element_stock.b + tmpAttackArea.b)
-		);
+	if (KeyInput::GetInstance()->Push(DIK_UP)
+		|| KeyInput::GetInstance()->Push(DIK_DOWN)
+		|| KeyInput::GetInstance()->Push(DIK_LEFT)
+		|| KeyInput::GetInstance()->Push(DIK_RIGHT)
+		|| gamePad_->RStickDown())
+	{
+		if (KeyInput::GetInstance()->Push(DIK_UP) || gamePad_->RStickDownFront()) {
+			type_attack = AREA::UP;
+			tmpAttackArea = attack_area[(int)type_attack][1];
+			object3d->rotation.y = 180.0f;
+			attackAreasBillboard->SetRotation(0, 0, 0);
+			attackAreasBillboard->SetPosition(
+				Common::ConvertTilePosition(element_stock.a + tmpAttackArea.a),
+				-1.0f, Common::ConvertTilePosition(element_stock.b + tmpAttackArea.b)
+			);
+		}
+		else if (KeyInput::GetInstance()->Push(DIK_LEFT) || gamePad_->RStickDownLeft()) {
+			type_attack = AREA::LEFT;
+			tmpAttackArea = attack_area[(int)type_attack][1];
+			object3d->rotation.y = 90.0f;
+			attackAreasBillboard->SetRotation(0, -90, 0);
+			attackAreasBillboard->SetPosition(
+				Common::ConvertTilePosition(element_stock.a + tmpAttackArea.a),
+				-1.0f, Common::ConvertTilePosition(element_stock.b + tmpAttackArea.b)
+			);
+		}
+		else if (KeyInput::GetInstance()->Push(DIK_RIGHT) || gamePad_->RStickDownRight()) {
+			type_attack = AREA::RIGHT;
+			tmpAttackArea = attack_area[(int)type_attack][1];
+			object3d->rotation.y = -90.0f;
+			attackAreasBillboard->SetRotation(0, 90, 0);
+			attackAreasBillboard->SetPosition(
+				Common::ConvertTilePosition(element_stock.a + tmpAttackArea.a),
+				-1.0f, Common::ConvertTilePosition(element_stock.b + tmpAttackArea.b)
+			);
+		}
+		else if (KeyInput::GetInstance()->Push(DIK_DOWN) || gamePad_->RStickDownBack()) {
+			type_attack = AREA::DOWN;
+			tmpAttackArea = attack_area[(int)type_attack][1];
+			object3d->rotation.y = 0.0f;
+			attackAreasBillboard->SetRotation(0, 180, 0);
+			attackAreasBillboard->SetPosition(
+				Common::ConvertTilePosition(element_stock.a + tmpAttackArea.a),
+				-1.0f, Common::ConvertTilePosition(element_stock.b + tmpAttackArea.b)
+			);
+		}
+		else {
+			type_attack = AREA::NONE;
+		}
 	}
-	else if (KeyInput::GetInstance()->Push(DIK_LEFT)) {
-		type_attack = AREA::LEFT;
-		tmpAttackArea = attack_area[(int)type_attack][1];
-		object3d->rotation.y = 90.0f;
-		attackAreasBillboard->SetRotation(0, -90, 0);
-		attackAreasBillboard->SetPosition(
-			Common::ConvertTilePosition(element_stock.a + tmpAttackArea.a),
-			-1.0f, Common::ConvertTilePosition(element_stock.b + tmpAttackArea.b)
-		);
-	}
-	else if (KeyInput::GetInstance()->Push(DIK_DOWN)) {
-		type_attack = AREA::DOWN;
-		tmpAttackArea = attack_area[(int)type_attack][1];
-		object3d->rotation.y = 0.0f;
-		attackAreasBillboard->SetRotation(0, 180, 0);
-		attackAreasBillboard->SetPosition(
-			Common::ConvertTilePosition(element_stock.a + tmpAttackArea.a),
-			-1.0f, Common::ConvertTilePosition(element_stock.b + tmpAttackArea.b)
-		);
-	}
-	else if (KeyInput::GetInstance()->Push(DIK_RIGHT)) {
-		type_attack = AREA::RIGHT;
-		tmpAttackArea = attack_area[(int)type_attack][1];
-		object3d->rotation.y = -90.0f;
-		attackAreasBillboard->SetRotation(0, 90, 0);
-		attackAreasBillboard->SetPosition(
-			Common::ConvertTilePosition(element_stock.a + tmpAttackArea.a),
-			-1.0f, Common::ConvertTilePosition(element_stock.b + tmpAttackArea.b)
-		);
-	}
-	else {
-		type_attack = AREA::NONE;
-	}
+	
 }
 
 void XIIlib::King::Action()

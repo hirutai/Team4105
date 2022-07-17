@@ -33,11 +33,6 @@ void Clear::Update(GameScene* p_game_scene)
 		p_game_scene->GetAudio()->PlaySE("clear.wav", 0.5f);
 		oneThrough = true;
 	}
-
-	if (gamePad_->Button_Down(X_A)) {
-		p_game_scene->ChangeState(new Title);
-	}
-
 	if (trigSpace) {
 		if (p_game_scene->DrawScreen(TransitionType::CLOSE)) {
 			p_game_scene->ChangeState(new Title);
