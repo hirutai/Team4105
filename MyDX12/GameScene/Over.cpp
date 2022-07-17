@@ -47,10 +47,6 @@ void XIIlib::Over::Update(GameScene* p_game_scene)
 		oneThrough = true;
 	}
 
-	if (gamePad_->Button_Down(X_A)) {
-		p_game_scene->ChangeState(new Title);
-	}
-
 	if (trigSpace) {
 		if (p_game_scene->DrawScreen(TransitionType::CLOSE)) {
 			if (selectT_R) {
@@ -69,18 +65,18 @@ void XIIlib::Over::Update(GameScene* p_game_scene)
 
 	if (trigSpace)return;
 
-	if (KeyInput::GetInstance()->Trigger(DIK_W)) {
+	if (KeyInput::GetInstance()->Trigger(DIK_W) || gamePad_->LStickDownFront()) {
 		selectT_R = true;
 		textRetry->SetColor(1,1,1,1);
 		textTitle->SetColor(0.5f, 0.5f, 0.5f, 1);
 	}
-	if (KeyInput::GetInstance()->Trigger(DIK_S)) {
+	if (KeyInput::GetInstance()->Trigger(DIK_S) || gamePad_->LStickDownBack()) {
 		selectT_R = false;
 		textRetry->SetColor(0.5f, 0.5f, 0.5f, 1);
 		textTitle->SetColor(1, 1, 1, 1);
 	}
 
-	if (KeyInput::GetInstance()->Trigger(DIK_SPACE)) {
+	if (KeyInput::GetInstance()->Trigger(DIK_SPACE) || gamePad_->Button_Down(X_A)) {
 		trigSpace = true;
 		p_game_scene->GetAudio()->StopSE();
 		p_game_scene->GetAudio()->PlaySE("kettei.wav", 0.3f);
