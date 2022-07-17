@@ -88,29 +88,12 @@ void XIIlib::Play::Update(GameScene* p_game_scene)
 	switch (phase)
 	{
 	case XIIlib::Phase::CameraDirecting: // カメラ演出
-		switch (timing)
-		{
-		case XIIlib::Timing::ToTheRight: // 右カメラへ
-			ToTheRight();
-			break;
-		case XIIlib::Timing::ToTheBack: // 後ろカメラへ
-			ToTheBack();
-			break;
-		case XIIlib::Timing::ToTheLeft: // 左カメラへ
-			ToTheLeft();
-			break;
-		case XIIlib::Timing::ToTheFront: // 前カメラへ
-			ToTheFront();
-			break;
-		case XIIlib::Timing::ToTheUp: // 上カメラへ
-			ToTheUp();
-			break;
-		}
+		RotateEye();
 
-		debugCamera->SetPosition(cameraEye.x, cameraEye.y, cameraEye.z); // 視点座標の設定
-		UnitManager::GetInstance()->ObjectUpdate(); // 3Dオブジェクトの更新
 		break;
 	case XIIlib::Phase::ClearCondDisplay: // クリア条件表示
+		UnitManager::GetInstance()->ObjectUpdate(); // 3Dオブジェクトの更新
+
 		if (stageNum == StageNumber::HARD) { // HARD時
 			ClearCondDisplay(bossClearCond); // ボスクリア条件の表示
 		}
@@ -238,114 +221,27 @@ void XIIlib::Play::DrawBackground()
 	spStageBG1->Draw();
 }
 
-void XIIlib::Play::ToTheRight()
+void XIIlib::Play::RotateEye()
 {
-	if (cameraEye.x < rightEye.x) // 右側カメラまで
-	{
-		cameraEye.x += moveValue;
+	UnitManager::GetInstance()->ObjectUpdate(); // 3Dオブジェクトの更新
+
+	s = sin(358.0f * 3.1415f / 180);
+	c = cos(358.0f * 3.1415f / 180);
+
+	cameraEye.x = c * cameraEye.x - s * cameraEye.z;
+	cameraEye.z = s * cameraEye.x + c * cameraEye.z;
+
+	if (rotateCount == upTiming) {
+		UpEye();
 	}
-	else
-	{
-		cameraEye.x = rightEye.x;
+	else {
+		rotateCount = rotateCount + 1;
 	}
 
-	if (cameraEye.z < rightEye.z) // 右側カメラまで
-	{
-		cameraEye.z += moveValue;
-	}
-	else
-	{
-		cameraEye.z = rightEye.z;
-	}
-
-	if (cameraEye.x == rightEye.x && cameraEye.z == rightEye.z) // 右側カメラに達したら
-	{
-		timing = XIIlib::Timing::ToTheBack; // 後ろ側カメラへ
-	}
+	debugCamera->SetPosition(cameraEye.x, cameraEye.y, cameraEye.z); // 視点座標の設定
 }
 
-void XIIlib::Play::ToTheBack()
-{
-	if (cameraEye.x > backEye.x) // 後ろ側カメラまで
-	{
-		cameraEye.x -= moveValue;
-	}
-	else
-	{
-		cameraEye.x = backEye.x;
-	}
-
-	if (cameraEye.z < backEye.z) // 後ろ側カメラまで
-	{
-
-		cameraEye.z += moveValue;
-	}
-	else
-	{
-		cameraEye.z = backEye.z;
-	}
-
-	if (cameraEye.x == backEye.x && cameraEye.z == backEye.z) // 後ろ側カメラ達したら
-	{
-		timing = XIIlib::Timing::ToTheLeft; // 左へ
-	}
-}
-
-void XIIlib::Play::ToTheLeft()
-{
-	if (cameraEye.x > leftEye.x) // 左側カメラまで
-	{
-		cameraEye.x -= moveValue; // 移動
-	}
-	else
-	{
-		cameraEye.x = leftEye.x;
-	}
-
-	if (cameraEye.z > leftEye.z) // 左側カメラまで
-	{
-
-		cameraEye.z -= moveValue; // 移動
-	}
-	else
-	{
-		cameraEye.z = leftEye.z;
-	}
-
-	if (cameraEye.x == leftEye.x && cameraEye.z == leftEye.z) // 左側カメラに達したら
-	{
-		timing = XIIlib::Timing::ToTheFront; // 前へ
-	}
-}
-
-void XIIlib::Play::ToTheFront()
-{
-	if (cameraEye.x < frontEye.x) // 前側カメラまで
-	{
-		cameraEye.x += moveValue; // 移動
-	}
-	else
-	{
-		cameraEye.x = frontEye.x;
-	}
-
-	if (cameraEye.z > frontEye.z) // 前側カメラまで
-	{
-
-		cameraEye.z -= moveValue; // 移動
-	}
-	else
-	{
-		cameraEye.z = frontEye.z;
-	}
-
-	if (cameraEye.x == frontEye.x && cameraEye.z == frontEye.z) // 前側カメラに達したら
-	{
-		timing = XIIlib::Timing::ToTheUp; // 上カメラへ
-	}
-}
-
-void XIIlib::Play::ToTheUp()
+void XIIlib::Play::UpEye()
 {
 	if (cameraEye.y < upperEye.y) // 上カメラまで
 	{
@@ -358,7 +254,7 @@ void XIIlib::Play::ToTheUp()
 
 	if (cameraEye.y == upperEye.y) // 上側カメラに達したら
 	{
-		phase = XIIlib::Phase::ClearCondDisplay; // ゲームへ
+		phase = XIIlib::Phase::ClearCondDisplay; // クリア条件表示へ
 	}
 }
 
