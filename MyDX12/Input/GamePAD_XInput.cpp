@@ -268,7 +268,7 @@ float GamePAD_XInput::PreStickRX()
 float GamePAD_XInput::PreStickRY()
 {
 	float result;
-	result = (float)XinputState.Gamepad.sThumbRY / 32767;
+	result = (float)preXinputState.Gamepad.sThumbRY / 32767;
 	if (result < 0.3f && result > -0.3f) return 0;
 	if (result > 1.0f) return 1.0f;
 	if (result < -1.0f) return -1.0f;
@@ -288,7 +288,7 @@ float GamePAD_XInput::PreStickLX()
 float GamePAD_XInput::PreStickLY()
 {
 	float result;
-	result = (float)preXinputState.Gamepad.bLeftTrigger / 255;
+	result = (float)preXinputState.Gamepad.sThumbLY / 32767;
 	if (result < 0.3f && result > -0.3f) return 0;
 	if (result > 1.0f) return 1.0f;
 	if (result < -1.0f) return -1.0f;

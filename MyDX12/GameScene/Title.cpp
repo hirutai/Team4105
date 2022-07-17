@@ -41,21 +41,9 @@ void XIIlib::Title::Update(GameScene* p_game_scene)
 		}
 	}
 
-	if (gamePad_->Button_Down(X_A)) {
-		p_game_scene->ChangeState(new Select);
-	}
-
-	if (gamePad_->Button_Down(X_Y)) {
-		stageNum = StageNumber::EASY;
-	}
-
-	if (gamePad_->Button_Down(X_X)) {
-		stageNum = StageNumber::NORMAL;
-	}
-
 	if (trigSpace)return;
 
-	if (KeyInput::GetInstance()->Trigger(DIK_SPACE)) {
+	if (KeyInput::GetInstance()->Trigger(DIK_SPACE) || gamePad_->Button_Down(X_A)) {
 		trigSpace = true;
 		p_game_scene->GetAudio()->PlaySE("kettei.wav", 0.3f);
 	}

@@ -129,7 +129,8 @@ void XIIlib::Menu::Update(GameScene* p_game_scene)
 	// menu状態が説明表示になっていたら
 	if (menuState == MenuState::PLAYER_GUIDS || menuState == MenuState::ENEMY_GUIDS)
 	{
-		if (KeyInput::GetInstance()->Trigger(DIK_SPACE) || KeyInput::GetInstance()->Trigger(DIK_TAB))
+		if (KeyInput::GetInstance()->Trigger(DIK_SPACE) || KeyInput::GetInstance()->Trigger(DIK_TAB) 
+			|| gamePad_->Button_Down(X_A) || gamePad_->Button_Down(X_START))
 		{
 			menuState = MenuState::NONE;
 		}
@@ -144,7 +145,7 @@ void XIIlib::Menu::Update(GameScene* p_game_scene)
 	// カーソル移動
 	MoveCursor();
 
-	if (KeyInput::GetInstance()->Trigger(DIK_SPACE))
+	if (KeyInput::GetInstance()->Trigger(DIK_SPACE) || gamePad_->Button_Down(X_A))
 	{
 		menuState = (MenuState)cursorState;
 		if (menuState == MenuState::PLAYER_GUIDS)
@@ -166,7 +167,7 @@ void XIIlib::Menu::Update(GameScene* p_game_scene)
 	}
 
 	// 更新
-	if (KeyInput::GetInstance()->Trigger(DIK_TAB)) {
+	if (KeyInput::GetInstance()->Trigger(DIK_TAB) || gamePad_->Button_Down(X_START)) {
 		easingState = EasingState::MOVE_OUT;
 	}
 	// テスト用
@@ -278,17 +279,18 @@ void XIIlib::Menu::MoveCursor()
 {
 	prevPos = cursor->GetPosition();
 	// もしkeyを押したら
-	if (KeyInput::GetInstance()->Trigger(DIK_W) || KeyInput::GetInstance()->Trigger(DIK_S))
+	if (KeyInput::GetInstance()->Trigger(DIK_W) || KeyInput::GetInstance()->Trigger(DIK_S)
+		|| gamePad_->LStickDownFront() || gamePad_->LStickDownBack())
 	{
 		// 移動処理
 		float moveY = 0;
 		Math::Vector2 pos = cursor->GetPosition();
 		// それぞれの処理
-		if (KeyInput::GetInstance()->Trigger(DIK_W))
+		if (KeyInput::GetInstance()->Trigger(DIK_W) || gamePad_->LStickDownFront())
 		{
 			moveY = -SPACE;
 		}
-		else if (KeyInput::GetInstance()->Trigger(DIK_S))
+		else if (KeyInput::GetInstance()->Trigger(DIK_S) || gamePad_->LStickDownBack())
 		{
 			moveY = SPACE;
 		}

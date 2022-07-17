@@ -123,7 +123,7 @@ void XIIlib::Play::Update(GameScene* p_game_scene)
 #pragma region メニュー処理
 		if (!trigSpace) {
 			// メニュー画面を展開、閉じる
-			if (KeyInput::GetInstance()->Trigger(DIK_TAB))
+			if (KeyInput::GetInstance()->Trigger(DIK_TAB) || gamePad_->Button_Down(X_START))
 			{
 				p_game_scene->ChangeState(new Menu); // クリアシーンへ
 				menuExists = true;

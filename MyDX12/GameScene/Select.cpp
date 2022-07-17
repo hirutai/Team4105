@@ -81,18 +81,14 @@ void XIIlib::Select::Initialize(GameScene* p_game_scene)
 
 void XIIlib::Select::Update(GameScene* p_game_scene)
 {
-	if (gamePad_->Button_Down(X_A)) {
-		p_game_scene->ChangeState(new Play);
-	}
-
 	if (!trigSpace) {
 		// A‚©D‚ð‰Ÿ‚µ‚Ä‚½‚ç
-		if (KeyInput::GetInstance()->Trigger(DIK_A)
-			|| KeyInput::GetInstance()->Trigger(DIK_D))
+		if (KeyInput::GetInstance()->Trigger(DIK_A)|| KeyInput::GetInstance()->Trigger(DIK_D)
+			|| gamePad_->LStickDownLeft() || gamePad_->LStickDownRight())
 		{
 			const float moveX = BASE_SIZE.x + GAP;
 
-			if (KeyInput::GetInstance()->Trigger(DIK_A))
+			if (KeyInput::GetInstance()->Trigger(DIK_A) || gamePad_->LStickDownLeft())
 			{
 				cursorPos.x -= moveX;
 				if (cursorPos.x < HOMEL_POS.x)
@@ -104,7 +100,7 @@ void XIIlib::Select::Update(GameScene* p_game_scene)
 					p_game_scene->GetAudio()->PlaySE("select.wav", 0.1f);
 				}
 			}
-			else if (KeyInput::GetInstance()->Trigger(DIK_D))
+			else if (KeyInput::GetInstance()->Trigger(DIK_D) || gamePad_->LStickDownRight())
 			{
 				cursorPos.x += moveX;
 				if (cursorPos.x > HOMER_POS.x)
@@ -160,7 +156,7 @@ void XIIlib::Select::Update(GameScene* p_game_scene)
 		stage_normal = false;
 	}
 
-	if (KeyInput::GetInstance()->Trigger(DIK_SPACE)) {
+	if (KeyInput::GetInstance()->Trigger(DIK_SPACE) || gamePad_->Button_Down(X_A)) {
 		if (trigSpace)return;
 		trigSpace = true;
 		select = true;

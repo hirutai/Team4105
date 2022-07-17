@@ -46,7 +46,7 @@ void Clear::Update(GameScene* p_game_scene)
 
 	if (trigSpace)return;
 
-	if (KeyInput::GetInstance()->Trigger(DIK_SPACE)) {
+	if (KeyInput::GetInstance()->Trigger(DIK_SPACE) || gamePad_->Button_Down(X_A)) {
 		trigSpace = true;
 		p_game_scene->GetAudio()->PlaySE("kettei.wav", 0.3f);
 	}
