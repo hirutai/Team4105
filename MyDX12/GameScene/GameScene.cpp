@@ -29,11 +29,6 @@ XIIlib::GameScene::GameScene()
 { 
 	// コンストラクタ!
 	state = new Title; // 初期状態の格納・設定
-
-	// GamePadの生成と初期化とStateに設定
-	gamePad = new GamePAD_XInput();
-	gamePad->Initialize();
-	state->SetGamePad(gamePad);
 }
 
 XIIlib::GameScene::~GameScene()
@@ -61,6 +56,11 @@ void XIIlib::GameScene::Initialize()
 	// Audioの初期化
 	audio = new Audio();
 	UnitManager::GetInstance()->SetAudio(audio);
+	// GamePadの生成と初期化とStateに設定
+	gamePad = new GamePAD_XInput();
+	gamePad->Initialize();
+	state->SetGamePad(gamePad);
+	UnitManager::GetInstance()->SetGamePad(gamePad);
 	// 前景テクスチャの初期化
 	// サイズを設定
 	const unsigned int tex_size = 128;
