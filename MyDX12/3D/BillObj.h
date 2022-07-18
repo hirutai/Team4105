@@ -101,9 +101,20 @@ namespace XIIlib {
 		void TransferVertices();
 
 		void SetPosition(float x, float y, float z) { position = { x,y,z }; }
+		void SetPosition(const Math::Vector3& pos) { position = pos; }
+
+		void AddPosition(const Math::Vector3& v) { position += v; }
 
 		void SetColor(float r, float g, float b, float a) { color = { r,g,b,a }; }
+		void AddColor(float r, float g, float b, float a){
+			color.x += r;
+			color.y += g;
+			color.z += b;
+			color.w += a;
+		}
+		float GetColorR()const { return color.x; }
 		void SetScale(float x, float y, float z) { scale = { x,y,z }; }
+		void AddScale(float x, float y, float z) { scale += {x, y, z}; }
 		void SetRotation(float x, float y, float z) { rotation = { x,y,z }; }
 
 		void SetSize(Math::Vector2 size);
