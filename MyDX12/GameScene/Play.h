@@ -42,6 +42,15 @@ namespace XIIlib {
 		float s	= 0.0f; // sin関数結果保存用
 		float c	= 0.0f; // cos関数結果保存用
 
+		//ランダム生成用
+		int Min = 0;
+		int Max = 3;
+		int tileRand = 1;
+
+		int SwitchRandiMin = 0;
+		int SwitchRandiMax = 3;
+		int SwitchRand = 0;
+
 		Math::Vector3 cameraEye{ frontEye.x, frontEye.y, frontEye.z }; // カメラの視点
 
 		int rotateCount = 0; // 回転している時間
