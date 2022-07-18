@@ -145,6 +145,9 @@
     <Filter Include="Struct\Math">
       <UniqueIdentifier>{70bcfed8-c128-4854-9d25-8d9fb4e1635c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameObject\Smoke">
+      <UniqueIdentifier>{6b430ce7-edd0-43a5-9b72-428f08f4d92f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -392,6 +395,12 @@
     </ClCompile>
     <ClCompile Include="GameObject\ModelLoader.cpp">
       <Filter>GameObject\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject\Smoke.cpp">
+      <Filter>GameObject\Smoke</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject\SmokeManager.cpp">
+      <Filter>GameObject\Smoke</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -667,6 +676,12 @@
     </ClInclude>
     <ClInclude Include="GameObject\ModelLoader.h">
       <Filter>GameObject\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\Smoke.h">
+      <Filter>GameObject\Smoke</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\SmokeManager.h">
+      <Filter>GameObject\Smoke</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
