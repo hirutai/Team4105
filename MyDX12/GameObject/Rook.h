@@ -4,12 +4,13 @@
 
 namespace XIIlib {
 
-	class BillObj;
+	class SmokeManager;
 
 	class Rook : public Unit {
 	private:
 		Math::Point2 point_attack;
-		BillObj* effect = nullptr;
+		SmokeManager* sManager = nullptr;
+		int intTimeCount = 0;
 
 		int countingNum = 5; // ƒJƒEƒ“ƒg‚µ‚½‚¢”
 	public:

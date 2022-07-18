@@ -112,7 +112,7 @@ namespace XIIlib {
 			color.z += b;
 			color.w += a;
 		}
-		float GetColorR()const { return color.x; }
+		float GetAlpha()const { return color.w; }
 		void SetScale(float x, float y, float z) { scale = { x,y,z }; }
 		void AddScale(float x, float y, float z) { scale += {x, y, z}; }
 		void SetRotation(float x, float y, float z) { rotation = { x,y,z }; }
