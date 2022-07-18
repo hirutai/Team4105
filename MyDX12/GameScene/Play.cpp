@@ -16,6 +16,7 @@
 #include "../3D/BillObj.h"
 #include"../GameObject/Bishop.h"
 #include"../GameObject/Rook.h"
+#include"../GameObject/Yankee.h"
 
 XIIlib::Play::Play()
 {
@@ -121,16 +122,69 @@ void XIIlib::Play::Update(GameScene* p_game_scene)
 		count++;
 		// 更新
 		UnitManager::GetInstance()->Update();
+		//
+		int createMin = Min;
+		int createMax = Max;
+		tileRand = 1;
+		
+		//Switch文用の乱数
+		int createSwitchiMin = SwitchRandiMin;
+		int createSwitchiMax = SwitchRandiMax;
+		SwitchRand = SwitchRandiMin + (int)(rand() * (SwitchRandiMax - SwitchRandiMin + 1) / (1 + RAND_MAX));
+		
 		if (stageNum == StageNumber::HARD && count % 900 == 0)
 		{
-			std::shared_ptr<Bishop> bishop = std::move(Bishop::Create(0, 7));
-			std::shared_ptr<Bishop> bishop1 = std::move(Bishop::Create(7, 7));
-			std::shared_ptr<Rook> rook = std::move(Rook::Create(4, 0));
-			std::shared_ptr<Rook> rook1 = std::move(Rook::Create(3, 0));
-			UnitManager::GetInstance()->AddUnit(std::move(bishop));
-			UnitManager::GetInstance()->AddUnit(std::move(rook));
-			UnitManager::GetInstance()->AddUnit(std::move(bishop1));
-			UnitManager::GetInstance()->AddUnit(std::move(rook1));
+			tileRand = Min + (int)(rand() * (Max - Min + 1) / (1 + RAND_MAX));
+			if (tileRand == 0)
+			{
+
+				std::shared_ptr<Bishop> bishop = std::move(Bishop::Create(0, 7));
+				std::shared_ptr<Bishop> bishop1 = std::move(Bishop::Create(7, 7));
+				std::shared_ptr<Rook> rook = std::move(Rook::Create(4, 0));
+				std::shared_ptr<Rook> rook1 = std::move(Rook::Create(3, 0));
+				UnitManager::GetInstance()->AddUnit(std::move(bishop));
+				UnitManager::GetInstance()->AddUnit(std::move(rook));
+				UnitManager::GetInstance()->AddUnit(std::move(bishop1));
+				UnitManager::GetInstance()->AddUnit(std::move(rook1));
+
+			}
+			if (tileRand == 1)
+			{				
+				std::shared_ptr<Bishop> bishop = std::move(Bishop::Create(0, 0));
+				std::shared_ptr<Bishop> bishop1 = std::move(Bishop::Create(7, 0));
+				std::shared_ptr<Rook> rook = std::move(Rook::Create(4, 0));
+				std::shared_ptr<Rook> rook1 = std::move(Rook::Create(3, 0));
+				UnitManager::GetInstance()->AddUnit(std::move(bishop));
+				UnitManager::GetInstance()->AddUnit(std::move(rook));
+				UnitManager::GetInstance()->AddUnit(std::move(bishop1));
+				UnitManager::GetInstance()->AddUnit(std::move(rook1));
+			}
+			if (tileRand == 2)
+			{
+				std::shared_ptr<Yankee> yankee = std::move(Yankee::Create(0, 6));
+				std::shared_ptr<Yankee> yankee1 = std::move(Yankee::Create(0, 5));
+				std::shared_ptr<Yankee> yankee2 = std::move(Yankee::Create(0, 4));
+				std::shared_ptr<Yankee> yankee3 = std::move(Yankee::Create(7, 6));
+				std::shared_ptr<Yankee> yankee4 = std::move(Yankee::Create(7, 5));
+				std::shared_ptr<Yankee> yankee5 = std::move(Yankee::Create(7, 4));
+				UnitManager::GetInstance()->AddUnit(std::move(yankee));
+				UnitManager::GetInstance()->AddUnit(std::move(yankee1));
+				UnitManager::GetInstance()->AddUnit(std::move(yankee2));
+				UnitManager::GetInstance()->AddUnit(std::move(yankee3));
+				UnitManager::GetInstance()->AddUnit(std::move(yankee4));
+				UnitManager::GetInstance()->AddUnit(std::move(yankee5));
+			}
+			if (tileRand == 3)
+			{
+				std::shared_ptr<Bishop> bishop = std::move(Bishop::Create(0, 3));
+				std::shared_ptr<Bishop> bishop1 = std::move(Bishop::Create(7, 4));
+				std::shared_ptr<Rook> rook = std::move(Rook::Create(0, 4));
+				std::shared_ptr<Rook> rook1 = std::move(Rook::Create(7, 3));
+				UnitManager::GetInstance()->AddUnit(std::move(bishop));
+				UnitManager::GetInstance()->AddUnit(std::move(rook));
+				UnitManager::GetInstance()->AddUnit(std::move(bishop1));
+				UnitManager::GetInstance()->AddUnit(std::move(rook1));
+			}
 		}
 		// シーン移動
 		if (stageNum == StageNumber::HARD && UnitManager::GetInstance()->GetUnitIDElements("Boss") < 0) {
