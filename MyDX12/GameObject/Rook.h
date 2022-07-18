@@ -4,9 +4,12 @@
 
 namespace XIIlib {
 
+	class BillObj;
+
 	class Rook : public Unit {
 	private:
 		Math::Point2 point_attack;
+		BillObj* effect = nullptr;
 
 		int countingNum = 5; // ÉJÉEÉìÉgÇµÇΩÇ¢êî
 	public:
@@ -17,6 +20,7 @@ namespace XIIlib {
 
 		void Initialize()override;
 		void Update()override;
+		void OriginBillDraw()override;
 
 		void Action()override;
 		void Attack()override;

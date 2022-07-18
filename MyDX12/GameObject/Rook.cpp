@@ -8,6 +8,7 @@
 #include "../GameObject/AttackTimer.h"
 #include "../Tool/Easing.h"
 #include "ModelLoader.h"
+#include "../3D/BillObj.h"
 
 XIIlib::Rook::Rook()
 {
@@ -20,6 +21,7 @@ XIIlib::Rook::Rook()
 
 XIIlib::Rook::~Rook()
 {
+	delete effect;
 	delete attackTimer;
 	delete object3d;
 }
@@ -51,6 +53,11 @@ void XIIlib::Rook::Initialize()
 	correctionAngle = 90.0f;
 
 	SetAttackTimer(countingNum);
+
+	effect = BillObj::Create({}, "");
+
+	effect->SetSize({1.0f, 1.0f});
+	effect->SetColor(0.1f,0.1f, 0.1f,1);
 }
 
 void XIIlib::Rook::Update()
@@ -64,15 +71,28 @@ void XIIlib::Rook::Update()
 		attackTimer->Timer();
 
 		pos = object3d->position;
+		// エフェクトの設定
+		effect->SetPosition(object3d->position + Math::Vector3(0, 3, 0));
+		effect->SetScale(0.1f, 0.1f, 0.1f);
+		effect->SetColor(0.1f, 0.1f, 0.1f, 1);
 	}
 	else {
 		// モーション処理
 		Motion();
+		// アドで動かす
+		effect->AddPosition(Math::Vector3(0.1f,0.1f,0.2f));
+		effect->AddScale(0.1f,0.1f,0.1f);
+		effect->AddColor(0.04f,0.04f,0.04f,-0.01f);
 	}
 
 	object3d->Update();
 	// 座標設定
 	attackTimer->SetPosition(object3d->position);
+}
+
+void XIIlib::Rook::OriginBillDraw()
+{
+	effect->Draw();
 }
 
 void XIIlib::Rook::Action()
