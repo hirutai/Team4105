@@ -131,7 +131,29 @@ void XIIlib::Play::Update(GameScene* p_game_scene)
 		int createSwitchiMin = SwitchRandiMin;
 		int createSwitchiMax = SwitchRandiMax;
 		SwitchRand = SwitchRandiMin + (int)(rand() * (SwitchRandiMax - SwitchRandiMin + 1) / (1 + RAND_MAX));
-		
+		std::cout << "easyCount" << easyCount<<std::endl;
+		if (stageNum == StageNumber::EASY && UnitManager::GetInstance()->GetUnitIDElements("King") >= 0)
+		{
+			if (UnitManager::GetInstance()->GetAllUnitCount() - 1 == 0) // 敵を全滅させた時
+			{
+				if (easyCount == 0)
+				{
+					std::shared_ptr<Yankee> yankee = std::move(Yankee::Create(4, 7));
+					std::shared_ptr<Yankee> yankee1 = std::move(Yankee::Create(4, 5));
+					UnitManager::GetInstance()->AddUnit(std::move(yankee));
+					UnitManager::GetInstance()->AddUnit(std::move(yankee1));
+					UnitManager::GetInstance()->Update();
+				}
+				else if (easyCount == 1)
+				{
+					std::shared_ptr<Rook> rook = std::move(Rook::Create(3, 6));
+					UnitManager::GetInstance()->AddUnit(std::move(rook));
+					UnitManager::GetInstance()->Update();
+				}
+				easyCount += 1;
+			}					
+		}
+
 		if (stageNum == StageNumber::HARD && count % 900 == 0)
 		{
 			tileRand = Min + (int)(rand() * (Max - Min + 1) / (1 + RAND_MAX));
@@ -189,6 +211,12 @@ void XIIlib::Play::Update(GameScene* p_game_scene)
 		// シーン移動
 		if (stageNum == StageNumber::HARD && UnitManager::GetInstance()->GetUnitIDElements("Boss") < 0) {
 			trigSpace = true;
+		}
+		else if (stageNum == StageNumber::EASY && UnitManager::GetInstance()->GetUnitIDElements("King") >= 0) {
+			if (UnitManager::GetInstance()->GetAllUnitCount() - 1 == 0 && easyCount >= 2) // 敵を全滅させた時
+			{
+				trigSpace = true;
+			}
 		}
 		else  if (UnitManager::GetInstance()->GetUnitIDElements("King") >= 0) // プレイヤが存在している場合
 		{
