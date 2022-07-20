@@ -46,17 +46,16 @@ void XIIlib::SceneState::CreateUnitsPosition(StageNumber stageNum, std::string f
 
 		// SceneØ‚è‘Ö‚¦‚Éˆê“x’Ê‚éˆ—
 		std::shared_ptr<King> king = std::move(King::CreateKing(1, 0));
-		std::shared_ptr<Bishop> bishop = std::move(Bishop::Create(2, 3));
-		std::shared_ptr<Rook> rook = std::move(Rook::Create(4, 6));
-		std::shared_ptr<Yankee> yankee1 = std::move(Yankee::Create(1, 6));
-		std::shared_ptr<Yankee> yankee2 = std::move(Yankee::Create(6, 1));
-
+		//std::shared_ptr<Bishop> bishop = std::move(Bishop::Create(2, 3));
+		//std::shared_ptr<Rook> rook = std::move(Rook::Create(4, 6));
+		std::shared_ptr<Yankee> yankee1 = std::move(Yankee::Create(3, 4));
+		//std::shared_ptr<Yankee> yankee2 = std::move(Yankee::Create(4, 7));
 
 		UnitManager::GetInstance()->AddUnit(std::move(king));
-		UnitManager::GetInstance()->AddUnit(std::move(bishop));
-		UnitManager::GetInstance()->AddUnit(std::move(rook));
+		//UnitManager::GetInstance()->AddUnit(std::move(bishop));
+		//UnitManager::GetInstance()->AddUnit(std::move(rook));
 		UnitManager::GetInstance()->AddUnit(std::move(yankee1));
-		UnitManager::GetInstance()->AddUnit(std::move(yankee2));
+		//UnitManager::GetInstance()->AddUnit(std::move(yankee2));
 
 	}
 	else if (stageNum == StageNumber::NORMAL)
