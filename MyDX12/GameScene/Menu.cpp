@@ -22,15 +22,6 @@ XIIlib::Menu::Menu()
 XIIlib::Menu::~Menu()
 {
 	// ポインタ使ったやつの埋葬場
-	delete enemyGuides;
-	delete playerGuide;
-	for (int i = MAX_BUTTON -1; i >= 0; --i)
-	{
-		delete buttons[i];
-	}
-	delete cursor;
-	delete spStageBG1;
-	delete rule;
 }
 
 void XIIlib::Menu::Initialize()
@@ -40,36 +31,43 @@ void XIIlib::Menu::Initialize()
 	const Math::Vector2 anchorPoint = {0.5f,0.5f};
 
 	// 生成
+	spStageBG1.reset(Sprite::Create(STAGEBG1_TEX, { 0.0f,0.0f })); // 背景
+	cursor.reset(Sprite::Create(CURSOR_TEX, { winCenter.x - CURSOR_SPACE, winCenter.y - SPACE }, color, anchorPoint));
+	playerGuide.reset(Sprite::Create(PLAYERGUIDES_TEX, winCenter, color, anchorPoint)); // プレイヤーの説明
+	playerGuide->SetSize(winCenter);
+	enemyGuides.reset(Sprite::Create(ENEMYGUIDES_TEX, winCenter, color, anchorPoint)); // 敵の説明
+	enemyGuides->SetSize(winCenter);
+
+	rulePos = { winCenter.x, winCenter.y - SPACE * 2.5f };
 	if (stageNum == StageNumber::HARD)
 	{
-		rule = Sprite::Create(BOSSCLEARCONDITION, { winCenter.x, winCenter.y - 100 },color, anchorPoint);
+		buttons[(int)CursorState::RULE]
+			.reset(Sprite::Create(BOSSCLEARCONDITION,rulePos, color, anchorPoint));
 	}
 	else
 	{
-		rule = Sprite::Create(CLEARCONDITION, { winCenter.x, winCenter.y - 100 }, color, anchorPoint);
+		buttons[(int)CursorState::RULE]
+			.reset(Sprite::Create(CLEARCONDITION,rulePos, color, anchorPoint));
 	}
-	
-
-	spStageBG1   = Sprite::Create(STAGEBG1_TEX, { 0.0f,0.0f }); // 背景
-	cursor       = Sprite::Create(CURSOR_TEX, { winCenter.x - CURSOR_SPACE, winCenter.y - SPACE * 2 }, color, anchorPoint);
-	playerGuide = Sprite::Create(PLAYERGUIDES_TEX, winCenter, color, anchorPoint); // プレイヤーの説明
-	playerGuide->SetSize(winCenter);
-	enemyGuides = Sprite::Create(ENEMYGUIDES_TEX, winCenter, color, anchorPoint); // 敵の説明
-	enemyGuides->SetSize(winCenter);
-
 	buttons[(int)CursorState::CONTINUE] 
-		= Sprite::Create(BUTTON_PLAY_TEX,  { winCenter.x, winCenter.y - SPACE * 2}, color, anchorPoint);
+		.reset(Sprite::Create(BUTTON_PLAY_TEX,  { winCenter.x, winCenter.y - SPACE}, color, anchorPoint));
 	buttons[(int)CursorState::PLAYER_GUIDS] 
-		= Sprite::Create(BUTTON_PLAYER_TEX,{ winCenter.x, winCenter.y - SPACE}, color, anchorPoint);
+		.reset(Sprite::Create(BUTTON_PLAYER_TEX,{ winCenter.x, winCenter.y}, color, anchorPoint));
 	buttons[(int)CursorState::ENEMY_GUIDS] 
-		= Sprite::Create(BUTTON_ENEMY_TEX, { winCenter.x, winCenter.y }, color, anchorPoint);
+		.reset(Sprite::Create(BUTTON_ENEMY_TEX, { winCenter.x, winCenter.y + SPACE }, color, anchorPoint));
 	buttons[(int)CursorState::NEXT_SLECT] 
-		= Sprite::Create(BUTTON_SELECT_TEX,{ winCenter.x, winCenter.y + SPACE}, color, anchorPoint);
+		.reset(Sprite::Create(BUTTON_SELECT_TEX,{ winCenter.x, winCenter.y + SPACE * 2 }, color, anchorPoint));
 	buttons[(int)CursorState::NEXT_TITLE] 
-		= Sprite::Create(BUTTON_TITLE_TEX, { winCenter.x, winCenter.y + SPACE * 2 }, color, anchorPoint);
+		.reset(Sprite::Create(BUTTON_TITLE_TEX, { winCenter.x, winCenter.y + SPACE * 3 }, color, anchorPoint));
+
+	//for (int i = 0; i < MAX_BUTTON; i++)
+	//{
+	//	buttons[i]->SetSize({0.5f,0.5f});
+	//}
 
 	// 最大最小値を決める
 	CheckLimitPos();
+
 
 	// 全てのサイズを0に
 	for (int i = 0; i < MAX_BUTTON; ++i)
@@ -88,6 +86,24 @@ void XIIlib::Menu::Update()
 #pragma endregion
 
 #pragma region 説明
+	// 勝利条件移動処理
+	static Math::Vector3 move;
+	if (-600.0f >= rulePos.x)rulePos.x = (winCenter.x * 2) + 300.0f;
+	if (count >= moveTime) {
+		rulePos.x += VEL_X;
+		buttons[0]->SetPosition(rulePos);
+	}
+	else
+	{
+		// 震える処理
+		if (count >= 120) {
+			switchRand.x = switchRandiMin + (int)(rand() * (switchRandiMax - switchRandiMin + 1) / (1 + RAND_MAX));
+			switchRand.y = switchRandiMin + (int)(rand() * (switchRandiMax - switchRandiMin + 1) / (1 + RAND_MAX));
+			buttons[0]->SetPosition({ rulePos.x + switchRand.x,rulePos.y + switchRand.y });
+		}
+	}
+	count++;
+
 	// menu状態が説明表示になっていたら
 	if (menuState == MenuState::PLAYER_GUIDS || menuState == MenuState::ENEMY_GUIDS)
 	{
@@ -145,8 +161,6 @@ void XIIlib::Menu::Draw()
 
 void XIIlib::Menu::DrawTex()
 {
-	// 勝利条件
-	rule->Draw();
 	// スプライト描画
 	if (cursorDisp) {
 		cursor->Draw();
@@ -240,13 +254,15 @@ void XIIlib::Menu::EasingMove(int i,EasingState easingState)
 	if (easingState == EasingState::MOVE_IN)
 	{
 		// 0 + ...なのでそのまま
-		buttons[i]->SetSize(size);
+		if(i == 0)buttons[i]->SetSize(size * 1.5f);
+		else buttons[i]->SetSize(size);
 		buttons[i]->SetAlpha(alpha);
 	}
 	else if (easingState == EasingState::MOVE_OUT)
 	{
 		// その分引く
-		buttons[i]->SetSize(defaultSize - size);
+		if (i == 0)buttons[i]->SetSize((defaultSize * 1.5f) - size);
+		else buttons[i]->SetSize(defaultSize - size);
 		buttons[i]->SetAlpha(1 - alpha);
 	}
 }
@@ -271,9 +287,9 @@ void XIIlib::Menu::CountUpdate(int& count)
 void XIIlib::Menu::CheckLimitPos()
 {
 	// 最大と最小を調べる
-	float min = buttons[0]->GetPosition().y;
-	float max = buttons[0]->GetPosition().y;
-	for (int i = 0; i < MAX_BUTTON; ++i)
+	float min = buttons[1]->GetPosition().y;
+	float max = buttons[1]->GetPosition().y;
+	for (int i = 1; i < MAX_BUTTON; ++i)
 	{
 		if (min > buttons[i]->GetPosition().y)
 		{
