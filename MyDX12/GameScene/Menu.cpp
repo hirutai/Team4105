@@ -40,7 +40,16 @@ void XIIlib::Menu::Initialize()
 	const Math::Vector2 anchorPoint = {0.5f,0.5f};
 
 	// 生成
-	rule = Sprite::Create(CLEARCONDITION, { 0,0 });
+	if (stageNum == StageNumber::HARD)
+	{
+		rule = Sprite::Create(BOSSCLEARCONDITION, { winCenter.x, winCenter.y - 100 },color, anchorPoint);
+	}
+	else
+	{
+		rule = Sprite::Create(CLEARCONDITION, { winCenter.x, winCenter.y - 100 }, color, anchorPoint);
+	}
+	
+
 	spStageBG1   = Sprite::Create(STAGEBG1_TEX, { 0.0f,0.0f }); // 背景
 	cursor       = Sprite::Create(CURSOR_TEX, { winCenter.x - CURSOR_SPACE, winCenter.y - SPACE * 2 }, color, anchorPoint);
 	playerGuide = Sprite::Create(PLAYERGUIDES_TEX, winCenter, color, anchorPoint); // プレイヤーの説明
@@ -136,6 +145,7 @@ void XIIlib::Menu::Draw()
 
 void XIIlib::Menu::DrawTex()
 {
+	// 勝利条件
 	rule->Draw();
 	// スプライト描画
 	if (cursorDisp) {
