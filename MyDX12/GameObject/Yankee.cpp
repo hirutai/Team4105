@@ -68,7 +68,8 @@ void XIIlib::Yankee::Update()
 
 		pos = object3d->position;
 	}
-	else {
+
+	if (determinateMoveAction) {
 		// ƒ‚[ƒVƒ‡ƒ“ˆ—
 		Motion();
 	}

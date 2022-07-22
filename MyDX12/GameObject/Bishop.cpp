@@ -66,7 +66,7 @@ void XIIlib::Bishop::Update()
 
 		pos = object3d->position;
 	}
-	else {
+	if (determinateMoveAction) {
 		// ƒ‚[ƒVƒ‡ƒ“ˆ—
 		Motion();
 	}
