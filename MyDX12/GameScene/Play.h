@@ -60,6 +60,9 @@ namespace XIIlib {
 		void RotateEye(); // 視点を回転
 
 		void UpEye(); // 視点を上へ
+
+		bool xAddition = true;
+		bool zAddition = true;
 #pragma endregion
 
 #pragma region クリア条件表示		
@@ -75,8 +78,5 @@ namespace XIIlib {
 		// クリア条件の表示
 		void ClearCondDisplay(Sprite* clearCond);
 #pragma endregion
-
-		bool cPushFlag = false;
-		bool oPushFlag = false;
 	};
 }

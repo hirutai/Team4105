@@ -310,8 +310,8 @@ void XIIlib::Play::RotateEye()
 	s = sin(358.0f * 3.1415f / 180);
 	c = cos(358.0f * 3.1415f / 180);
 
-	cameraEye.x = c * cameraEye.x - s * cameraEye.z;
-	cameraEye.z = s * cameraEye.x + c * cameraEye.z;
+	cameraEye.x = s * cameraEye.z + c * cameraEye.x;
+	cameraEye.z = c * cameraEye.z - s * cameraEye.x;
 
 	if (rotateCount == upTiming) {
 		UpEye();
