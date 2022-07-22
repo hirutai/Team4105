@@ -46,7 +46,7 @@ void XIIlib::SceneState::CreateUnitsPosition(StageNumber stageNum, std::string f
 		//CSVLoader::CSVLoad("stage1");
 
 		// SceneØ‚è‘Ö‚¦‚Éˆê“x’Ê‚éˆ—
-		std::shared_ptr<King> king = std::move(King::CreateKing(1, 0));
+		std::shared_ptr<King> king = std::move(King::CreateKing(3, 0));
 		//std::shared_ptr<Bishop> bishop = std::move(Bishop::Create(2, 3));
 		//std::shared_ptr<Rook> rook = std::move(Rook::Create(4, 6));
 		std::shared_ptr<Yankee> yankee1 = std::move(Yankee::Create(3, 4));
