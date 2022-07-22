@@ -16,8 +16,8 @@ namespace XIIlib {
 		Title();
 		~Title();
 
-		void Initialize(GameScene* p_game_scene)override;
-		void Update(GameScene* p_game_scene)override;
+		void Initialize()override;
+		void Update()override;
 		void Draw()override;
 		void DrawTex()override;
 		void DrawBackground()override;

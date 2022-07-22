@@ -22,7 +22,7 @@ XIIlib::Over::~Over()
 	delete spGameOver;
 }
 
-void XIIlib::Over::Initialize(GameScene* p_game_scene)
+void XIIlib::Over::Initialize()
 {
 	// SceneØ‚è‘Ö‚¦Žž‚Éˆê“x’Ê‚éˆ—
 	UnitManager::GetInstance()->AllDestroy();
@@ -40,7 +40,7 @@ void XIIlib::Over::Initialize(GameScene* p_game_scene)
 	//p_game_scene->GetAudio()->PlayBGM("yankeeBGM.wav");
 }
 
-void XIIlib::Over::Update(GameScene* p_game_scene)
+void XIIlib::Over::Update()
 {
 	if (!oneThrough) {
 		p_game_scene->GetAudio()->PlaySE("sakebi.wav", 0.1f);

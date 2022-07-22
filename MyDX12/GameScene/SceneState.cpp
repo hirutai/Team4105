@@ -15,6 +15,7 @@
 
 using namespace XIIlib;
 StageNumber SceneState::stageNum = StageNumber::DEBUG;
+GameScene* SceneState::p_game_scene = nullptr;
 GamePAD_XInput* SceneState::gamePad_ = nullptr;
 Phase SceneState::phase = Phase::CameraDirecting;
 std::unique_ptr<Object3D> SceneState::backStages[3] = {};
@@ -22,7 +23,7 @@ std::unique_ptr<Object3D> SceneState::backStages[3] = {};
 void XIIlib::SceneState::CommonUpdate(GameScene* p_game_scene)
 {
 	if (movingScene) {
-		Update(p_game_scene);
+		Update();
 	}
 	else {
 		// ƒV[ƒ“‚Ì‘JˆÚ‚ªŠ®—¹‚µ‚Ä‚¢‚é‚©H

@@ -51,6 +51,8 @@ namespace XIIlib {
 		CursorState cursorState = CursorState::CONTINUE; 
 		MenuState menuState = MenuState::NONE;
 		EasingState easingState = EasingState::MOVE_IN; // 最初から動く
+		// ルール
+		Sprite* rule = nullptr;
 		// ボタン画像
 		Sprite* spStageBG1  = nullptr; // 背景
 		Sprite* cursor = nullptr; // カーソル
@@ -69,13 +71,14 @@ namespace XIIlib {
 		Menu();
 		~Menu();
 
-		void Initialize(GameScene* p_game_scene)override;
-		void Update(GameScene* p_game_scene)override;
+		void Initialize()override;
+		void Update()override;
 		void Draw()override;
 		void DrawTex()override;
 		void DrawBackground()override;
 
 	private: // メンバ関数
+		void EasingUpdate();
 		void EasingMove(int i,EasingState easingState); // イージングで移動
 		void CountsUpdate(); // 全てのカウントを更新
 		void CountUpdate(int& count); // 個々のカウントを更新

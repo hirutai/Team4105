@@ -34,7 +34,7 @@ XIIlib::Play::~Play()
 	delete bossClearCond;
 }
 
-void XIIlib::Play::Initialize(GameScene* p_game_scene)
+void XIIlib::Play::Initialize()
 {
 	SetDebugCamera(p_game_scene->GetCamera());
 
@@ -84,7 +84,7 @@ void XIIlib::Play::Initialize(GameScene* p_game_scene)
 	bossClearCond->SetAnchorPoint({ 0.5f, 0.5f }); // 中心に設定
 }
 
-void XIIlib::Play::Update(GameScene* p_game_scene)
+void XIIlib::Play::Update()
 {
 	switch (phase)
 	{

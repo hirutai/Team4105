@@ -19,7 +19,7 @@ Clear::~Clear()
 	delete space;
 }
 
-void Clear::Initialize(GameScene* p_game_scene)
+void Clear::Initialize()
 {
 	// SceneØ‚è‘Ö‚¦Žž‚Éˆê“x’Ê‚éˆ—
 	UnitManager::GetInstance()->AllDestroy();
@@ -27,7 +27,7 @@ void Clear::Initialize(GameScene* p_game_scene)
 	gameClear = Sprite::Create(GAMECLEAR_TEX, { 0.0f,0.0f });
 }
 
-void Clear::Update(GameScene* p_game_scene)
+void Clear::Update()
 {
 	if (!oneThrough) {
 		p_game_scene->GetAudio()->PlaySE("clear.wav", 0.5f);

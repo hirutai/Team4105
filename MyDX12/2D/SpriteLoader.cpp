@@ -53,4 +53,5 @@ void XIIlib::SpriteLoader::Load()
 	Sprite::LoadTexture(SHITAPPA, L"Resources/sitappaText.png");
 	Sprite::LoadTexture(CLEARCONDITION, L"Resources/clearCondition.png");
 	Sprite::LoadTexture(BOSSCLEARCONDITION, L"Resources/bossClearCondition.png");
+	//Sprite::LoadTexture(RULE_TEX, L"Resources/bossClearCondition.png");
 }

@@ -18,7 +18,7 @@ XIIlib::Story::~Story()
 	}
 }
 
-void XIIlib::Story::Initialize(GameScene* p_game_scene)
+void XIIlib::Story::Initialize()
 {
 	int i = 0;
 	storys[i] = Sprite::Create(STORY0_SP, winSize * i); i++;
@@ -26,7 +26,7 @@ void XIIlib::Story::Initialize(GameScene* p_game_scene)
 	storys[i] = Sprite::Create(STORY0_SP, winSize * i); i++;
 }
 
-void XIIlib::Story::Update(GameScene* p_game_scene)
+void XIIlib::Story::Update()
 {
 	Math::Vector2 pos = { 0,0 };
 	switch (storyState)

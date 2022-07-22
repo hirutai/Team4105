@@ -21,7 +21,7 @@ XIIlib::Select::~Select()
 	// ポインタ使ったやつの埋葬場
 }
 
-void XIIlib::Select::Initialize(GameScene* p_game_scene)
+void XIIlib::Select::Initialize()
 {
 	// Scene切り替え時に一度通る処理
 
@@ -79,7 +79,7 @@ void XIIlib::Select::Initialize(GameScene* p_game_scene)
 
 }
 
-void XIIlib::Select::Update(GameScene* p_game_scene)
+void XIIlib::Select::Update()
 {
 	if (!trigSpace) {
 		// AかDを押してたら

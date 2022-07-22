@@ -23,7 +23,7 @@ XIIlib::Title::~Title()
 	delete space;
 }
 
-void XIIlib::Title::Initialize(GameScene* p_game_scene)
+void XIIlib::Title::Initialize()
 {
 	// SceneØ‚è‘Ö‚¦Žž‚Éˆê“x’Ê‚éˆ—
 	space = Sprite::Create(SPACE_TEX, { 1280 / 2 - 300, 768 / 2 + 100 });
@@ -32,7 +32,7 @@ void XIIlib::Title::Initialize(GameScene* p_game_scene)
 	p_game_scene->GetAudio()->PlayBGM("yankeeBGM.wav");
 }
 
-void XIIlib::Title::Update(GameScene* p_game_scene)
+void XIIlib::Title::Update()
 {
 	if (trigSpace) {
 		if (p_game_scene->DrawScreen(TransitionType::CLOSE)) {
