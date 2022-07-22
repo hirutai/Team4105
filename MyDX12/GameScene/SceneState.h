@@ -46,8 +46,8 @@ namespace XIIlib
 		virtual ~SceneState() = default;
 
 	public: // 継承
-		virtual void Initialize(GameScene* p_game_scene) = 0;// 初期化
-		virtual void Update(GameScene* p_game_scene) = 0;//　更新
+		virtual void Initialize() = 0;// 初期化
+		virtual void Update() = 0;//　更新
 		virtual void Draw() = 0;// 描画
 		virtual void DrawTex() = 0;//スプライト描画
 		virtual void DrawBackground() = 0;
@@ -55,8 +55,9 @@ namespace XIIlib
 	protected: // 共通処理
 		void CreateUnitsPosition(StageNumber stageNum,std::string fileName);
 	public: // Setter関数
-		void SetGamePad(GamePAD_XInput* gamePad) { this->gamePad_ = gamePad; } // GamePadの設定
-
+		void SetGameScene(GameScene* p_game_scene) { this->p_game_scene = p_game_scene; }
+		// GamePadの設定
+		void SetGamePad(GamePAD_XInput* gamePad) { this->gamePad_ = gamePad; } 
 		// カメラの設定
 		void SetDebugCamera(DebugCamera* debugCamera_) { debugCamera = debugCamera_; }
 
@@ -69,6 +70,7 @@ namespace XIIlib
 
 	protected: // 静的メンバ変数
 		static StageNumber stageNum; // ステージナンバー
+		static GameScene* p_game_scene;
 		// GamePadの借り物変数
 		static GamePAD_XInput* gamePad_;
 		static Phase phase; // 現在のフェーズ

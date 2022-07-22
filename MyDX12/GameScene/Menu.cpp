@@ -30,15 +30,17 @@ XIIlib::Menu::~Menu()
 	}
 	delete cursor;
 	delete spStageBG1;
+	delete rule;
 }
 
-void XIIlib::Menu::Initialize(GameScene* p_game_scene)
+void XIIlib::Menu::Initialize()
 {
 	// 定数
 	const DirectX::XMFLOAT4 color = {1,1,1,1};
 	const Math::Vector2 anchorPoint = {0.5f,0.5f};
 
 	// 生成
+	rule = Sprite::Create(CLEARCONDITION, { 0,0 });
 	spStageBG1   = Sprite::Create(STAGEBG1_TEX, { 0.0f,0.0f }); // 背景
 	cursor       = Sprite::Create(CURSOR_TEX, { winCenter.x - CURSOR_SPACE, winCenter.y - SPACE * 2 }, color, anchorPoint);
 	playerGuide = Sprite::Create(PLAYERGUIDES_TEX, winCenter, color, anchorPoint); // プレイヤーの説明
@@ -67,61 +69,12 @@ void XIIlib::Menu::Initialize(GameScene* p_game_scene)
 	}
 }
 
-void XIIlib::Menu::Update(GameScene* p_game_scene)
+void XIIlib::Menu::Update()
 {
 #pragma region Easing処理
-	// 最後のカウンターがMAXに到達するまで、Easing処理
-	if (easingState == EasingState::MOVE_IN || easingState == EasingState::MOVE_OUT)
-	{
-		// カーソルの非表示
-		if (cursorDisp) { cursorDisp = false; }
-		// Easing処理
-		for (int i = 0; i < MAX_BUTTON; ++i)
-		{
-			EasingMove(i,easingState);
-		}
-		// カウントの更新
-		CountsUpdate();
-
-		// 最後のカウントがマックスになったらEasingの状態をNONE
-		if (easingCounts[MAX_BUTTON - 1] > MAX_EASING_COUNT)
-		{
-			// EasingOutなら別シーンに移動
-			if (easingState == EasingState::MOVE_OUT)
-			{
-				switch (menuState)
-				{
-				case XIIlib::MenuState::CONTINUE:
-					p_game_scene->ChangeState(new Play);
-					break;
-				case XIIlib::MenuState::NEXT_SLECT:
-					// シーンを戻る際はUnitデータを消しておく
-					UnitManager::GetInstance()->AllDestroy();
-					p_game_scene->ChangeState(new Select);
-					break;
-				case XIIlib::MenuState::NEXT_TITLE:
-					// シーンを戻る際はUnitデータを消しておく
-					UnitManager::GetInstance()->AllDestroy();
-					p_game_scene->ChangeState(new Title);
-					break;
-				default:
-					p_game_scene->ChangeState(new Play);
-					break;
-				}
-				
-				menuExists = false;
-				return;
-			}
-			// カウントをすべて0
-			for (int i = 0; i < MAX_BUTTON; ++i)
-			{
-				easingCounts[i] = 0;
-			}
-			// 状態をNONEに
-			easingState = EasingState::NONE;
-		}
-	}
-	
+	// Easing処理
+	EasingUpdate();
+	// イージング処理中なら即リターン
 	if (easingState != EasingState::NONE)return;
 #pragma endregion
 
@@ -170,10 +123,6 @@ void XIIlib::Menu::Update(GameScene* p_game_scene)
 	if (KeyInput::GetInstance()->Trigger(DIK_TAB) || gamePad_->Button_Down(X_START)) {
 		easingState = EasingState::MOVE_OUT;
 	}
-	// テスト用
-	if (gamePad_->Button_Down(X_A)) {
-		p_game_scene->ChangeState(new Play);
-	}
 #pragma endregion 
 }
 
@@ -187,6 +136,7 @@ void XIIlib::Menu::Draw()
 
 void XIIlib::Menu::DrawTex()
 {
+	rule->Draw();
 	// スプライト描画
 	if (cursorDisp) {
 		cursor->Draw();
@@ -210,6 +160,61 @@ void XIIlib::Menu::DrawTex()
 void XIIlib::Menu::DrawBackground()
 {
 	spStageBG1->Draw();
+}
+
+void XIIlib::Menu::EasingUpdate()
+{
+	// 最後のカウンターがMAXに到達するまで、Easing処理
+	if (easingState == EasingState::MOVE_IN || easingState == EasingState::MOVE_OUT)
+	{
+		// カーソルの非表示
+		if (cursorDisp) { cursorDisp = false; }
+		// Easing処理
+		for (int i = 0; i < MAX_BUTTON; ++i)
+		{
+			EasingMove(i, easingState);
+		}
+		// カウントの更新
+		CountsUpdate();
+
+		// 最後のカウントがマックスになったらEasingの状態をNONE
+		if (easingCounts[MAX_BUTTON - 1] > MAX_EASING_COUNT)
+		{
+			// EasingOutなら別シーンに移動
+			if (easingState == EasingState::MOVE_OUT)
+			{
+				switch (menuState)
+				{
+				case XIIlib::MenuState::CONTINUE:
+					p_game_scene->ChangeState(new Play);
+					break;
+				case XIIlib::MenuState::NEXT_SLECT:
+					// シーンを戻る際はUnitデータを消しておく
+					UnitManager::GetInstance()->AllDestroy();
+					p_game_scene->ChangeState(new Select);
+					break;
+				case XIIlib::MenuState::NEXT_TITLE:
+					// シーンを戻る際はUnitデータを消しておく
+					UnitManager::GetInstance()->AllDestroy();
+					p_game_scene->ChangeState(new Title);
+					break;
+				default:
+					p_game_scene->ChangeState(new Play);
+					break;
+				}
+
+				menuExists = false;
+				return;
+			}
+			// カウントをすべて0
+			for (int i = 0; i < MAX_BUTTON; ++i)
+			{
+				easingCounts[i] = 0;
+			}
+			// 状態をNONEに
+			easingState = EasingState::NONE;
+		}
+	}
 }
 
 void XIIlib::Menu::EasingMove(int i,EasingState easingState)

@@ -48,7 +48,7 @@ void XIIlib::GameScene::ChangeState(SceneState* different_state)
 	audio->StopBGM();
 	delete state;
 	state = different_state;
-	state->Initialize(this);
+	state->Initialize();
 }
 
 void XIIlib::GameScene::Initialize()
@@ -59,6 +59,7 @@ void XIIlib::GameScene::Initialize()
 	// GamePadの生成と初期化とStateに設定
 	gamePad = new GamePAD_XInput();
 	gamePad->Initialize();
+	state->SetGameScene(this);
 	state->SetGamePad(gamePad);
 	UnitManager::GetInstance()->SetGamePad(gamePad);
 	// 前景テクスチャの初期化
@@ -81,10 +82,11 @@ void XIIlib::GameScene::Initialize()
 	functions.push_back(&XIIlib::GameScene::BlackOut);
 	
 	// シーンの初期化
-	state->Initialize(this);
+	state->Initialize();
 
 	outTex = Sprite::Create(WHITEOUT, { 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f, 0.0f }); // 白画像の作成
 	// コメントしました。
+	
 }
 
 void XIIlib::GameScene::Update()

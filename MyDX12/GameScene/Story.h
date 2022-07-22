@@ -28,9 +28,9 @@ namespace XIIlib
 		~Story();
 
 		// ‰Šú‰»
-		void Initialize(GameScene* p_game_scene)override;
+		void Initialize()override;
 		// XV
-		void Update(GameScene* p_game_scene)override;
+		void Update()override;
 		// •`‰æ
 		void Draw()override;
 		void DrawTex()override;
