@@ -73,7 +73,7 @@ void XIIlib::Rook::Update()
 		intTimeCount = 3;
 		sManager->AllClear();
 	}
-	else {
+	if (determinateMoveAction) {
 		// モーション処理
 		Motion();
 		// アドで動かす
