@@ -251,24 +251,41 @@ void XIIlib::Bishop::Move()
 
 		temp.a += tileRand;
 		temp.b -= tileRand;
+		
 		if (temp.a >= 8 && temp.b <= -1)
 		{
 			nextPoint.a = 8;
 			nextPoint.b = 0;
+			if (AttackAreaManager::GetInstance()->CheckMoveAreas(nextPoint)) 
+			{
+				nextPoint = temp;
+			}
 		}
 		else if (temp.a >= 8)
 		{
 			nextPoint.b = temp.b + (temp.a - 7);
 			nextPoint.a = 7;
+			if (AttackAreaManager::GetInstance()->CheckMoveAreas(nextPoint))
+			{
+				nextPoint = temp;
+			}
 		}
 		else if (temp.b <= -1)
 		{
 			nextPoint.a = temp.a + temp.b;
 			nextPoint.b = 0;
+			if (AttackAreaManager::GetInstance()->CheckMoveAreas(nextPoint))
+			{
+				nextPoint = temp;
+			}
 		}
 		else
 		{
 			nextPoint = temp;
+			if (AttackAreaManager::GetInstance()->CheckMoveAreas(nextPoint))
+			{
+				nextPoint = temp;
+			}
 		}
 		audio_->PlaySE("yankeeVoice.wav");
 		break;
@@ -282,16 +299,28 @@ void XIIlib::Bishop::Move()
 		{
 			nextPoint.a = 0;
 			nextPoint.b = 7;
+			if (AttackAreaManager::GetInstance()->CheckMoveAreas(nextPoint))
+			{
+				nextPoint = temp;
+			}
 		}
 		else if (temp.a <= -1)
 		{
 			nextPoint.b = temp.b + temp.a;
 			nextPoint.a = 0;
+			if (AttackAreaManager::GetInstance()->CheckMoveAreas(nextPoint))
+			{
+				nextPoint = temp;
+			}
 		}
 		else if (temp.b >= 8)
 		{
 			nextPoint.a = temp.a - (temp.b - 7);
 			nextPoint.b = 7;
+			if (AttackAreaManager::GetInstance()->CheckMoveAreas(nextPoint))
+			{
+				nextPoint = temp;
+			}
 		}
 		else
 		{
@@ -309,16 +338,28 @@ void XIIlib::Bishop::Move()
 		{
 			nextPoint.a = 7;
 			nextPoint.b = 7;
+			if (AttackAreaManager::GetInstance()->CheckMoveAreas(nextPoint))
+			{
+				nextPoint = temp;
+			}
 		}
 		else if (temp.a >= 8)
 		{
 			nextPoint.a = 7;
 			nextPoint.b = temp.b - (temp.a - 7);
+			if (AttackAreaManager::GetInstance()->CheckMoveAreas(nextPoint))
+			{
+				nextPoint = temp;
+			}
 		}
 		else if (temp.b >= 8)
 		{
 			nextPoint.a = temp.a - (temp.b - 7);
 			nextPoint.b = 7;
+			if (AttackAreaManager::GetInstance()->CheckMoveAreas(nextPoint))
+			{
+				nextPoint = temp;
+			}
 		}
 		else
 		{
@@ -331,6 +372,8 @@ void XIIlib::Bishop::Move()
 	Math::Point2 v = nextPoint - element_stock;
 	//ˆÚ“®—Ê‚©‚çŠp“x‚ğ‹‚ß‚Äİ’è
 	Direction(v);
+
+	AttackAreaManager::GetInstance()->SetMoveAreas(nextPoint);
 
 	// ˆÚ“®‚Ü‚·‚ªŒˆ’è‚³‚ê‚Ü‚µ‚½B
 	determinateMoveAction = true;

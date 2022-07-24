@@ -1,5 +1,6 @@
 #include "SmokeManager.h"
 #include "Smoke.h"
+#include <algorithm>
 
 XIIlib::SmokeManager::SmokeManager() {}
 

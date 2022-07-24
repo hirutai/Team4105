@@ -279,7 +279,7 @@ void XIIlib::Rook::Move()
 		tileRand = jMin + (int)(rand() * (jMax - jMin + 1) / (1 + RAND_MAX));
 
 		temp.a -= tileRand;
-		if (ThreeCheckArea(temp))
+		if (ThreeCheckArea(temp) || AttackAreaManager::GetInstance()->CheckMoveAreas(temp))
 		{
 			nextPoint.a = 0;
 		}
@@ -295,7 +295,7 @@ void XIIlib::Rook::Move()
 		tileRand = jMin + (int)(rand() * (jMax - jMin + 1) / (1 + RAND_MAX));
 
 		temp.a += tileRand;
-		if (ThreeCheckArea(temp))
+		if (ThreeCheckArea(temp) || AttackAreaManager::GetInstance()->CheckMoveAreas(temp))
 		{
 			nextPoint.a = 7;
 		}
@@ -310,7 +310,7 @@ void XIIlib::Rook::Move()
 		tileRand = jMin + (int)(rand() * (jMax - jMin + 1) / (1 + RAND_MAX));
 
 		temp.b -= tileRand;
-		if (ThreeCheckArea(temp))
+		if (ThreeCheckArea(temp) || AttackAreaManager::GetInstance()->CheckMoveAreas(temp))
 		{
 			nextPoint.b = 0;
 		}
@@ -325,7 +325,7 @@ void XIIlib::Rook::Move()
 		tileRand = jMin + (int)(rand() * (jMax - jMin + 1) / (1 + RAND_MAX));
 
 		temp.b += tileRand;
-		if (ThreeCheckArea(temp))
+		if (ThreeCheckArea(temp)|| AttackAreaManager::GetInstance()->CheckMoveAreas(temp))
 		{
 			nextPoint.b = 7;
 		}
@@ -341,7 +341,7 @@ void XIIlib::Rook::Move()
 	Math::Point2 v = nextPoint - element_stock;
 	//ˆÚ“®—Ê‚©‚çŠp“x‚ğ‹‚ß‚Äİ’è
 	Direction(v);
-
+	AttackAreaManager::GetInstance()->SetMoveAreas(nextPoint);
 	// ˆÚ“®‚Ü‚·‚ªŒˆ’è‚³‚ê‚Ü‚µ‚½B
 	determinateMoveAction = true;
 
