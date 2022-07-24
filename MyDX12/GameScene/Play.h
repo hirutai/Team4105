@@ -42,6 +42,8 @@ namespace XIIlib {
 		float s	= 0.0f; // sin関数結果保存用
 		float c	= 0.0f; // cos関数結果保存用
 
+		int appearCount = 0;
+
 		int easyCount = 0;
 
 		//ランダム生成用
