@@ -81,6 +81,11 @@ void XIIlib::Boss::Update()
 	attackTimer->SetPosition(object3d->position);
 }
 
+void XIIlib::Boss::Draw()
+{
+
+}
+
 void XIIlib::Boss::Action()
 {
 	isAttack = true;
