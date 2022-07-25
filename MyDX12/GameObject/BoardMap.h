@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include <vector>
 #include "../Struct/Point2.h"
 
@@ -14,7 +14,7 @@ namespace XIIlib {
 		static BoardMap* Create();
 
 		/// <summary>
-		/// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+		/// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 		/// </summary>
 		BoardMap();
 		~BoardMap();
@@ -27,7 +27,7 @@ namespace XIIlib {
 
 		void DrawBillObj();
 
-		// ”»’èˆ—‚Ì‰Šú‰»(‘S‚Ä)
+		// åˆ¤å®šå‡¦ç†ã®åˆæœŸåŒ–(å…¨ã¦)
 		void AllFlat();
 
 		void SetBackVector(const Math::Point2& element,const Math::Point2& point);
@@ -44,5 +44,6 @@ namespace XIIlib {
 
 		void SetBaseColors(float r, float g, float b);
 
+		void ObjectUpdate(); // 3Dã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®æ›´æ–°
 	};
 }
