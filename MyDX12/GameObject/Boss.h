@@ -35,6 +35,14 @@ namespace XIIlib {
 
 		Math::Point2 GetElementStock()const { return element_stock; }
 		bool MoveAreaCheck(Math::Point2 crPos, Math::Point2 vec, int tileNum)override;
+
+		void InitAttackDisplay();
+	private:
+		// ïœêî
+		bool tileDeth[8] = {};
+		int tileNum = 0;
+		const int DISPLAY_FRAME = 12;
+		const int MAX_TILE = 8;
 	};
 }
 
