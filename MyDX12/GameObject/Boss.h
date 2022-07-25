@@ -9,6 +9,7 @@ namespace XIIlib {
 	private:
 		Math::Point2 point_attack;
 		AREA type_attack = AREA::NONE;
+		Object3D* object3d2 = nullptr;
 		
 		int count = 0;
 	public:

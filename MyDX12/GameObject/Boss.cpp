@@ -29,6 +29,7 @@ XIIlib::Boss::~Boss()
 {
 	delete attackTimer;
 	delete object3d;
+	delete object3d2;
 }
 
 std::shared_ptr<XIIlib::Boss> XIIlib::Boss::Create(int point_x, int point_z)
@@ -54,7 +55,11 @@ void XIIlib::Boss::Initialize()
 	object3d->scale = Math::Vector3({ 1.5f,1.5f,1.5f });
 	object3d->position = { Common::ConvertTilePosition(element_stock.a),1.0f, Common::ConvertTilePosition(element_stock.b) };
 	object3d->position.x -= 2.7f;
-	
+
+	object3d2 = Object3D::Create(ModelLoader::GetInstance()->GetModel(MODEL_BOSS2));
+	object3d2->scale = Math::Vector3({ 1.5f,1.5f,1.5f });
+	object3d2->position = { Common::ConvertTilePosition(element_stock.a),1.0f, Common::ConvertTilePosition(element_stock.b) };
+	object3d2->position.x -= 2.7f;
 	// Audio‚Ì‰Šú‰»
 	audio_ = UnitManager::GetInstance()->GetAudio();
 
@@ -79,12 +84,20 @@ void XIIlib::Boss::Update()
 	Action();
 
 	object3d->Update();
+	object3d2->Update();
 	// À•WÝ’è
 	attackTimer->SetPosition(object3d->position);
 }
 
 void XIIlib::Boss::Draw()
 {
+	if (attackTimer->SizeZeroFlag())
+	{
+		object3d2->Draw();
+	}
+	else {
+		object3d->Draw();
+	}
 
 }
 
