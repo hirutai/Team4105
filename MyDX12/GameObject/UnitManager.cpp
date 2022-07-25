@@ -241,3 +241,8 @@ void XIIlib::UnitManager::ObjectUpdate()
 		unit->ObjectUpdate();
 	}
 }
+
+void XIIlib::UnitManager::SetBoardBaseColor(float r, float g, float b)
+{
+	map_board->SetBaseColors(r, g, b);
+}

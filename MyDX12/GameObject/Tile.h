@@ -32,6 +32,11 @@ namespace XIIlib {
 
 		BillObj* warningTex = nullptr;
 		BillObj* scullTex   = nullptr;
+
+		float red = 1.0f;
+		float green = 1.0f;
+		float blue = 1.0f;
+
 	public:
 		static Tile* Create(float _x,float _z);
 
@@ -73,6 +78,8 @@ namespace XIIlib {
 		bool IsBossKnockBackValid()const { return is_knockBack_boss; }
 
 		Math::Point2 GetBackVector()const { return vec_back; }
+
+		void SetBaseColor(float r, float g, float b);
 
 		bool GetOnTile()const { return on_tile; }
 	};

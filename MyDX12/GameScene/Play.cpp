@@ -125,7 +125,7 @@ void XIIlib::Play::Update()
 		//
 		int createMin = Min;
 		int createMax = Max;
-		tileRand = 1;		
+		tileRand = 1;
 
 		//Switch文用の乱数
 		int createSwitchiMin = SwitchRandiMin;

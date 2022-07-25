@@ -94,6 +94,8 @@ namespace XIIlib {
 		int GetDeadCount()const { return deadCount; }
 		// Object3Dの更新
 		void ObjectUpdate();
+
+		void SetBoardBaseColor(float r,float g,float b);
 	};
 
 }

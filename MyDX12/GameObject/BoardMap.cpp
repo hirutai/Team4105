@@ -163,3 +163,12 @@ bool XIIlib::BoardMap::GetOnTile(const Math::Point2& element) const
 {
 	return map_board[element.b][element.a]->GetOnTile();
 }
+
+void XIIlib::BoardMap::SetBaseColors(float r, float g, float b)
+{
+	for (auto tiles : map_board) {
+		for (auto tile : tiles) {
+			tile->SetBaseColor(r,g,b);
+		}
+	}
+}

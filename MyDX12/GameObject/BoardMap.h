@@ -42,5 +42,7 @@ namespace XIIlib {
 
 		bool GetOnTile(const Math::Point2& element)const;
 
+		void SetBaseColors(float r, float g, float b);
+
 	};
 }
