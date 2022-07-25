@@ -184,9 +184,10 @@ void XIIlib::Yankee::Move()
 	{
 		//上に１進む
 		temp.b -= 1;
-		if (ThreeCheckArea(temp))return;
+		if (ThreeCheckArea(temp)||AttackAreaManager::GetInstance()->CheckMoveAreas(temp))return;
 
 		nextPoint.b -= 1;
+		AttackAreaManager::GetInstance()->SetMoveAreas(nextPoint);
 		audio_->PlaySE("yankeeVoice.wav");
 	}
 	// 自分とキングの間を1マスづつ調べる
@@ -194,8 +195,9 @@ void XIIlib::Yankee::Move()
 	{
 		//下に1進む
 		temp.b += 1;
-		if (ThreeCheckArea(temp))return;
+		if (ThreeCheckArea(temp) || AttackAreaManager::GetInstance()->CheckMoveAreas(temp))return;
 		nextPoint.b += 1;
+		AttackAreaManager::GetInstance()->SetMoveAreas(nextPoint);
 		audio_->PlaySE("yankeeVoice.wav");
 	}
 	// 自分とキングの間を1マスづつ調べる
@@ -203,16 +205,18 @@ void XIIlib::Yankee::Move()
 	{
 		//右に１進む
 		temp.a -= 1;
-		if (ThreeCheckArea(temp))return;
+		if (ThreeCheckArea(temp) || AttackAreaManager::GetInstance()->CheckMoveAreas(temp))return;
 		nextPoint.a -= 1;
+		AttackAreaManager::GetInstance()->SetMoveAreas(nextPoint);
 		audio_->PlaySE("yankeeVoice.wav");
 	}
 	else if (dif.a > 0 && dif.b == 0)// 0より大きければKingより右にいる
 	{
 		//左に１進む
 		temp.a += 1;
-		if (ThreeCheckArea(temp))return;
+		if (ThreeCheckArea(temp) || AttackAreaManager::GetInstance()->CheckMoveAreas(temp))return;
 		nextPoint.a += 1;
+		AttackAreaManager::GetInstance()->SetMoveAreas(nextPoint);
 		audio_->PlaySE("yankeeVoice.wav");
 	}
 	// 自分とキングの間を1マスづつ調べる
@@ -221,9 +225,10 @@ void XIIlib::Yankee::Move()
 		//右上に1進む
 		temp.a -= 1;
 		temp.b -= 1;
-		if (ThreeCheckArea(temp))return;
+		if (ThreeCheckArea(temp) || AttackAreaManager::GetInstance()->CheckMoveAreas(temp))return;
 		nextPoint.a -= 1;
 		nextPoint.b -= 1;
+		AttackAreaManager::GetInstance()->SetMoveAreas(nextPoint);
 		audio_->PlaySE("yankeeVoice.wav");
 	}
 	// 自分とキングの間を1マスづつ調べる
@@ -232,9 +237,10 @@ void XIIlib::Yankee::Move()
 		//右下に1進む
 		temp.a -= 1;
 		temp.b += 1;
-		if (ThreeCheckArea(temp))return;
+		if (ThreeCheckArea(temp) || AttackAreaManager::GetInstance()->CheckMoveAreas(temp))return;
 		nextPoint.a -= 1;
 		nextPoint.b += 1;
+		AttackAreaManager::GetInstance()->SetMoveAreas(nextPoint);
 		audio_->PlaySE("yankeeVoice.wav");
 	}
 	// 自分とキングの間を1マスづつ調べる
@@ -243,9 +249,10 @@ void XIIlib::Yankee::Move()
 		//左上に1進む
 		temp.a += 1;
 		temp.b -= 1;
-		if (ThreeCheckArea(temp))return;
+		if (ThreeCheckArea(temp) || AttackAreaManager::GetInstance()->CheckMoveAreas(temp))return;
 		nextPoint.a += 1;
 		nextPoint.b -= 1;
+		AttackAreaManager::GetInstance()->SetMoveAreas(nextPoint);
 		audio_->PlaySE("yankeeVoice.wav");
 	}
 	// 自分とキングの間を1マスづつ調べる
@@ -254,9 +261,10 @@ void XIIlib::Yankee::Move()
 		//左下に1進む
 		temp.a += 1;
 		temp.b += 1;
-		if (ThreeCheckArea(temp))return;
+		if (ThreeCheckArea(temp) || AttackAreaManager::GetInstance()->CheckMoveAreas(temp))return;
 		nextPoint.a += 1;
 		nextPoint.b += 1;
+		AttackAreaManager::GetInstance()->SetMoveAreas(nextPoint);
 		audio_->PlaySE("yankeeVoice.wav");
 	}
 
