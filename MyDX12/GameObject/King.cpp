@@ -9,6 +9,7 @@
 #include "../3D/BillObj.h"
 #include "../Tool/Easing.h"
 #include "ModelLoader.h"
+#include "../GameScene/SceneState.h"
 
 XIIlib::King::King()
 {
@@ -59,6 +60,7 @@ void XIIlib::King::Initialize()
 	object3d = Object3D::Create(ModelLoader::GetInstance()->GetModel(MODEL_KING));
 	object3d->scale = Math::Vector3({2.0f,2.0f,2.0f});
 	daiza = Object3D::Create(Model::CreateFromOBJ("daiza"));
+	object3d->position.y = 30.0f;
 
 	attackAreasBillboard = BillObj::Create({0,-1,0},"swing_L.png");
 	const float mullPower = 0.8f;
@@ -68,95 +70,97 @@ void XIIlib::King::Initialize()
 
 void XIIlib::King::Update()
 {
-	// 位置座標の更新
-	object3d->position = { Common::ConvertTilePosition(element_stock.a),2.0f, Common::ConvertTilePosition(element_stock.b) };
-	daiza->position = { Common::ConvertTilePosition(element_stock.a),1.0f, Common::ConvertTilePosition(element_stock.b) };
-	
-	if (!determinateMoveAction) {
-		Action();
+	if (fallFlag) {
+		// 位置座標の更新
+		object3d->position = { Common::ConvertTilePosition(element_stock.a),1.0f, Common::ConvertTilePosition(element_stock.b) };
+		daiza->position = { Common::ConvertTilePosition(element_stock.a),0.5f, Common::ConvertTilePosition(element_stock.b) };
 
-		pos = object3d->position;
-	}
-	else {
-		const float maxTime = 1.0f/3.0f;
-		movingTimer += (1.0f / 40.0f);
-		Math::Vector3 nowP = { Common::ConvertTilePosition(element_stock.a),1.0f, Common::ConvertTilePosition(element_stock.b) };
-		Math::Vector3 nextP = { Common::ConvertTilePosition(nextPoint.a),1.0f, Common::ConvertTilePosition(nextPoint.b) };
-		Math::Vector3 v = nextP - nowP;
+		if (!determinateMoveAction) {
+			Action();
 
-		bool isVx = false, isVz = false;
-		if (v.x < 0.0f) {
-			isVx = true;
-			v.x *= -1.0f;
+			pos = object3d->position;
 		}
-		if (v.z < 0.0f) {
-			isVz = true;
-			v.z *= -1.0f;
-		}
+		else {
+			const float maxTime = 1.0f / 3.0f;
+			movingTimer += (1.0f / 40.0f);
+			Math::Vector3 nowP = { Common::ConvertTilePosition(element_stock.a),1.0f, Common::ConvertTilePosition(element_stock.b) };
+			Math::Vector3 nextP = { Common::ConvertTilePosition(nextPoint.a),1.0f, Common::ConvertTilePosition(nextPoint.b) };
+			Math::Vector3 v = nextP - nowP;
 
-		float resultX = Easing::InOutCubic(movingTimer, 0.0f, v.x, maxTime);
-		float resultZ = Easing::InOutCubic(movingTimer, 0.0f, v.z, maxTime);
-		if (isVx)resultX *= -1.0f;
-		if (isVz)resultZ *= -1.0f;
-
-		object3d->position.x = pos.x + resultX;
-		object3d->position.z = pos.z + resultZ;
-		daiza->position.x = object3d->position.x;
-		daiza->position.z = object3d->position.z;
-
-		if (movingTimer >= maxTime) {
-			determinateMoveAction = false;
-			element_stock = nextPoint;
-			movingTimer = 0.0f;
-			nextPoint = Math::Point2(0, 0);
-			pos = Math::Vector3();
-		}
-	}
-
-	if (moveCount <= 0) {
-		if (type_attack != AREA::NONE) {
-			std::vector<Math::Point2> container = attack_area[(int)type_attack];
-			int add_element = 0;
-			moveCount = moveLag;
-			Math::Vector2 at[3];
-			for (int i = 0; i < 3; i++) {
-				container[i] += element_stock;
-				if ((container[i].a < 8 && container[i].a >= 0) && (container[i].b < 8 && container[i].b >= 0)) {
-					audio_->PlaySE("swing.wav");
-					UnitManager::GetInstance()->ChangeAttackValidTile(container[i], (int)type);
-					Math::Point2 vec_point = container[i] - element_stock;
-					UnitManager::GetInstance()->SetBackVector(container[i], vec_point * 2);
-				}
+			bool isVx = false, isVz = false;
+			if (v.x < 0.0f) {
+				isVx = true;
+				v.x *= -1.0f;
 			}
-			isDrawAtArea = true;
+			if (v.z < 0.0f) {
+				isVz = true;
+				v.z *= -1.0f;
+			}
+
+			float resultX = Easing::InOutCubic(movingTimer, 0.0f, v.x, maxTime);
+			float resultZ = Easing::InOutCubic(movingTimer, 0.0f, v.z, maxTime);
+			if (isVx)resultX *= -1.0f;
+			if (isVz)resultZ *= -1.0f;
+
+			object3d->position.x = pos.x + resultX;
+			object3d->position.z = pos.z + resultZ;
+			daiza->position.x = object3d->position.x;
+			daiza->position.z = object3d->position.z;
+
+			if (movingTimer >= maxTime) {
+				determinateMoveAction = false;
+				element_stock = nextPoint;
+				movingTimer = 0.0f;
+				nextPoint = Math::Point2(0, 0);
+				pos = Math::Vector3();
+			}
 		}
-	}
 
-	if (isDrawAtArea) {
-		attackAreasBillboard->SetPosition(attackAreasBillboard->GetPosition().x,2.0f, attackAreasBillboard->GetPosition().z);
-		drawAtArea++;
-		if (drawAtArea == 10) {
-			drawAtArea = 0;
-			isDrawAtArea = false;
+		if (moveCount <= 0) {
+			if (type_attack != AREA::NONE) {
+				std::vector<Math::Point2> container = attack_area[(int)type_attack];
+				int add_element = 0;
+				moveCount = moveLag;
+				Math::Vector2 at[3];
+				for (int i = 0; i < 3; i++) {
+					container[i] += element_stock;
+					if ((container[i].a < 8 && container[i].a >= 0) && (container[i].b < 8 && container[i].b >= 0)) {
+						audio_->PlaySE("swing.wav");
+						UnitManager::GetInstance()->ChangeAttackValidTile(container[i], (int)type);
+						Math::Point2 vec_point = container[i] - element_stock;
+						UnitManager::GetInstance()->SetBackVector(container[i], vec_point * 2);
+					}
+				}
+				isDrawAtArea = true;
+			}
 		}
-	}
-	if (is_hit) {
-		damage_counter++;
 
-		if (damage_counter > 20) {
-			is_hit = 0;
-			damage_counter = 0;
+		if (isDrawAtArea) {
+			attackAreasBillboard->SetPosition(attackAreasBillboard->GetPosition().x, 2.0f, attackAreasBillboard->GetPosition().z);
+			drawAtArea++;
+			if (drawAtArea == 10) {
+				drawAtArea = 0;
+				isDrawAtArea = false;
+			}
 		}
-	}
+		if (is_hit) {
+			damage_counter++;
 
-	if (UnitManager::GetInstance()->IsAttackValid(element_stock, (int)_PositionType::BOSS))
-	{
-		OnDead();
-	}
-	
+			if (damage_counter > 20) {
+				is_hit = 0;
+				damage_counter = 0;
+			}
+		}
 
-	object3d->Update();
-	daiza->Update();
+		if (UnitManager::GetInstance()->IsAttackValid(element_stock, (int)_PositionType::BOSS))
+		{
+			OnDead();
+		}
+
+
+		object3d->Update();
+		daiza->Update();
+	}
 }
 
 void XIIlib::King::Draw()
@@ -366,6 +370,21 @@ bool XIIlib::King::MoveAreaCheck(Math::Point2 crPos, Math::Point2 vec, int tileN
 
 void XIIlib::King::ObjectUpdate()
 {
+	object3d->position.x = Common::ConvertTilePosition(element_stock.a);
+	object3d->position.z = Common::ConvertTilePosition(element_stock.b);
+	daiza->position = { Common::ConvertTilePosition(element_stock.a),0.5f, Common::ConvertTilePosition(element_stock.b) };
+	if (SceneState::GetPhase() == Phase::ClearCondDisplay) {
+		if (!fallFlag) {
+			object3d->position.y -= 0.3f;
+			daiza->position = { Common::ConvertTilePosition(element_stock.a),1.0f, Common::ConvertTilePosition(element_stock.b) };
+
+			if (object3d->position.y <= 1.0f) {
+				object3d->position.y = 1.0f;
+				fallFlag = true;
+			}
+		}
+	}
+
 	object3d->Update();
 	daiza->Update();
 }
