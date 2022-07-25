@@ -166,16 +166,19 @@ void XIIlib::Select::Update()
 		{
 			p_game_scene->GetAudio()->PlaySE("stageSelect.wav", 0.3f);
 			SceneState::CreateUnitsPosition(StageNumber::EASY, "stage0");
+			UnitManager::GetInstance()->SetBoardBaseColor(1, 1, 1);
 		}
 		else if (cursorPos.x == HOMEC_POS.x)
 		{
 			p_game_scene->GetAudio()->PlaySE("stageSelect.wav", 0.3f);
 			SceneState::CreateUnitsPosition(StageNumber::NORMAL, "stage0");
+			UnitManager::GetInstance()->SetBoardBaseColor(1, 1, 1);
 		}
 		else if (cursorPos.x == HOMER_POS.x)
 		{
 			p_game_scene->GetAudio()->PlaySE("stageSelect.wav",0.3f);
 			SceneState::CreateUnitsPosition(StageNumber::HARD, "stage0");
+			UnitManager::GetInstance()->SetBoardBaseColor(0.8f, 0.7f, 0.4f);
 		}
 	}
 }
