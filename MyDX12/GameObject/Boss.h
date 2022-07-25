@@ -20,6 +20,7 @@ namespace XIIlib {
 
 		void Initialize()override;
 		void Update()override;
+		void Draw()override;
 
 		void Action()override;
 		void Attack()override;

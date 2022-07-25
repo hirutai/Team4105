@@ -155,7 +155,7 @@ void XIIlib::Tile::Update()
 
 	on_tile = false;
 
-	tile->color = { 1,1, 1 };
+	tile->color = { red,green,blue};
 
 	if (SceneState::GetPhase() == Phase::CameraDirecting)return;
 
@@ -233,4 +233,16 @@ void XIIlib::Tile::Flat()
 	is_move_point = false;
 	is_attack_point = false;
 	is_knockBack_boss = false;
+}
+
+void XIIlib::Tile::SetBaseColor(float r, float g, float b)
+{
+	red = r;
+	green = g;
+	blue = b;
+}
+
+void XIIlib::Tile::ObjectUpdate()
+{
+	tile->Update();
 }

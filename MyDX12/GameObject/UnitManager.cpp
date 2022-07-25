@@ -234,10 +234,15 @@ void XIIlib::UnitManager::ResetCount()
 
 void XIIlib::UnitManager::ObjectUpdate()
 {
-	map_board->Update();
+	map_board->ObjectUpdate();
 
 	for (auto unit : units)
 	{
 		unit->ObjectUpdate();
 	}
+}
+
+void XIIlib::UnitManager::SetBoardBaseColor(float r, float g, float b)
+{
+	map_board->SetBaseColors(r, g, b);
 }

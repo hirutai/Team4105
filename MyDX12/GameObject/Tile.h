@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "../Struct/Point2.h"
 class Object3D;
 
@@ -8,12 +8,12 @@ namespace XIIlib {
 
 	class Tile {
 	private:
-		// ƒmƒbƒNƒoƒbƒN‚ÌƒxƒNƒgƒ‹
+		// ãƒãƒƒã‚¯ãƒãƒƒã‚¯ã®ãƒ™ã‚¯ãƒˆãƒ«
 		Math::Point2 vec_back = Math::Point2();
-		// ‹î‚ª‚¢‚é‚©‚Ç‚¤‚©
+		// é§’ãŒã„ã‚‹ã‹ã©ã†ã‹
 		bool on_tile = false;
 
-		// UŒ‚”»’è‚ª—LŒø‰»‚µ‚Ä‚¢‚é‚©‚Ç‚¤‚©
+		// æ”»æ’ƒåˆ¤å®šãŒæœ‰åŠ¹åŒ–ã—ã¦ã„ã‚‹ã‹ã©ã†ã‹
 		bool is_attack_player = false;
 		bool is_attack_enemy = false;
 		bool is_move_point = false;
@@ -21,17 +21,22 @@ namespace XIIlib {
 		bool is_attack_boss = false;
 		bool is_knockBack_boss = false;
 
-		// UŒ‚”»’è‚Ì—L–³‚ğŒv‚é
-		int time_valid_player = 0; // 10f–Ú‚ÅÁ‚¦‚é
-		int time_valid_enemy = 0; // 10f–Ú‚ÅÁ‚¦‚é
-		int time_valid_move_point = 0; // 10f–Ú‚ÅÁ‚¦‚é
-		int time_valid_attack_point = 0; // 10f–Ú‚ÅÁ‚¦‚é
-		int time_valid_attack_boss = 0; // 10f–Ú‚ÅÁ‚¦‚é
-		// ƒ}ƒX—p‚Ìƒ‚ƒfƒ‹
+		// æ”»æ’ƒåˆ¤å®šã®æœ‰ç„¡ã‚’è¨ˆã‚‹
+		int time_valid_player = 0; // 10fç›®ã§æ¶ˆãˆã‚‹
+		int time_valid_enemy = 0; // 10fç›®ã§æ¶ˆãˆã‚‹
+		int time_valid_move_point = 0; // 10fç›®ã§æ¶ˆãˆã‚‹
+		int time_valid_attack_point = 0; // 10fç›®ã§æ¶ˆãˆã‚‹
+		int time_valid_attack_boss = 0; // 10fç›®ã§æ¶ˆãˆã‚‹
+		// ãƒã‚¹ç”¨ã®ãƒ¢ãƒ‡ãƒ«
 		Object3D* tile = nullptr;
 
 		BillObj* warningTex = nullptr;
 		BillObj* scullTex   = nullptr;
+
+		float red = 1.0f;
+		float green = 1.0f;
+		float blue = 1.0f;
+
 	public:
 		static Tile* Create(float _x,float _z);
 
@@ -74,7 +79,11 @@ namespace XIIlib {
 
 		Math::Point2 GetBackVector()const { return vec_back; }
 
+		void SetBaseColor(float r, float g, float b);
+
 		bool GetOnTile()const { return on_tile; }
+
+		void ObjectUpdate(); // 3Dã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®æ›´æ–°
 	};
 
 }
