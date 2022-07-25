@@ -241,3 +241,8 @@ void XIIlib::Tile::SetBaseColor(float r, float g, float b)
 	green = g;
 	blue = b;
 }
+
+void XIIlib::Tile::ObjectUpdate()
+{
+	tile->Update();
+}
