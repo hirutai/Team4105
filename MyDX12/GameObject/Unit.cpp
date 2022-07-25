@@ -189,6 +189,12 @@ void XIIlib::Unit::SetAttackTimer(int countNum, XIIlib::CountType type)
 	attackTimer->Initialize();
 }
 
+void XIIlib::Unit::SetFallFlag()
+{
+	fallFlag = true;
+	object3d->position.y = 1.0f;
+}
+
 void XIIlib::Unit::ObjectUpdate()
 {
 	if (object3d != nullptr) {

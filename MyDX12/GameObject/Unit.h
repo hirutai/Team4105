@@ -100,6 +100,8 @@ namespace XIIlib {
 		bool isDrawTimer = false;
 
 		float correctionAngle = 0.0f;
+
+		bool fallFlag = false;
 	public:
 		Unit() = default;
 		virtual ~Unit(){}
@@ -141,6 +143,8 @@ namespace XIIlib {
 		void OnDead() { is_dead = true; }
 
 		void SetAttackTimer(int countNum, XIIlib::CountType type = XIIlib::CountType::SECOND);
+
+		void SetFallFlag();
 
 	public:// 共通関数
 		void BillObjectDraw();
