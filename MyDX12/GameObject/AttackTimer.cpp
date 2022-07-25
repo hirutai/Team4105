@@ -59,10 +59,6 @@ void AttackTimer::SetPosition(const Vector3& position)
 	timerEdge->SetPosition(position.x, position.y, position.z - 0.5f); // ‰‚ÌÀ•W‚Ìİ’è
 }
 
-bool XIIlib::AttackTimer::SizeZeroFlag()
-{
-	return currentSize <= 0;
-}
 bool XIIlib::AttackTimer::SizeThirdFlag()
 {
 	return currentSize == maxSize / 3;
@@ -70,4 +66,8 @@ bool XIIlib::AttackTimer::SizeThirdFlag()
 bool XIIlib::AttackTimer::SizeThirdBelowFlag()
 {
 	return currentSize <= maxSize / 3;
+}
+bool XIIlib::AttackTimer::SizeZeroFlag()
+{
+	return currentSize <= 0;
 }

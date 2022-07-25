@@ -52,6 +52,8 @@ void XIIlib::Boss::Initialize()
 	CreateAttackArea();
 	object3d = Object3D::Create(ModelLoader::GetInstance()->GetModel(MODEL_BOSS));
 	object3d->scale = Math::Vector3({ 1.5f,1.5f,1.5f });
+	object3d->position = { Common::ConvertTilePosition(element_stock.a),1.0f, Common::ConvertTilePosition(element_stock.b) };
+	object3d->position.x -= 2.7f;
 	
 	// Audio‚Ì‰Šú‰»
 	audio_ = UnitManager::GetInstance()->GetAudio();
@@ -61,6 +63,8 @@ void XIIlib::Boss::Initialize()
 
 	nextPoint = { 0,0 };
 	isDrawTimer = true;
+
+	InitAttackDisplay();
 }
 
 void XIIlib::Boss::Update()
@@ -75,8 +79,6 @@ void XIIlib::Boss::Update()
 	Action();
 
 	object3d->Update();
-	object3d->position = { Common::ConvertTilePosition(element_stock.a),1.0f, Common::ConvertTilePosition(element_stock.b) };
-	object3d->position.x -= 2.7f;
 	// À•WÝ’è
 	attackTimer->SetPosition(object3d->position);
 }
@@ -95,42 +97,57 @@ void XIIlib::Boss::Action()
 	
 	if (attackTimer->SizeZeroFlag())
 	{
+		InitAttackDisplay();
 		Attack();
 		audio_->PlaySE("swing.wav");
 	}
 	else if (attackTimer->SizeThirdFlag())
 	{
 		Target();
+
+		// Attack•\Ž¦‚Ì‰Šú‰»
+		InitAttackDisplay();
 	}
 	else if (attackTimer->SizeThirdBelowFlag())
 	{
 		//F‚ð“h‚é
-		//if (count % 10 == 0)
-		//{
-		//	int num = count * 0.1;
-		//	UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(bossTileRand, num), (int)_PositionType::ENEMY);
-		//}
-		//if (count >= 70)
-		//{
-		//	count = 0;
-		//}
-		//count++;
+		if (count % DISPLAY_FRAME == 0)
+		{
+			if (bossAttackSelect == 0) {
+				tileDeth[abs(tileNum - (MAX_TILE - 1))] = true;
+			}
+			else
+			{
+				tileDeth[tileNum] = true;
+			}
+			tileNum++;
+		}
+		count++;
+
 		if (bossAttackSelect == 0)
 		{
-			for (int i = 0; i <= 7; i++)
+			// c
+			for (int i = MAX_TILE - 1; i >= 0; --i)
 			{
-				UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(bossTileRand, i), (int)_PositionType::ENEMY);
-				UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(bossTileRand + 1, i), (int)_PositionType::ENEMY);
-				UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(bossTileRand - 1, i), (int)_PositionType::ENEMY);
+				if (tileDeth[i])
+				{
+					UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(bossTileRand, i), (int)_PositionType::ENEMY);
+					UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(bossTileRand + 1, i), (int)_PositionType::ENEMY);
+					UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(bossTileRand - 1, i), (int)_PositionType::ENEMY);
+				}
 			}
 		}
 		else
 		{
-			for (int j = 0; j <= 7; j++)
+			// ‰¡
+			for (int j = 0; j < MAX_TILE;++j)
 			{
-				UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(j, bossTileRand), (int)_PositionType::ENEMY);
-				UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(j, bossTileRand + 1), (int)_PositionType::ENEMY);
-				UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(j, bossTileRand - 1), (int)_PositionType::ENEMY);
+				if (tileDeth[j])
+				{
+					UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(j, bossTileRand), (int)_PositionType::ENEMY);
+					UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(j, bossTileRand + 1), (int)_PositionType::ENEMY);
+					UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(j, bossTileRand - 1), (int)_PositionType::ENEMY);
+				}
 			}
 		}
 	}
@@ -158,6 +175,8 @@ void XIIlib::Boss::Action()
 		UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(element_stock.a - 3, element_stock.b - 1), (int)_PositionType::BOSS_KNOCKBACK);
 		UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(element_stock.a + 2, element_stock.b - 1), (int)_PositionType::BOSS_KNOCKBACK);
 	}
+
+	
 }
 
 void XIIlib::Boss::Target()
@@ -178,33 +197,15 @@ void XIIlib::Boss::Target()
 	std::shuffle(v.begin(), v.end(), engine);
 
 	bossTileRand = v[bossTileRand] + 1;
-	if (bossAttackSelect == 0)
-	{
-		for (int i = 0; i <= 7; i++)
-		{
-			UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(bossTileRand, i), (int)_PositionType::ENEMY);
-			UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(bossTileRand + 1, i), (int)_PositionType::ENEMY);
-			UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(bossTileRand - 1, i), (int)_PositionType::ENEMY);
-		}
-	}
-	else
-	{
-		for (int j = 0; j <= 7; j++)
-		{
-			UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(j, bossTileRand), (int)_PositionType::ENEMY);
-			UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(j, bossTileRand + 1), (int)_PositionType::ENEMY);
-			UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(j, bossTileRand - 1), (int)_PositionType::ENEMY);
-		}
-	}
-
 }
 
 void XIIlib::Boss::Attack()
 {
+	
 	Math::Point2 temp = element_stock;
 	if (bossAttackSelect == 0)
 	{
-		for (int i = 0; i <= 7; i++)
+		for (int i = 0; i < MAX_TILE; i++)
 		{
 			UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(bossTileRand, i), (int)_PositionType::BOSS);
 			UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(bossTileRand + 1, i), (int)_PositionType::BOSS);
@@ -213,7 +214,7 @@ void XIIlib::Boss::Attack()
 	}
 	else
 	{
-		for (int j = 0; j <= 7; j++)
+		for (int j = 0; j < MAX_TILE; j++)
 		{
 			UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(j, bossTileRand), (int)_PositionType::BOSS);
 			UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(j, bossTileRand + 1), (int)_PositionType::BOSS);
@@ -267,6 +268,19 @@ bool XIIlib::Boss::MoveAreaCheck(Math::Point2 crPos, Math::Point2 vec, int tileN
 		if (UnitManager::GetInstance()->AllOnUnit(pos))return true;
 	}
 	return false;
+}
+
+void XIIlib::Boss::InitAttackDisplay()
+{
+	if (count >= DISPLAY_FRAME * MAX_TILE)
+	{
+		count = 0;
+		tileNum = 0;
+		for (int i = 0; i < MAX_TILE; i++)
+		{
+			tileDeth[i] = false;
+		}
+	}
 }
 
 void XIIlib::Boss::SetHitDamage(int attackPoint)
