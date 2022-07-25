@@ -20,6 +20,7 @@ void XIIlib::ModelLoader::Load(){
 	SetModel(MODEL_ROOK,    "bike2");
 	SetModel(MODEL_BISHOP,  "bike");
 	SetModel(MODEL_BOSS,    "boss");
+	SetModel(MODEL_BOSS2,   "boss2");
 }
 
 Model* XIIlib::ModelLoader::GetModel(const ModelNum& modelNum) const

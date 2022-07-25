@@ -13,7 +13,8 @@ namespace XIIlib {
 		MODEL_YANKEE,
 		MODEL_ROOK,
 		MODEL_BISHOP,
-		MODEL_BOSS
+		MODEL_BOSS,
+		MODEL_BOSS2
 	};
 
 	class ModelLoader
