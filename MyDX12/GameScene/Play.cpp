@@ -125,8 +125,8 @@ void XIIlib::Play::Update()
 		//
 		int createMin = Min;
 		int createMax = Max;
-		tileRand = 1;
-		
+		tileRand = 1;		
+
 		//Switch文用の乱数
 		int createSwitchiMin = SwitchRandiMin;
 		int createSwitchiMax = SwitchRandiMax;
@@ -136,21 +136,25 @@ void XIIlib::Play::Update()
 		{
 			if (UnitManager::GetInstance()->GetAllUnitCount() - 1 == 0) // 敵を全滅させた時
 			{
-				if (easyCount == 0)
+				appearCount++;
+				if (easyCount == 0 && appearCount == 60)
 				{
 					std::shared_ptr<Yankee> yankee = std::move(Yankee::Create(4, 7));
-					std::shared_ptr<Yankee> yankee1 = std::move(Yankee::Create(4, 5));
+					std::shared_ptr<Yankee> yankee1 = std::move(Yankee::Create(4, 5));			
 					UnitManager::GetInstance()->AddUnit(std::move(yankee));
 					UnitManager::GetInstance()->AddUnit(std::move(yankee1));
 					UnitManager::GetInstance()->Update();
+					appearCount = 0;
+					easyCount += 1;
 				}
-				else if (easyCount == 1)
+				else if (easyCount == 1 && appearCount == 60)
 				{
 					std::shared_ptr<Rook> rook = std::move(Rook::Create(3, 6));
 					UnitManager::GetInstance()->AddUnit(std::move(rook));
 					UnitManager::GetInstance()->Update();
-				}
-				easyCount += 1;
+					appearCount = 0;
+					easyCount += 1;
+				}			
 			}					
 		}
 
