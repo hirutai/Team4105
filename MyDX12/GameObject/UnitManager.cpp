@@ -234,7 +234,7 @@ void XIIlib::UnitManager::ResetCount()
 
 void XIIlib::UnitManager::ObjectUpdate()
 {
-	map_board->Update();
+	map_board->ObjectUpdate();
 
 	for (auto unit : units)
 	{

@@ -172,3 +172,12 @@ void XIIlib::BoardMap::SetBaseColors(float r, float g, float b)
 		}
 	}
 }
+
+void XIIlib::BoardMap::ObjectUpdate()
+{
+	for (auto tiles : map_board) {
+		for (auto tile : tiles) {
+			tile->ObjectUpdate();
+		}
+	}
+}
