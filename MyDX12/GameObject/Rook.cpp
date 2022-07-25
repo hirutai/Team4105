@@ -287,8 +287,8 @@ void XIIlib::Rook::Move()
 		{
 			nextPoint.a = temp.a;
 		}
-		break;
 		audio_->PlaySE("yankeeVoice.wav");
+		break;
 	case 1:
 		//‰E•ûŒü
 
@@ -303,8 +303,8 @@ void XIIlib::Rook::Move()
 		{
 			nextPoint.a = temp.a;
 		}
-		break;
 		audio_->PlaySE("yankeeVoice.wav");
+		break;
 	case 2:
 		//‰º•ûŒü
 		tileRand = jMin + (int)(rand() * (jMax - jMin + 1) / (1 + RAND_MAX));
@@ -318,8 +318,9 @@ void XIIlib::Rook::Move()
 		{
 			nextPoint.b = temp.b;
 		}
-		break;
 		audio_->PlaySE("yankeeVoice.wav");
+		break;
+		
 	case 3:
 		//ã•ûŒü
 		tileRand = jMin + (int)(rand() * (jMax - jMin + 1) / (1 + RAND_MAX));
