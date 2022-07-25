@@ -197,6 +197,8 @@ void XIIlib::Unit::SetFallFlag()
 
 void XIIlib::Unit::ObjectUpdate()
 {
+	
+
 	if (object3d != nullptr) {
 		object3d->Update();
 	}
