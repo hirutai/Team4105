@@ -102,6 +102,7 @@ namespace XIIlib {
 		float correctionAngle = 0.0f;
 
 		bool fallFlag = false;
+		bool fallRot = false;
 	public:
 		Unit() = default;
 		virtual ~Unit(){}
@@ -155,5 +156,7 @@ namespace XIIlib {
 		void Motion();
 		void Direction(const Math::Point2& v);
 		void SetElementStock(int x, int z);		// マス座標の設定
+
+		void FallAction();
 	};
 }

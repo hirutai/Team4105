@@ -48,6 +48,7 @@ void XIIlib::Rook::Initialize()
 	CreateAttackArea();
 	object3d = Object3D::Create(ModelLoader::GetInstance()->GetModel(MODEL_ROOK));
 	object3d->scale = Math::Vector3({ 0.8f,0.8f,0.8f });
+	object3d->position.y = 30.0f;
 	// Audioの初期化
 	audio_ = UnitManager::GetInstance()->GetAudio();
 	correctionAngle = 90.0f;
@@ -60,40 +61,45 @@ void XIIlib::Rook::Initialize()
 
 void XIIlib::Rook::Update()
 {
-	// 位置座標の更新
-	object3d->position = { Common::ConvertTilePosition(element_stock.a),1.0f, Common::ConvertTilePosition(element_stock.b) };
-	if (!determinateMoveAction) {
-		// 駒の行動
-		Action();
-		// タイマーの更新
-		attackTimer->Timer();
-
-		pos = object3d->position;
-		// エフェクトの設定
-		intTimeCount = 3;
-		sManager->AllClear();
+	if (!fallFlag) {
+		FallAction();
 	}
-	if (determinateMoveAction) {
-		// モーション処理
-		Motion();
-		// アドで動かす
-		intTimeCount--;
-		if (intTimeCount < 0) {
-			Math::Vector3 nowP = { Common::ConvertTilePosition(element_stock.a),1.0f, Common::ConvertTilePosition(element_stock.b) };
-			Math::Vector3 nextP = { Common::ConvertTilePosition(nextPoint.a),1.0f, Common::ConvertTilePosition(nextPoint.b) };
-			Math::Vector3 v = nowP - nextP;
-			v.normalize();
-			float rnd_scale = static_cast<float>(rand() % 10 + 5) / 100.0f;
-			float rnd_mullValue = static_cast<float>(rand() % 5 + 5) / 50.0f;
-			sManager->Add(0.05f, rnd_scale, v * rnd_mullValue + Math::Vector3(0, 0.05f, 0), object3d->position + Math::Vector3(0, 2, 0));
+	else if (fallFlag) {
+		// 位置座標の更新
+		object3d->position = { Common::ConvertTilePosition(element_stock.a),1.0f, Common::ConvertTilePosition(element_stock.b) };
+		if (!determinateMoveAction) {
+			// 駒の行動
+			Action();
+			// タイマーの更新
+			attackTimer->Timer();
+
+			pos = object3d->position;
+			// エフェクトの設定
 			intTimeCount = 3;
+			sManager->AllClear();
 		}
-		sManager->Update();
-	}
+		if (determinateMoveAction) {
+			// モーション処理
+			Motion();
+			// アドで動かす
+			intTimeCount--;
+			if (intTimeCount < 0) {
+				Math::Vector3 nowP = { Common::ConvertTilePosition(element_stock.a),1.0f, Common::ConvertTilePosition(element_stock.b) };
+				Math::Vector3 nextP = { Common::ConvertTilePosition(nextPoint.a),1.0f, Common::ConvertTilePosition(nextPoint.b) };
+				Math::Vector3 v = nowP - nextP;
+				v.normalize();
+				float rnd_scale = static_cast<float>(rand() % 10 + 5) / 100.0f;
+				float rnd_mullValue = static_cast<float>(rand() % 5 + 5) / 50.0f;
+				sManager->Add(0.05f, rnd_scale, v * rnd_mullValue + Math::Vector3(0, 0.05f, 0), object3d->position + Math::Vector3(0, 2, 0));
+				intTimeCount = 3;
+			}
+			sManager->Update();
+		}
 
-	object3d->Update();
-	// 座標設定
-	attackTimer->SetPosition(object3d->position);
+		object3d->Update();
+		// 座標設定
+		attackTimer->SetPosition(object3d->position);
+	}
 }
 
 void XIIlib::Rook::OriginBillDraw()

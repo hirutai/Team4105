@@ -7,6 +7,8 @@
 #include "../Audio/Audio.h"
 //#include "../GameObject/AttackTimer.h"
 #include "../Tool/Easing.h"
+#include "../GameScene/SceneState.h"
+#include "King.h"
 
 bool XIIlib::Unit::ThreeCheckArea(Math::Point2 element_stock)
 {
@@ -176,6 +178,31 @@ void XIIlib::Unit::Direction(const Math::Point2& v)
 void XIIlib::Unit::SetElementStock(int x, int z)
 {
 	element_stock = Math::Point2(x, z);
+}
+
+void XIIlib::Unit::FallAction()
+{
+	// X/Z‚ÌÀ•W‚ð‘ã“ü‚µ‚Ä‚¨‚­
+	object3d->position.x = Common::ConvertTilePosition(element_stock.a);
+	object3d->position.z = Common::ConvertTilePosition(element_stock.b);
+	object3d->position.y -= 0.4f;
+	object3d->rotation.y += 18.0f;
+
+	if (object3d->position.y <= 1.0f) {
+		int element = UnitManager::GetInstance()->GetUnitIDElements("King");
+		if (element != -1)
+		{
+			std::shared_ptr<King> p_king =
+				std::dynamic_pointer_cast<King>(UnitManager::GetInstance()->GetUnit(element));
+			Math::Point2 v = p_king->GetElementStock() - element_stock;
+			Direction(v);
+		}
+		object3d->position.y = 1.0f;
+		fallFlag = true;
+	}
+
+	object3d->Update();
+	attackTimer->SetPosition(object3d->position);
 }
 
 void XIIlib::Unit::SetHitDamage(int attackPoint)
