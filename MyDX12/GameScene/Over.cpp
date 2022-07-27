@@ -54,10 +54,12 @@ void XIIlib::Over::Update()
 				SceneState::phase = Phase::CameraDirecting;
 				SceneState::CreateUnitsPosition(SceneState::stageNum, "stage0");
 				p_game_scene->ChangeState(new Play());
+				easyCount = 0;
 			}
 			else {
 				// ƒ^ƒCƒgƒ‹‚É‘JˆÚ
 				p_game_scene->ChangeState(new Title);
+				easyCount = 0;
 			}
 			
 		}

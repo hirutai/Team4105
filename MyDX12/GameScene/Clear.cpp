@@ -36,6 +36,7 @@ void Clear::Update()
 	if (trigSpace) {
 		if (p_game_scene->DrawScreen(TransitionType::CLOSE)) {
 			p_game_scene->ChangeState(new Title);
+			easyCount = 0;
 		}
 	}
 

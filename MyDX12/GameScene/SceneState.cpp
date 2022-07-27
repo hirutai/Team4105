@@ -19,6 +19,7 @@ GameScene* SceneState::p_game_scene = nullptr;
 GamePAD_XInput* SceneState::gamePad_ = nullptr;
 Phase SceneState::phase = Phase::CameraDirecting;
 std::unique_ptr<Object3D> SceneState::backStages[3] = {};
+int SceneState::easyCount = 0;
 
 void XIIlib::SceneState::CommonUpdate(GameScene* p_game_scene)
 {
@@ -113,7 +114,6 @@ void XIIlib::SceneState::CreateUnitsPosition(StageNumber stageNum, std::string f
 		std::shared_ptr<BossCollision> bossCollision1 = std::move(BossCollision::Create(2, 7));
 		std::shared_ptr<BossCollision> bossCollision2 = std::move(BossCollision::Create(3, 7));
 		std::shared_ptr<BossCollision> bossCollision3 = std::move(BossCollision::Create(5, 7));
-
 
 		UnitManager::GetInstance()->AddUnit(std::move(king));
 		UnitManager::GetInstance()->AddUnit(std::move(bishop));

@@ -61,6 +61,7 @@ void XIIlib::King::Initialize()
 	object3d->scale = Math::Vector3({2.0f,2.0f,2.0f});
 	daiza = Object3D::Create(Model::CreateFromOBJ("daiza"));
 	object3d->position.y = 30.0f;
+	object3d->rotation.y = 180.0f;
 
 	attackAreasBillboard = BillObj::Create({0,-1,0},"swing_L.png");
 	const float mullPower = 0.8f;

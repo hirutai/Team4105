@@ -68,7 +68,7 @@ void XIIlib::Boss::Initialize()
 
 	nextPoint = { 0,0 };
 	//isDrawTimer = true;
-
+	fallFlag = true;
 	InitAttackDisplay();
 }
 
