@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include <memory>
 
 namespace XIIlib {
@@ -7,8 +7,8 @@ namespace XIIlib {
 	private:
 		BossHP();
 		~BossHP();
-		const int defaultHp = 60;
-		int bossHP = 60;
+		const int defaultHp = 30;
+		float bossHP = 30.0f;
 
 		bool nodamage = false;
 		int nodamageTime = 0;
@@ -20,9 +20,9 @@ namespace XIIlib {
 		static BossHP* GetInstance();
 
 		int GetBossHP() { return bossHP; }
-		void SetBossHP(int HP) { bossHP = HP; }
+		void SetBossHP(float HP) { bossHP = HP; }
 
-		void Initialize(); // ‰Šú‰»
+		void Initialize(); // åˆæœŸåŒ–
 		void Update(); 
 
 		void Damage();

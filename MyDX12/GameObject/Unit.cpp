@@ -60,7 +60,7 @@ void XIIlib::Unit::KnockBack()
 	// 攻撃当たっていなければそく返す
 	if (!UnitManager::GetInstance()->IsAttackValid(element_stock, (int)_PositionType::MINE))return;
 
-	SetHitDamage(1);
+	SetHitDamage(1.0f);
 	audio_->PlaySE("damage.wav",0.3f);
 	isAttack = false;
 	// ノックバックの移動量
@@ -205,7 +205,7 @@ void XIIlib::Unit::FallAction()
 	attackTimer->SetPosition(object3d->position);
 }
 
-void XIIlib::Unit::SetHitDamage(int attackPoint)
+void XIIlib::Unit::SetHitDamage(float attackPoint)
 {
 	_hit_point -= attackPoint;
 }

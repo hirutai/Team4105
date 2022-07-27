@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "Unit.h"
 #include <memory>
 
@@ -9,7 +9,7 @@ namespace XIIlib {
 	public:
 		BossCollision();
 		~BossCollision();
-		// ¶¬ŠÖ”
+		// ç”Ÿæˆé–¢æ•°
 		static std::shared_ptr<BossCollision> Create(int point_x, int point_z);
 
 		void Initialize()override;
@@ -25,7 +25,7 @@ namespace XIIlib {
 		
 
 		void CreateAttackArea()override;
-		void SetHitDamage(int attackPoint)override;	
+		void SetHitDamage(float attackPoint)override;	
 
 		Math::Point2 GetElementStock()const { return element_stock; }
 		bool MoveAreaCheck(Math::Point2 crPos, Math::Point2 vec, int tileNum)override;
