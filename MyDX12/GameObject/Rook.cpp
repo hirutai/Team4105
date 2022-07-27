@@ -293,7 +293,7 @@ void XIIlib::Rook::Move()
 		{
 			nextPoint.a = temp.a;
 		}
-		audio_->PlaySE("yankeeVoice.wav");
+		audio_->PlaySE("pararira.wav");
 		break;
 	case 1:
 		//‰E•ûŒü
@@ -309,7 +309,7 @@ void XIIlib::Rook::Move()
 		{
 			nextPoint.a = temp.a;
 		}
-		audio_->PlaySE("yankeeVoice.wav");
+		audio_->PlaySE("pararira.wav");
 		break;
 	case 2:
 		//‰º•ûŒü
@@ -324,7 +324,7 @@ void XIIlib::Rook::Move()
 		{
 			nextPoint.b = temp.b;
 		}
-		audio_->PlaySE("yankeeVoice.wav");
+		audio_->PlaySE("pararira.wav");
 		break;
 		
 	case 3:
@@ -340,7 +340,7 @@ void XIIlib::Rook::Move()
 		{
 			nextPoint.b = temp.b;
 		}
-		audio_->PlaySE("yankeeVoice.wav");
+		audio_->PlaySE("pararira.wav");
 		break;
 	}
 
