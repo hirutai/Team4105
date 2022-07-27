@@ -44,16 +44,10 @@ namespace XIIlib {
 
 		int appearCount = 0;
 
-		int easyCount = 0;
-
 		//ランダム生成用
 		int Min = 0;
 		int Max = 3;
 		int tileRand = 1;
-
-		int SwitchRandiMin = 0;
-		int SwitchRandiMax = 3;
-		int SwitchRand = 0;
 
 		Math::Vector3 cameraEye{ frontEye.x, frontEye.y, frontEye.z }; // カメラの視点
 

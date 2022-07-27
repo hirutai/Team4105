@@ -35,8 +35,8 @@ void XIIlib::Over::Initialize()
 	textRetry->SetSize(textRetry->GetDefault() * mulXY);
 	textTitle = Sprite::Create(TEXT_GO_TITLE, { 1280 * xMullValue,768.0f * yMullValue2 });
 	textTitle->SetSize(textTitle->GetDefault() * mulXY);
-	textRetry->SetColor(0.5f, 0.5f, 0.5f, 1);
-	textTitle->SetColor(1, 1, 1, 1);
+	textRetry->SetColor(1, 1, 1, 1);
+	textTitle->SetColor(0.5f, 0.5f, 0.5f, 1);
 	//p_game_scene->GetAudio()->PlayBGM("yankeeBGM.wav");
 }
 
@@ -54,10 +54,12 @@ void XIIlib::Over::Update()
 				SceneState::phase = Phase::CameraDirecting;
 				SceneState::CreateUnitsPosition(SceneState::stageNum, "stage0");
 				p_game_scene->ChangeState(new Play());
+				easyCount = 0;
 			}
 			else {
 				// ƒ^ƒCƒgƒ‹‚É‘JˆÚ
 				p_game_scene->ChangeState(new Title);
+				easyCount = 0;
 			}
 			
 		}
@@ -66,12 +68,12 @@ void XIIlib::Over::Update()
 	if (trigSpace)return;
 
 	if (KeyInput::GetInstance()->Trigger(DIK_W) || gamePad_->LStickDownFront()) {
-		selectT_R = true;
+		selectT_R = false;
 		textRetry->SetColor(1,1,1,1);
 		textTitle->SetColor(0.5f, 0.5f, 0.5f, 1);
 	}
 	if (KeyInput::GetInstance()->Trigger(DIK_S) || gamePad_->LStickDownBack()) {
-		selectT_R = false;
+		selectT_R = true;
 		textRetry->SetColor(0.5f, 0.5f, 0.5f, 1);
 		textTitle->SetColor(1, 1, 1, 1);
 	}

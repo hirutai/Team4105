@@ -83,6 +83,7 @@ void XIIlib::Menu::Update()
 	EasingUpdate();
 	// イージング処理中なら即リターン
 	if (easingState != EasingState::NONE)return;
+	if (trigSpace)return;
 #pragma endregion
 
 #pragma region 説明
@@ -139,6 +140,7 @@ void XIIlib::Menu::Update()
 			cursorState == CursorState::NEXT_SLECT ||
 			cursorState == CursorState::NEXT_TITLE)
 		{
+			trigSpace = true;
 			easingState = EasingState::MOVE_OUT;
 		}
 		return;
@@ -215,12 +217,22 @@ void XIIlib::Menu::EasingUpdate()
 				case XIIlib::MenuState::NEXT_SLECT:
 					// シーンを戻る際はUnitデータを消しておく
 					UnitManager::GetInstance()->AllDestroy();
-					p_game_scene->ChangeState(new Select);
+					if (trigSpace) {
+						if (p_game_scene->DrawScreen(TransitionType::CLOSE)) {
+							p_game_scene->ChangeState(new Select);
+						}
+					}
+					easyCount = 0;
 					break;
 				case XIIlib::MenuState::NEXT_TITLE:
 					// シーンを戻る際はUnitデータを消しておく
 					UnitManager::GetInstance()->AllDestroy();
-					p_game_scene->ChangeState(new Title);
+					if (trigSpace) {
+						if (p_game_scene->DrawScreen(TransitionType::CLOSE)) {
+							p_game_scene->ChangeState(new Title);
+						}
+					}
+					easyCount = 0;
 					break;
 				default:
 					p_game_scene->ChangeState(new Play);
