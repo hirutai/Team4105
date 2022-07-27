@@ -54,4 +54,6 @@ void XIIlib::SpriteLoader::Load()
 	Sprite::LoadTexture(CLEARCONDITION, L"Resources/clearCondition.png");
 	Sprite::LoadTexture(BOSSCLEARCONDITION, L"Resources/bossClearCondition.png");
 	//Sprite::LoadTexture(RULE_TEX, L"Resources/bossClearCondition.png");
+	Sprite::LoadTexture(TIMER_BAR, L"Resources/timer_bar.png");
+	Sprite::LoadTexture(TIMER_EDGE, L"Resources/timer_edge.png");
 }

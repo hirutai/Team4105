@@ -44,7 +44,7 @@ namespace XIIlib {
 
 		std::string ID; // クラスネーム
 
-		int _hit_point; // 体力
+		float _hit_point; // 体力
 		int _attack_point; // 攻撃力
 		int _defense_point; // 守備力
 
@@ -140,7 +140,7 @@ namespace XIIlib {
 
 	public:// Set関数群
 		void SetTypePositioning(_PositionType changeType);
-		virtual void SetHitDamage(int attackPoint);				// ダメージを受ける関数
+		virtual void SetHitDamage(float attackPoint);				// ダメージを受ける関数
 		void OnDead() { is_dead = true; }
 
 		void SetAttackTimer(int countNum, XIIlib::CountType type = XIIlib::CountType::SECOND);

@@ -112,7 +112,7 @@ bool XIIlib::BossCollision::MoveAreaCheck(Math::Point2 crPos, Math::Point2 vec, 
 	return false;
 }
 
-void XIIlib::BossCollision::SetHitDamage(int attackPoint)
+void XIIlib::BossCollision::SetHitDamage(float attackPoint)
 {
 	_hit_point -= attackPoint;
 	BossHP::GetInstance()->SetBossHP(_hit_point);

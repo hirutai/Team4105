@@ -1,4 +1,4 @@
-#pragma once
+Ôªø#pragma once
 
 namespace XIIlib
 {
@@ -6,7 +6,7 @@ namespace XIIlib
 	{
 		DEBUG_TEXT_TEX = 0, DEBUG_JISTEXT_TEX,
 		DIGITALNUMBER_TEX, EFEECT1_TEX,
-		// ÉQÅ[ÉÄÇ≈égÇ¡ÇƒÇÈïîï™
+		// „Ç≤„Éº„É†„Åß‰Ωø„Å£„Å¶„ÇãÈÉ®ÂàÜ
 		SPACE_TEX, 
 		TEXT_GO_TITLE,
 		TEXT_RETRY,
@@ -32,7 +32,9 @@ namespace XIIlib
 		ZOKU,
 		SHITAPPA,
 		CLEARCONDITION,
-		BOSSCLEARCONDITION
+		BOSSCLEARCONDITION,
+		TIMER_BAR,
+		TIMER_EDGE,
 	};
 	class SpriteLoader
 	{	
