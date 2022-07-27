@@ -37,7 +37,6 @@ XIIlib::Play::~Play()
 void XIIlib::Play::Initialize()
 {
 	SetDebugCamera(p_game_scene->GetCamera());
-
 	if (stageNum == StageNumber::DEBUG)
 	{
 		// それ以外の数値が入っていたら、仮生成
@@ -69,7 +68,10 @@ void XIIlib::Play::Initialize()
 	{
 		spStageBG1 = Sprite::Create(STAGEBG1_TEX, { 0.0f,0.0f });
 	}
-	
+	debugCamera->SetPosition(frontEye.x, frontEye.y, frontEye.z); // 視点座標の設定
+	debugCamera->_Update();
+	UnitManager::GetInstance()->ObjectUpdate();
+
 	operatorGuide = Sprite::Create(OPERATORGUIDE_TEX, { 1000.0f,600.0f }); // 操作説明
 	menuButton = Sprite::Create(MENU_TEX, { 0.0f,10.0f }); // メニュー
 
@@ -285,7 +287,7 @@ void XIIlib::Play::Draw()
 void XIIlib::Play::DrawTex()
 {
 	// スプライト描画
-	operatorGuide->Draw();
+	
 	menuButton->Draw();
 	if (phase == XIIlib::Phase::ClearCondDisplay) {
 		if (stageNum == StageNumber::HARD) { // HARD時
@@ -293,6 +295,7 @@ void XIIlib::Play::DrawTex()
 		}
 		else { //HARD以外
 			clearCond->Draw();
+			if(stageNum == StageNumber::EASY)operatorGuide->Draw();
 		}
 	}
 }

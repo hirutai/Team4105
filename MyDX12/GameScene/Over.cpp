@@ -34,6 +34,7 @@ void XIIlib::Over::Initialize()
 	textTitle->SetSize(textTitle->GetDefault() * mulXY);
 	textRetry->SetColor(1, 1, 1, 1);
 	textTitle->SetColor(0.5f, 0.5f, 0.5f, 1);
+
 	//p_game_scene->GetAudio()->PlayBGM("yankeeBGM.wav");
 }
 
