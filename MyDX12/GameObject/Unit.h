@@ -146,6 +146,7 @@ namespace XIIlib {
 		void SetAttackTimer(int countNum, XIIlib::CountType type = XIIlib::CountType::SECOND);
 
 		void SetFallFlag();
+		bool GetFallFlag()const { return fallFlag; }
 
 	public:// 共通関数
 		void BillObjectDraw();
