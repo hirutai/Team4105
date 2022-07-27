@@ -60,7 +60,7 @@ namespace XIIlib
 		Vector2 barSize{ maxSize, 30.0f }; // バーのサイズ
 		Vector2 edgeSize{ maxSize + 20.0f, 50.0f }; // 縁のサイズ
 
-		const Vector2 hpBarPos{ 40, 700.0f }; // HPバーの座標
+		const Vector2 hpBarPos{ 40, 690.0f }; // HPバーの座標
 #pragma endregion
 	};
 }
