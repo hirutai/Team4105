@@ -127,10 +127,6 @@ void XIIlib::Play::Update()
 		int createMax = Max;
 		tileRand = 1;
 
-		//Switch文用の乱数
-		int createSwitchiMin = SwitchRandiMin;
-		int createSwitchiMax = SwitchRandiMax;
-		SwitchRand = SwitchRandiMin + (int)(rand() * (SwitchRandiMax - SwitchRandiMin + 1) / (1 + RAND_MAX));
 		std::cout << "easyCount" << easyCount<<std::endl;
 		if (stageNum == StageNumber::EASY && UnitManager::GetInstance()->GetUnitIDElements("King") >= 0)
 		{
@@ -154,8 +150,8 @@ void XIIlib::Play::Update()
 					UnitManager::GetInstance()->Update();
 					appearCount = 0;
 					easyCount += 1;
-				}			
-			}					
+				}
+			}
 		}
 
 		if (stageNum == StageNumber::HARD && count % 900 == 0)
