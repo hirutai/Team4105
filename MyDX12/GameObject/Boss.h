@@ -29,6 +29,9 @@ namespace XIIlib {
 		bool AttackAreaExists()override;
 		void AttackAreaDraw();
 
+		bool switching = false;//‰æ‘œØ‚è‘Ö‚¦‚æ‚¤
+		int switchingCount = 0;
+
 		void IniState()override;
 
 		void SetHitDamage(int attackPoint)override;				// ƒ_ƒ[ƒW‚ğó‚¯‚éŠÖ”

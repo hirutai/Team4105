@@ -76,6 +76,15 @@ void XIIlib::Boss::Update()
 {
 	std::cout << "HP" << _hit_point << std::endl;
 
+	if (switching == true)
+	{
+		switchingCount++;
+	}
+	if (switchingCount >= 30)
+	{
+		switching = false;
+		switchingCount = 0;
+	}
 	_hit_point = BossHP::GetInstance()->GetBossHP();
 	BossHP::GetInstance()->Update();
 	// タイマーの更新
@@ -91,7 +100,7 @@ void XIIlib::Boss::Update()
 
 void XIIlib::Boss::Draw()
 {
-	if (attackTimer->SizeZeroFlag())
+	if (switchingCount >= 1)
 	{
 		object3d2->Draw();
 	}
@@ -110,6 +119,7 @@ void XIIlib::Boss::Action()
 	
 	if (attackTimer->SizeZeroFlag())
 	{
+		switching = true;
 		InitAttackDisplay();
 		Attack();
 		audio_->PlaySE("swing.wav");
