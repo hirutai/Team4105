@@ -81,6 +81,7 @@ void XIIlib::Select::Initialize()
 
 void XIIlib::Select::Update()
 {
+
 	if (!trigSpace) {
 		// A‚©D‚ð‰Ÿ‚µ‚Ä‚½‚ç
 		if (KeyInput::GetInstance()->Trigger(DIK_A)|| KeyInput::GetInstance()->Trigger(DIK_D)

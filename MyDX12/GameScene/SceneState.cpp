@@ -18,7 +18,8 @@ StageNumber SceneState::stageNum = StageNumber::DEBUG;
 GameScene* SceneState::p_game_scene = nullptr;
 GamePAD_XInput* SceneState::gamePad_ = nullptr;
 Phase SceneState::phase = Phase::CameraDirecting;
-std::unique_ptr<Object3D> SceneState::backStages[3] = {};
+std::unique_ptr<Object3D> SceneState::backStage = nullptr;
+std::unique_ptr<Object3D> SceneState::bossBG[5] = {};
 int SceneState::easyCount = 0;
 
 void XIIlib::SceneState::CommonUpdate(GameScene* p_game_scene)
@@ -172,27 +173,49 @@ void XIIlib::SceneState::CreateUnitsPosition(StageNumber stageNum, std::string f
 	UnitManager::GetInstance()->Update();
 }
 
+// îwåiÉÇÉfÉãì«Ç›çûÇ›
 void XIIlib::SceneState::BackStagesInit()
 {
-	/*for (int i = 0; i < 3; ++i)
-	{
-		backStages[i].reset(Object3D::Create(Model::CreateFromOBJ("stage1_all")));
-		backStages[i]->scale = Math::Vector3({ 3.0f,3.0f,3.0f });
-		backStages[i]->position = Math::Vector3({ 0.0f,-1.0f,0.0f });
-		backStages[i]->Update();
-	}*/
+	
 
-	backStages[0].reset(Object3D::Create(Model::CreateFromOBJ("stage1_all")));
-	backStages[0]->scale = Math::Vector3({ 3.0f,3.0f,3.0f });
-	backStages[0]->position = Math::Vector3({ 0.0f,-1.0f,0.0f });
-	backStages[0]->Update();
+	// Bossîwåi
+	bossBG[0].reset(Object3D::Create(Model::CreateFromOBJ("stage3_a")));
+	bossBG[1].reset(Object3D::Create(Model::CreateFromOBJ("stage3_b")));
+	bossBG[2].reset(Object3D::Create(Model::CreateFromOBJ("stage3_c")));
+	bossBG[3].reset(Object3D::Create(Model::CreateFromOBJ("stage3_d")));
+	bossBG[4].reset(Object3D::Create(Model::CreateFromOBJ("stage3_e")));
+	for (int i = 0; i < 5; i++)
+	{
+		bossBG[i]->scale = Math::Vector3({ 3.0f,3.0f,3.0f });
+		bossBG[i]->position = Math::Vector3({ 0.0f,-1.0f,0.0f });
+		bossBG[i]->Update();
+	}
+
+	// Easy Normal ÇÃîwåi
+	backStage.reset(Object3D::Create(Model::CreateFromOBJ("stage1_all")));
+	backStage->scale = Math::Vector3({ 3.0f,3.0f,3.0f });
+	backStage->position = Math::Vector3({ 0.0f,-1.0f,0.0f });
+	backStage->Update();
 }
 
 void XIIlib::SceneState::BackStagesDraw()
 {
-	backStages[0]->Update();
+
 	// ÉÇÉfÉãÇÃï`âÊ(.obj)
 	Object3D::PreDraw();
-	backStages[0]->Draw();
+	if (stageNum == StageNumber::HARD)
+	{
+		for (int i = 0; i < 5; i++)
+		{
+			bossBG[i]->Update();
+			bossBG[i]->Draw();
+		}
+	}
+	else
+	{
+		backStage->Update();
+		backStage->Draw();
+	}
+	
 	Object3D::PostDraw();
 }
