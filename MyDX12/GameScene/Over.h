@@ -11,6 +11,9 @@ namespace XIIlib {
 	private:
 		// プレイ内で使う変数宣言の場(Object/Sprite/時間/フラグ等)
 
+	private:
+		const float yMullValue1 = 0.5f, yMullValue2 = 0.7f,
+			xMullValue = 0.53f, mulXY = 1.5f, pickSize = 1.5f;
 	public:
 		Over();
 		~Over();

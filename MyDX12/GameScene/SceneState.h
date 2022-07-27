@@ -75,6 +75,7 @@ namespace XIIlib
 		static GamePAD_XInput* gamePad_;
 		static Phase phase; // 現在のフェーズ
 		static std::unique_ptr<Object3D> backStages[];
+		static std::unique_ptr<Object3D> bossBG[]; // ボス背景
 		static int easyCount;
 	};
 }

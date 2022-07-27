@@ -28,11 +28,8 @@ void XIIlib::Over::Initialize()
 	UnitManager::GetInstance()->AllDestroy();
 	spGameOver = Sprite::Create(GAMEOVER_TEX, {0.0f,0.0f});
 
-	const float yMullValue1 = 0.5f, yMullValue2 = 0.7f,
-		xMullValue = 0.53f,mulXY = 2.0f;
-
 	textRetry = Sprite::Create(TEXT_RETRY, { 1280 * xMullValue,768.0f * yMullValue1 });
-	textRetry->SetSize(textRetry->GetDefault() * mulXY);
+	textRetry->SetSize(textRetry->GetDefault() * mulXY * pickSize);
 	textTitle = Sprite::Create(TEXT_GO_TITLE, { 1280 * xMullValue,768.0f * yMullValue2 });
 	textTitle->SetSize(textTitle->GetDefault() * mulXY);
 	textRetry->SetColor(1, 1, 1, 1);
@@ -67,15 +64,20 @@ void XIIlib::Over::Update()
 
 	if (trigSpace)return;
 
+	static Math::Vector2 dfaultSize = textRetry->GetDefault() * mulXY;
 	if (KeyInput::GetInstance()->Trigger(DIK_W) || gamePad_->LStickDownFront()) {
 		selectT_R = false;
 		textRetry->SetColor(1,1,1,1);
 		textTitle->SetColor(0.5f, 0.5f, 0.5f, 1);
+		textRetry->SetSize(dfaultSize * pickSize);
+		textTitle->SetSize(dfaultSize);
 	}
 	if (KeyInput::GetInstance()->Trigger(DIK_S) || gamePad_->LStickDownBack()) {
 		selectT_R = true;
 		textRetry->SetColor(0.5f, 0.5f, 0.5f, 1);
 		textTitle->SetColor(1, 1, 1, 1);
+		textRetry->SetSize(dfaultSize);
+		textTitle->SetSize(dfaultSize * pickSize);
 	}
 
 	if (KeyInput::GetInstance()->Trigger(DIK_SPACE) || gamePad_->Button_Down(X_A)) {

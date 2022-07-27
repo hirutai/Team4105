@@ -19,6 +19,7 @@ GameScene* SceneState::p_game_scene = nullptr;
 GamePAD_XInput* SceneState::gamePad_ = nullptr;
 Phase SceneState::phase = Phase::CameraDirecting;
 std::unique_ptr<Object3D> SceneState::backStages[3] = {};
+std::unique_ptr<Object3D> SceneState::bossBG[5] = {};
 int SceneState::easyCount = 0;
 
 void XIIlib::SceneState::CommonUpdate(GameScene* p_game_scene)
@@ -186,13 +187,33 @@ void XIIlib::SceneState::BackStagesInit()
 	backStages[0]->scale = Math::Vector3({ 3.0f,3.0f,3.0f });
 	backStages[0]->position = Math::Vector3({ 0.0f,-1.0f,0.0f });
 	backStages[0]->Update();
+	
+	bossBG[0].reset(Object3D::Create(Model::CreateFromOBJ("stage3_a")));
+	bossBG[1].reset(Object3D::Create(Model::CreateFromOBJ("stage3_b")));
+	bossBG[2].reset(Object3D::Create(Model::CreateFromOBJ("stage3_c")));
+	bossBG[3].reset(Object3D::Create(Model::CreateFromOBJ("stage3_d")));
+	bossBG[4].reset(Object3D::Create(Model::CreateFromOBJ("stage3_e")));
+	for (int i = 0; i < 5; i++)
+	{
+		bossBG[i]->scale = Math::Vector3({ 3.0f,3.0f,3.0f });
+		bossBG[i]->position = Math::Vector3({ 0.0f,-1.0f,0.0f });
+		bossBG[i]->Update();
+	}
 }
 
 void XIIlib::SceneState::BackStagesDraw()
 {
-	backStages[0]->Update();
+	//backStages[0]->Update();
+	for (int i = 0; i < 5; i++)
+	{
+		bossBG[i]->Update();
+	}
 	// ƒ‚ƒfƒ‹‚Ì•`‰æ(.obj)
 	Object3D::PreDraw();
-	backStages[0]->Draw();
+	//backStages[0]->Draw();
+	for (int i = 0; i < 5; i++)
+	{
+		bossBG[i]->Draw();
+	}
 	Object3D::PostDraw();
 }
