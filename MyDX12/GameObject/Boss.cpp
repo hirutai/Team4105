@@ -103,6 +103,14 @@ void XIIlib::Boss::Draw()
 	if (switchingCount >= 1)
 	{
 		object3d2->Draw();
+		if (switchingCount <= 15)
+		{
+			object3d2->position.y += 0.3f;
+		}
+		if (switchingCount >= 15 && switchingCount <= 30)
+		{
+			object3d2->position.y -= 0.3f;
+		}
 	}
 	else {
 		object3d->Draw();
