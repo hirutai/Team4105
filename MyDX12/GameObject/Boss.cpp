@@ -67,7 +67,7 @@ void XIIlib::Boss::Initialize()
 	SetAttackTimer(300,CountType::FRAME);
 
 	nextPoint = { 0,0 };
-	isDrawTimer = true;
+	//isDrawTimer = true;
 
 	InitAttackDisplay();
 }
@@ -95,7 +95,7 @@ void XIIlib::Boss::Update()
 	object3d->Update();
 	object3d2->Update();
 	// À•WÝ’è
-	attackTimer->SetPosition(object3d->position);
+	attackTimer->SetPosition(object3d->position + Math::Vector3(0.0f, 18.0f, 0.0f));
 }
 
 void XIIlib::Boss::Draw()
