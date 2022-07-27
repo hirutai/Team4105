@@ -49,7 +49,7 @@ void XIIlib::Over::Update()
 
 	if (trigSpace) {
 		if (p_game_scene->DrawScreen(TransitionType::CLOSE)) {
-			if (selectT_R) {
+			if (!selectT_R) {
 				// RETRY
 				SceneState::phase = Phase::CameraDirecting;
 				SceneState::CreateUnitsPosition(SceneState::stageNum, "stage0");

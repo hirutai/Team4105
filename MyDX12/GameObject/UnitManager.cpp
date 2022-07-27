@@ -38,7 +38,7 @@ void XIIlib::UnitManager::Update()
 	// ここに「重なったらダメージを入れる」を書く
 	for (auto& unit1 : units) {
 		for (auto& unit2 : units) {
-			if (unit1.get() == unit2.get() || unit1->IsDead() || unit2->IsDead())continue;
+			if (unit1->GetFallFlag() != unit2->GetFallFlag() || unit1.get() == unit2.get() || unit1->IsDead() || unit2->IsDead())continue;
 
 			// 重なったら死ぬ
 			if (Math::MatchPoint2(unit1->GetElementStock(),unit2->GetElementStock())) {

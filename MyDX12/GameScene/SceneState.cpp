@@ -64,7 +64,7 @@ void XIIlib::SceneState::CreateUnitsPosition(StageNumber stageNum, std::string f
 	{
 		//CSVLoader::CSVLoad("stage2");
 		// SceneØ‚è‘Ö‚¦‚Éˆê“x’Ê‚éˆ—
-		std::shared_ptr<King> king = std::move(King::CreateKing(1, 0));
+		std::shared_ptr<King> king = std::move(King::CreateKing(3, 0));
 		std::shared_ptr<Bishop> bishop = std::move(Bishop::Create(6, 3));
 		std::shared_ptr<Bishop> bishop2 = std::move(Bishop::Create(4, 5));
 		bishop->SetFallFlag();
@@ -100,7 +100,7 @@ void XIIlib::SceneState::CreateUnitsPosition(StageNumber stageNum, std::string f
 	else if (stageNum == StageNumber::HARD)
 	{
 		// SceneØ‚è‘Ö‚¦‚Éˆê“x’Ê‚éˆ—
-		std::shared_ptr<King> king = std::move(King::CreateKing(1, 0));
+		std::shared_ptr<King> king = std::move(King::CreateKing(3, 0));
 		std::shared_ptr<Bishop> bishop = std::move(Bishop::Create(2, 3));
 		bishop->SetFallFlag();
 		std::shared_ptr<Rook> rook = std::move(Rook::Create(4, 6));
