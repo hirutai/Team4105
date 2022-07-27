@@ -276,12 +276,6 @@ void XIIlib::Play::Draw()
 	// カメラが移動する際にビルボードオブジェクトの表示をしない
 	if (phase == XIIlib::Phase::CameraDirecting)return;
 	UnitManager::GetInstance()->BillDraw();
-
-	// ボス戦で無ければ描画処理はしない
-	if (stageNum != StageNumber::HARD)return;
-	BillObj::PreDraw();
-	HPBar::GetInstance()->Draw();
-	BillObj::PostDraw();
 }
 
 void XIIlib::Play::DrawTex()
@@ -298,6 +292,10 @@ void XIIlib::Play::DrawTex()
 			if(stageNum == StageNumber::EASY)operatorGuide->Draw();
 		}
 	}
+
+	// ボス戦で無ければ描画処理はしない
+	if (stageNum != StageNumber::HARD)return;
+	HPBar::GetInstance()->Draw();
 }
 
 void XIIlib::Play::DrawBackground()
