@@ -192,7 +192,7 @@ void XIIlib::Bishop::Attack()
 		//移動量から角度を求めて設定
 		Direction(v);
 
-		audio_->PlaySE("yankeeVoice.wav");
+		audio_->PlaySE("pararira.wav");
 		IniState();
 		
 		// 移動ますが決定されました。
@@ -249,7 +249,7 @@ void XIIlib::Bishop::Move()
 		{
 			nextPoint = temp;
 		}
-		audio_->PlaySE("yankeeVoice.wav");
+		audio_->PlaySE("pararira.wav");
 		break;
 	case 1:
 		//右下方向			
@@ -293,7 +293,7 @@ void XIIlib::Bishop::Move()
 				nextPoint = temp;
 			}
 		}
-		audio_->PlaySE("yankeeVoice.wav");
+		audio_->PlaySE("pararira.wav");
 		break;
 	case 2:
 		//左上方向
@@ -332,7 +332,7 @@ void XIIlib::Bishop::Move()
 		{
 			nextPoint = temp;
 		}
-		audio_->PlaySE("yankeeVoice.wav");
+		audio_->PlaySE("pararira.wav");
 		break;
 	case 3:
 		//右上方向
@@ -371,7 +371,7 @@ void XIIlib::Bishop::Move()
 		{
 			nextPoint = temp;
 		}
-		audio_->PlaySE("yankeeVoice.wav");
+		audio_->PlaySE("pararira.wav");
 		break;
 	}
 	// 移動量を取得
