@@ -46,6 +46,7 @@ void XIIlib::Yankee::Initialize()
 	CreateAttackArea();
 	object3d = Object3D::Create(ModelLoader::GetInstance()->GetModel(MODEL_YANKEE));
 	object3d->scale = Math::Vector3({2.0f,2.0f,2.0f});
+	object3d->position.y = 30.0f;
 	// Audioの初期化
 	audio_ = UnitManager::GetInstance()->GetAudio();
 	correctionAngle = 180.0f;
@@ -56,27 +57,32 @@ void XIIlib::Yankee::Initialize()
 
 void XIIlib::Yankee::Update()
 {
-	// 位置座標の更新
-	object3d->position = { Common::ConvertTilePosition(element_stock.a),1.0f, Common::ConvertTilePosition(element_stock.b) };
-
-	if (!determinateMoveAction) {
-		// 駒の行動
-		Action();
-
-		// タイマーの更新
-		attackTimer->Timer();
-
-		pos = object3d->position;
+	if (!fallFlag) {
+		FallAction();
 	}
+	else if (fallFlag) {
+		// 位置座標の更新
+		object3d->position = { Common::ConvertTilePosition(element_stock.a),1.0f, Common::ConvertTilePosition(element_stock.b) };
 
-	if (determinateMoveAction) {
-		// モーション処理
-		Motion();
+		if (!determinateMoveAction) {
+			// 駒の行動
+			Action();
+
+			// タイマーの更新
+			attackTimer->Timer();
+
+			pos = object3d->position;
+		}
+
+		if (determinateMoveAction) {
+			// モーション処理
+			Motion();
+		}
+		object3d->Update();
+
+		// 座標設定
+		attackTimer->SetPosition(object3d->position);
 	}
-	object3d->Update();
-
-	// 座標設定
-	attackTimer->SetPosition(object3d->position);
 }
 
 void XIIlib::Yankee::Action()

@@ -375,7 +375,7 @@ void XIIlib::King::ObjectUpdate()
 	daiza->position = { Common::ConvertTilePosition(element_stock.a),0.5f, Common::ConvertTilePosition(element_stock.b) };
 	if (SceneState::GetPhase() == Phase::ClearCondDisplay) {
 		if (!fallFlag) {
-			object3d->position.y -= 0.3f;
+			object3d->position.y -= 0.6f;
 			daiza->position = { Common::ConvertTilePosition(element_stock.a),1.0f, Common::ConvertTilePosition(element_stock.b) };
 
 			if (object3d->position.y <= 1.0f) {

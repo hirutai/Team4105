@@ -50,6 +50,7 @@ void XIIlib::SceneState::CreateUnitsPosition(StageNumber stageNum, std::string f
 		//std::shared_ptr<Bishop> bishop = std::move(Bishop::Create(2, 3));
 		//std::shared_ptr<Rook> rook = std::move(Rook::Create(4, 6));
 		std::shared_ptr<Yankee> yankee1 = std::move(Yankee::Create(3, 4));
+		yankee1->SetFallFlag();
 		//std::shared_ptr<Yankee> yankee2 = std::move(Yankee::Create(4, 7));
 
 		UnitManager::GetInstance()->AddUnit(std::move(king));
@@ -66,12 +67,23 @@ void XIIlib::SceneState::CreateUnitsPosition(StageNumber stageNum, std::string f
 		std::shared_ptr<King> king = std::move(King::CreateKing(1, 0));
 		std::shared_ptr<Bishop> bishop = std::move(Bishop::Create(6, 3));
 		std::shared_ptr<Bishop> bishop2 = std::move(Bishop::Create(4, 5));
+		bishop->SetFallFlag();
+		bishop2->SetFallFlag();
+
 		std::shared_ptr<Rook> rook = std::move(Rook::Create(3, 6));
 		std::shared_ptr<Rook> rook2 = std::move(Rook::Create(1, 5));
+		rook->SetFallFlag();
+		rook2->SetFallFlag();
+
 		std::shared_ptr<Yankee> yankee = std::move(Yankee::Create(3, 3));
 		std::shared_ptr<Yankee> yankee2 = std::move(Yankee::Create(5, 1));
 		std::shared_ptr<Yankee> yankee3 = std::move(Yankee::Create(7, 4));
 		std::shared_ptr<Yankee> yankee4 = std::move(Yankee::Create(2, 4));
+		yankee->SetFallFlag();
+		yankee2->SetFallFlag();
+		yankee3->SetFallFlag();
+		yankee4->SetFallFlag();
+
 		//std::shared_ptr<Stone> stone = std::move(Stone::Create(6, 6));
 
 		UnitManager::GetInstance()->AddUnit(std::move(king));
@@ -90,9 +102,13 @@ void XIIlib::SceneState::CreateUnitsPosition(StageNumber stageNum, std::string f
 		// SceneØ‚è‘Ö‚¦‚Éˆê“x’Ê‚éˆ—
 		std::shared_ptr<King> king = std::move(King::CreateKing(1, 0));
 		std::shared_ptr<Bishop> bishop = std::move(Bishop::Create(2, 3));
+		bishop->SetFallFlag();
 		std::shared_ptr<Rook> rook = std::move(Rook::Create(4, 6));
+		rook->SetFallFlag();
 		std::shared_ptr<Yankee> yankee = std::move(Yankee::Create(3, 6));
 		std::shared_ptr<Yankee> yankee1 = std::move(Yankee::Create(1, 6));
+		yankee->SetFallFlag();
+		yankee1->SetFallFlag();
 		std::shared_ptr<Boss> boss = std::move(Boss::Create(4, 7));
 		std::shared_ptr<BossCollision> bossCollision1 = std::move(BossCollision::Create(2, 7));
 		std::shared_ptr<BossCollision> bossCollision2 = std::move(BossCollision::Create(3, 7));
