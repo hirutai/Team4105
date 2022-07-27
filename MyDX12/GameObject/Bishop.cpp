@@ -260,7 +260,7 @@ void XIIlib::Bishop::Move()
 		
 		if (temp.a >= 8 && temp.b <= -1)
 		{
-			nextPoint.a = 8;
+			nextPoint.a = 7;
 			nextPoint.b = 0;
 			if (AttackAreaManager::GetInstance()->CheckMoveAreas(nextPoint)) 
 			{
