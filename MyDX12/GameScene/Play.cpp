@@ -82,6 +82,7 @@ void XIIlib::Play::Initialize()
 
 	bossClearCond = Sprite::Create(BOSSCLEARCONDITION, { 1280.0f, 768.0f / 2 }); // ボスクリア条件画像の作成
 	bossClearCond->SetAnchorPoint({ 0.5f, 0.5f }); // 中心に設定
+	UnitManager::GetInstance()->Update();
 }
 
 void XIIlib::Play::Update()
