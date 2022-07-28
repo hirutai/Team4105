@@ -129,7 +129,7 @@ void XIIlib::Menu::Update()
 		menuState = (MenuState)cursorState;
 		if (menuState == MenuState::PLAYER_GUIDS)
 		{
-			playerGuide->SetPosition(winCenter);
+			playerGuide->SetPosition({ 0.0f,0.0f });
 		}
 		else if (menuState == MenuState::ENEMY_GUIDS)
 		{
