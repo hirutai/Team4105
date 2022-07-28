@@ -56,4 +56,14 @@ void XIIlib::SpriteLoader::Load()
 	//Sprite::LoadTexture(RULE_TEX, L"Resources/bossClearCondition.png");
 	Sprite::LoadTexture(TIMER_BAR, L"Resources/timer_bar.png");
 	Sprite::LoadTexture(TIMER_EDGE, L"Resources/timer_edge.png");
+
+	Sprite::LoadTexture(MOJI_TEN, L"Resources/mojiTanpin/ten.png");
+	Sprite::LoadTexture(MOJI_TEN2, L"Resources/mojiTanpin/ten_2.png");
+	Sprite::LoadTexture(MOJI_BOKU, L"Resources/mojiTanpin/boku.png");
+	Sprite::LoadTexture(MOJI_HAI, L"Resources/mojiTanpin/hai.png");
+	Sprite::LoadTexture(MOJI_KA, L"Resources/mojiTanpin/ka.png");
+	Sprite::LoadTexture(MOJI_KEN, L"Resources/mojiTanpin/ken.png");
+	Sprite::LoadTexture(MOJI_TOU, L"Resources/mojiTanpin/tou.png");
+	Sprite::LoadTexture(MOJI_TYOU, L"Resources/mojiTanpin/tyou.png");
+	Sprite::LoadTexture(MOJI_ZYOU, L"Resources/mojiTanpin/zyou.png");
 }

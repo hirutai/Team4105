@@ -201,6 +201,7 @@
     <ClCompile Include="GameObject\Smoke.cpp" />
     <ClCompile Include="GameObject\SmokeManager.cpp" />
     <ClCompile Include="GameObject\Stone.cpp" />
+    <ClCompile Include="GameObject\TexMoveAction.cpp" />
     <ClCompile Include="GameObject\Tile.cpp" />
     <ClCompile Include="GameObject\Unit.cpp" />
     <ClCompile Include="GameObject\UnitManager.cpp" />
@@ -287,6 +288,7 @@
     <ClInclude Include="GameObject\Smoke.h" />
     <ClInclude Include="GameObject\SmokeManager.h" />
     <ClInclude Include="GameObject\Stone.h" />
+    <ClInclude Include="GameObject\TexMoveAction.h" />
     <ClInclude Include="GameObject\Tile.h" />
     <ClInclude Include="GameObject\Unit.h" />
     <ClInclude Include="GameObject\UnitManager.h" />

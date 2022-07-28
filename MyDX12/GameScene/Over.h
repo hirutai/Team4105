@@ -4,7 +4,7 @@ class Sprite;
 namespace XIIlib {
 
 	class GameScene;
-	
+	class TexMoveAction;
 
 	// プレイシーンのクラス
 	class Over : public SceneState {
@@ -29,6 +29,7 @@ namespace XIIlib {
 
 		Sprite* textRetry = nullptr;
 		Sprite* textTitle = nullptr;
+		TexMoveAction* pMoji = nullptr;
 		bool selectT_R = false;
 	};
 }
