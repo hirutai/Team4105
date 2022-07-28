@@ -22,7 +22,7 @@ void XIIlib::SpriteLoader::Load()
 	Sprite::LoadTexture(EDGE_TEX,          L"Resources/waku.png");
 	Sprite::LoadTexture(TITLEBG_TEX,       L"Resources/TitleBG.png");
 	Sprite::LoadTexture(TITLELOG_TEX,      L"Resources/TitleLog.png");
-	Sprite::LoadTexture(GAMECLEAR_TEX,     L"Resources/new_C.png");
+	Sprite::LoadTexture(GAMECLEAR_TEX,     L"Resources/GameClear_1.png");
 	Sprite::LoadTexture(BOSSCLEAR_TEX,     L"Resources/BossClear.png");
 	Sprite::LoadTexture(OPERATORGUIDE_TEX, L"Resources/explanation.png");
 	Sprite::LoadTexture(MENU_TEX,          L"Resources/tabkey.png");
