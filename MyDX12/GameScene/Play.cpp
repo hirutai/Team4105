@@ -68,9 +68,7 @@ void XIIlib::Play::Initialize()
 	{
 		spStageBG1 = Sprite::Create(STAGEBG1_TEX, { 0.0f,0.0f });
 	}
-	debugCamera->SetPosition(frontEye.x, frontEye.y, frontEye.z); // 視点座標の設定
-	debugCamera->_Update();
-	UnitManager::GetInstance()->ObjectUpdate();
+	
 
 	operatorGuide = Sprite::Create(OPERATORGUIDE_TEX, { 1000.0f,600.0f }); // 操作説明
 	menuButton = Sprite::Create(MENU_TEX, { 0.0f,10.0f }); // メニュー
@@ -288,10 +286,10 @@ void XIIlib::Play::DrawTex()
 		}
 		else { //HARD以外
 			clearCond->Draw();
-			if(stageNum == StageNumber::EASY)operatorGuide->Draw();
 		}
+		//return;
 	}
-
+	if (stageNum == StageNumber::EASY)operatorGuide->Draw();
 	// ボス戦で無ければ描画処理はしない
 	if (stageNum != StageNumber::HARD)return;
 	HPBar::GetInstance()->Draw();

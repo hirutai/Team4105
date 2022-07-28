@@ -31,10 +31,11 @@ void XIIlib::Menu::Initialize()
 	const Math::Vector2 anchorPoint = {0.5f,0.5f};
 
 	// 生成
+	specterBG.reset(Sprite::Create(WHITEOUT, { 0.0f,0.0f }, {0,0,0,0}));
+	specterBG->SetAlpha(0.0f);
 	spStageBG1.reset(Sprite::Create(STAGEBG1_TEX, { 0.0f,0.0f })); // 背景
 	cursor.reset(Sprite::Create(CURSOR_TEX, { winCenter.x - CURSOR_SPACE, winCenter.y - SPACE }, color, anchorPoint));
 	playerGuide.reset(Sprite::Create(PLAYERGUIDES_TEX, { 0.0f,0.0f })); // プレイヤーの説明
-	//playerGuide->SetSize(winCenter);
 	enemyGuides.reset(Sprite::Create(ENEMYGUIDES_TEX, winCenter, color, anchorPoint)); // 敵の説明
 	enemyGuides->SetSize(winCenter);
 
@@ -80,6 +81,7 @@ void XIIlib::Menu::Update()
 {
 #pragma region Easing処理
 	// Easing処理
+	LerpAlpha();
 	EasingUpdate();
 	// イージング処理中なら即リターン
 	if (easingState != EasingState::NONE)return;
@@ -129,7 +131,7 @@ void XIIlib::Menu::Update()
 		menuState = (MenuState)cursorState;
 		if (menuState == MenuState::PLAYER_GUIDS)
 		{
-			playerGuide->SetPosition(winCenter);
+			playerGuide->SetPosition({ 0.0f,0.0f });
 		}
 		else if (menuState == MenuState::ENEMY_GUIDS)
 		{
@@ -163,6 +165,18 @@ void XIIlib::Menu::Draw()
 
 void XIIlib::Menu::DrawTex()
 {
+	specterBG->Draw();
+	if (menuState == MenuState::PLAYER_GUIDS)
+	{
+		playerGuide->Draw();
+		return;
+	}
+	else if (menuState == MenuState::ENEMY_GUIDS)
+	{
+		enemyGuides->Draw();
+		return;
+	}
+
 	// スプライト描画
 	if (cursorDisp) {
 		cursor->Draw();
@@ -171,16 +185,6 @@ void XIIlib::Menu::DrawTex()
 	{
 		buttons[i]->Draw();
 	}
-
-	if (menuState == MenuState::PLAYER_GUIDS)
-	{
-		playerGuide->Draw();
-	}
-	else if (menuState == MenuState::ENEMY_GUIDS)
-	{
-		enemyGuides->Draw();
-	}
-
 }
 
 void XIIlib::Menu::DrawBackground()
@@ -369,5 +373,23 @@ void XIIlib::Menu::CheckMenuState()
 			return;
 		}
 	}
+}
+
+void XIIlib::Menu::LerpAlpha()
+{
+	static float alpha = 0.0f;
+	if (easingState == EasingState::MOVE_IN)
+	{
+		alpha += 0.01f;
+		if (alpha >= 0.4f)alpha = 0.4f;
+		specterBG->SetAlpha(alpha);
+	}
+	else if (easingState == EasingState::MOVE_OUT)
+	{
+		alpha -= 0.01f;
+		if (alpha <= 0.0f)alpha = 0.0f;
+		specterBG->SetAlpha(alpha);
+	}
+	
 }
 

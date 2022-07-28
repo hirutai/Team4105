@@ -54,6 +54,8 @@ namespace XIIlib {
 		CursorState cursorState = CursorState::CONTINUE; 
 		MenuState menuState = MenuState::NONE;
 		EasingState easingState = EasingState::MOVE_IN; // 最初から動く
+		// 半透明背景
+		std::unique_ptr<Sprite> specterBG;
 		// ルール
 		std::unique_ptr<Sprite> rule;
 		// ボタン画像
@@ -97,5 +99,6 @@ namespace XIIlib {
 
 		void MoveCursor(); // カーソル処理
 		void CheckMenuState(); // メニューの状態を座標で決める
+		void LerpAlpha();
 	};
 }

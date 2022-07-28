@@ -7,6 +7,7 @@
 #include "../GameObject/UnitManager.h"
 #include "../2D/Sprite.h"
 #include "../Audio/Audio.h"
+#include "../Camera/DebugCamera.h"
 #include "../GameObject/TexMoveAction.h"
 
 XIIlib::Over::Over()
@@ -26,6 +27,7 @@ XIIlib::Over::~Over()
 
 void XIIlib::Over::Initialize()
 {
+	SetDebugCamera(p_game_scene->GetCamera());
 	// SceneØ‚è‘Ö‚¦Žž‚Éˆê“x’Ê‚éˆ—
 	UnitManager::GetInstance()->AllDestroy();
 	spGameOver = Sprite::Create(GAMEOVER_TEX, {0.0f,0.0f});
@@ -55,6 +57,9 @@ void XIIlib::Over::Update()
 			if (!selectT_R) {
 				// RETRY
 				SceneState::phase = Phase::CameraDirecting;
+				debugCamera->SetPosition(0, 10, -30); // Ž‹“_À•W‚ÌÝ’è
+				debugCamera->_Update();
+				UnitManager::GetInstance()->ObjectUpdate();
 				SceneState::CreateUnitsPosition(SceneState::stageNum, "stage0");
 				p_game_scene->ChangeState(new Play());
 				easyCount = 0;
