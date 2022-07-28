@@ -28,7 +28,7 @@ void Clear::Initialize()
 {
 	SetDebugCamera(p_game_scene->GetCamera());
 	// Scene�؂�ւ����Ɉ�x�ʂ鏈��
-	pchStr = ChainSprite::Create();
+ 	pchStr = ChainSprite::Create();
 	
 	UnitManager::GetInstance()->AllDestroy();
 	if (stageNum == StageNumber::HARD)
@@ -73,18 +73,18 @@ void Clear::Update()
 				UnitManager::GetInstance()->ObjectUpdate();
 				p_game_scene->ChangeState(new Select());
 				easyCount = 0;
+				return;
 			}
 			else {
 				// タイトルに遷移
 				p_game_scene->ChangeState(new Title);
 				easyCount = 0;
+				return;
 			}
 		}
 	}
 
-
 	if (trigSpace)return;
-	pchStr->Update();
 
 	static Math::Vector2 dfaultSize = textSelect->GetDefault() * mulXY;
 	if (KeyInput::GetInstance()->Trigger(DIK_W) || gamePad_->LStickDownFront()) {
