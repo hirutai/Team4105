@@ -43,7 +43,7 @@ void XIIlib::UnitManager::Update()
 
 			// d‚È‚Á‚½‚çŽ€‚Ê
 			if (Math::MatchPoint2(unit1->GetElementStock(),unit2->GetElementStock())) {
-				GetAudio()->PlaySE("hitAB.wav",0.4f);
+				GetAudio()->PlaySE("hitAB.wav",0.3f);
 				unit1->SetHitDamage(3);
 				unit2->SetHitDamage(3);
 			}

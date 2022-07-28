@@ -10,7 +10,7 @@ ModelLoader* XIIlib::ModelLoader::GetInstance()
 
 void XIIlib::ModelLoader::Initialize()
 {
-	models.resize(10);
+	models.resize(20);
 }
 
 void XIIlib::ModelLoader::Load(){
@@ -21,6 +21,11 @@ void XIIlib::ModelLoader::Load(){
 	SetModel(MODEL_BISHOP,  "bike");
 	SetModel(MODEL_BOSS,    "boss");
 	SetModel(MODEL_BOSS2,   "boss2");
+	SetModel(MODEL_STAGE_A, "stage3_a");
+	SetModel(MODEL_STAGE_B, "stage3_b");
+	SetModel(MODEL_STAGE_C, "stage3_c");
+	SetModel(MODEL_STAGE_D, "stage3_d");
+	SetModel(MODEL_STAGE_E, "stage3_e");
 }
 
 Model* XIIlib::ModelLoader::GetModel(const ModelNum& modelNum) const

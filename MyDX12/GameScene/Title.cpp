@@ -45,7 +45,7 @@ void XIIlib::Title::Update()
 
 	if (KeyInput::GetInstance()->Trigger(DIK_SPACE) || gamePad_->Button_Down(X_A)) {
 		trigSpace = true;
-		p_game_scene->GetAudio()->PlaySE("kettei.wav", 0.3f);
+		p_game_scene->GetAudio()->PlaySE("stageSelect.wav", 0.3f);
 	}
 }
 

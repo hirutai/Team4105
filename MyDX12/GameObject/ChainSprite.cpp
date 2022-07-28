@@ -1,5 +1,7 @@
 #include "ChainSprite.h"
 #include "TexMoveAction.h"
+#include "UnitManager.h"
+#include "../Audio/Audio.h"
 
 XIIlib::ChainSprite* XIIlib::ChainSprite::Create()
 {
@@ -32,7 +34,10 @@ void XIIlib::ChainSprite::Update()
 	if (pTexs.size() == 0 || pTexs.size() == activeNum)return;
 
 	pTexs[activeNum]->Update();
-	if (pTexs[activeNum]->GetFinish())activeNum++;
+	if (pTexs[activeNum]->GetFinish()) {
+		activeNum++;
+		UnitManager::GetInstance()->GetAudio()->PlaySE("taiko01.wav", 0.9f);
+	}
 }
 
 void XIIlib::ChainSprite::Draw()

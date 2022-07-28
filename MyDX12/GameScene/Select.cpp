@@ -165,19 +165,20 @@ void XIIlib::Select::Update()
 		// ポジションによってステージナンバーを代入
 		if (cursorPos.x == HOMEL_POS.x)
 		{
-			p_game_scene->GetAudio()->PlaySE("stageSelect.wav", 0.3f);
+			p_game_scene->GetAudio()->PlaySE("kettei.wav", 0.3f);
+			
 			SceneState::CreateUnitsPosition(StageNumber::EASY, "stage0");
 			UnitManager::GetInstance()->SetBoardBaseColor(1, 1, 1);
 		}
 		else if (cursorPos.x == HOMEC_POS.x)
 		{
-			p_game_scene->GetAudio()->PlaySE("stageSelect.wav", 0.3f);
+			p_game_scene->GetAudio()->PlaySE("kettei.wav", 0.3f);
 			SceneState::CreateUnitsPosition(StageNumber::NORMAL, "stage0");
 			UnitManager::GetInstance()->SetBoardBaseColor(1, 1, 1);
 		}
 		else if (cursorPos.x == HOMER_POS.x)
 		{
-			p_game_scene->GetAudio()->PlaySE("stageSelect.wav",0.3f);
+			p_game_scene->GetAudio()->PlaySE("kettei.wav", 0.3f);
 			SceneState::CreateUnitsPosition(StageNumber::HARD, "stage0");
 			UnitManager::GetInstance()->SetBoardBaseColor(0.6f, 0.3f, 0.1f);
 		}

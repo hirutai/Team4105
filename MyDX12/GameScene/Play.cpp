@@ -69,9 +69,9 @@ void XIIlib::Play::Initialize()
 		spStageBG1 = Sprite::Create(STAGEBG1_TEX, { 0.0f,0.0f });
 	}
 	
-
 	operatorGuide = Sprite::Create(OPERATORGUIDE_TEX, { 1000.0f,600.0f }); // 操作説明
 	menuButton = Sprite::Create(MENU_TEX, { 0.0f,10.0f }); // メニュー
+	menuButton->SetSize(menuButton->GetDefault() * 0.7f);
 
 	p_game_scene->GetAudio()->PlayBGM("yankeeBGM.wav");
 
@@ -281,6 +281,7 @@ void XIIlib::Play::DrawTex()
 {
 	// スプライト描画
 	menuButton->Draw();
+	if (stageNum == StageNumber::EASY)operatorGuide->Draw();
 	if (phase == XIIlib::Phase::ClearCondDisplay) {
 		if (stageNum == StageNumber::HARD) { // HARD時
 			bossClearCond->Draw();
@@ -290,7 +291,6 @@ void XIIlib::Play::DrawTex()
 		}
 		return;
 	}
-	if (stageNum == StageNumber::EASY)operatorGuide->Draw();
 	// ボス戦で無ければ描画処理はしない
 	if (stageNum != StageNumber::HARD)return;
 	HPBar::GetInstance()->Draw();
