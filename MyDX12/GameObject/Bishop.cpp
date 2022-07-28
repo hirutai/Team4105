@@ -64,6 +64,7 @@ void XIIlib::Bishop::Update()
 {
 	if (!fallFlag) {
 		FallAction();
+		UnitManager::GetInstance()->ChangeAttackValidTile(element_stock, (int)type);
 	}
 	else if (fallFlag) {
 		// 位置座標の更新
