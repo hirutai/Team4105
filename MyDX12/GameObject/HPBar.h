@@ -1,62 +1,66 @@
-#pragma once
+ï»¿#pragma once
 
 #include "../Struct/Math.h"
 #include"BossHP.h"
 
+class Sprite;
+
 namespace XIIlib
 {
-	class BillObj;
+	//class BillObj;
 
 	/// <summary>
-	/// “G‚ÌUŒ‚ƒ^ƒCƒ}[
+	/// æ•µã®æ”»æ’ƒã‚¿ã‚¤ãƒãƒ¼
 	/// </summary>
 	class HPBar
 	{
-#pragma region ƒGƒCƒŠƒAƒX
+#pragma region ã‚¨ã‚¤ãƒªã‚¢ã‚¹
 	private:
 		using Vector2 = Math::Vector2;
 		using Vector3 = Math::Vector3;
 #pragma endregion
 
-#pragma region ’è”
-		const float maxSize = 60.0f; // Å‘åƒTƒCƒY
+#pragma region å®šæ•°
+		const float maxSize = 30.0f * 40; // æœ€å¤§ã‚µã‚¤ã‚º
 #pragma endregion
 
-#pragma region ƒƒ“ƒoŠÖ”
+#pragma region ãƒ¡ãƒ³ãƒé–¢æ•°
 	public:
 		HPBar(const HPBar& obj) = delete;
 		HPBar& operator = (const HPBar& obj) = delete;
 
 		static HPBar* GetInstance();
-		// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+		// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 		HPBar();
-		// ‰Šú‰»
+		// åˆæœŸåŒ–
 		void Initialize();
-		// ƒ^ƒCƒ}[ŠÖ”
+		// ã‚¿ã‚¤ãƒãƒ¼é–¢æ•°
 		void Timer(float damage);
-		// •`‰æ
+		// æç”»
 		void Draw();
-		// ƒTƒCƒY‚Ìæ“¾
+		// ã‚µã‚¤ã‚ºã®å–å¾—
 		bool SizeZeroFlag();
-		bool SizeThirdFlag();//O•ª‚Ìˆê
-		bool SizeThirdBelowFlag();//O•ª‚ÌˆêˆÈ‰º
-		// ƒo[‚ÌÀ•W‚Ìİ’è
+		bool SizeThirdFlag();//ä¸‰åˆ†ã®ä¸€
+		bool SizeThirdBelowFlag();//ä¸‰åˆ†ã®ä¸€ä»¥ä¸‹
+		// ãƒãƒ¼ã®åº§æ¨™ã®è¨­å®š
 		void SetPosition(const Vector3& position);
 #pragma endregion
 
-#pragma region ƒƒ“ƒo•Ï”
+#pragma region ãƒ¡ãƒ³ãƒå¤‰æ•°
 	private:
-		float decNum; // Œ¸‚ç‚·—Ê
+		float decNum; // æ¸›ã‚‰ã™é‡
 
-		float currentSize; // Œ»İ‚ÌƒTƒCƒY
+		float currentSize; // ç¾åœ¨ã®ã‚µã‚¤ã‚º
 
-		BillObj* timerBar = nullptr; // ƒ^ƒCƒ}[ƒo[‚ÌƒIƒuƒWƒFƒNƒg
-		BillObj* timerEdge = nullptr; // ƒ^ƒCƒ}[‚Ì‰‚ÌƒIƒuƒWƒFƒNƒg
+		//BillObj* timerBar = nullptr; // ã‚¿ã‚¤ãƒãƒ¼ãƒãƒ¼ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+		//BillObj* timerEdge = nullptr; // ã‚¿ã‚¤ãƒãƒ¼ã®ç¸ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+		Sprite* timerBar = nullptr; // ã‚¿ã‚¤ãƒãƒ¼ãƒãƒ¼ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+		Sprite* timerEdge = nullptr; // ã‚¿ã‚¤ãƒãƒ¼ã®ç¸ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 
-		Vector2 barSize{ maxSize, 1.0f }; // ƒo[‚ÌƒTƒCƒY
-		Vector2 edgeSize{ maxSize + 1.0f, 2.0f }; // ‰‚ÌƒTƒCƒY
+		Vector2 barSize{ maxSize, 30.0f }; // ãƒãƒ¼ã®ã‚µã‚¤ã‚º
+		Vector2 edgeSize{ maxSize + 20.0f, 50.0f }; // ç¸ã®ã‚µã‚¤ã‚º
 
-		const Vector3 hpBarPos{ 0, 0, -25 }; // HPƒo[‚ÌÀ•W
+		const Vector2 hpBarPos{ 40, 690.0f }; // HPãƒãƒ¼ã®åº§æ¨™
 #pragma endregion
 	};
 }

@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "Unit.h"
 #include <memory>
 #include "../Struct/Math.h"
@@ -15,7 +15,7 @@ namespace XIIlib {
 	public:
 		Boss();
 		~Boss();
-		// ¶¬ŠÖ”
+		// ç”Ÿæˆé–¢æ•°
 		static std::shared_ptr<Boss> Create(int point_x, int point_z);
 
 		void Initialize()override;
@@ -29,12 +29,12 @@ namespace XIIlib {
 		bool AttackAreaExists()override;
 		void AttackAreaDraw();
 
-		bool switching = false;//‰æ‘œØ‚è‘Ö‚¦‚æ‚¤
+		bool switching = false;//ç”»åƒåˆ‡ã‚Šæ›¿ãˆã‚ˆã†
 		int switchingCount = 0;
 
 		void IniState()override;
 
-		void SetHitDamage(int attackPoint)override;				// ƒ_ƒ[ƒW‚ğó‚¯‚éŠÖ”
+		void SetHitDamage(float attackPoint)override;				// ãƒ€ãƒ¡ãƒ¼ã‚¸ã‚’å—ã‘ã‚‹é–¢æ•°
 
 		void CreateAttackArea()override;
 
@@ -43,7 +43,7 @@ namespace XIIlib {
 
 		void InitAttackDisplay();
 	private:
-		// •Ï”
+		// å¤‰æ•°
 		bool tileDeth[8] = {};
 		int tileNum = 0;
 		const int DISPLAY_FRAME = 12;

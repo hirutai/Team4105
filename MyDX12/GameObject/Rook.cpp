@@ -98,7 +98,7 @@ void XIIlib::Rook::Update()
 
 		object3d->Update();
 		// À•WÝ’è
-		attackTimer->SetPosition(object3d->position);
+		attackTimer->SetPosition(object3d->position + Math::Vector3(0.0f, 0.0f, -2.0f));
 	}
 }
 
