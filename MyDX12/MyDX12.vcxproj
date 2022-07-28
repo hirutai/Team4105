@@ -191,6 +191,7 @@
     <ClCompile Include="GameObject\Boss.cpp" />
     <ClCompile Include="GameObject\BossCollision.cpp" />
     <ClCompile Include="GameObject\BossHP.cpp" />
+    <ClCompile Include="GameObject\ChainSprite.cpp" />
     <ClCompile Include="GameObject\Common.cpp" />
     <ClCompile Include="GameObject\Curtain.cpp" />
     <ClCompile Include="GameObject\HPBar.cpp" />
@@ -278,6 +279,7 @@
     <ClInclude Include="GameObject\Boss.h" />
     <ClInclude Include="GameObject\BossCollision.h" />
     <ClInclude Include="GameObject\BossHP.h" />
+    <ClInclude Include="GameObject\ChainSprite.h" />
     <ClInclude Include="GameObject\Common.h" />
     <ClInclude Include="GameObject\Curtain.h" />
     <ClInclude Include="GameObject\HPBar.h" />
