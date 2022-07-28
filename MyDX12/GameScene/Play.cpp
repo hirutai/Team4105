@@ -129,7 +129,7 @@ void XIIlib::Play::Update()
 		int createMax = Max;
 		tileRand = 1;
 
-		std::cout << "easyCount" << easyCount<<std::endl;
+		std::cout << "easyCount" << easyCount <<std::endl;
 		if (stageNum == StageNumber::EASY && UnitManager::GetInstance()->GetUnitIDElements("King") >= 0)
 		{
 			if (UnitManager::GetInstance()->GetAllUnitCount() - 1 == 0) // 敵を全滅させた時
@@ -287,7 +287,6 @@ void XIIlib::Play::Draw()
 void XIIlib::Play::DrawTex()
 {
 	// スプライト描画
-	
 	menuButton->Draw();
 	if (phase == XIIlib::Phase::ClearCondDisplay) {
 		if (stageNum == StageNumber::HARD) { // HARD時
