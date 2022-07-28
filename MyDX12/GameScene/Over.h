@@ -4,7 +4,6 @@ class Sprite;
 namespace XIIlib {
 
 	class GameScene;
-	class TexMoveAction;
 	class ChainSprite;
 
 	// プレイシーンのクラス

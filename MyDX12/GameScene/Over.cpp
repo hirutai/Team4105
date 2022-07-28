@@ -8,7 +8,6 @@
 #include "../2D/Sprite.h"
 #include "../Audio/Audio.h"
 #include "../Camera/DebugCamera.h"
-#include "../GameObject/TexMoveAction.h"
 #include "../GameObject/ChainSprite.h"
 
 XIIlib::Over::Over()
@@ -48,8 +47,8 @@ void XIIlib::Over::Initialize()
 	textTitle->SetColor(0.5f, 0.5f, 0.5f, 1);
 
 	pchStr = ChainSprite::Create();
-	pchStr->AddMoji(720, 240, MOJI_HAI);
-	pchStr->AddMoji(1080, 240, MOJI_BOKU);
+	pchStr->AddMoji(720, 240,320, MOJI_HAI);
+	pchStr->AddMoji(960, 240,320, MOJI_BOKU);
 	//p_game_scene->GetAudio()->PlayBGM("yankeeBGM.wav");
 }
 

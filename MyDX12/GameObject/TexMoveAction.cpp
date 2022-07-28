@@ -2,9 +2,9 @@
 #include "../2D/Sprite.h"
 #include "../Tool/Easing.h"
 
-XIIlib::TexMoveAction* XIIlib::TexMoveAction::Create(float posX, float posY, int texNum)
+XIIlib::TexMoveAction* XIIlib::TexMoveAction::Create(float posX, float posY, float finishSize, int texNum)
 {
-	TexMoveAction* pTexMoveAction = new TexMoveAction(posX,posY,texNum);
+	TexMoveAction* pTexMoveAction = new TexMoveAction(posX,posY,finishSize,texNum);
 
 	if (pTexMoveAction == nullptr) {
 		return nullptr;
@@ -15,9 +15,10 @@ XIIlib::TexMoveAction* XIIlib::TexMoveAction::Create(float posX, float posY, int
 	return pTexMoveAction;
 }
 
-XIIlib::TexMoveAction::TexMoveAction(float posX, float posY, int texNum)
+XIIlib::TexMoveAction::TexMoveAction(float posX, float posY, float finishSize, int texNum)
 {
 	tex = Sprite::Create(texNum, { posX,posY }, { 1,1,1,0 }, {0.5f,0.5f});
+	this->finishSize = finishSize;
 }
 
 XIIlib::TexMoveAction::~TexMoveAction()
@@ -45,7 +46,7 @@ void XIIlib::TexMoveAction::Update()
 	}
 	// ƒXƒP[ƒ‹‚ÌŒ¸ŽZ
 	float sub;
-	const float subSize = 600.0f;
+	float subSize = scale_xy - finishSize;
 	sub = Easing::InOutCubic(countFrame,0.0f, subSize,1.5f);
 	tex->SetSize({ scale_xy - sub,scale_xy - sub });
 
