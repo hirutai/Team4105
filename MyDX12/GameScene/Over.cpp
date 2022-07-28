@@ -9,6 +9,7 @@
 #include "../Audio/Audio.h"
 #include "../Camera/DebugCamera.h"
 #include "../GameObject/TexMoveAction.h"
+#include "../GameObject/ChainSprite.h"
 
 XIIlib::Over::Over()
 {
@@ -19,7 +20,7 @@ XIIlib::Over::Over()
 XIIlib::Over::~Over()
 {
 	// ポインタ使ったやつの埋葬場
-	delete pMoji;
+	delete pchStr;
 	delete textTitle;
 	delete textRetry;
 	delete spGameOver;
@@ -39,7 +40,9 @@ void XIIlib::Over::Initialize()
 	textRetry->SetColor(1, 1, 1, 1);
 	textTitle->SetColor(0.5f, 0.5f, 0.5f, 1);
 
-	pMoji = TexMoveAction::Create(200,150,MOJI_TEN);
+	pchStr = ChainSprite::Create();
+	pchStr->AddMoji(720, 240, MOJI_HAI);
+	pchStr->AddMoji(1080, 240, MOJI_BOKU);
 	//p_game_scene->GetAudio()->PlayBGM("yankeeBGM.wav");
 }
 
@@ -50,7 +53,7 @@ void XIIlib::Over::Update()
 		oneThrough = true;
 	}
 
-	pMoji->Update();
+	pchStr->Update();
 
 	if (trigSpace) {
 		if (p_game_scene->DrawScreen(TransitionType::CLOSE)) {
@@ -109,7 +112,7 @@ void XIIlib::Over::DrawTex()
 	spGameOver->Draw();
 	textRetry->Draw();
 	textTitle->Draw();
-	pMoji->Draw();
+	pchStr->Draw();
 }
 
 void XIIlib::Over::DrawBackground()

@@ -405,6 +405,9 @@
     <ClCompile Include="GameObject\TexMoveAction.cpp">
       <Filter>GameObject\Common</Filter>
     </ClCompile>
+    <ClCompile Include="GameObject\ChainSprite.cpp">
+      <Filter>GameObject\Common</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Base\DirectX12.h">
@@ -687,6 +690,9 @@
       <Filter>GameObject\Smoke</Filter>
     </ClInclude>
     <ClInclude Include="GameObject\TexMoveAction.h">
+      <Filter>GameObject\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\ChainSprite.h">
       <Filter>GameObject\Common</Filter>
     </ClInclude>
   </ItemGroup>
