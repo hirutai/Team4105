@@ -7,8 +7,8 @@ namespace XIIlib {
 	private:
 		BossHP();
 		~BossHP();
-		const int defaultHp = 1;
-		float bossHP = 1.0f;
+		const int defaultHp = 30;
+		float bossHP = 30.0f;
 
 		bool nodamage = false;
 		int nodamageTime = 0;

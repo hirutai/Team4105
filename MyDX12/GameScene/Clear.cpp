@@ -7,6 +7,8 @@
 #include "../2D/Sprite.h"
 #include "../Audio/Audio.h"
 #include "../GameObject/ChainSprite.h"
+#include "../Camera/DebugCamera.h"
+#include "Select.h"
 
 using namespace XIIlib;
 
@@ -17,15 +19,16 @@ Clear::Clear()
 Clear::~Clear()
 {
 	delete pchStr;
+	delete textTitle;
+	delete textSelect;
 	delete gameClear;
-	delete space;
 }
 
 void Clear::Initialize()
 {
+	SetDebugCamera(p_game_scene->GetCamera());
 	// Scene�؂�ւ����Ɉ�x�ʂ鏈��
 	UnitManager::GetInstance()->AllDestroy();
-	space = Sprite::Create(SPACE_TEX, { 1280 / 2 - 300, 768 / 2 + 100 });
 	if (stageNum == StageNumber::HARD)
 	{
 		gameClear = Sprite::Create(BOSSCLEAR_TEX, { 0.0f,0.0f });
@@ -34,7 +37,13 @@ void Clear::Initialize()
 	{
 		gameClear = Sprite::Create(GAMECLEAR_TEX, { 0.0f,0.0f });
 	}
-	gameClear = Sprite::Create(GAMECLEAR_TEX, { 0.0f,0.0f });
+
+	textSelect = Sprite::Create(TEXT_SELECT, { 1280 * xMullValue,768.0f * yMullValue1 });
+	textSelect->SetSize(textSelect->GetDefault() * mulXY * pickSize);
+	textTitle = Sprite::Create(CLEAR_GO_TITLE, { 1280 * xMullValue,768.0f * yMullValue2 });
+	textTitle->SetSize(textTitle->GetDefault() * mulXY);
+	textSelect->SetColor(1, 1, 1, 1);
+	textTitle->SetColor(0.5f, 0.5f, 0.5f, 1);
 
 	pchStr = ChainSprite::Create();
 	pchStr->AddMoji(360,360,60, MOJI_KEN);
@@ -49,19 +58,50 @@ void Clear::Update()
 		p_game_scene->GetAudio()->PlaySE("clear.wav", 0.5f);
 		oneThrough = true;
 	}
-	if (trigSpace) {
-		if (p_game_scene->DrawScreen(TransitionType::CLOSE)) {
-			p_game_scene->ChangeState(new Title);
-			easyCount = 0;
-		}
-	}
 
 	pchStr->Update();
 
+	if (trigSpace) {
+		if (p_game_scene->DrawScreen(TransitionType::CLOSE)) {
+			if (!selectT_R) {
+				// RETRY
+				SceneState::phase = Phase::CameraDirecting;
+				debugCamera->SetPosition(0, 10, -30); // 視点座標の設定
+				debugCamera->_Update();
+				UnitManager::GetInstance()->ObjectUpdate();
+				p_game_scene->ChangeState(new Select());
+				easyCount = 0;
+			}
+			else {
+				// タイトルに遷移
+				p_game_scene->ChangeState(new Title);
+				easyCount = 0;
+			}
+		}
+	}
+
+
 	if (trigSpace)return;
+
+	static Math::Vector2 dfaultSize = textSelect->GetDefault() * mulXY;
+	if (KeyInput::GetInstance()->Trigger(DIK_W) || gamePad_->LStickDownFront()) {
+		selectT_R = false;
+		textSelect->SetColor(1, 1, 1, 1);
+		textTitle->SetColor(0.5f, 0.5f, 0.5f, 1);
+		textSelect->SetSize(dfaultSize * pickSize);
+		textTitle->SetSize(dfaultSize);
+	}
+	if (KeyInput::GetInstance()->Trigger(DIK_S) || gamePad_->LStickDownBack()) {
+		selectT_R = true;
+		textSelect->SetColor(0.5f, 0.5f, 0.5f, 1);
+		textTitle->SetColor(1, 1, 1, 1);
+		textSelect->SetSize(dfaultSize);
+		textTitle->SetSize(dfaultSize * pickSize);
+	}
 
 	if (KeyInput::GetInstance()->Trigger(DIK_SPACE) || gamePad_->Button_Down(X_A)) {
 		trigSpace = true;
+		p_game_scene->GetAudio()->StopSE();
 		p_game_scene->GetAudio()->PlaySE("kettei.wav", 0.3f);
 	}
 }
@@ -76,7 +116,8 @@ void Clear::DrawTex()
 {
 	// �X�v���C�g�`��
 	gameClear->Draw();
-	space->Draw();
+	textSelect->Draw();
+	textTitle->Draw();
 	pchStr->Draw();
 }
 

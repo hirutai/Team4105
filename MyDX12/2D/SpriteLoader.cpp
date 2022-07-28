@@ -11,8 +11,11 @@ void XIIlib::SpriteLoader::Load()
 	Sprite::LoadTexture(EFEECT1_TEX,       L"Resources/effect1.png");
 	// ÉQÅ[ÉÄ
 	Sprite::LoadTexture(SPACE_TEX,         L"Resources/Space.png");
-	Sprite::LoadTexture(TEXT_GO_TITLE,     L"Resources/titleTex.png");
+	Sprite::LoadTexture(OVER_GO_TITLE,     L"Resources/titleTex.png");
+	Sprite::LoadTexture(CLEAR_GO_TITLE,    L"Resources/taitleGo.png");
 	Sprite::LoadTexture(TEXT_RETRY,        L"Resources/retryTex.png");
+	Sprite::LoadTexture(TEXT_SELECT,       L"Resources/selectStage.png");
+
 	Sprite::LoadTexture(GAMEOVER_TEX,      L"Resources/GameOver.png");
 	Sprite::LoadTexture(BOSSOVER_TEX,      L"Resources/BossOver.png");
 	Sprite::LoadTexture(STAGEBG1_TEX,      L"Resources/stage_BG1.png");

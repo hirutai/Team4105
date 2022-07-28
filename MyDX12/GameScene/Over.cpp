@@ -41,7 +41,7 @@ void XIIlib::Over::Initialize()
 
 	textRetry = Sprite::Create(TEXT_RETRY, { 1280 * xMullValue,768.0f * yMullValue1 });
 	textRetry->SetSize(textRetry->GetDefault() * mulXY * pickSize);
-	textTitle = Sprite::Create(TEXT_GO_TITLE, { 1280 * xMullValue,768.0f * yMullValue2 });
+	textTitle = Sprite::Create(OVER_GO_TITLE, { 1280 * xMullValue,768.0f * yMullValue2 });
 	textTitle->SetSize(textTitle->GetDefault() * mulXY);
 	textRetry->SetColor(1, 1, 1, 1);
 	textTitle->SetColor(0.5f, 0.5f, 0.5f, 1);
