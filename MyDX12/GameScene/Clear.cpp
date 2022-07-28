@@ -29,10 +29,10 @@ void Clear::Initialize()
 	gameClear = Sprite::Create(GAMECLEAR_TEX, { 0.0f,0.0f });
 
 	pchStr = ChainSprite::Create();
-	pchStr->AddMoji(360,360,60, MOJI_KEN);
-	pchStr->AddMoji(360,420,60, MOJI_KA);
-	pchStr->AddMoji(360,480,60, MOJI_ZYOU);
-	pchStr->AddMoji(360,520,60, MOJI_TOU);
+	pchStr->AddMoji(180,120,180, MOJI_KEN);
+	pchStr->AddMoji(180,240,180, MOJI_KA);
+	pchStr->AddMoji(180,360,180, MOJI_ZYOU);
+	pchStr->AddMoji(180,480,180, MOJI_TOU);
 }
 
 void Clear::Update()
@@ -48,9 +48,9 @@ void Clear::Update()
 		}
 	}
 
-	pchStr->Update();
 
 	if (trigSpace)return;
+	pchStr->Update();
 
 	if (KeyInput::GetInstance()->Trigger(DIK_SPACE) || gamePad_->Button_Down(X_A)) {
 		trigSpace = true;
