@@ -6,9 +6,8 @@
 XIIlib::ChainSprite* XIIlib::ChainSprite::Create()
 {
 	ChainSprite* pChainSprite = new ChainSprite();
-
 	if (pChainSprite == nullptr) {
-		return nullptr;
+		return pChainSprite;
 	}
 }
 
