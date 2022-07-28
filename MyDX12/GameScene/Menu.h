@@ -79,6 +79,7 @@ namespace XIIlib {
 		const int switchRandiMin = -3;
 		const int switchRandiMax = 3;
 		int count = 0;
+		bool endFlag = false;
 		Math::Vector2 switchRand = { 0,0 };
 	public:
 		Menu();
@@ -91,7 +92,7 @@ namespace XIIlib {
 		void DrawBackground()override;
 
 	private: // メンバ関数
-		void EasingUpdate();
+		bool EasingUpdate();
 		void EasingMove(int i,EasingState easingState); // イージングで移動
 		void CountsUpdate(); // 全てのカウントを更新
 		void CountUpdate(int& count); // 個々のカウントを更新
