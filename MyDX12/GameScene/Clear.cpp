@@ -28,13 +28,21 @@ void Clear::Initialize()
 {
 	SetDebugCamera(p_game_scene->GetCamera());
 	// Scene�؂�ւ����Ɉ�x�ʂ鏈��
+	pchStr = ChainSprite::Create();
+	
 	UnitManager::GetInstance()->AllDestroy();
 	if (stageNum == StageNumber::HARD)
 	{
+		pchStr->AddMoji(180, 120, 320, MOJI_TYOU);
+		pchStr->AddMoji(180, 360, 320, MOJI_TEN2);
 		gameClear = Sprite::Create(BOSSCLEAR_TEX, { 0.0f,0.0f });
 	}
 	else
 	{
+		pchStr->AddMoji(180, 120, 180, MOJI_KEN);
+		pchStr->AddMoji(180, 240, 180, MOJI_KA);
+		pchStr->AddMoji(180, 360, 180, MOJI_ZYOU);
+		pchStr->AddMoji(180, 480, 180, MOJI_TOU);
 		gameClear = Sprite::Create(GAMECLEAR_TEX, { 0.0f,0.0f });
 	}
 	textSelect = Sprite::Create(TEXT_SELECT, { 1280 * xMullValue,768.0f * yMullValue1 });
@@ -46,11 +54,6 @@ void Clear::Initialize()
 	gameClear->SetSize({ 1280, 768 });
 
 
-	pchStr = ChainSprite::Create();
-	pchStr->AddMoji(180,120,180, MOJI_KEN);
-	pchStr->AddMoji(180,240,180, MOJI_KA);
-	pchStr->AddMoji(180,360,180, MOJI_ZYOU);
-	pchStr->AddMoji(180,480,180, MOJI_TOU);
 }
 
 void Clear::Update()
