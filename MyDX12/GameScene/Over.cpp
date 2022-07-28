@@ -37,7 +37,7 @@ void XIIlib::Over::Initialize()
 	{
 		spGameOver = Sprite::Create(GAMEOVER_TEX, { 0.0f,0.0f });
 	}
-
+	spGameOver->SetSize({ 1280, 768 });
 
 	textRetry = Sprite::Create(TEXT_RETRY, { 1280 * xMullValue,768.0f * yMullValue1 });
 	textRetry->SetSize(textRetry->GetDefault() * mulXY * pickSize);

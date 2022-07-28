@@ -37,19 +37,20 @@ void Clear::Initialize()
 	{
 		gameClear = Sprite::Create(GAMECLEAR_TEX, { 0.0f,0.0f });
 	}
-
 	textSelect = Sprite::Create(TEXT_SELECT, { 1280 * xMullValue,768.0f * yMullValue1 });
 	textSelect->SetSize(textSelect->GetDefault() * mulXY * pickSize);
 	textTitle = Sprite::Create(CLEAR_GO_TITLE, { 1280 * xMullValue,768.0f * yMullValue2 });
 	textTitle->SetSize(textTitle->GetDefault() * mulXY);
 	textSelect->SetColor(1, 1, 1, 1);
 	textTitle->SetColor(0.5f, 0.5f, 0.5f, 1);
+	gameClear->SetSize({ 1280, 768 });
+
 
 	pchStr = ChainSprite::Create();
-	pchStr->AddMoji(360,360,60, MOJI_KEN);
-	pchStr->AddMoji(360,420,60, MOJI_KA);
-	pchStr->AddMoji(360,480,60, MOJI_ZYOU);
-	pchStr->AddMoji(360,520,60, MOJI_TOU);
+	pchStr->AddMoji(180,120,180, MOJI_KEN);
+	pchStr->AddMoji(180,240,180, MOJI_KA);
+	pchStr->AddMoji(180,360,180, MOJI_ZYOU);
+	pchStr->AddMoji(180,480,180, MOJI_TOU);
 }
 
 void Clear::Update()
@@ -82,6 +83,7 @@ void Clear::Update()
 
 
 	if (trigSpace)return;
+	pchStr->Update();
 
 	static Math::Vector2 dfaultSize = textSelect->GetDefault() * mulXY;
 	if (KeyInput::GetInstance()->Trigger(DIK_W) || gamePad_->LStickDownFront()) {
