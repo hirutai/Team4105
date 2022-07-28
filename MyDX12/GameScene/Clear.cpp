@@ -24,7 +24,15 @@ void Clear::Initialize()
 	// SceneØ‚è‘Ö‚¦Žž‚Éˆê“x’Ê‚éˆ—
 	UnitManager::GetInstance()->AllDestroy();
 	space = Sprite::Create(SPACE_TEX, { 1280 / 2 - 300, 768 / 2 + 100 });
-	gameClear = Sprite::Create(GAMECLEAR_TEX, { 0.0f,0.0f });
+	if (stageNum == StageNumber::HARD)
+	{
+		gameClear = Sprite::Create(BOSSCLEAR_TEX, { 0.0f,0.0f });
+	}
+	else
+	{
+		gameClear = Sprite::Create(GAMECLEAR_TEX, { 0.0f,0.0f });
+	}
+	
 }
 
 void Clear::Update()

@@ -14,6 +14,7 @@ void XIIlib::SpriteLoader::Load()
 	Sprite::LoadTexture(TEXT_GO_TITLE,     L"Resources/titleTex.png");
 	Sprite::LoadTexture(TEXT_RETRY,        L"Resources/retryTex.png");
 	Sprite::LoadTexture(GAMEOVER_TEX,      L"Resources/GameOver.png");
+	Sprite::LoadTexture(BOSSOVER_TEX,      L"Resources/BossOver.png");
 	Sprite::LoadTexture(STAGEBG1_TEX,      L"Resources/stage_BG1.png");
 	Sprite::LoadTexture(EASY_BUTTON_TEX,   L"Resources/kantan.png");
 	Sprite::LoadTexture(NORMAL_BUTTON_TEX, L"Resources/futuu.png");
@@ -21,7 +22,8 @@ void XIIlib::SpriteLoader::Load()
 	Sprite::LoadTexture(EDGE_TEX,          L"Resources/waku.png");
 	Sprite::LoadTexture(TITLEBG_TEX,       L"Resources/TitleBG.png");
 	Sprite::LoadTexture(TITLELOG_TEX,      L"Resources/TitleLog.png");
-	Sprite::LoadTexture(GAMECLEAR_TEX,     L"Resources/GameClear_1.png");
+	Sprite::LoadTexture(GAMECLEAR_TEX,     L"Resources/new_C.png");
+	Sprite::LoadTexture(BOSSCLEAR_TEX,     L"Resources/BossClear.png");
 	Sprite::LoadTexture(OPERATORGUIDE_TEX, L"Resources/explanation.png");
 	Sprite::LoadTexture(MENU_TEX,          L"Resources/tabkey.png");
 	Sprite::LoadTexture(CURSOR_TEX,        L"Resources/cursor.png");
@@ -49,8 +51,8 @@ void XIIlib::SpriteLoader::Load()
 	Sprite::LoadTexture(PLAYER2,		   L"Resources/player2.png");
 	Sprite::LoadTexture(BLOOD_BACK_GROUND, L"Resources/bloodBG.png");
 	Sprite::LoadTexture(SELECT_BACK_GROUND, L"Resources/selectBG.png");
-	Sprite::LoadTexture(ZOKU, L"Resources/zokuText.png");
-	Sprite::LoadTexture(SHITAPPA, L"Resources/sitappaText.png");
+	Sprite::LoadTexture(ZOKU,				L"Resources/zokuText.png");
+	Sprite::LoadTexture(SHITAPPA,			L"Resources/sitappaText.png");
 	Sprite::LoadTexture(CLEARCONDITION, L"Resources/clearCondition.png");
 	Sprite::LoadTexture(BOSSCLEARCONDITION, L"Resources/bossClearCondition.png");
 	//Sprite::LoadTexture(RULE_TEX, L"Resources/bossClearCondition.png");

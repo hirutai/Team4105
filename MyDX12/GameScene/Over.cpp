@@ -31,7 +31,14 @@ void XIIlib::Over::Initialize()
 	SetDebugCamera(p_game_scene->GetCamera());
 	// SceneØ‚è‘Ö‚¦Žž‚Éˆê“x’Ê‚éˆ—
 	UnitManager::GetInstance()->AllDestroy();
-	spGameOver = Sprite::Create(GAMEOVER_TEX, {0.0f,0.0f});
+	if (stageNum == StageNumber::HARD){
+		spGameOver = Sprite::Create(BOSSOVER_TEX, { 0.0f,0.0f });
+	}
+	else
+	{
+		spGameOver = Sprite::Create(GAMEOVER_TEX, { 0.0f,0.0f });
+	}
+
 
 	textRetry = Sprite::Create(TEXT_RETRY, { 1280 * xMullValue,768.0f * yMullValue1 });
 	textRetry->SetSize(textRetry->GetDefault() * mulXY * pickSize);
