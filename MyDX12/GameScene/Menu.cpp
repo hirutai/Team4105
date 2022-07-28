@@ -12,6 +12,7 @@
 #include "../2D/Sprite.h"
 #include "../Tool/Easing.h"
 #include "../3D/Object3D.h"
+#include <cassert>
 
 XIIlib::Menu::Menu()
 {
@@ -69,7 +70,6 @@ void XIIlib::Menu::Initialize()
 	// 最大最小値を決める
 	CheckLimitPos();
 
-
 	// 全てのサイズを0に
 	for (int i = 0; i < MAX_BUTTON; ++i)
 	{
@@ -82,10 +82,11 @@ void XIIlib::Menu::Update()
 #pragma region Easing処理
 	// Easing処理
 	LerpAlpha();
-	EasingUpdate();
+	endFlag = EasingUpdate();
 	// イージング処理中なら即リターン
 	if (easingState != EasingState::NONE)return;
 	if (trigSpace)return;
+	if (endFlag)return;
 #pragma endregion
 
 #pragma region 説明
@@ -192,7 +193,7 @@ void XIIlib::Menu::DrawBackground()
 	spStageBG1->Draw();
 }
 
-void XIIlib::Menu::EasingUpdate()
+bool XIIlib::Menu::EasingUpdate()
 {
 	// 最後のカウンターがMAXに到達するまで、Easing処理
 	if (easingState == EasingState::MOVE_IN || easingState == EasingState::MOVE_OUT)
@@ -217,6 +218,8 @@ void XIIlib::Menu::EasingUpdate()
 				{
 				case XIIlib::MenuState::CONTINUE:
 					p_game_scene->ChangeState(new Play);
+					menuExists = false;
+					return true;
 					break;
 				case XIIlib::MenuState::NEXT_SLECT:
 					// シーンを戻る際はUnitデータを消しておく
@@ -227,6 +230,8 @@ void XIIlib::Menu::EasingUpdate()
 						}
 					}
 					easyCount = 0;
+					menuExists = false;
+					return true;
 					break;
 				case XIIlib::MenuState::NEXT_TITLE:
 					// シーンを戻る際はUnitデータを消しておく
@@ -237,14 +242,14 @@ void XIIlib::Menu::EasingUpdate()
 						}
 					}
 					easyCount = 0;
+					menuExists = false;
+					return true;
 					break;
 				default:
 					p_game_scene->ChangeState(new Play);
 					break;
 				}
-
-				menuExists = false;
-				return;
+				
 			}
 			// カウントをすべて0
 			for (int i = 0; i < MAX_BUTTON; ++i)
@@ -255,6 +260,7 @@ void XIIlib::Menu::EasingUpdate()
 			easingState = EasingState::NONE;
 		}
 	}
+	return false;
 }
 
 void XIIlib::Menu::EasingMove(int i,EasingState easingState)
