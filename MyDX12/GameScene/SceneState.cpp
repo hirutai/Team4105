@@ -12,6 +12,7 @@
 #include"../GameObject/AttackAreaManager.h"
 #include "../Tool/CSVLoader.h"
 #include "../3D/Object3D.h"
+#include "../GameObject/ModelLoader.h"
 
 using namespace XIIlib;
 StageNumber SceneState::stageNum = StageNumber::DEBUG;
@@ -176,14 +177,12 @@ void XIIlib::SceneState::CreateUnitsPosition(StageNumber stageNum, std::string f
 // ”wŒiƒ‚ƒfƒ‹“Ç‚Ýž‚Ý
 void XIIlib::SceneState::BackStagesInit()
 {
-	
-
 	// Boss”wŒi
-	bossBG[0].reset(Object3D::Create(Model::CreateFromOBJ("stage3_a")));
-	bossBG[1].reset(Object3D::Create(Model::CreateFromOBJ("stage3_b")));
-	bossBG[2].reset(Object3D::Create(Model::CreateFromOBJ("stage3_c")));
-	bossBG[3].reset(Object3D::Create(Model::CreateFromOBJ("stage3_d")));
-	bossBG[4].reset(Object3D::Create(Model::CreateFromOBJ("stage3_e")));
+	bossBG[0].reset(Object3D::Create(ModelLoader::GetInstance()->GetModel(MODEL_STAGE_A)));
+	bossBG[1].reset(Object3D::Create(ModelLoader::GetInstance()->GetModel(MODEL_STAGE_B)));
+	bossBG[2].reset(Object3D::Create(ModelLoader::GetInstance()->GetModel(MODEL_STAGE_C)));
+	bossBG[3].reset(Object3D::Create(ModelLoader::GetInstance()->GetModel(MODEL_STAGE_D)));
+	bossBG[4].reset(Object3D::Create(ModelLoader::GetInstance()->GetModel(MODEL_STAGE_E)));
 	for (int i = 0; i < 5; i++)
 	{
 		bossBG[i]->scale = Math::Vector3({ 3.0f,3.0f,3.0f });

@@ -51,6 +51,7 @@ void Clear::Initialize()
 	pchStr->AddMoji(180,240,180, MOJI_KA);
 	pchStr->AddMoji(180,360,180, MOJI_ZYOU);
 	pchStr->AddMoji(180,480,180, MOJI_TOU);
+	
 }
 
 void Clear::Update()
@@ -87,6 +88,7 @@ void Clear::Update()
 
 	static Math::Vector2 dfaultSize = textSelect->GetDefault() * mulXY;
 	if (KeyInput::GetInstance()->Trigger(DIK_W) || gamePad_->LStickDownFront()) {
+		p_game_scene->GetAudio()->PlaySE("select.wav", 0.1f);
 		selectT_R = false;
 		textSelect->SetColor(1, 1, 1, 1);
 		textTitle->SetColor(0.5f, 0.5f, 0.5f, 1);
@@ -94,6 +96,7 @@ void Clear::Update()
 		textTitle->SetSize(dfaultSize);
 	}
 	if (KeyInput::GetInstance()->Trigger(DIK_S) || gamePad_->LStickDownBack()) {
+		p_game_scene->GetAudio()->PlaySE("select.wav", 0.1f);
 		selectT_R = true;
 		textSelect->SetColor(0.5f, 0.5f, 0.5f, 1);
 		textTitle->SetColor(1, 1, 1, 1);

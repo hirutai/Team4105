@@ -115,6 +115,7 @@ void XIIlib::Menu::Update()
 			|| gamePad_->Button_Down(X_A) || gamePad_->Button_Down(X_START))
 		{
 			menuState = MenuState::NONE;
+			p_game_scene->GetAudio()->PlaySE("kettei.wav", 0.3f);
 		}
 		return;
 	}
@@ -129,6 +130,7 @@ void XIIlib::Menu::Update()
 
 	if (KeyInput::GetInstance()->Trigger(DIK_SPACE) || gamePad_->Button_Down(X_A))
 	{
+		p_game_scene->GetAudio()->PlaySE("kettei.wav", 0.3f);
 		menuState = (MenuState)cursorState;
 		if (menuState == MenuState::PLAYER_GUIDS)
 		{
@@ -342,10 +344,12 @@ void XIIlib::Menu::MoveCursor()
 		if (KeyInput::GetInstance()->Trigger(DIK_W) || gamePad_->LStickDownFront())
 		{
 			moveY = -SPACE;
+			p_game_scene->GetAudio()->PlaySE("select.wav", 0.1f);
 		}
 		else if (KeyInput::GetInstance()->Trigger(DIK_S) || gamePad_->LStickDownBack())
 		{
 			moveY = SPACE;
+			p_game_scene->GetAudio()->PlaySE("select.wav", 0.1f);
 		}
 		pos.y += moveY;
 		// ˜g‚ð’´‚¦‚½‚çŽ~‚ß‚é

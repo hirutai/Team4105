@@ -14,7 +14,12 @@ namespace XIIlib {
 		MODEL_ROOK,
 		MODEL_BISHOP,
 		MODEL_BOSS,
-		MODEL_BOSS2
+		MODEL_BOSS2,
+		MODEL_STAGE_A,
+		MODEL_STAGE_B,
+		MODEL_STAGE_C,
+		MODEL_STAGE_D,
+		MODEL_STAGE_E
 	};
 
 	class ModelLoader

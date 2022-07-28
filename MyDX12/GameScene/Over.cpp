@@ -86,6 +86,7 @@ void XIIlib::Over::Update()
 
 	static Math::Vector2 dfaultSize = textRetry->GetDefault() * mulXY;
 	if (KeyInput::GetInstance()->Trigger(DIK_W) || gamePad_->LStickDownFront()) {
+		p_game_scene->GetAudio()->PlaySE("select.wav", 0.1f);
 		selectT_R = false;
 		textRetry->SetColor(1,1,1,1);
 		textTitle->SetColor(0.5f, 0.5f, 0.5f, 1);
@@ -93,6 +94,7 @@ void XIIlib::Over::Update()
 		textTitle->SetSize(dfaultSize);
 	}
 	if (KeyInput::GetInstance()->Trigger(DIK_S) || gamePad_->LStickDownBack()) {
+		p_game_scene->GetAudio()->PlaySE("select.wav", 0.1f);
 		selectT_R = true;
 		textRetry->SetColor(0.5f, 0.5f, 0.5f, 1);
 		textTitle->SetColor(1, 1, 1, 1);
