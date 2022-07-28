@@ -34,7 +34,7 @@ void Clear::Initialize()
 	{
 		gameClear = Sprite::Create(GAMECLEAR_TEX, { 0.0f,0.0f });
 	}
-	gameClear = Sprite::Create(GAMECLEAR_TEX, { 0.0f,0.0f });
+	gameClear->SetSize({ 1280, 768 });
 
 	pchStr = ChainSprite::Create();
 	pchStr->AddMoji(180,120,180, MOJI_KEN);
