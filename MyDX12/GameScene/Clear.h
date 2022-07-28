@@ -12,6 +12,9 @@ namespace XIIlib
 
 	class Clear : public SceneState
 	{
+	private:
+		const float yMullValue1 = 0.5f, yMullValue2 = 0.7f,
+			xMullValue = 0.53f, mulXY = 1.5f, pickSize = 1.5f;
 	public: // メンバ関数
 		// コンストラクタ
 		Clear();
@@ -31,8 +34,10 @@ namespace XIIlib
 		Sprite* gameClear = nullptr; // クリア画像
 		bool oneThrough = false;
 
-		Sprite* space = nullptr;
+		Sprite* textSelect = nullptr;
+		Sprite* textTitle = nullptr;
 		ChainSprite* pchStr = nullptr;
+		bool selectT_R = false;
 	};
 
 }
