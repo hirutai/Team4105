@@ -230,17 +230,17 @@ void XIIlib::Bishop::Move()
 
 		temp.a -= tileRand;
 		temp.b -= tileRand;
-		if (temp.a <= -1 && temp.b <= -1)
+		/*if (temp.a <= 0 && temp.b <= 0)
 		{
 			nextPoint.a = 0;
 			nextPoint.b = 0;
 		}
-		else if(temp.a <= -1)
+		else if(temp.a <= 0)
 		{
 			nextPoint.b = temp.b - temp.a;
 			nextPoint.a = 0;
 		}
-		else if (temp.b <= -1)
+		else if (temp.b <= 0)
 		{
 			nextPoint.a = temp.a - temp.b;
 			nextPoint.b = 0;
@@ -248,7 +248,8 @@ void XIIlib::Bishop::Move()
 		else
 		{
 			nextPoint = temp;
-		}
+		}*/
+		nextPoint = temp;
 		audio_->PlaySE("pararira.wav");
 		break;
 	case 1:
@@ -258,7 +259,7 @@ void XIIlib::Bishop::Move()
 		temp.a += tileRand;
 		temp.b -= tileRand;
 		
-		if (temp.a >= 8 && temp.b <= -1)
+		/*if (temp.a >= 8 && temp.b <= -1)
 		{
 			nextPoint.a = 7;
 			nextPoint.b = 0;
@@ -292,7 +293,8 @@ void XIIlib::Bishop::Move()
 			{
 				nextPoint = temp;
 			}
-		}
+		}*/
+		nextPoint = temp;
 		audio_->PlaySE("pararira.wav");
 		break;
 	case 2:
@@ -301,7 +303,7 @@ void XIIlib::Bishop::Move()
 
 		temp.a -= tileRand;
 		temp.b += tileRand;
-		if (temp.a <= -1 && temp.b >= 8)
+		/*if (temp.a <= -1 && temp.b >= 8)
 		{
 			nextPoint.a = 0;
 			nextPoint.b = 7;
@@ -331,7 +333,8 @@ void XIIlib::Bishop::Move()
 		else
 		{
 			nextPoint = temp;
-		}
+		}*/
+		nextPoint = temp;
 		audio_->PlaySE("pararira.wav");
 		break;
 	case 3:
@@ -340,7 +343,7 @@ void XIIlib::Bishop::Move()
 
 		temp.a += tileRand;
 		temp.b += tileRand;
-		if (temp.a >= 8 && temp.b >= 8)
+		/*if (temp.a >= 8 && temp.b >= 8)
 		{
 			nextPoint.a = 7;
 			nextPoint.b = 7;
@@ -370,15 +373,20 @@ void XIIlib::Bishop::Move()
 		else
 		{
 			nextPoint = temp;
-		}
+		}*/
+		nextPoint = temp;
 		audio_->PlaySE("pararira.wav");
 		break;
+	}
+
+	if (AttackAreaManager::GetInstance()->CheckMoveAreas(nextPoint) || ThreeCheckArea(nextPoint)) {
+		nextPoint = element_stock;
 	}
 	// ˆÚ“®—Ê‚ğæ“¾
 	Math::Point2 v = nextPoint - element_stock;
 	//ˆÚ“®—Ê‚©‚çŠp“x‚ğ‹‚ß‚Äİ’è
 	Direction(v);
-
+	
 	AttackAreaManager::GetInstance()->SetMoveAreas(nextPoint);
 
 	// ˆÚ“®‚Ü‚·‚ªŒˆ’è‚³‚ê‚Ü‚µ‚½B
