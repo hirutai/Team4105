@@ -33,8 +33,8 @@ void XIIlib::Menu::Initialize()
 	// ¶¬
 	spStageBG1.reset(Sprite::Create(STAGEBG1_TEX, { 0.0f,0.0f })); // ”wŒi
 	cursor.reset(Sprite::Create(CURSOR_TEX, { winCenter.x - CURSOR_SPACE, winCenter.y - SPACE }, color, anchorPoint));
-	playerGuide.reset(Sprite::Create(PLAYERGUIDES_TEX, winCenter, color, anchorPoint)); // ƒvƒŒƒCƒ„[‚Ìà–¾
-	playerGuide->SetSize(winCenter);
+	playerGuide.reset(Sprite::Create(PLAYERGUIDES_TEX, { 0.0f,0.0f })); // ƒvƒŒƒCƒ„[‚Ìà–¾
+	//playerGuide->SetSize(winCenter);
 	enemyGuides.reset(Sprite::Create(ENEMYGUIDES_TEX, winCenter, color, anchorPoint)); // “G‚Ìà–¾
 	enemyGuides->SetSize(winCenter);
 
