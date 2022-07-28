@@ -6,6 +6,7 @@
 #include "../GameObject/UnitManager.h"
 #include "../2D/Sprite.h"
 #include "../Audio/Audio.h"
+#include "../GameObject/ChainSprite.h"
 
 using namespace XIIlib;
 
@@ -15,6 +16,7 @@ Clear::Clear()
 
 Clear::~Clear()
 {
+	delete pchStr;
 	delete gameClear;
 	delete space;
 }
@@ -25,6 +27,12 @@ void Clear::Initialize()
 	UnitManager::GetInstance()->AllDestroy();
 	space = Sprite::Create(SPACE_TEX, { 1280 / 2 - 300, 768 / 2 + 100 });
 	gameClear = Sprite::Create(GAMECLEAR_TEX, { 0.0f,0.0f });
+
+	pchStr = ChainSprite::Create();
+	pchStr->AddMoji(360,360,60, MOJI_KEN);
+	pchStr->AddMoji(360,420,60, MOJI_KA);
+	pchStr->AddMoji(360,480,60, MOJI_ZYOU);
+	pchStr->AddMoji(360,520,60, MOJI_TOU);
 }
 
 void Clear::Update()
@@ -39,6 +47,8 @@ void Clear::Update()
 			easyCount = 0;
 		}
 	}
+
+	pchStr->Update();
 
 	if (trigSpace)return;
 
@@ -59,6 +69,7 @@ void Clear::DrawTex()
 	// スプライト描画
 	gameClear->Draw();
 	space->Draw();
+	pchStr->Draw();
 }
 
 void Clear::DrawBackground()

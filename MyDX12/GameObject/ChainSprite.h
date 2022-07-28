@@ -19,6 +19,6 @@ namespace XIIlib{
 
 		void Draw();
 
-		void AddMoji(float posX, float posY, int texNum);
+		void AddMoji(float posX, float posY, float finishSize, int texNum);
 	};
 }

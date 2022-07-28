@@ -8,6 +8,7 @@ class Sprite;
 namespace XIIlib
 {
 	class GameScene;
+	class ChainSprite;
 
 	class Clear : public SceneState
 	{
@@ -31,6 +32,7 @@ namespace XIIlib
 		bool oneThrough = false;
 
 		Sprite* space = nullptr;
+		ChainSprite* pchStr = nullptr;
 	};
 
 }

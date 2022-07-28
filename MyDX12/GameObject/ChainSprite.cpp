@@ -42,7 +42,7 @@ void XIIlib::ChainSprite::Draw()
 	}
 }
 
-void XIIlib::ChainSprite::AddMoji(float posX, float posY, int texNum)
+void XIIlib::ChainSprite::AddMoji(float posX, float posY, float finishSize, int texNum)
 {
-	pTexs.push_back(TexMoveAction::Create(posX,posY,texNum));
+	pTexs.push_back(TexMoveAction::Create(posX,posY,finishSize,texNum));
 }
