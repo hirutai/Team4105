@@ -28,13 +28,20 @@ XIIlib::Over::~Over()
 void XIIlib::Over::Initialize()
 {
 	SetDebugCamera(p_game_scene->GetCamera());
+	pchStr = ChainSprite::Create();
 	// SceneØ‚è‘Ö‚¦Žž‚Éˆê“x’Ê‚éˆ—
 	UnitManager::GetInstance()->AllDestroy();
 	if (stageNum == StageNumber::HARD){
+		pchStr->AddMoji(320, 240, 320, MOJI_HAI);
+		pchStr->AddMoji(960, 240, 320, MOJI_BOKU);
+
 		spGameOver = Sprite::Create(BOSSOVER_TEX, { 0.0f,0.0f });
 	}
 	else
 	{
+		pchStr->AddMoji(720, 240, 320, MOJI_HAI);
+		pchStr->AddMoji(960, 240, 320, MOJI_BOKU);
+
 		spGameOver = Sprite::Create(GAMEOVER_TEX, { 0.0f,0.0f });
 	}
 	spGameOver->SetSize({ 1280, 768 });
@@ -46,9 +53,6 @@ void XIIlib::Over::Initialize()
 	textRetry->SetColor(1, 1, 1, 1);
 	textTitle->SetColor(0.5f, 0.5f, 0.5f, 1);
 
-	pchStr = ChainSprite::Create();
-	pchStr->AddMoji(720, 240,320, MOJI_HAI);
-	pchStr->AddMoji(960, 240,320, MOJI_BOKU);
 	//p_game_scene->GetAudio()->PlayBGM("yankeeBGM.wav");
 }
 
