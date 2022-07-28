@@ -40,17 +40,17 @@ void XIIlib::TexMoveAction::Update()
 
 	// 1.5•b‚Å“\‚ê‚é‚æ‚¤‚É‚·‚é
 	countFrame += (1.0f / 60.0f);
-	if (countFrame >= 1.5f) {
-		countFrame = 1.5f;
+	if (countFrame >= 0.5f) {
+		countFrame = 0.5f;
 		isFinish = true;
 	}
 	// ƒXƒP[ƒ‹‚ÌŒ¸ŽZ
 	float sub;
 	float subSize = scale_xy - finishSize;
-	sub = Easing::InOutCubic(countFrame,0.0f, subSize,1.5f);
+	sub = Easing::InOutCubic(countFrame,0.0f, subSize,0.5f);
 	tex->SetSize({ scale_xy - sub,scale_xy - sub });
 
-	float addAlpha = Easing::InOutCubic(countFrame, 0.0f, alpha,1.5f);
+	float addAlpha = Easing::InOutCubic(countFrame, 0.0f, alpha,0.5f);
 	tex->SetAlpha(addAlpha);
 }
 
