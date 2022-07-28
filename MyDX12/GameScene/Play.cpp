@@ -287,7 +287,7 @@ void XIIlib::Play::DrawTex()
 		else { //HARD以外
 			clearCond->Draw();
 		}
-		//return;
+		return;
 	}
 	if (stageNum == StageNumber::EASY)operatorGuide->Draw();
 	// ボス戦で無ければ描画処理はしない

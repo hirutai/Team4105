@@ -23,9 +23,17 @@ Clear::~Clear()
 
 void Clear::Initialize()
 {
-	// SceneØ‚è‘Ö‚¦Žž‚Éˆê“x’Ê‚éˆ—
+	// Sceneï¿½Ø‚ï¿½Ö‚ï¿½ï¿½ï¿½ï¿½Éˆï¿½xï¿½Ê‚éˆï¿½ï¿½
 	UnitManager::GetInstance()->AllDestroy();
 	space = Sprite::Create(SPACE_TEX, { 1280 / 2 - 300, 768 / 2 + 100 });
+	if (stageNum == StageNumber::HARD)
+	{
+		gameClear = Sprite::Create(BOSSCLEAR_TEX, { 0.0f,0.0f });
+	}
+	else
+	{
+		gameClear = Sprite::Create(GAMECLEAR_TEX, { 0.0f,0.0f });
+	}
 	gameClear = Sprite::Create(GAMECLEAR_TEX, { 0.0f,0.0f });
 
 	pchStr = ChainSprite::Create();
@@ -60,13 +68,13 @@ void Clear::Update()
 
 void Clear::Draw()
 {
-	// 3D•`‰æ
+	// 3Dï¿½`ï¿½ï¿½
 
 }
 
 void Clear::DrawTex()
 {
-	// ƒXƒvƒ‰ƒCƒg•`‰æ
+	// ï¿½Xï¿½vï¿½ï¿½ï¿½Cï¿½gï¿½`ï¿½ï¿½
 	gameClear->Draw();
 	space->Draw();
 	pchStr->Draw();

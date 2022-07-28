@@ -2,6 +2,7 @@
 #include "Title.h"
 #include "Select.h"
 #include "Play.h"
+#include "Clear.h"
 #include "../2D/Sprite.h"
 #include "../Tool/DigitalNumberText.h"
 #include "../Audio/Audio.h"
