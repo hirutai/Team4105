@@ -402,6 +402,9 @@
     <ClCompile Include="GameObject\SmokeManager.cpp">
       <Filter>GameObject\Smoke</Filter>
     </ClCompile>
+    <ClCompile Include="GameObject\TexMoveAction.cpp">
+      <Filter>GameObject\Common</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Base\DirectX12.h">
@@ -682,6 +685,9 @@
     </ClInclude>
     <ClInclude Include="GameObject\SmokeManager.h">
       <Filter>GameObject\Smoke</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\TexMoveAction.h">
+      <Filter>GameObject\Common</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

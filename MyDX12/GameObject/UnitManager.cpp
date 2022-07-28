@@ -125,6 +125,8 @@ void XIIlib::UnitManager::AllDestroy()
 bool XIIlib::UnitManager::AllOnUnit(const Math::Point2& point)
 {
 	for (auto unit : units) {
+		if (!unit->GetFallFlag())continue;
+
 		if (Math::MatchPoint2(unit->GetElementStock(),point)) {
 			return true;
 		}

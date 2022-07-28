@@ -35,6 +35,15 @@ namespace XIIlib
 		BOSSCLEARCONDITION,
 		TIMER_BAR,
 		TIMER_EDGE,
+		MOJI_TEN,
+		MOJI_TEN2,
+		MOJI_BOKU,
+		MOJI_HAI ,
+		MOJI_KA  ,
+		MOJI_KEN ,
+		MOJI_TOU ,
+		MOJI_TYOU,
+		MOJI_ZYOU
 	};
 	class SpriteLoader
 	{	
