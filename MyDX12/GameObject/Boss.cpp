@@ -232,8 +232,7 @@ void XIIlib::Boss::Target()
 
 void XIIlib::Boss::Attack()
 {
-	
-	/*Math::Point2 temp = element_stock;
+	Math::Point2 temp = element_stock;
 	if (bossAttackSelect == 0)
 	{
 		for (int i = 0; i < MAX_TILE; i++)
@@ -251,7 +250,7 @@ void XIIlib::Boss::Attack()
 			UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(j, bossTileRand + 1), (int)_PositionType::BOSS);
 			UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(j, bossTileRand - 1), (int)_PositionType::BOSS);
 		}
-	}*/
+	}
 }
 
 void XIIlib::Boss::Move()
