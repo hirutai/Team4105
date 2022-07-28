@@ -30,7 +30,7 @@ void XIIlib::SpriteLoader::Load()
 	Sprite::LoadTexture(BUTTON_TITLE_TEX,  L"Resources/taitleni.png");
 	Sprite::LoadTexture(BUTTON_PLAYER_TEX, L"Resources/sousa.png");
 	Sprite::LoadTexture(BUTTON_ENEMY_TEX,  L"Resources/enemyPic.png");
-	Sprite::LoadTexture(PLAYERGUIDES_TEX,  L"Resources/explanation.png");
+	Sprite::LoadTexture(PLAYERGUIDES_TEX,  L"Resources/sousa_3.png");
 	Sprite::LoadTexture(ENEMYGUIDES_TEX,   L"Resources/Menu.png");
 	Sprite::LoadTexture(BG_TEX,            L"Resources/BG.png");
 	Sprite::LoadTexture(STAGESELECT_TEX,   L"Resources/nanido.png");
