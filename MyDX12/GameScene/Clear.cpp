@@ -33,9 +33,15 @@ void Clear::Initialize()
 	UnitManager::GetInstance()->AllDestroy();
 	if (stageNum == StageNumber::HARD)
 	{
-		pchStr->AddMoji(180, 120, 320, MOJI_TYOU);
-		pchStr->AddMoji(180, 360, 320, MOJI_TEN2);
+		pchStr->AddMoji(180, 90, 360, MOJI_CLEAR1);
+		pchStr->AddMoji(1100, 90, 360, MOJI_CLEAR2);
+		pchStr->AddMoji(180, 630, 360, MOJI_CLEAR3);
+		pchStr->AddMoji(1100, 630, 360, MOJI_CLEAR4);
 		gameClear = Sprite::Create(BOSSCLEAR_TEX, { 0.0f,0.0f });
+		textSelect = Sprite::Create(TEXT_SELECT, { 1280 * xMullValueHard,768.0f * yMullValue1 });
+		textSelect->SetSize(textSelect->GetDefault() * mulXY * pickSize);
+		textTitle = Sprite::Create(CLEAR_GO_TITLE, { 1280 * xMullValueHard,768.0f * yMullValue2 });
+		textTitle->SetSize(textTitle->GetDefault() * mulXY);
 	}
 	else
 	{
@@ -44,11 +50,11 @@ void Clear::Initialize()
 		pchStr->AddMoji(180, 360, 180, MOJI_ZYOU);
 		pchStr->AddMoji(180, 480, 180, MOJI_TOU);
 		gameClear = Sprite::Create(GAMECLEAR_TEX, { 0.0f,0.0f });
+		textSelect = Sprite::Create(TEXT_SELECT, { 1280 * xMullValue,768.0f * yMullValue1 });
+		textSelect->SetSize(textSelect->GetDefault() * mulXY * pickSize);
+		textTitle = Sprite::Create(CLEAR_GO_TITLE, { 1280 * xMullValue,768.0f * yMullValue2 });
+		textTitle->SetSize(textTitle->GetDefault() * mulXY);
 	}
-	textSelect = Sprite::Create(TEXT_SELECT, { 1280 * xMullValue,768.0f * yMullValue1 });
-	textSelect->SetSize(textSelect->GetDefault() * mulXY * pickSize);
-	textTitle = Sprite::Create(CLEAR_GO_TITLE, { 1280 * xMullValue,768.0f * yMullValue2 });
-	textTitle->SetSize(textTitle->GetDefault() * mulXY);
 	textSelect->SetColor(1, 1, 1, 1);
 	textTitle->SetColor(0.5f, 0.5f, 0.5f, 1);
 	gameClear->SetSize({ 1280, 768 });

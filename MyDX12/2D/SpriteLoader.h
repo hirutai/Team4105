@@ -43,7 +43,11 @@ namespace XIIlib
 		MOJI_KEN ,
 		MOJI_TOU ,
 		MOJI_TYOU,
-		MOJI_ZYOU
+		MOJI_ZYOU,
+		MOJI_CLEAR1,
+		MOJI_CLEAR2,
+		MOJI_CLEAR3,
+		MOJI_CLEAR4
 	};
 	class SpriteLoader
 	{	
