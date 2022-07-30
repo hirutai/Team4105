@@ -15,6 +15,7 @@ namespace XIIlib
 	private:
 		const float yMullValue1 = 0.5f, yMullValue2 = 0.7f,
 			xMullValue = 0.53f, mulXY = 1.5f, pickSize = 1.5f;
+		const float xMullValueHard = 0.3f;
 	public: // メンバ関数
 		// コンストラクタ
 		Clear();

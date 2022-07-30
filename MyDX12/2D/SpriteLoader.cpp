@@ -71,4 +71,9 @@ void XIIlib::SpriteLoader::Load()
 	Sprite::LoadTexture(MOJI_TOU, L"Resources/mojiTanpin/tou.png");
 	Sprite::LoadTexture(MOJI_TYOU, L"Resources/mojiTanpin/tyou.png");
 	Sprite::LoadTexture(MOJI_ZYOU, L"Resources/mojiTanpin/zyou.png");
+
+	Sprite::LoadTexture(MOJI_CLEAR1, L"Resources/mojiTanpin/clear_1.png");
+	Sprite::LoadTexture(MOJI_CLEAR2, L"Resources/mojiTanpin/clear_2.png");
+	Sprite::LoadTexture(MOJI_CLEAR3, L"Resources/mojiTanpin/clear_3.png");
+	Sprite::LoadTexture(MOJI_CLEAR4, L"Resources/mojiTanpin/clear_4.png");
 }
