@@ -27,7 +27,8 @@ void XIIlib::SpriteLoader::Load()
 	Sprite::LoadTexture(TITLELOG_TEX,      L"Resources/TitleLog.png");
 	Sprite::LoadTexture(GAMECLEAR_TEX,     L"Resources/GameClear_1.png");
 	Sprite::LoadTexture(BOSSCLEAR_TEX,     L"Resources/BossClear.png");
-	Sprite::LoadTexture(OPERATORGUIDE_TEX, L"Resources/explanation.png");
+	Sprite::LoadTexture(KEYBOARDGUIDE_TEX, L"Resources/explanation.png");
+	Sprite::LoadTexture(KEYBOARDGUIDE_TEX, L"Resources/explanation.png");
 	Sprite::LoadTexture(MENU_TEX,          L"Resources/tabkey.png");
 	Sprite::LoadTexture(CURSOR_TEX,        L"Resources/cursor.png");
 	Sprite::LoadTexture(BUTTON_PLAY_TEX,   L"Resources/modoru.png");

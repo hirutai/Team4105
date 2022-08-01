@@ -15,7 +15,8 @@ namespace XIIlib {
 		// プレイ内で使う変数宣言の場(Object/Sprite/時間/フラグ等)
 		Sprite* spStageBG1 = nullptr; // 背景
 		Sprite* menuButton = nullptr; // メニュー
-		Sprite* operatorGuide = nullptr; // 操作説明
+		Sprite* keyboardGuide = nullptr; // keyboard操作説明
+		Sprite* padGuide = nullptr;
 		bool menuExists = false; // メニューが開かれてるかどうかの状態
 		int count = 0;
 		//std::unique_ptr<Object3D> backStage;
