@@ -43,7 +43,7 @@ void XIIlib::Play::Initialize()
 		// Object3Dの初期化
 		SceneState::BackStagesInit();
 
-		SceneState::CreateUnitsPosition(StageNumber::DEBUG,"stage0");
+		SceneState::CreateUnitsPosition(StageNumber::DEBUG, "stage0");
 		spStageBG1 = Sprite::Create(STAGEBG1_TEX, { 0.0f,0.0f });
 		stageNum = StageNumber::NONE;
 		phase = Phase::Game;
@@ -68,15 +68,17 @@ void XIIlib::Play::Initialize()
 	{
 		spStageBG1 = Sprite::Create(STAGEBG1_TEX, { 0.0f,0.0f });
 	}
-	
-	keyboardGuide = Sprite::Create(KEYBOARDGUIDE_TEX, { 1000.0f,600.0f }); // 操作説明
 
+	keyboardGuide = Sprite::Create(KEYBOARDGUIDE_TEX, { 1000.0f,600.0f }); // 操作説明
 	menuButton = Sprite::Create(MENU_TEX, { 0.0f,10.0f }); // メニュー
 	menuButton->SetSize(menuButton->GetDefault() * 0.7f);
 
 	p_game_scene->GetAudio()->PlayBGM("yankeeBGM.wav");
 
 	count = 0;
+	
+	easyCount = 0;
+	normalCount = 0;
 
 	clearCond = Sprite::Create(CLEARCONDITION, { 1280.0f, 768.0f / 2 }); // クリア条件画像の作成
 	clearCond->SetAnchorPoint({ 0.5f, 0.5f }); // 中心に設定
@@ -120,7 +122,7 @@ void XIIlib::Play::Update()
 #pragma endregion 
 
 #pragma region Game Update処理
-		
+
 		count++;
 		// 更新
 		UnitManager::GetInstance()->Update();
@@ -129,39 +131,66 @@ void XIIlib::Play::Update()
 		int createMax = Max;
 		tileRand = 1;
 
-		std::cout << "easyCount" << easyCount <<std::endl;
+		srand((unsigned int)time(0));
+
+		std::cout << "easyCount" << easyCount << std::endl;
 		if (stageNum == StageNumber::EASY && UnitManager::GetInstance()->GetUnitIDElements("King") >= 0)
 		{
 			if (UnitManager::GetInstance()->GetAllUnitCount() - 1 == 0) // 敵を全滅させた時
 			{
-				appearCount++;
-				if (easyCount == 0 && appearCount == 60)
+				easyAppearCount++;
+				if (easyCount == 0 && easyAppearCount == 60)
 				{
 					std::shared_ptr<Yankee> yankee = std::move(Yankee::Create(4, 7));
-					std::shared_ptr<Yankee> yankee1 = std::move(Yankee::Create(4, 5));			
+					std::shared_ptr<Yankee> yankee1 = std::move(Yankee::Create(4, 5));
 					UnitManager::GetInstance()->AddUnit(std::move(yankee));
 					UnitManager::GetInstance()->AddUnit(std::move(yankee1));
 					UnitManager::GetInstance()->Update();
-					appearCount = 0;
+					easyAppearCount = 0;
 					easyCount += 1;
 				}
-				else if (easyCount == 1 && appearCount == 60)
+				else if (easyCount == 1 && easyAppearCount == 60)
 				{
 					std::shared_ptr<Rook> rook = std::move(Rook::Create(3, 6));
 					UnitManager::GetInstance()->AddUnit(std::move(rook));
 					UnitManager::GetInstance()->Update();
-					appearCount = 0;
+					easyAppearCount = 0;
 					easyCount += 1;
 				}
 			}
 		}
 
+		if (stageNum == StageNumber::NORMAL && UnitManager::GetInstance()->GetUnitIDElements("King") >= 0)
+		{
+			if (UnitManager::GetInstance()->GetAllUnitCount() - 1 == 0) // 敵を全滅させた時
+			{
+				normalAppearCount++;
+				if (normalCount == 0 && normalAppearCount == 60)
+				{
+					std::shared_ptr<Yankee> yankee = std::move(Yankee::Create(5, rand()%8));
+					std::shared_ptr<Yankee> yankee1 = std::move(Yankee::Create(1, rand() % 8));
+					UnitManager::GetInstance()->AddUnit(std::move(yankee));
+					UnitManager::GetInstance()->AddUnit(std::move(yankee1));
+					UnitManager::GetInstance()->Update();
+					normalAppearCount = 0;
+					normalCount += 1;
+				}
+				else if (normalCount == 1 && normalAppearCount == 60)
+				{
+					std::shared_ptr<Rook> rook = std::move(Rook::Create(3, 6));
+					UnitManager::GetInstance()->AddUnit(std::move(rook));
+					UnitManager::GetInstance()->Update();
+					normalAppearCount = 0;
+					normalCount += 1;
+				}
+			}
+		}
+		
 		if (stageNum == StageNumber::HARD && count % 900 == 0)
 		{
 			tileRand = Min + (int)(rand() * (Max - Min + 1) / (1 + RAND_MAX));
 			if (tileRand == 0)
 			{
-
 				std::shared_ptr<Bishop> bishop = std::move(Bishop::Create(0, 7));
 				std::shared_ptr<Bishop> bishop1 = std::move(Bishop::Create(7, 7));
 				std::shared_ptr<Rook> rook = std::move(Rook::Create(4, 0));
@@ -173,7 +202,7 @@ void XIIlib::Play::Update()
 
 			}
 			if (tileRand == 1)
-			{				
+			{
 				std::shared_ptr<Bishop> bishop = std::move(Bishop::Create(0, 0));
 				std::shared_ptr<Bishop> bishop1 = std::move(Bishop::Create(7, 0));
 				std::shared_ptr<Rook> rook = std::move(Rook::Create(4, 0));
@@ -220,9 +249,9 @@ void XIIlib::Play::Update()
 				trigSpace = true;
 			}
 		}
-		else  if (UnitManager::GetInstance()->GetUnitIDElements("King") >= 0) // プレイヤが存在している場合
+		else  if (stageNum == StageNumber::NORMAL && UnitManager::GetInstance()->GetUnitIDElements("King") >= 0) // プレイヤが存在している場合
 		{
-			if (UnitManager::GetInstance()->GetAllUnitCount() - 1 == 0) // 敵を全滅させた時
+			if (UnitManager::GetInstance()->GetAllUnitCount() - 1 == 0 && normalCount >= 2) // 敵を全滅させた時
 			{
 				trigSpace = true;
 			}
@@ -233,30 +262,30 @@ void XIIlib::Play::Update()
 		}
 
 		if (trigSpace) {
-				if (UnitManager::GetInstance()->GetUnitIDElements("King") >= 0) // プレイヤが存在している場合
-				{
-					//if (UnitManager::GetInstance()->GetAllUnitCount() - 1 == 0) // 敵を全滅させた時
-					//{
-					//	if (p_game_scene->DrawScreen(TransitionType::WHITE)) {
-					//		p_game_scene->ResetAlpha();
-					//		p_game_scene->ChangeState(new Clear); // クリアシーンへ
-					//		return;
-					//	}
-					//}
-					if (p_game_scene->DrawScreen(TransitionType::WHITE)) {
-						p_game_scene->ResetAlpha();
-						p_game_scene->ChangeState(new Clear); // クリアシーンへ
-						return;
-					}
+			if (UnitManager::GetInstance()->GetUnitIDElements("King") >= 0) // プレイヤが存在している場合
+			{
+				//if (UnitManager::GetInstance()->GetAllUnitCount() - 1 == 0) // 敵を全滅させた時
+				//{
+				//	if (p_game_scene->DrawScreen(TransitionType::WHITE)) {
+				//		p_game_scene->ResetAlpha();
+				//		p_game_scene->ChangeState(new Clear); // クリアシーンへ
+				//		return;
+				//	}
+				//}
+				if (p_game_scene->DrawScreen(TransitionType::WHITE)) {
+					p_game_scene->ResetAlpha();
+					p_game_scene->ChangeState(new Clear); // クリアシーンへ
+					return;
 				}
-				else if (UnitManager::GetInstance()->GetUnitIDElements("King") < 0) // プレイヤが存在していない場合
-				{
-					if (p_game_scene->DrawScreen(TransitionType::BLACK)) {
-						p_game_scene->ResetAlpha();
-						p_game_scene->ChangeState(new Over); // オーバーシーンへ
-						return;
-					}
+			}
+			else if (UnitManager::GetInstance()->GetUnitIDElements("King") < 0) // プレイヤが存在していない場合
+			{
+				if (p_game_scene->DrawScreen(TransitionType::BLACK)) {
+					p_game_scene->ResetAlpha();
+					p_game_scene->ChangeState(new Over); // オーバーシーンへ
+					return;
 				}
+			}
 		}
 #pragma endregion
 		break;
@@ -270,7 +299,7 @@ void XIIlib::Play::Draw()
 	SceneState::BackStagesDraw();
 	// 3D描画
 	AttackAreaManager::GetInstance()->Draw();
-	
+
 	UnitManager::GetInstance()->Draw();
 
 	// カメラが移動する際にビルボードオブジェクトの表示をしない
