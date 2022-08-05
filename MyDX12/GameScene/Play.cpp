@@ -26,7 +26,7 @@ XIIlib::Play::Play()
 XIIlib::Play::~Play()
 {
 	// ポインタ使ったやつの埋葬場
-	delete operatorGuide; // 操作説明
+	delete keyboardGuide; // 操作説明
 	delete menuButton; // メニュー
 	delete spStageBG1;
 
@@ -69,7 +69,8 @@ void XIIlib::Play::Initialize()
 		spStageBG1 = Sprite::Create(STAGEBG1_TEX, { 0.0f,0.0f });
 	}
 	
-	operatorGuide = Sprite::Create(OPERATORGUIDE_TEX, { 1000.0f,600.0f }); // 操作説明
+	keyboardGuide = Sprite::Create(KEYBOARDGUIDE_TEX, { 1000.0f,600.0f }); // 操作説明
+
 	menuButton = Sprite::Create(MENU_TEX, { 0.0f,10.0f }); // メニュー
 	menuButton->SetSize(menuButton->GetDefault() * 0.7f);
 
@@ -281,7 +282,7 @@ void XIIlib::Play::DrawTex()
 {
 	// スプライト描画
 	menuButton->Draw();
-	if (stageNum == StageNumber::EASY)operatorGuide->Draw();
+	if (stageNum == StageNumber::EASY)keyboardGuide->Draw();
 	if (phase == XIIlib::Phase::ClearCondDisplay) {
 		if (stageNum == StageNumber::HARD) { // HARD時
 			bossClearCond->Draw();
