@@ -22,6 +22,7 @@ Phase SceneState::phase = Phase::CameraDirecting;
 std::unique_ptr<Object3D> SceneState::backStage = nullptr;
 std::unique_ptr<Object3D> SceneState::bossBG[5] = {};
 int SceneState::easyCount = 0;
+int SceneState::normalCount = 0;
 
 void XIIlib::SceneState::CommonUpdate(GameScene* p_game_scene)
 {
