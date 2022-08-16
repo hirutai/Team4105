@@ -127,13 +127,9 @@ void XIIlib::Play::Update()
 		// 更新
 		UnitManager::GetInstance()->Update();
 		//
-		int createMin = Min;
-		int createMax = Max;
 		tileRand = 1;
 
-		srand((unsigned int)time(0));
-
-		std::cout << "easyCount" << easyCount << std::endl;
+		std::cout << "tileRand" << normalTileRand << std::endl;
 		if (stageNum == StageNumber::EASY && UnitManager::GetInstance()->GetUnitIDElements("King") >= 0)
 		{
 			if (UnitManager::GetInstance()->GetAllUnitCount() - 1 == 0) // 敵を全滅させた時
@@ -162,26 +158,57 @@ void XIIlib::Play::Update()
 
 		if (stageNum == StageNumber::NORMAL && UnitManager::GetInstance()->GetUnitIDElements("King") >= 0)
 		{
-			if (UnitManager::GetInstance()->GetAllUnitCount() - 1 == 0) // 敵を全滅させた時
+			if (UnitManager::GetInstance()->GetAllUnitCount() - 1 <= 3 && normalCount <= 1) // 敵が三体以下の時
 			{
 				normalAppearCount++;
-				if (normalCount == 0 && normalAppearCount == 60)
+				normalTileRand = Min + (int)(rand() * (Max - Min + 1) / (1 + RAND_MAX));
+				if (normalTileRand == 0 && normalAppearCount == 60)
 				{
-					std::shared_ptr<Yankee> yankee = std::move(Yankee::Create(5, rand()%8));
-					std::shared_ptr<Yankee> yankee1 = std::move(Yankee::Create(1, rand() % 8));
+					normalCount += 1;
+					normalAppearCount = 0;
+					std::shared_ptr<Yankee> yankee = std::move(Yankee::Create(0, 7));
+					std::shared_ptr<Yankee> yankee2 = std::move(Yankee::Create(4, 0));
+					std::shared_ptr<Bishop> bishop1 = std::move(Bishop::Create(7, 7));
 					UnitManager::GetInstance()->AddUnit(std::move(yankee));
-					UnitManager::GetInstance()->AddUnit(std::move(yankee1));
-					UnitManager::GetInstance()->Update();
-					normalAppearCount = 0;
-					normalCount += 1;
+					UnitManager::GetInstance()->AddUnit(std::move(yankee2));
+					UnitManager::GetInstance()->AddUnit(std::move(bishop1));
 				}
-				else if (normalCount == 1 && normalAppearCount == 60)
+				if (normalTileRand == 1 && normalAppearCount == 60)
 				{
-					std::shared_ptr<Rook> rook = std::move(Rook::Create(3, 6));
-					UnitManager::GetInstance()->AddUnit(std::move(rook));
-					UnitManager::GetInstance()->Update();
-					normalAppearCount = 0;
 					normalCount += 1;
+					normalAppearCount = 0;
+					std::shared_ptr<Yankee> yankee = std::move(Yankee::Create(0, 7));
+					std::shared_ptr<Yankee> yankee2 = std::move(Yankee::Create(4, 0));
+					std::shared_ptr<Rook> rook = std::move(Rook::Create(5, 0));
+					UnitManager::GetInstance()->AddUnit(std::move(yankee));
+					UnitManager::GetInstance()->AddUnit(std::move(yankee2));
+					UnitManager::GetInstance()->AddUnit(std::move(rook));
+
+				}
+				if (normalTileRand == 2 && normalAppearCount == 60)
+				{
+					normalCount += 1;
+					normalAppearCount = 0;
+					std::shared_ptr<Yankee> yankee = std::move(Yankee::Create(0, 6));
+					std::shared_ptr<Bishop> bishop1 = std::move(Bishop::Create(7, 7));
+					std::shared_ptr<Rook> rook = std::move(Rook::Create(4, 0));
+
+					UnitManager::GetInstance()->AddUnit(std::move(yankee));
+					UnitManager::GetInstance()->AddUnit(std::move(bishop1));
+					UnitManager::GetInstance()->AddUnit(std::move(rook));
+				}
+				if (normalTileRand == 3 && normalAppearCount == 60)
+				{
+					normalCount += 1;
+					normalAppearCount = 0;
+					std::shared_ptr<Bishop> bishop = std::move(Bishop::Create(0, 3));
+					std::shared_ptr<Bishop> bishop1 = std::move(Bishop::Create(7, 4));
+					std::shared_ptr<Rook> rook = std::move(Rook::Create(0, 4));
+					std::shared_ptr<Rook> rook1 = std::move(Rook::Create(7, 3));
+					UnitManager::GetInstance()->AddUnit(std::move(bishop));
+					UnitManager::GetInstance()->AddUnit(std::move(rook));
+					UnitManager::GetInstance()->AddUnit(std::move(bishop1));
+					UnitManager::GetInstance()->AddUnit(std::move(rook1));
 				}
 			}
 		}

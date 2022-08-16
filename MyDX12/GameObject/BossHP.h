@@ -7,7 +7,7 @@ namespace XIIlib {
 	private:
 		BossHP();
 		~BossHP();
-		const int defaultHp = 30;
+		const float defaultHP = 30.0f;
 		float bossHP = 30.0f;
 
 		bool nodamage = false;
@@ -21,6 +21,8 @@ namespace XIIlib {
 
 		int GetBossHP() { return bossHP; }
 		void SetBossHP(float HP) { bossHP = HP; }
+
+		int GetDefaultBossHP() { return defaultHP; }
 
 		void Initialize(); // 初期化
 		void Update(); 
