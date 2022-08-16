@@ -50,6 +50,8 @@ namespace XIIlib {
 		int Min = 0;
 		int Max = 3;
 		int tileRand = 1;
+		int normalTileRand = 1;
+
 		int bRand = 0;
 
 		Math::Vector3 cameraEye{ frontEye.x, frontEye.y, frontEye.z }; // カメラの視点
