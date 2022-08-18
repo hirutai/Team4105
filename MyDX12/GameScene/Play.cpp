@@ -26,6 +26,7 @@ XIIlib::Play::Play()
 XIIlib::Play::~Play()
 {
 	// ポインタ使ったやつの埋葬場
+	delete padGuide;
 	delete keyboardGuide; // 操作説明
 	delete menuButton; // メニュー
 	delete spStageBG1;
@@ -69,9 +70,13 @@ void XIIlib::Play::Initialize()
 		spStageBG1 = Sprite::Create(STAGEBG1_TEX, { 0.0f,0.0f });
 	}
 
-	keyboardGuide = Sprite::Create(KEYBOARDGUIDE_TEX, { 1000.0f,600.0f }); // 操作説明
+	keyboardGuide = Sprite::Create(KEYBOARDGUIDE_TEX, { 1100.0f,650.0f }); // 操作説明
+	keyboardGuide->SetSize(keyboardGuide->GetDefault() * 0.6f);
+	padGuide = Sprite::Create(PADGUIDE_TEX, { 1100.0f,550.0f });
+	padGuide->SetSize(padGuide->GetDefault() * 0.6f);
+
 	menuButton = Sprite::Create(MENU_TEX, { 0.0f,10.0f }); // メニュー
-	menuButton->SetSize(menuButton->GetDefault() * 0.7f);
+	menuButton->SetSize(menuButton->GetDefault() * 0.5f);
 
 	p_game_scene->GetAudio()->PlayBGM("yankeeBGM.wav");
 
@@ -338,7 +343,11 @@ void XIIlib::Play::DrawTex()
 {
 	// スプライト描画
 	menuButton->Draw();
-	if (stageNum == StageNumber::EASY)keyboardGuide->Draw();
+	if (stageNum == StageNumber::EASY)
+	{
+		keyboardGuide->Draw();
+		padGuide->Draw();
+	}
 	if (phase == XIIlib::Phase::ClearCondDisplay) {
 		if (stageNum == StageNumber::HARD) { // HARD時
 			bossClearCond->Draw();
