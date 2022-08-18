@@ -5,6 +5,10 @@
 
 namespace XIIlib {
 
+	enum class BossState {
+		normal = 0,
+		strong
+	};
 	class Boss : public Unit {
 	private:
 		Math::Point2 point_attack;
@@ -31,6 +35,9 @@ namespace XIIlib {
 
 		bool switching = false;//画像切り替えよう
 		int switchingCount = 0;
+
+		bool harfHpFlag = false;
+		BossState bossState = BossState::normal;
 
 		void IniState()override;
 

@@ -40,15 +40,19 @@ namespace XIIlib {
 
 		const float moveValue = 0.5f;
 
-		float s	= 0.0f; // sin関数結果保存用
-		float c	= 0.0f; // cos関数結果保存用
+		float s = 0.0f; // sin関数結果保存用
+		float c = 0.0f; // cos関数結果保存用
 
-		int appearCount = 0;
+		int easyAppearCount = 0;
+		int normalAppearCount = 0;
 
 		//ランダム生成用
 		int Min = 0;
 		int Max = 3;
 		int tileRand = 1;
+		int normalTileRand = 1;
+
+		int bRand = 0;
 
 		Math::Vector3 cameraEye{ frontEye.x, frontEye.y, frontEye.z }; // カメラの視点
 

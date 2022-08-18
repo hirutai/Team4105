@@ -13,7 +13,7 @@ XIIlib::BossHP* XIIlib::BossHP::GetInstance()
 
 void XIIlib::BossHP::Initialize()
 {
-	bossHP = defaultHp;
+	bossHP = defaultHP;
 }
 
 void XIIlib::BossHP::Update()

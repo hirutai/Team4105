@@ -86,6 +86,13 @@ void XIIlib::Boss::Update()
 		switchingCount = 0;
 	}
 	_hit_point = BossHP::GetInstance()->GetBossHP();
+
+	if (_hit_point <= BossHP::GetInstance()->GetDefaultBossHP() / 2 && bossState == BossState::normal)
+	{
+		bossState = BossState::strong;
+		SetAttackTimer(150, CountType::FRAME);
+	}
+
 	BossHP::GetInstance()->Update();
 	// タイマーの更新
 	attackTimer->Timer();
@@ -134,6 +141,13 @@ void XIIlib::Boss::Action()
 	}
 	else if (attackTimer->SizeThirdFlag())
 	{
+		int element = UnitManager::GetInstance()->GetUnitIDElements("King");
+		if (element != -1)
+		{
+			std::shared_ptr<King> p_king =
+				std::dynamic_pointer_cast<King>(UnitManager::GetInstance()->GetUnit(element));
+			kingPos = p_king->GetElementStock();
+		}
 		Target();
 
 		// Attack表示の初期化
@@ -154,32 +168,47 @@ void XIIlib::Boss::Action()
 			tileNum++;
 		}
 		count++;
-
-		if (bossAttackSelect == 0)
+		if (bossState == BossState::normal)
 		{
-			// 縦
-			for (int i = MAX_TILE - 1; i >= 0; --i)
+			if (bossAttackSelect == 0)
 			{
-				if (tileDeth[i])
+				// 縦
+				for (int i = MAX_TILE - 1; i >= 0; --i)
 				{
-					UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(bossTileRand, i), (int)_PositionType::ENEMY);
-					UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(bossTileRand + 1, i), (int)_PositionType::ENEMY);
-					UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(bossTileRand - 1, i), (int)_PositionType::ENEMY);
+					if (tileDeth[i])
+					{
+						UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(bossTileRand, i), (int)_PositionType::ENEMY);
+						UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(bossTileRand + 1, i), (int)_PositionType::ENEMY);
+						UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(bossTileRand - 1, i), (int)_PositionType::ENEMY);
+					}
+				}
+			}
+			else
+			{
+				// 横
+				for (int j = 0; j < MAX_TILE; ++j)
+				{
+					if (tileDeth[j])
+					{
+						UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(j, bossTileRand), (int)_PositionType::ENEMY);
+						UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(j, bossTileRand + 1), (int)_PositionType::ENEMY);
+						UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(j, bossTileRand - 1), (int)_PositionType::ENEMY);
+					}
 				}
 			}
 		}
-		else
+
+		else if (bossState == BossState::strong)
 		{
-			// 横
-			for (int j = 0; j < MAX_TILE;++j)
+			Math::Point2 anchorLUpos = { kingPos.a - 1, kingPos.b + 1 };//左上
+			for (int i = 0; i < 3; i++)//3*3の点攻撃
 			{
-				if (tileDeth[j])
+				for (int j = 0; j < 3; j++)
 				{
-					UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(j, bossTileRand), (int)_PositionType::ENEMY);
-					UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(j, bossTileRand + 1), (int)_PositionType::ENEMY);
-					UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(j, bossTileRand - 1), (int)_PositionType::ENEMY);
+					UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(anchorLUpos.a + j, anchorLUpos.b - i), (int)_PositionType::ENEMY);
 				}
 			}
+
 		}
 	}
 	
@@ -233,24 +262,40 @@ void XIIlib::Boss::Target()
 void XIIlib::Boss::Attack()
 {
 	Math::Point2 temp = element_stock;
-	if (bossAttackSelect == 0)
+	if (bossState == BossState::normal)
 	{
-		for (int i = 0; i < MAX_TILE; i++)
+		if (bossAttackSelect == 0)
 		{
-			UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(bossTileRand, i), (int)_PositionType::BOSS);
-			UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(bossTileRand + 1, i), (int)_PositionType::BOSS);
-			UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(bossTileRand - 1, i), (int)_PositionType::BOSS);
+			for (int i = 0; i < MAX_TILE; i++)
+			{
+				UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(bossTileRand, i), (int)_PositionType::BOSS);
+				UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(bossTileRand + 1, i), (int)_PositionType::BOSS);
+				UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(bossTileRand - 1, i), (int)_PositionType::BOSS);
+			}
+		}
+		else
+		{
+			for (int j = 0; j < MAX_TILE; j++)
+			{
+				UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(j, bossTileRand), (int)_PositionType::BOSS);
+				UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(j, bossTileRand + 1), (int)_PositionType::BOSS);
+				UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(j, bossTileRand - 1), (int)_PositionType::BOSS);
+			}
 		}
 	}
-	else
+	else if (bossState == BossState::strong)
 	{
-		for (int j = 0; j < MAX_TILE; j++)
+		Math::Point2 anchorLUpos = { kingPos.a - 1, kingPos.b + 1 };//左上
+		for (int i = 0; i < 3; i++)//3*3の点攻撃
 		{
-			UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(j, bossTileRand), (int)_PositionType::BOSS);
-			UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(j, bossTileRand + 1), (int)_PositionType::BOSS);
-			UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(j, bossTileRand - 1), (int)_PositionType::BOSS);
+			for (int j = 0; j < 3; j++)
+			{
+				UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(anchorLUpos.a + j, anchorLUpos.b - i), (int)_PositionType::BOSS);
+			}
 		}
+
 	}
+
 }
 
 void XIIlib::Boss::Move()

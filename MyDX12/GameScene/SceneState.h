@@ -77,5 +77,6 @@ namespace XIIlib
 		static std::unique_ptr<Object3D> backStage;
 		static std::unique_ptr<Object3D> bossBG[]; // ボス背景
 		static int easyCount;
+		static int normalCount;
 	};
 }
