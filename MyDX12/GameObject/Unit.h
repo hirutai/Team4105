@@ -69,6 +69,13 @@ namespace XIIlib {
 		int SwitchRandiMax = 3;
 		int SwitchRand = 0;
 
+		int meteorAMin = 0;
+		int meteorAMax = 7;
+		int meteorATileRand[10];
+		int meteorBMin = 0;
+		int meteorBMax = 7;
+		int meteorBTileRand[10];
+
 		unsigned int attackInterval = 180;
 		//攻撃flag
 		bool notAttackflag = true;
