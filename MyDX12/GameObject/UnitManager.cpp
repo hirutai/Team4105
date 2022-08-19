@@ -6,11 +6,14 @@
 #include "../3D/Object3D.h"
 #include "../3D/BillObj.h"
 #include "../Audio/Audio.h"
+#include "Common.h"
+#include "GrainManager.h"
 
 XIIlib::UnitManager::UnitManager() {}
 
 XIIlib::UnitManager::~UnitManager()
 {
+	delete grainMs;
 	delete map_board;
 }
 
@@ -25,6 +28,9 @@ void XIIlib::UnitManager::Initialize()
 	std::cout << "Unit->初期化しました。" << std::endl;
 	add_units.reserve(100);
 	map_board = BoardMap::Create();
+
+	hitPos.reserve(100);
+	grainMs = GrainManager::Create();
 }
 
 void XIIlib::UnitManager::Update()
@@ -46,9 +52,27 @@ void XIIlib::UnitManager::Update()
 				GetAudio()->PlaySE("hitAB.wav",0.3f);
 				unit1->SetHitDamage(3);
 				unit2->SetHitDamage(3);
+
+				/*Math::Vector3 addPoint = {
+					Common::ConvertTilePosition(unit1->GetElementStock().a),
+					2.0f,
+					Common::ConvertTilePosition(unit1->GetElementStock().b)
+				};*/
+				// 何もない状態で取得する場合はそのまま追加
+				if(hitPos.size() == 0)hitPos.push_back(unit1->GetElementStock());
+				else {// そうでない場合は同じ物がないか確認して衝突しなければ追加
+					for (auto x : hitPos) {
+						if (Math::MatchPoint2(x, unit1->GetElementStock()))continue;
+
+						hitPos.push_back(unit1->GetElementStock());
+					}
+				}
 			}
 		}
 	}
+
+	// ここでパーティクルを発生させる
+	GrainCreate();
 
 	// hpが0のやつを死なせる。
 	for (auto& unit : units) {
@@ -94,6 +118,8 @@ void XIIlib::UnitManager::BillDraw()
 	{
 		obj->BillObjectDraw();
 	}
+
+	grainMs->Draw();
 	BillObj::PostDraw();
 }
 
@@ -249,4 +275,54 @@ void XIIlib::UnitManager::ObjectUpdate()
 void XIIlib::UnitManager::SetBoardBaseColor(float r, float g, float b)
 {
 	map_board->SetBaseColors(r, g, b);
+}
+
+void XIIlib::UnitManager::GrainCreate()
+{
+	// パーティクルの更新
+	grainMs->Update();
+
+	// 追加するパーティクルが無ければ即リターン
+	if (hitPos.size() == 0)return;
+
+	// あれば追加する
+	// 粒子の追加
+	for (auto points : hitPos) {
+		// 出現点の取得
+		Math::Vector3 addP = {
+			Common::ConvertTilePosition(points.a),
+			2.0f,
+			Common::ConvertTilePosition(points.b)
+		};
+
+		// 粒子の移動ベクトルを算出し順次追加(計20個)
+		for (int i = 0; i < 20; i++) {
+			Math::Vector3 addV;
+			const int rdist = 10;
+			const int rdist2 = rdist * 2 + 1;
+			float rX = static_cast<float>(rand()%rdist2 - rdist);
+			float rZ = static_cast<float>(rand()%rdist2 - rdist);
+
+			addV = { rX,0.1f,rZ };
+			addV.normalize();
+			grainMs->Add(addV, addP);
+		}
+	}
+	
+	// 登録の解除
+	hitPos.clear();
+}
+
+bool XIIlib::UnitManager::GetStoneOnTile(const Math::Point2& nextP)
+{
+	for (auto u : units) {
+		// 障害物出なければスキップ
+		if (u->GetID() != "Stone")continue;
+
+		// 等しければそのマスに存在する
+		if (Math::MatchPoint2(u->GetElementStock(), nextP)) {
+			return true;
+		}
+	}
+	return false;
 }

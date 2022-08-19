@@ -11,6 +11,8 @@ namespace XIIlib {
 	class BoardMap;
 	class Audio;
 
+	class GrainManager;
+
 	class UnitManager {
 	private:
 		UnitManager();
@@ -25,6 +27,9 @@ namespace XIIlib {
 
 		Audio* audio_ = nullptr;
 		GamePAD_XInput* gamePad_ = nullptr;
+
+		std::vector<Math::Point2> hitPos;
+		GrainManager* grainMs;
 
 	public:
 		UnitManager(const UnitManager& obj) = delete;
@@ -96,6 +101,10 @@ namespace XIIlib {
 		void ObjectUpdate();
 
 		void SetBoardBaseColor(float r,float g,float b);
+
+		void GrainCreate();
+
+		bool GetStoneOnTile(const Math::Point2& nextP);
 	};
 
 }
