@@ -72,7 +72,8 @@ void XIIlib::UnitManager::Update()
 	}
 
 	// ここでパーティクルを発生させる
-	GrainCreate();
+	//GrainCreate();
+	hitPos.clear();
 
 	// hpが0のやつを死なせる。
 	for (auto& unit : units) {
