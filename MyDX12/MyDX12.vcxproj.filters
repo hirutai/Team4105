@@ -148,6 +148,15 @@
     <Filter Include="GameObject\Smoke">
       <UniqueIdentifier>{6b430ce7-edd0-43a5-9b72-428f08f4d92f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameObject\Grain">
+      <UniqueIdentifier>{0fc1f68d-b97c-475d-b354-19ca8a7e3493}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3D\InstBill">
+      <UniqueIdentifier>{28cab795-4715-46a1-80c6-1a0813ce5a04}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="HLSL\inst_bill">
+      <UniqueIdentifier>{014cb2eb-c9fe-40e8-ac27-6dcf9d612618}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -407,6 +416,15 @@
     </ClCompile>
     <ClCompile Include="GameObject\ChainSprite.cpp">
       <Filter>GameObject\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject\Grain.cpp">
+      <Filter>GameObject\Grain</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject\GrainManager.cpp">
+      <Filter>GameObject\Grain</Filter>
+    </ClCompile>
+    <ClCompile Include="3D\InstBill.cpp">
+      <Filter>3D\InstBill</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -695,6 +713,15 @@
     <ClInclude Include="GameObject\ChainSprite.h">
       <Filter>GameObject\Common</Filter>
     </ClInclude>
+    <ClInclude Include="GameObject\Grain.h">
+      <Filter>GameObject\Grain</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\GrainManager.h">
+      <Filter>GameObject\Grain</Filter>
+    </ClInclude>
+    <ClInclude Include="3D\InstBill.h">
+      <Filter>3D\InstBill</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Shaders\FBX.hlsli">
@@ -738,6 +765,9 @@
     </None>
     <None Include="Resources\Shaders\BillGauge.hlsli">
       <Filter>HLSL\bill_obj</Filter>
+    </None>
+    <None Include="Resources\Shaders\InstanceB.hlsli">
+      <Filter>HLSL\inst_bill</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
