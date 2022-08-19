@@ -50,6 +50,18 @@ void XIIlib::Stone::Update()
 	object3d->position = { Common::ConvertTilePosition(element_stock.a),1.0f, Common::ConvertTilePosition(element_stock.b) };
 
 	object3d->Update();
+
+	// UŒ‚“–‚½‚Á‚Ä‚¢‚È‚¯‚ê‚Î‚»‚­•Ô‚·
+	if (!UnitManager::GetInstance()->IsAttackValid(element_stock, (int)_PositionType::MINE))return;
+	Damage();
+	if (nodamage)
+	{
+		nodamageTime--;
+	}
+	if (nodamageTime <= 0)
+	{
+		nodamage = false;
+	}
 }
 
 void XIIlib::Stone::Action()
@@ -84,4 +96,14 @@ void XIIlib::Stone::CreateAttackArea()
 bool XIIlib::Stone::MoveAreaCheck(Math::Point2 crPos, Math::Point2 vec, int tileNum)
 {
 	return false;
+}
+
+void XIIlib::Stone::Damage()
+{
+	if (!nodamage)
+	{
+		SetHitDamage(1.0f);
+		nodamageTime = defaultNodamageTime;
+		nodamage = true;
+	}
 }
