@@ -6,6 +6,10 @@
 namespace XIIlib {
 
 	enum class BossState {
+		wait = 0,
+		attack
+	};
+	enum class BossType {
 		normal = 0,
 		strong
 	};
@@ -16,6 +20,9 @@ namespace XIIlib {
 		Object3D* object3d2 = nullptr;
 		
 		int count = 0;
+		const int METEORS_MAX = 15;
+		int numbersA[15];
+		int numbersB[15];
 	public:
 		Boss();
 		~Boss();
@@ -37,7 +44,8 @@ namespace XIIlib {
 		int switchingCount = 0;
 
 		bool harfHpFlag = false;
-		BossState bossState = BossState::normal;
+		BossState bossState = BossState::wait;
+		BossType bossType = BossType::normal;
 
 		void IniState()override;
 
@@ -49,6 +57,8 @@ namespace XIIlib {
 		bool MoveAreaCheck(Math::Point2 crPos, Math::Point2 vec, int tileNum)override;
 
 		void InitAttackDisplay();
+
+		bool CheckMeteorArea(Math::Point2 meteorPos);
 	private:
 		// 変数
 		bool tileDeth[8] = {};
