@@ -6,6 +6,10 @@ namespace XIIlib {
 	class Stone : public Unit {
 	private:
 		Math::Point2 point_attack;
+
+		bool nodamage = false;
+		int nodamageTime = 0;
+		int defaultNodamageTime = 11;
 	public:
 		Stone();
 		~Stone();
@@ -23,6 +27,8 @@ namespace XIIlib {
 		void IniState()override;
 
 		void CreateAttackArea()override;
+
+		void Damage();
 
 		Math::Point2 GetElementStock()const { return element_stock; }
 		bool MoveAreaCheck(Math::Point2 crPos, Math::Point2 vec, int tileNum)override;
