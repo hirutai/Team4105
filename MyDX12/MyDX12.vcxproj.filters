@@ -864,5 +864,11 @@
     <FxCompile Include="Resources\Shaders\BillGaugeVS.hlsl">
       <Filter>HLSL\bill_obj</Filter>
     </FxCompile>
+    <FxCompile Include="Resources\Shaders\InstanceVS.hlsl">
+      <Filter>HLSL\inst_bill</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\InstancePS.hlsl">
+      <Filter>HLSL\inst_bill</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>
