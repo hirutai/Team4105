@@ -147,7 +147,7 @@ namespace XIIlib {
 
 	public:// Set関数群
 		void SetTypePositioning(_PositionType changeType);
-		virtual void SetHitDamage(float attackPoint);				// ダメージを受ける関数
+		virtual void SetHitDamage(int attackPoint);				// ダメージを受ける関数
 		void OnDead() { is_dead = true; }
 
 		void SetAttackTimer(int countNum, XIIlib::CountType type = XIIlib::CountType::SECOND);

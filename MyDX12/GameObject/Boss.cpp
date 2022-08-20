@@ -435,7 +435,7 @@ bool XIIlib::Boss::CheckMeteorArea(Math::Point2 meteorPos)
 	return false;
 }
 
-void XIIlib::Boss::SetHitDamage(float attackPoint)
+void XIIlib::Boss::SetHitDamage(int attackPoint)
 {
 	_hit_point -= attackPoint;
 	BossHP::GetInstance()->SetBossHP(_hit_point);

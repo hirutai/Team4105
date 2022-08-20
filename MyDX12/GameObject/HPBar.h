@@ -21,7 +21,7 @@ namespace XIIlib
 #pragma endregion
 
 #pragma region 定数
-		const float maxSize = 30.0f * 40; // 最大サイズ
+		const int maxSize = 30 * 40; // 最大サイズ
 #pragma endregion
 
 #pragma region メンバ関数
@@ -35,7 +35,7 @@ namespace XIIlib
 		// 初期化
 		void Initialize();
 		// タイマー関数
-		void Timer(float damage);
+		void Timer(int damage);
 		// 描画
 		void Draw();
 		// サイズの取得
@@ -48,9 +48,9 @@ namespace XIIlib
 
 #pragma region メンバ変数
 	private:
-		float decNum; // 減らす量
+		int decNum; // 減らす量
 
-		float currentSize; // 現在のサイズ
+		int currentSize; // 現在のサイズ
 
 		//BillObj* timerBar = nullptr; // タイマーバーのオブジェクト
 		//BillObj* timerEdge = nullptr; // タイマーの縁のオブジェクト
