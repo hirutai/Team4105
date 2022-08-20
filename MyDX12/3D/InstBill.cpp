@@ -43,9 +43,9 @@ void InstBill::PostDraw()
 	InstBill::cmdList = nullptr;
 }
 
-InstBill* InstBill::Create(const Math::Vector3& position, const std::string& textureFilename, bool outBill)
+InstBill* InstBill::Create(const std::string& textureFilename)
 {
-	InstBill* collisionbox = new InstBill(position, textureFilename, outBill);
+	InstBill* collisionbox = new InstBill(textureFilename);
 
 	if (collisionbox == nullptr) {
 		return nullptr;
@@ -55,7 +55,7 @@ InstBill* InstBill::Create(const Math::Vector3& position, const std::string& tex
 }
 
 // 静的メンバ変数の実体
-InstBill::InstBill(const Math::Vector3& position, const std::string& textureFilename, bool outBill)
+InstBill::InstBill(const std::string& textureFilename)
 {
 	device = DirectX12::GetDevice();
 
@@ -158,8 +158,8 @@ void InstBill::CreateGraphicsPipelineState()
 	plData->AddInputLayout({ "POSITION",XIILib::RGB_FLOAT });
 	plData->AddInputLayout({ "TEXCOORD",XIILib::RG_FLOAT });
 
-	plData->AddShader(XIILib::VS, "BillGaugeVS.hlsl");
-	plData->AddShader(XIILib::PS, "BillGaugePS.hlsl");
+	plData->AddShader(XIILib::VS, "InstanceVS.hlsl");
+	plData->AddShader(XIILib::PS, "InstancePS.hlsl");
 	plData->AddRange(XIILib::SRV, 1, 0);
 	plData->AddRootParam(0, XIILib::CBV);
 	plData->AddRootParam(1, XIILib::SRV, XIILib::SRV_MULTI_ONE);
@@ -242,6 +242,8 @@ void InstBill::Update()
 	HRESULT result = this->constBuff->Map(0, nullptr, (void**)&constMap);
 	if (SUCCEEDED(result))
 	{
+		constMap->matbillboard = d_camera->GetMatBillboard();
+		constMap->viewproj = d_camera->GetMatViewProjection();
 		for (int i = 0; i < dataIndexCount; i++)
 		{
 			// ワールド行列の更新
@@ -251,7 +253,7 @@ void InstBill::Update()
 
 			if (iData.size() >= i + 1)
 			{
-				matScale = XMMatrixScaling(iData[i].scale, iData[i].scale,0.0f);
+				matScale = XMMatrixScaling(iData[i].scale, iData[i].scale, iData[i].scale);
 				matTrans = XMMatrixTranslation(iData[i].position.x, iData[i].position.y, iData[i].position.z);
 				this->matWorld *= matScale;
 				this->matWorld *= matTrans;
@@ -267,16 +269,12 @@ void InstBill::Update()
 			constMap->data[i].color = colorMap;
 		}
 
-		constMap->matbillboard = d_camera->GetMatBillboard();
-		constMap->viewproj = d_camera->GetMatViewProjection();
 		this->constBuff->Unmap(0, nullptr);
 	}
 }
 
 void InstBill::Draw()
 {
-	Update();
-
 	// パイプラインステートの設定
 	cmdList->SetPipelineState(pipelineState.Get());
 	// ルートシグネチャの設定
@@ -293,6 +291,8 @@ void InstBill::Draw()
 	cmdList->IASetVertexBuffers(0, 1, &this->vbView);
 	// 描画コマンド
 	cmdList->DrawInstanced(vertNum, iData.size(), 0, 0);
+	// 描画毎にデータを空にしておく
+	ClearData();
 }
 
 void XIIlib::InstBill::DrawBillBox(Math::Vector3 position, float scale, float r, float g, float b, float a)

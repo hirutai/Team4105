@@ -31,6 +31,7 @@
 
 #include "../3D/Object3D.h"
 #include "../3D/BillObj.h"
+#include "../3D/InstBill.h"
 #include "../GameObject/ModelLoader.h"
 /*仮置き(ここまで)*/
 
@@ -94,6 +95,7 @@ void GameApp::Initialize()
 	CollisionCircle::SetDebugCamera(d_camera);
 	Tessellation::SetDebugCamera(d_camera);
 	BillObj::SetDebugCamera(d_camera);
+	InstBill::SetDebugCamera(d_camera);
 
 	SpriteLoader::Load();
 

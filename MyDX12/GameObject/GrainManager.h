@@ -5,11 +5,19 @@
 
 namespace XIIlib {
 
-	class Grain;
+	class InstBill;
+
+	struct DataAset {
+		Math::Vector3 position;
+		Math::Vector3 vec;
+		float addScale,scale, r, g, b, a;
+	};
 
 	class GrainManager {
 	private:
-		std::vector<std::unique_ptr<Grain>> vcon;
+		std::vector<DataAset> vcon;
+
+		InstBill* iBill = nullptr;
 	public:
 		static GrainManager* Create();
 
