@@ -25,7 +25,7 @@ namespace XIIlib {
 		
 
 		void CreateAttackArea()override;
-		void SetHitDamage(float attackPoint)override;	
+		void SetHitDamage(int attackPoint)override;	
 
 		Math::Point2 GetElementStock()const { return element_stock; }
 		bool MoveAreaCheck(Math::Point2 crPos, Math::Point2 vec, int tileNum)override;
