@@ -205,7 +205,7 @@ void XIIlib::Unit::FallAction()
 	attackTimer->SetPosition(object3d->position);
 }
 
-void XIIlib::Unit::SetHitDamage(float attackPoint)
+void XIIlib::Unit::SetHitDamage(int attackPoint)
 {
 	_hit_point -= attackPoint;
 }
