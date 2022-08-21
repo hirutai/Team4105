@@ -405,9 +405,6 @@
     <ClCompile Include="GameObject\ModelLoader.cpp">
       <Filter>GameObject\Common</Filter>
     </ClCompile>
-    <ClCompile Include="GameObject\Smoke.cpp">
-      <Filter>GameObject\Smoke</Filter>
-    </ClCompile>
     <ClCompile Include="GameObject\SmokeManager.cpp">
       <Filter>GameObject\Smoke</Filter>
     </ClCompile>
@@ -416,9 +413,6 @@
     </ClCompile>
     <ClCompile Include="GameObject\ChainSprite.cpp">
       <Filter>GameObject\Common</Filter>
-    </ClCompile>
-    <ClCompile Include="GameObject\Grain.cpp">
-      <Filter>GameObject\Grain</Filter>
     </ClCompile>
     <ClCompile Include="GameObject\GrainManager.cpp">
       <Filter>GameObject\Grain</Filter>
@@ -701,9 +695,6 @@
     <ClInclude Include="GameObject\ModelLoader.h">
       <Filter>GameObject\Common</Filter>
     </ClInclude>
-    <ClInclude Include="GameObject\Smoke.h">
-      <Filter>GameObject\Smoke</Filter>
-    </ClInclude>
     <ClInclude Include="GameObject\SmokeManager.h">
       <Filter>GameObject\Smoke</Filter>
     </ClInclude>
@@ -712,9 +703,6 @@
     </ClInclude>
     <ClInclude Include="GameObject\ChainSprite.h">
       <Filter>GameObject\Common</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObject\Grain.h">
-      <Filter>GameObject\Grain</Filter>
     </ClInclude>
     <ClInclude Include="GameObject\GrainManager.h">
       <Filter>GameObject\Grain</Filter>
