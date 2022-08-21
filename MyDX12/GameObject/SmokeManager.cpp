@@ -1,5 +1,5 @@
 #include "SmokeManager.h"
-#include "Smoke.h"
+#include "../3D/InstBill.h"
 #include <algorithm>
 
 XIIlib::SmokeManager::SmokeManager() {}
@@ -20,41 +20,52 @@ XIIlib::SmokeManager* XIIlib::SmokeManager::Create()
 
 void XIIlib::SmokeManager::Initialize()
 {
-	vcon.reserve(100);
+	vcon.reserve(sizeof(DataAset) * 100);
+	iBill = InstBill::Create("");
 }
 
 void XIIlib::SmokeManager::Add(float c, float s, const Math::Vector3& v, const Math::Vector3& pos)
 {
-	std::unique_ptr<Smoke> uSmoke;
-	uSmoke.reset(Smoke::Create(c,s,v,pos));
+	DataAset data = { pos,v,
+		s,	// addScale
+		0.1f,		// scale
+		c * 255.0f,25.5f,255.0f	// color
+	};
 
-	vcon.push_back(std::move(uSmoke));
+	vcon.push_back(data);
 }
 
 void XIIlib::SmokeManager::Update()
 {
 	if (vcon.size() == 0)return;
 	for (auto& u : vcon) {
-		u->Update();
+		u.position += u.vec;
+		u.scale += u.addScale;
+		u.color += u.addColor;
+		u.a += -2.55f;
 	}
 
 	// アルファ値が0以下の物を排除
-	auto removeIt = std::remove_if(vcon.begin(), vcon.end(), [&](std::unique_ptr<Smoke>& itr)
+	auto removeIt = std::remove_if(vcon.begin(), vcon.end(), [](DataAset& itr)
 		{
-			return itr->GetAlpha() <= 0.0f;
+			return itr.a <= 25.5f * 5.0f;
 		}
 	);
 
 	vcon.erase(removeIt, vcon.end());
+
+	for (auto& u : vcon) {
+		iBill->DrawBillBox(u.position, u.scale, u.color, u.color, u.color, u.a);
+	}
 }
 
 void XIIlib::SmokeManager::Draw()
 {
-	if (vcon.size() == 0)return;
+	iBill->Update();
 
-	for (auto& u : vcon) {
-		u->Draw();
-	}
+	InstBill::PreDraw();
+	iBill->Draw();
+	InstBill::PostDraw();
 }
 
 void XIIlib::SmokeManager::AllClear()

@@ -27,7 +27,9 @@ void XIIlib::Unit::SetTypePositioning(_PositionType changeType)
 
 void XIIlib::Unit::BillObjectDraw()
 {
-	OriginBillDraw();
+	if (GetID() != "Rook" && GetID() != "Bishop") {
+		OriginBillDraw();
+	}
 
 	if (attackTimer == nullptr) return;
 	if (isDrawTimer)return;

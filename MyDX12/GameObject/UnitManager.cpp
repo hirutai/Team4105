@@ -122,6 +122,11 @@ void XIIlib::UnitManager::BillDraw()
 
 	BillObj::PostDraw();
 
+	for (auto& obj : units) {
+		if (obj->GetID() != "Rook" && obj->GetID() != "Bishop")continue;
+		obj->OriginBillDraw();
+	}
+
 	grainMs->Draw();
 }
 

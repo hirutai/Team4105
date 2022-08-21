@@ -1,19 +1,18 @@
 #pragma once
 #include <vector>
-#include <memory>
 #include "../Struct/Math.h"
 
 namespace XIIlib {
 
 	class InstBill;
 
-	struct DataAset {
-		Math::Vector3 position;
-		Math::Vector3 vec;
-		float addScale,scale, r, g, b, a;
-	};
-
 	class GrainManager {
+	public:
+		struct DataAset {
+			Math::Vector3 position;
+			Math::Vector3 vec;
+			float addScale, scale, r, g, b, a;
+		};
 	private:
 		std::vector<DataAset> vcon;
 
