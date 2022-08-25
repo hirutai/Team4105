@@ -56,6 +56,7 @@ void XIIlib::Stone::Update()
 	// UŒ‚“–‚½‚Á‚Ä‚¢‚È‚¯‚ê‚Î‚»‚­•Ô‚·
 	if (!UnitManager::GetInstance()->IsAttackValid(element_stock, (int)_PositionType::MINE))return;
 	Damage();
+
 	if (nodamage)
 	{
 		nodamageTime--;
