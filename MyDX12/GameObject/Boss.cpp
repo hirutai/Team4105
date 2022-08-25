@@ -52,15 +52,19 @@ void XIIlib::Boss::Initialize()
 	ID = Common::SeparateFilePath(path).second;
 	type = _PositionType::ENEMY;
 	CreateAttackArea();
+
+	// 大きさと座標の定数
+	const Math::Vector3 scale = { 1.5f,1.5f,1.5f };
+	const Math::Vector3 position = { Common::ConvertTilePosition(element_stock.a) - 2.7f,1.0f, Common::ConvertTilePosition(element_stock.b) };
+
 	object3d = Object3D::Create(ModelLoader::GetInstance()->GetModel(MODEL_BOSS));
-	object3d->scale = Math::Vector3({ 1.5f,1.5f,1.5f });
-	object3d->position = { Common::ConvertTilePosition(element_stock.a),1.0f, Common::ConvertTilePosition(element_stock.b) };
-	object3d->position.x -= 2.7f;
+	object3d->scale = scale;
+	object3d->position = position;
 
 	object3d2 = Object3D::Create(ModelLoader::GetInstance()->GetModel(MODEL_BOSS2));
-	object3d2->scale = Math::Vector3({ 1.5f,1.5f,1.5f });
-	object3d2->position = { Common::ConvertTilePosition(element_stock.a),1.0f, Common::ConvertTilePosition(element_stock.b) };
-	object3d2->position.x -= 2.7f;
+	object3d2->scale = scale;
+	object3d2->position = position;
+	
 	// Audioの初期化
 	audio_ = UnitManager::GetInstance()->GetAudio();
 
@@ -109,12 +113,21 @@ void XIIlib::Boss::Update()
 		UnitManager::GetInstance()->AddUnit(std::move(stone7));
 		UnitManager::GetInstance()->AddUnit(std::move(stone8));
 	}
-
 	BossHP::GetInstance()->Update();
-	// タイマーの更新
-	attackTimer->Timer();
+	if (!determinateMoveAction) {
+		// 駒の行動
+		Action();
 
-	Action();
+		// タイマーの更新
+		attackTimer->Timer();
+
+		pos = object3d->position;
+	}
+
+	if (determinateMoveAction) {
+		// 攻撃処理
+		Attack();
+	}
 
 	object3d->Update();
 	object3d2->Update();
@@ -152,8 +165,10 @@ void XIIlib::Boss::Action()
 	{
 		bossState = BossState::wait;
 		switching = true;
+		// Attack表示の初期化
 		InitAttackDisplay();
-		Attack();
+		// 攻撃を開始するのでtrue
+		determinateMoveAction = true;
 		audio_->PlaySE("swing.wav");
 	}
 	else if (attackTimer->SizeThirdFlag())
@@ -246,7 +261,6 @@ void XIIlib::Boss::Action()
 				}
 			}
 		}
-
 		else if (bossType == BossType::strong)
 		{
 			if (bossAttackSelect == 0)
@@ -362,6 +376,17 @@ void XIIlib::Boss::Attack()
 				UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(numbersA[i], numbersB[i]), (int)_PositionType::BOSS);
 			}
 		}
+	}
+
+	// 攻撃フレームの加算
+	attackFrameCnt++;
+	// 最大攻撃フレームより攻撃フレームが多ければ攻撃は終了
+	if (MAX_ATTACK_FRAME <= attackFrameCnt)
+	{
+		// 攻撃が完全に終わったのでfalse
+		determinateMoveAction = false;
+		// 攻撃フレームを0クリア
+		attackFrameCnt = 0;
 	}
 }
 
