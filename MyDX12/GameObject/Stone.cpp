@@ -4,6 +4,7 @@
 #include "UnitManager.h"
 #include "../Tool/Messenger.h"
 #include "../3D/Object3D.h"
+#include "../GameObject/AttackTimer.h"
 #include "ModelLoader.h"
 
 
@@ -18,6 +19,7 @@ XIIlib::Stone::Stone()
 
 XIIlib::Stone::~Stone()
 {
+	delete attackTimer;
 	delete object3d;
 }
 
@@ -42,17 +44,36 @@ void XIIlib::Stone::Initialize()
 	CreateAttackArea();
 	object3d = Object3D::Create(ModelLoader::GetInstance()->GetModel(MODEL_GUARDMAN));
 	object3d->scale = Math::Vector3({1.6f,1.6f,1.6f});
-	fallFlag = true;
+	object3d->position.y = 30.0f;
+	dispATFlag = false;
+	SetAttackTimer(3);
 }
 
 void XIIlib::Stone::Update()
 {
-	// 駒の行動
-	Action();
-	// 位置座標の更新
-	object3d->position = { Common::ConvertTilePosition(element_stock.a),1.0f, Common::ConvertTilePosition(element_stock.b) };
+	if (!fallFlag) {
+		// X/Zの座標を代入しておく
+		object3d->position.x = Common::ConvertTilePosition(element_stock.a);
+		object3d->position.z = Common::ConvertTilePosition(element_stock.b);
+		object3d->position.y -= 0.4f;
 
-	object3d->Update();
+		if (object3d->position.y <= 1.0f) {
+			object3d->position.y = 1.0f;
+			fallFlag = true;
+		}
+
+		object3d->Update();
+	}
+	else if (fallFlag) {
+		// 位置座標の更新
+		object3d->position = { Common::ConvertTilePosition(element_stock.a),1.0f, Common::ConvertTilePosition(element_stock.b) };
+	
+		// 駒の行動
+		Action();
+		// タイマーの更新
+		attackTimer->Timer();	
+		object3d->Update();
+	}
 
 	// 攻撃当たっていなければそく返す
 	if (!UnitManager::GetInstance()->IsAttackValid(element_stock, (int)_PositionType::MINE))return;
