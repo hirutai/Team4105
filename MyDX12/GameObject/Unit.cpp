@@ -27,7 +27,9 @@ void XIIlib::Unit::SetTypePositioning(_PositionType changeType)
 
 void XIIlib::Unit::BillObjectDraw()
 {
-	OriginBillDraw();
+	if (GetID() != "Rook" && GetID() != "Bishop") {
+		OriginBillDraw();
+	}
 
 	if (attackTimer == nullptr) return;
 	if (isDrawTimer)return;
@@ -205,7 +207,7 @@ void XIIlib::Unit::FallAction()
 	attackTimer->SetPosition(object3d->position);
 }
 
-void XIIlib::Unit::SetHitDamage(float attackPoint)
+void XIIlib::Unit::SetHitDamage(int attackPoint)
 {
 	_hit_point -= attackPoint;
 }

@@ -1,15 +1,22 @@
 #pragma once
 #include <vector>
-#include <memory>
 #include "../Struct/Math.h"
 
 namespace XIIlib {
 
-	class Smoke;
+	class InstBill;
 
 	class SmokeManager {
+	public:
+		struct DataAset {
+			Math::Vector3 position;
+			Math::Vector3 vec;
+			float addScale, scale,addColor,color,a;
+		};
 	private:
-		std::vector<std::unique_ptr<Smoke>> vcon;
+		std::vector<DataAset> vcon;
+
+		InstBill* iBill = nullptr;
 	public:
 		static SmokeManager* Create();
 

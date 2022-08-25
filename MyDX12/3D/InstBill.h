@@ -85,13 +85,13 @@ namespace XIIlib {
 		/// </summary>
 		static void PostDraw();
 
-		static InstBill* Create(const Math::Vector3& position, const std::string& textureFilename, bool outBill = false);
+		static InstBill* Create(const std::string& textureFilename);
 
 	public:
 		/// <summary>
 		/// コンストラクタ
 		/// </summary>
-		InstBill(const Math::Vector3& position, const std::string& textureFilename, bool outBill);
+		InstBill(const std::string& textureFilename);
 
 		bool LoadTexture(const std::string& textureFilename);
 
@@ -114,6 +114,13 @@ namespace XIIlib {
 		void DrawBillBox(Math::Vector3 position,float scale, float r, float g, float b, float a);
 
 		void TransferVertices();
+		void ClearData() { 
+			if (iData.size() != 0){
+				iData.clear();
+				const int sizeAll = 500;
+				iData.reserve(sizeof(InstanceData) * sizeAll);
+			}
+		}
 
 		void ReLoadTexture(const std::string& textureFilename);
 

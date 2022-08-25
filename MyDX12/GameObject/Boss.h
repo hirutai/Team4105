@@ -45,6 +45,7 @@ namespace XIIlib {
 		bool AttackAreaExists()override;
 		void IniState()override;
 		void SetHitDamage(float attackPoint)override;				// ダメージを受ける関数
+		void SetHitDamage(int attackPoint)override;				// ダメージを受ける関数
 		void CreateAttackArea()override;
 
 	public: // メンバ関数

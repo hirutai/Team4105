@@ -4,6 +4,8 @@
 #include "UnitManager.h"
 #include "../Tool/Messenger.h"
 #include "../3D/Object3D.h"
+#include "ModelLoader.h"
+
 
 XIIlib::Stone::Stone()
 {
@@ -38,8 +40,8 @@ void XIIlib::Stone::Initialize()
 	ID = Common::SeparateFilePath(path).second;
 	type = _PositionType::ENEMY;
 	CreateAttackArea();
-	object3d = Object3D::Create(Model::CreateFromOBJ("Badboy_Enemy"));
-	object3d->scale = Math::Vector3({2.0f,2.0f,2.0f});
+	object3d = Object3D::Create(ModelLoader::GetInstance()->GetModel(MODEL_GUARDMAN));
+	object3d->scale = Math::Vector3({1.6f,1.6f,1.6f});
 }
 
 void XIIlib::Stone::Update()

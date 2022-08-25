@@ -72,7 +72,7 @@ void XIIlib::UnitManager::Update()
 	}
 
 	// ここでパーティクルを発生させる
-	//GrainCreate();
+	GrainCreate();
 	hitPos.clear();
 
 	// hpが0のやつを死なせる。
@@ -120,8 +120,14 @@ void XIIlib::UnitManager::BillDraw()
 		obj->BillObjectDraw();
 	}
 
-	grainMs->Draw();
 	BillObj::PostDraw();
+
+	for (auto& obj : units) {
+		if (obj->GetID() != "Rook" && obj->GetID() != "Bishop")continue;
+		obj->OriginBillDraw();
+	}
+
+	grainMs->Draw();
 }
 
 void XIIlib::UnitManager::AddUnit(const std::shared_ptr<Unit>& spObject)

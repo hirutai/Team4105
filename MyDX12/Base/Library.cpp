@@ -7,6 +7,7 @@
 #include "../Audio/Sound.h"
 #include "../3D/Object3D.h"
 #include "../3D/BillObj.h"
+#include "../3D/InstBill.h"
 #include "../2D/Sprite.h"
 #include "../2D/Point2D.h"
 #include "../2D/Line2D.h"
@@ -60,6 +61,7 @@ int XIIlib::Library::Initialize()
 	TextureInstance::StaticInitialize();
 	Object3D::StaticInitialize();
 	BillObj::StaticInitialize();
+	InstBill::StaticInitialize();
 	LightGroup::StaticInitialize(DirectX12::GetDevice());
 	ParticleManager::GetInstance()->Initialize("effect1.png");
 	CollisionCapsule::StaticInitialize();

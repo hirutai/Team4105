@@ -195,14 +195,12 @@
     <ClCompile Include="GameObject\ChainSprite.cpp" />
     <ClCompile Include="GameObject\Common.cpp" />
     <ClCompile Include="GameObject\Curtain.cpp" />
-    <ClCompile Include="GameObject\Grain.cpp" />
     <ClCompile Include="GameObject\GrainManager.cpp" />
     <ClCompile Include="GameObject\HPBar.cpp" />
     <ClCompile Include="GameObject\King.cpp" />
     <ClCompile Include="GameObject\Knight.cpp" />
     <ClCompile Include="GameObject\ModelLoader.cpp" />
     <ClCompile Include="GameObject\Rook.cpp" />
-    <ClCompile Include="GameObject\Smoke.cpp" />
     <ClCompile Include="GameObject\SmokeManager.cpp" />
     <ClCompile Include="GameObject\Stone.cpp" />
     <ClCompile Include="GameObject\TexMoveAction.cpp" />
@@ -286,14 +284,12 @@
     <ClInclude Include="GameObject\ChainSprite.h" />
     <ClInclude Include="GameObject\Common.h" />
     <ClInclude Include="GameObject\Curtain.h" />
-    <ClInclude Include="GameObject\Grain.h" />
     <ClInclude Include="GameObject\GrainManager.h" />
     <ClInclude Include="GameObject\HPBar.h" />
     <ClInclude Include="GameObject\King.h" />
     <ClInclude Include="GameObject\Knight.h" />
     <ClInclude Include="GameObject\ModelLoader.h" />
     <ClInclude Include="GameObject\Rook.h" />
-    <ClInclude Include="GameObject\Smoke.h" />
     <ClInclude Include="GameObject\SmokeManager.h" />
     <ClInclude Include="GameObject\Stone.h" />
     <ClInclude Include="GameObject\TexMoveAction.h" />
@@ -430,6 +426,18 @@
       <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">main,ShadowVS</EntryPointName>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">5.0</ShaderModel>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\InstancePS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\InstanceVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
     </FxCompile>
     <FxCompile Include="Resources\Shaders\Line2DPixelShader.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>

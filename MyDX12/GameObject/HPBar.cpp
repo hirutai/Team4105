@@ -37,13 +37,17 @@ void HPBar::Initialize()
 	timerEdge->SetPosition({ hpBarPos.x, hpBarPos.y}); // 縁の座標の設定
 }
 
-void XIIlib::HPBar::Timer(float HP)
+void XIIlib::HPBar::Timer(int HP)
 {
 	decNum = HP * 40; // 減らす量の計算
 
 	currentSize = maxSize - (maxSize - HP * 40); // 現在のサイズを計算
 
 	barSize.x = currentSize; // バーのサイズの設定
+
+	if (barSize.x < 0) {
+		barSize.x = 0;
+	}
 
 	timerBar->SetSize(barSize); // バーのサイズの反映
 }
