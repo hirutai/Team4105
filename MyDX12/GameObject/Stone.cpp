@@ -42,6 +42,7 @@ void XIIlib::Stone::Initialize()
 	CreateAttackArea();
 	object3d = Object3D::Create(ModelLoader::GetInstance()->GetModel(MODEL_GUARDMAN));
 	object3d->scale = Math::Vector3({1.6f,1.6f,1.6f});
+	fallFlag = true;
 }
 
 void XIIlib::Stone::Update()
