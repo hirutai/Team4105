@@ -193,6 +193,7 @@ void XIIlib::Boss::Action()
 					numbersA[i] = -1;
 					numbersB[i] = -1;
 				}
+				//メテオの座標生成
 				while (1)
 				{
 					breakCnt++;
@@ -203,7 +204,7 @@ void XIIlib::Boss::Action()
 					numbers.b = meteorBMin + (int)(rand() * (meteorBMax - meteorBMin + 1) / (1 + RAND_MAX));
 
 					if (UnitManager::GetInstance()->AllOnUnit(numbers))continue;//仮の座標に誰かがいるか
-					if (CheckMeteorArea(numbers))continue;
+					if (CheckMeteorArea(numbers))continue;//他のメテオの座標と被っているか
 					//居なかったら座標を代入
 					numbersA[count] = numbers.a;
 					numbersB[count] = numbers.b;
@@ -278,7 +279,7 @@ void XIIlib::Boss::Action()
 			}
 			else
 			{
-				for (int i = 0; i < METEORS_MAX; i++)
+				for (int i = 0; i < METEORS_MAX; i++)//メテオ
 				{	
 					UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(numbersA[i], numbersB[i]), (int)_PositionType::ENEMY);					
 				}
@@ -371,7 +372,7 @@ void XIIlib::Boss::Attack()
 		}
 		else
 		{
-			for (int i = 0; i < METEORS_MAX; i++)
+			for (int i = 0; i < METEORS_MAX; i++)//メテオ
 			{
 				UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(numbersA[i], numbersB[i]), (int)_PositionType::BOSS);
 			}
