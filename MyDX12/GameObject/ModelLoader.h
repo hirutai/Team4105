@@ -20,7 +20,8 @@ namespace XIIlib {
 		MODEL_STAGE_C,
 		MODEL_STAGE_D,
 		MODEL_STAGE_E,
-		MODEL_GUARDMAN
+		MODEL_GUARDMAN,
+		MODEL_BOSSCAR
 	};
 
 	class ModelLoader

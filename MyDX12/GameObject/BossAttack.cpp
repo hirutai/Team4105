@@ -31,7 +31,7 @@ void XIIlib::BossAttack::DispTileDeathControl()
 void XIIlib::BossAttack::CreateMeteorPosition()
 {
 	srand(time(NULL));
-	int count = 0;
+	int meteorcount = 0;
 	int breakCnt = 0;
 	for (int i = 0; i < METEORS_MAX; i++)
 	{
@@ -51,11 +51,11 @@ void XIIlib::BossAttack::CreateMeteorPosition()
 		if (UnitManager::GetInstance()->AllOnUnit(numbers))continue;//仮の座標に誰かがいるか
 		if (CheckMeteorArea(numbers))continue;//他のメテオの座標と被っているか
 		//居なかったら座標を代入
-		numbersA[count] = numbers.a;
-		numbersB[count] = numbers.b;
-		count++;
+		numbersA[meteorcount] = numbers.a;
+		numbersB[meteorcount] = numbers.b;
+		meteorcount++;
 
-		if (count >= METEORS_MAX)break;
+		if (meteorcount >= METEORS_MAX)break;
 	}
 }
 
@@ -71,6 +71,7 @@ bool XIIlib::BossAttack::CheckMeteorArea(const Math::Point2& meteorPos)
 
 void XIIlib::BossAttack::InitAttackDisplay()
 {
+	// 全てのタイルが表示されているなら初期化
 	if (count >= DISPLAY_FRAME * MAX_TILE)
 	{
 		count = 0;

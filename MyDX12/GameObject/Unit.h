@@ -85,7 +85,7 @@ namespace XIIlib {
 
 		float movingTimer = 0.0f;
 		bool determinateMoveAction = false;
-		Math::Point2 nextPoint;
+		Math::Point2 nextPoint = { 0,0 };
 		Math::Vector3 pos;
 
 		// タイマードローFlag

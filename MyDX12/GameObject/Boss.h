@@ -60,7 +60,6 @@ namespace XIIlib {
 		int meteorBMax = 7;
 		int meteorBTileRand[10];
 
-
 	public: // 継承クラス
 		void Initialize()override;
 		void Update()override;
@@ -73,6 +72,8 @@ namespace XIIlib {
 		void IniState()override;
 		void SetHitDamage(int attackPoint)override;				// ダメージを受ける関数
 		void CreateAttackArea()override;
+		// 3Dオブジェクトの更新
+		void ObjectUpdate()override;
 		bool MoveAreaCheck(Math::Point2 crPos, Math::Point2 vec, int tileNum)override;
 
 	public: // メンバ関数

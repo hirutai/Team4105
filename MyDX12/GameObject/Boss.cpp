@@ -29,9 +29,10 @@ XIIlib::Boss::Boss()
 
 XIIlib::Boss::~Boss()
 {
+	delete carobj;
+	delete object3d2;
 	delete attackTimer;
 	delete object3d;
-	delete object3d2;
 }
 
 std::shared_ptr<XIIlib::Boss> XIIlib::Boss::Create(int point_x, int point_z)
@@ -45,41 +46,48 @@ std::shared_ptr<XIIlib::Boss> XIIlib::Boss::Create(int point_x, int point_z)
 
 void XIIlib::Boss::Initialize()
 {
-	BossHP::GetInstance()->Initialize();
 	// クラスネーム取得
 	const type_info& id = typeid(Boss);
 	std::string path = id.name();
 	_hit_point = BossHP::GetInstance()->GetBossHP();
 	ID = Common::SeparateFilePath(path).second;
 	type = _PositionType::ENEMY;
-	CreateAttackArea();
 
+	BossHP::GetInstance()->Initialize();
 	// 大きさと座標の定数
 	const Math::Vector3 scale = { 1.5f,1.5f,1.5f };
-	const Math::Vector3 position = { Common::ConvertTilePosition(element_stock.a) - 2.7f,1.0f, Common::ConvertTilePosition(element_stock.b) };
+	const Math::Vector3 position = { 
+		Common::ConvertTilePosition(element_stock.a) - 2.7f,
+		1.0f, 
+		Common::ConvertTilePosition(element_stock.b) 
+	};
 
+	// ---------- Object3Dの初期設定 ----------
 	object3d = Object3D::Create(ModelLoader::GetInstance()->GetModel(MODEL_BOSS));
 	object3d->scale = scale;
 	object3d->position = position;
-
 	object3d2 = Object3D::Create(ModelLoader::GetInstance()->GetModel(MODEL_BOSS2));
 	object3d2->scale = scale;
 	object3d2->position = position;
-	
+	carobj = Object3D::Create(ModelLoader::GetInstance()->GetModel(MODEL_BOSSCAR));
+	carobj->scale = scale;
+	carobj->position = position;
+
 	// Audioの初期化
 	audio_ = UnitManager::GetInstance()->GetAudio();
-
 	//攻撃ゲージの秒数
 	SetAttackTimer(300,CountType::FRAME);
-
-	nextPoint = { 0,0 };
-	//isDrawTimer = true;
-	fallFlag = true;
+	// 座標設定
+	attackTimer->SetPosition(object3d->position + Math::Vector3(0.0f, 18.0f, 0.0f));
+	// Attackエリア表示各種変数初期化
 	BossAttack::GetInstance()->InitAttackDisplay();
 }
 
 void XIIlib::Boss::Update()
 {
+	// 現在のHPを取得
+	_hit_point = BossHP::GetInstance()->GetBossHP();
+	// デバッグにHP表示
 	std::cout << "HP" << _hit_point << std::endl;
 
 	if (switching == true)
@@ -91,8 +99,8 @@ void XIIlib::Boss::Update()
 		switching = false;
 		switchingCount = 0;
 	}
-	_hit_point = BossHP::GetInstance()->GetBossHP();
-
+	
+	// BossのHPがデフォルトのHPの半分以下でなおかつBossが通常の状態で待機中なら
 	if (_hit_point <= BossHP::GetInstance()->GetDefaultBossHP() / 2 && bossType == BossType::normal && bossState == BossState::wait)
 	{
 		bossType = BossType::strong;
@@ -124,21 +132,20 @@ void XIIlib::Boss::Update()
 
 		pos = object3d->position;
 	}
-
 	if (determinateMoveAction) {
 		// 攻撃処理
 		Attack();
 	}
 
+	// objectのUpdate
 	object3d->Update();
 	object3d2->Update();
-	// 座標設定
-	attackTimer->SetPosition(object3d->position + Math::Vector3(0.0f, 18.0f, 0.0f));
+	carobj->Update();
 }
 
 void XIIlib::Boss::Draw()
 {
-	if (switchingCount >= 1)
+	/*if (switchingCount >= 1)
 	{
 		object3d2->Draw();
 		if (switchingCount <= 15)
@@ -152,16 +159,13 @@ void XIIlib::Boss::Draw()
 	}
 	else {
 		object3d->Draw();
-	}
+	}*/
+	object3d->Draw();
+	carobj->Draw();
 }
 
 void XIIlib::Boss::Action()
 {
-	isAttack = true;
-	preElement_stock = kingPos;
-
-	Move();
-	
 	if (attackTimer->SizeZeroFlag()) // アタックタイマーが0(以下)になったら通る
 	{
 		bossState = BossState::wait;
@@ -182,10 +186,12 @@ void XIIlib::Boss::Action()
 				std::dynamic_pointer_cast<King>(UnitManager::GetInstance()->GetUnit(element));
 			kingPos = p_king->GetElementStock();
 		}
+
 		// ランダムで攻撃タイプを選択
 		bossAttackSelect = bossAttackMin + (int)(rand() * (bossAttackMax - bossAttackMin + 1) / (1 + RAND_MAX));
 		// どのラインを攻撃するか
 		BossAttack::GetInstance()->Target();
+
 		// BossTypeが強い状態なら
 		if (bossType == BossType::strong)
 		{
@@ -202,6 +208,14 @@ void XIIlib::Boss::Action()
 		BossAttack::GetInstance()->DispTileDeathControl();
 		if (bossType == BossType::normal)
 		{
+			object3d->position.y += 0.4f;
+			object3d2->position.y += 0.4f;
+			if (object3d->position.y >= 20.0f)
+			{
+				object3d->position.y = 20.0f;
+				object3d2->position.y = 20.0f;
+			}
+			//carobj->position.y +=0.1f;
 			if (bossAttackSelect == 0)
 			{
 				// 縦
@@ -227,7 +241,7 @@ void XIIlib::Boss::Action()
 		bossState = BossState::attack;
 	}
 
-	// ボスを直接殴った時の処理
+	// 直接殴られた時の処理
 	if (UnitManager::GetInstance()->IsAttackValid(element_stock, (int)_PositionType::MINE))
 	{
 		BossHP::GetInstance()->Damage();
@@ -237,16 +251,17 @@ void XIIlib::Boss::Action()
 
 void XIIlib::Boss::Attack()
 {
-	Math::Point2 temp = element_stock;
 	switch (bossType)
 	{
 	case BossType::normal:
 		if (bossAttackSelect == 0)
 		{
+			// 縦攻撃
 			BossAttack::GetInstance()->Vertical3LineAttack();
 		}
 		else
 		{
+			// 横攻撃
 			BossAttack::GetInstance()->Horizontal3LineAttack();
 		}
 		break;
@@ -283,7 +298,9 @@ void XIIlib::Boss::Move()
 {}
 
 bool XIIlib::Boss::AttackAreaExists()
-{}
+{
+	return false;
+}
 
 void XIIlib::Boss::AttackAreaDraw()
 {}
@@ -294,8 +311,17 @@ void XIIlib::Boss::IniState()
 void XIIlib::Boss::CreateAttackArea()
 {}
 
+void XIIlib::Boss::ObjectUpdate()
+{
+	object3d->Update();
+	object3d2->Update();
+	carobj->Update();
+}
+
 bool XIIlib::Boss::MoveAreaCheck(Math::Point2 crPos, Math::Point2 vec, int tileNum)
-{}
+{
+	return false;
+}
 
 void XIIlib::Boss::SetHitDamage(int attackPoint)
 {
