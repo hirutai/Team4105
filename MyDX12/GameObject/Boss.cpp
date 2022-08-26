@@ -277,13 +277,13 @@ void XIIlib::Boss::Action()
 					}
 				}
 			}
-			else
-			{
-				for (int i = 0; i < METEORS_MAX; i++)//メテオ
-				{	
-					UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(numbersA[i], numbersB[i]), (int)_PositionType::ENEMY);					
-				}
-			}
+			//else
+			//{
+			//	for (int i = 0; i < METEORS_MAX; i++)//メテオ
+			//	{	
+			//		UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(numbersA[i], numbersB[i]), (int)_PositionType::ENEMY);					
+			//	}
+			//}
 		}
 		bossState = BossState::attack;
 	}
@@ -355,6 +355,7 @@ void XIIlib::Boss::Attack()
 				UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(j, bossTileRand - 1), (int)_PositionType::BOSS);
 			}
 		}
+		attackFrameCnt = 300;
 	}
 	else if (bossType == BossType::strong)
 	{
@@ -369,12 +370,187 @@ void XIIlib::Boss::Attack()
 					UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(anchorLUpos.a + j, anchorLUpos.b - i), (int)_PositionType::BOSS);
 				}
 			}
+			attackFrameCnt = 300;
 		}
 		else
 		{
-			for (int i = 0; i < METEORS_MAX; i++)//メテオ
+			meteorsCount++;
+			//メテオ1描画
+			if (meteorsCount >= -20 && meteorsCount <= 0)
 			{
-				UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(numbersA[i], numbersB[i]), (int)_PositionType::BOSS);
+				UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(numbersA[0], numbersB[0]), (int)_PositionType::ENEMY);
+			}
+			//メテオ2
+			if (meteorsCount >= 0 && meteorsCount <= 20)
+			{
+				UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(numbersA[1], numbersB[1]), (int)_PositionType::ENEMY);
+			}
+			//メテオ3
+			if (meteorsCount >= 20 && meteorsCount <= 40)
+			{
+				UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(numbersA[2], numbersB[2]), (int)_PositionType::ENEMY);
+			}
+			//メテオ4
+			if (meteorsCount >= 40 && meteorsCount <= 60)
+			{
+				UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(numbersA[3], numbersB[3]), (int)_PositionType::ENEMY);
+			}
+			//メテオ5
+			if (meteorsCount >= 60 && meteorsCount <= 80)
+			{
+				UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(numbersA[4], numbersB[4]), (int)_PositionType::ENEMY);
+			}
+			//メテオ6
+			if (meteorsCount >= 80 && meteorsCount <= 100)
+			{
+				UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(numbersA[5], numbersB[5]), (int)_PositionType::ENEMY);
+			}
+			//メテオ7
+			if (meteorsCount >= 100 && meteorsCount <= 120)
+			{
+				UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(numbersA[6], numbersB[6]), (int)_PositionType::ENEMY);
+			}
+			//メテオ8
+			if (meteorsCount >= 120 && meteorsCount <= 140)
+			{
+				UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(numbersA[7], numbersB[7]), (int)_PositionType::ENEMY);
+			}
+			//メテオ9
+			if (meteorsCount >= 140 && meteorsCount <= 160)
+			{
+				UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(numbersA[8], numbersB[8]), (int)_PositionType::ENEMY);
+			}
+			//メテオ10
+			if (meteorsCount >= 160 && meteorsCount <= 180)
+			{
+				UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(numbersA[9], numbersB[9]), (int)_PositionType::ENEMY);
+			}
+			//メテオ11
+			if (meteorsCount >= 180 && meteorsCount <= 200)
+			{
+				UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(numbersA[10], numbersB[10]), (int)_PositionType::ENEMY);
+			}
+			//メテオ12
+			if (meteorsCount >= 200 && meteorsCount <= 220)
+			{
+				UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(numbersA[11], numbersB[11]), (int)_PositionType::ENEMY);
+			}
+			//メテオ13
+			if (meteorsCount >= 220 && meteorsCount <= 240)
+			{
+				UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(numbersA[12], numbersB[12]), (int)_PositionType::ENEMY);
+			}
+			//メテオ14
+			if (meteorsCount >= 240 && meteorsCount <= 260)
+			{
+				UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(numbersA[13], numbersB[13]), (int)_PositionType::ENEMY);
+			}
+			//メテオ15
+			if (meteorsCount >= 260 && meteorsCount <= 280)
+			{
+				UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(numbersA[14], numbersB[14]), (int)_PositionType::ENEMY);
+			}
+
+			//頑張ったけどむりでした
+			//meteorsSpaceCount++;
+			//if (meteorsSpaceCount >= 20)
+			//{
+			//	meteorsFCount++;
+			//	//メテオの攻撃判定
+			//	if (meteorsFCount >= 0 && meteorsFCount <= 40 && meteorsCount < METEORS_MAX)
+			//	{
+			//		if (meteorsFCount >= 0 && meteorsFCount <= 20)
+			//		{
+			//			UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(numbersA[meteorsIndex + meteorsCount], numbersB[meteorsIndex + meteorsCount]), (int)_PositionType::ENEMY);
+			//		}
+			//		if (meteorsFCount >= 20 && meteorsFCount <= 40)
+			//		{
+			//			UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(numbersA[meteorsIndex + meteorsCount], numbersB[meteorsIndex + meteorsCount]), (int)_PositionType::BOSS);
+			//		}
+			//		meteorsCount++;
+			//	}
+			//}
+			//
+			//if (meteorsFCount >= 40)
+			//{
+			//	meteorsFCount = 0;
+			//	meteorsSpaceCount = 0;
+			//}
+
+			//メテオ1の攻撃判定
+			if (meteorsCount >= 0 && meteorsCount <= 20)
+			{
+				UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(numbersA[0], numbersB[0]), (int)_PositionType::BOSS);
+			}
+			//メテオ2
+			if (meteorsCount >= 20 && meteorsCount <= 40)
+			{
+				UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(numbersA[1], numbersB[1]), (int)_PositionType::BOSS);
+			}
+			//メテオ3
+			if (meteorsCount >= 40 && meteorsCount <= 60)
+			{
+				UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(numbersA[2], numbersB[2]), (int)_PositionType::BOSS);
+			}
+			//メテオ4
+			if (meteorsCount >= 60 && meteorsCount <= 80)
+			{
+				UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(numbersA[3], numbersB[3]), (int)_PositionType::BOSS);
+			}
+			//メテオ5
+			if (meteorsCount >= 80 && meteorsCount <= 100)
+			{
+				UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(numbersA[4], numbersB[4]), (int)_PositionType::BOSS);
+			}
+			//メテオ6
+			if (meteorsCount >= 100 && meteorsCount <= 120)
+			{
+				UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(numbersA[5], numbersB[5]), (int)_PositionType::BOSS);
+			}
+			//メテオ7
+			if (meteorsCount >= 120 && meteorsCount <= 140)
+			{
+				UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(numbersA[6], numbersB[6]), (int)_PositionType::BOSS);
+			}
+			//メテオ8
+			if (meteorsCount >= 140 && meteorsCount <= 160)
+			{
+				UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(numbersA[7], numbersB[7]), (int)_PositionType::BOSS);
+			}
+			//メテオ9
+			if (meteorsCount >= 160 && meteorsCount <= 180)
+			{
+				UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(numbersA[8], numbersB[8]), (int)_PositionType::BOSS);
+			}
+			//メテオ10
+			if (meteorsCount >= 180 && meteorsCount <= 200)
+			{
+				UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(numbersA[9], numbersB[9]), (int)_PositionType::BOSS);
+			}
+			//メテオ11
+			if (meteorsCount >= 200 && meteorsCount <= 220)
+			{
+				UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(numbersA[10], numbersB[10]), (int)_PositionType::BOSS);
+			}
+			//メテオ12
+			if (meteorsCount >= 220 && meteorsCount <= 240)
+			{
+				UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(numbersA[11], numbersB[11]), (int)_PositionType::BOSS);
+			}
+			//メテオ13
+			if (meteorsCount >= 240 && meteorsCount <= 260)
+			{
+				UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(numbersA[12], numbersB[12]), (int)_PositionType::BOSS);
+			}
+			//メテオ14
+			if (meteorsCount >= 260 && meteorsCount <= 280)
+			{
+				UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(numbersA[13], numbersB[13]), (int)_PositionType::BOSS);
+			}
+			//メテオ15
+			if (meteorsCount >= 280 && meteorsCount <= 300)
+			{
+				UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(numbersA[14], numbersB[14]), (int)_PositionType::BOSS);
 			}
 		}
 	}
@@ -388,6 +564,8 @@ void XIIlib::Boss::Attack()
 		determinateMoveAction = false;
 		// 攻撃フレームを0クリア
 		attackFrameCnt = 0;
+		//メテオの数-20に(描画の関係で-になってます)
+		meteorsCount = -20;
 	}
 }
 

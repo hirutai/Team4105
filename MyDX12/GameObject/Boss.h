@@ -34,6 +34,8 @@ namespace XIIlib {
 		BossType bossType = BossType::normal;
 		
 		int count = 0;
+		int meteorsCount = -20;//
+
 		int numbersA[METEORS_MAX]; // ランダムメテオの座標格納配列A
 		int numbersB[METEORS_MAX]; // ランダムメテオの座標格納配列B
 		int switchingCount = 0;
