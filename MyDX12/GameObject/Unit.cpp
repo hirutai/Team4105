@@ -33,6 +33,7 @@ void XIIlib::Unit::BillObjectDraw()
 
 	if (attackTimer == nullptr) return;
 	if (isDrawTimer)return;
+	if (!dispATFlag)return;// 表示しないなら即リターン
 	// 攻撃タイマーの描画
 	attackTimer->Draw();
 }

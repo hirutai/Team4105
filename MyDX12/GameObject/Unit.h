@@ -110,6 +110,9 @@ namespace XIIlib {
 
 		bool fallFlag = false;
 		bool fallRot = false;
+
+		// attacktimerの表示flag
+		bool dispATFlag = true;
 	public:
 		Unit() = default;
 		virtual ~Unit(){}
