@@ -157,6 +157,15 @@
     <Filter Include="HLSL\inst_bill">
       <UniqueIdentifier>{014cb2eb-c9fe-40e8-ac27-6dcf9d612618}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameObject\Unit\Boss">
+      <UniqueIdentifier>{49e79173-3685-4590-808d-9c844fb07fda}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Unit\Player">
+      <UniqueIdentifier>{7767bf87-d084-4df7-b07f-091be1a88541}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Unit\Enemy Unit">
+      <UniqueIdentifier>{3083b974-2fcd-41f5-8b93-ffa4e87191b5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -297,9 +306,6 @@
     <ClCompile Include="System\Texture.cpp">
       <Filter>System</Filter>
     </ClCompile>
-    <ClCompile Include="GameObject\King.cpp">
-      <Filter>GameObject</Filter>
-    </ClCompile>
     <ClCompile Include="Struct\Point2.cpp">
       <Filter>Struct</Filter>
     </ClCompile>
@@ -312,16 +318,7 @@
     <ClCompile Include="GameObject\Tile.cpp">
       <Filter>GameObject\Tile</Filter>
     </ClCompile>
-    <ClCompile Include="GameObject\Rook.cpp">
-      <Filter>GameObject\Unit</Filter>
-    </ClCompile>
     <ClCompile Include="GameObject\UnitManager.cpp">
-      <Filter>GameObject\Unit</Filter>
-    </ClCompile>
-    <ClCompile Include="GameObject\Bishop.cpp">
-      <Filter>GameObject\Unit</Filter>
-    </ClCompile>
-    <ClCompile Include="GameObject\Knight.cpp">
       <Filter>GameObject\Unit</Filter>
     </ClCompile>
     <ClCompile Include="GameScene\Title.cpp">
@@ -354,12 +351,6 @@
     <ClCompile Include="3D\Object3D.cpp">
       <Filter>3D\obj</Filter>
     </ClCompile>
-    <ClCompile Include="GameObject\Yankee.cpp">
-      <Filter>GameObject\Unit</Filter>
-    </ClCompile>
-    <ClCompile Include="GameObject\Stone.cpp">
-      <Filter>GameObject\Unit</Filter>
-    </ClCompile>
     <ClCompile Include="Input\GamePAD_XInput.cpp">
       <Filter>Input</Filter>
     </ClCompile>
@@ -387,20 +378,8 @@
     <ClCompile Include="GameScene\Story.cpp">
       <Filter>GameScene\StateScene</Filter>
     </ClCompile>
-    <ClCompile Include="GameObject\Boss.cpp">
-      <Filter>GameObject\Unit</Filter>
-    </ClCompile>
     <ClCompile Include="Tool\CSVLoader.cpp">
       <Filter>Tool</Filter>
-    </ClCompile>
-    <ClCompile Include="GameObject\BossCollision.cpp">
-      <Filter>GameObject\Unit</Filter>
-    </ClCompile>
-    <ClCompile Include="GameObject\BossHP.cpp">
-      <Filter>GameObject\Unit</Filter>
-    </ClCompile>
-    <ClCompile Include="GameObject\HPBar.cpp">
-      <Filter>GameObject\Unit</Filter>
     </ClCompile>
     <ClCompile Include="GameObject\ModelLoader.cpp">
       <Filter>GameObject\Common</Filter>
@@ -419,6 +398,39 @@
     </ClCompile>
     <ClCompile Include="3D\InstBill.cpp">
       <Filter>3D\InstBill</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject\Boss.cpp">
+      <Filter>GameObject\Unit\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject\BossCollision.cpp">
+      <Filter>GameObject\Unit\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject\BossHP.cpp">
+      <Filter>GameObject\Unit\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject\King.cpp">
+      <Filter>GameObject\Unit\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject\Bishop.cpp">
+      <Filter>GameObject\Unit\Enemy Unit</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject\HPBar.cpp">
+      <Filter>GameObject\Unit\Enemy Unit</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject\Knight.cpp">
+      <Filter>GameObject\Unit\Enemy Unit</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject\Rook.cpp">
+      <Filter>GameObject\Unit\Enemy Unit</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject\Stone.cpp">
+      <Filter>GameObject\Unit\Enemy Unit</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject\Yankee.cpp">
+      <Filter>GameObject\Unit\Enemy Unit</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject\BossAttack.cpp">
+      <Filter>GameObject\Unit\Boss</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -587,9 +599,6 @@
     <ClInclude Include="GameObject\Unit.h">
       <Filter>GameObject</Filter>
     </ClInclude>
-    <ClInclude Include="GameObject\King.h">
-      <Filter>GameObject</Filter>
-    </ClInclude>
     <ClInclude Include="Struct\Point2.h">
       <Filter>Struct</Filter>
     </ClInclude>
@@ -605,16 +614,7 @@
     <ClInclude Include="GameObject\Unit.h">
       <Filter>GameObject\Unit</Filter>
     </ClInclude>
-    <ClInclude Include="GameObject\Rook.h">
-      <Filter>GameObject\Unit</Filter>
-    </ClInclude>
     <ClInclude Include="GameObject\UnitManager.h">
-      <Filter>GameObject\Unit</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObject\Bishop.h">
-      <Filter>GameObject\Unit</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObject\Knight.h">
       <Filter>GameObject\Unit</Filter>
     </ClInclude>
     <ClInclude Include="GameScene\Title.h">
@@ -644,14 +644,8 @@
     <ClInclude Include="3D\Object3D.h">
       <Filter>3D\obj</Filter>
     </ClInclude>
-    <ClInclude Include="GameObject\Yankee.h">
-      <Filter>GameObject\Unit</Filter>
-    </ClInclude>
     <ClInclude Include="GameScene\SceneState.h">
       <Filter>GameScene</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObject\Stone.h">
-      <Filter>GameObject\Unit</Filter>
     </ClInclude>
     <ClInclude Include="Input\GamePAD_XInput.h">
       <Filter>Input</Filter>
@@ -677,20 +671,8 @@
     <ClInclude Include="GameScene\Story.h">
       <Filter>GameScene\StateScene</Filter>
     </ClInclude>
-    <ClInclude Include="GameObject\Boss.h">
-      <Filter>GameObject\Unit</Filter>
-    </ClInclude>
     <ClInclude Include="Tool\CSVLoader.h">
       <Filter>Tool</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObject\BossCollision.h">
-      <Filter>GameObject\Unit</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObject\BossHP.h">
-      <Filter>GameObject\Unit</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObject\HPBar.h">
-      <Filter>GameObject\Unit</Filter>
     </ClInclude>
     <ClInclude Include="GameObject\ModelLoader.h">
       <Filter>GameObject\Common</Filter>
@@ -709,6 +691,39 @@
     </ClInclude>
     <ClInclude Include="3D\InstBill.h">
       <Filter>3D\InstBill</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\BossHP.h">
+      <Filter>GameObject\Unit\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\Boss.h">
+      <Filter>GameObject\Unit\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\BossCollision.h">
+      <Filter>GameObject\Unit\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\King.h">
+      <Filter>GameObject\Unit\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\Bishop.h">
+      <Filter>GameObject\Unit\Enemy Unit</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\HPBar.h">
+      <Filter>GameObject\Unit\Enemy Unit</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\Knight.h">
+      <Filter>GameObject\Unit\Enemy Unit</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\Rook.h">
+      <Filter>GameObject\Unit\Enemy Unit</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\Stone.h">
+      <Filter>GameObject\Unit\Enemy Unit</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\Yankee.h">
+      <Filter>GameObject\Unit\Enemy Unit</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\BossAttack.h">
+      <Filter>GameObject\Unit\Boss</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
