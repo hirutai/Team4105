@@ -21,10 +21,8 @@ namespace XIIlib {
 	// ボスクラス
 	class Boss : public Unit {
 	protected: // メンバ定数
-		
+
 		static const int MAX_ATTACK_FRAME = 300; // 攻撃最中の最大フレーム
-
-
 	protected: // メンバ変数
 		Math::Point2 point_attack;
 		AREA type_attack = AREA::NONE;
@@ -33,7 +31,7 @@ namespace XIIlib {
 		BossAttack* bossAttack = nullptr;
 		BossState bossState = BossState::wait;
 		BossType bossType = BossType::normal;
-		
+
 		int switchingCount = 0; // 切り替えるため間隔をカウント
 		bool harfHpFlag = false; // 体力が半分以下かどうか
 		bool switching = false; // 画像切り替えよう
@@ -49,14 +47,12 @@ namespace XIIlib {
 		void Draw()override;
 		void Action()override;
 		void Attack()override;
-		//void Target();
 		void Move()override;
 		bool AttackAreaExists()override;
 		void IniState()override;
 		void SetHitDamage(int attackPoint)override;				// ダメージを受ける関数
 		void CreateAttackArea()override;
-		// 3Dオブジェクトの更新
-		void ObjectUpdate()override;
+		void ObjectUpdate()override;// 3Dオブジェクトの更新
 		bool MoveAreaCheck(Math::Point2 crPos, Math::Point2 vec, int tileNum)override;
 
 	public: // メンバ関数

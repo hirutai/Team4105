@@ -60,7 +60,6 @@ namespace XIIlib {
 		int SwitchRandiMin = 0;
 		int SwitchRandiMax = 3;
 		int SwitchRand = 0;
-
 		unsigned int attackInterval = 180;
 		//攻撃flag
 		bool notAttackflag = true;

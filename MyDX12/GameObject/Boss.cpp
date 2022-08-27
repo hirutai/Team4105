@@ -56,10 +56,10 @@ void XIIlib::Boss::Initialize()
 	BossHP::GetInstance()->Initialize();
 	// 大きさと座標の定数
 	const Math::Vector3 scale = { 1.5f,1.5f,1.5f };
-	const Math::Vector3 position = { 
+	const Math::Vector3 position = {
 		Common::ConvertTilePosition(element_stock.a) - 2.7f,
-		1.0f, 
-		Common::ConvertTilePosition(element_stock.b) 
+		1.0f,
+		Common::ConvertTilePosition(element_stock.b)
 	};
 
 	// ---------- Object3Dの初期設定 ----------
@@ -76,7 +76,7 @@ void XIIlib::Boss::Initialize()
 	// Audioの初期化
 	audio_ = UnitManager::GetInstance()->GetAudio();
 	//攻撃ゲージの秒数
-	SetAttackTimer(300,CountType::FRAME);
+	SetAttackTimer(300, CountType::FRAME);
 	// 座標設定
 	attackTimer->SetPosition(object3d->position + Math::Vector3(0.0f, 18.0f, 0.0f));
 	// Attackエリア表示各種変数初期化
@@ -99,7 +99,7 @@ void XIIlib::Boss::Update()
 		switching = false;
 		switchingCount = 0;
 	}
-	
+
 	// BossのHPがデフォルトのHPの半分以下でなおかつBossが通常の状態で待機中なら
 	if (_hit_point <= BossHP::GetInstance()->GetDefaultBossHP() / 2 && bossType == BossType::normal && bossState == BossState::wait)
 	{
@@ -198,8 +198,8 @@ void XIIlib::Boss::Action()
 			if (bossAttackSelect != 0)
 			{
 				BossAttack::GetInstance()->CreateMeteorPosition();
-			}	
-		}	
+			}
+		}
 		// Attack表示の初期化
 		BossAttack::GetInstance()->InitAttackDisplay();
 	}
@@ -246,7 +246,7 @@ void XIIlib::Boss::Action()
 	{
 		BossHP::GetInstance()->Damage();
 		BossAttack::GetInstance()->KnockBackAttack(element_stock);
-	}	
+	}
 }
 
 void XIIlib::Boss::Attack()
