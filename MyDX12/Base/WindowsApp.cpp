@@ -57,11 +57,15 @@ LRESULT WindowsApp::WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam
 
 void WindowsApp::GenerateWindow()
 {
+	HICON hIcon = nullptr;
+	if(hIcon == nullptr)hIcon = ExtractIcon((HINSTANCE)(GetModuleHandle(nullptr)),L"Resources/gameIcon.ico", 0);
+
 	w.cbSize = sizeof(WNDCLASSEX);
 	w.lpfnWndProc = (WNDPROC)WindowProc;// ウィンドウプロシージャを設定
 	w.lpszClassName = windowClassName; // ウィンドウクラス名
 	w.hInstance = GetModuleHandle(nullptr);//ウィンドウハンドル
 	w.hCursor = LoadCursor(NULL, IDC_ARROW);// カーソル指定
+	w.hIcon = hIcon;
 
 	// ウィンドウクラスをOSに登録
 	RegisterClassEx(&w);
