@@ -27,6 +27,7 @@ void XIIlib::ModelLoader::Load(){
 	SetModel(MODEL_STAGE_D, "stage3_d");
 	SetModel(MODEL_STAGE_E, "stage3_e");
 	SetModel(MODEL_GUARDMAN,"guardman");
+	SetModel(MODEL_BOSSCAR,"boss_car");
 }
 
 Model* XIIlib::ModelLoader::GetModel(const ModelNum& modelNum) const

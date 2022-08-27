@@ -57,25 +57,9 @@ namespace XIIlib {
 		int jMax = 3;
 		int tileRand = 1;
 
-		int bossMin = 0;
-		int bossMax = 5;
-		int bossTileRand = 0 ;
-
-		int bossAttackMin = 0;
-		int bossAttackMax = 1;
-		int bossAttackSelect = 0;
-		
 		int SwitchRandiMin = 0;
 		int SwitchRandiMax = 3;
 		int SwitchRand = 0;
-
-		int meteorAMin = 0;
-		int meteorAMax = 7;
-		int meteorATileRand[10];
-		int meteorBMin = 0;
-		int meteorBMax = 7;
-		int meteorBTileRand[10];
-
 		unsigned int attackInterval = 180;
 		//攻撃flag
 		bool notAttackflag = true;
@@ -100,7 +84,7 @@ namespace XIIlib {
 
 		float movingTimer = 0.0f;
 		bool determinateMoveAction = false;
-		Math::Point2 nextPoint;
+		Math::Point2 nextPoint = { 0,0 };
 		Math::Vector3 pos;
 
 		// タイマードローFlag

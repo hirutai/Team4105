@@ -16,6 +16,7 @@
 #include <iterator>
 #include <random>
 #include "ModelLoader.h"
+#include "BossAttack.h"
 
 XIIlib::Boss::Boss()
 {
@@ -28,9 +29,10 @@ XIIlib::Boss::Boss()
 
 XIIlib::Boss::~Boss()
 {
+	delete carobj;
+	delete object3d2;
 	delete attackTimer;
 	delete object3d;
-	delete object3d2;
 }
 
 std::shared_ptr<XIIlib::Boss> XIIlib::Boss::Create(int point_x, int point_z)
@@ -44,41 +46,48 @@ std::shared_ptr<XIIlib::Boss> XIIlib::Boss::Create(int point_x, int point_z)
 
 void XIIlib::Boss::Initialize()
 {
-	BossHP::GetInstance()->Initialize();
 	// クラスネーム取得
 	const type_info& id = typeid(Boss);
 	std::string path = id.name();
 	_hit_point = BossHP::GetInstance()->GetBossHP();
 	ID = Common::SeparateFilePath(path).second;
 	type = _PositionType::ENEMY;
-	CreateAttackArea();
 
+	BossHP::GetInstance()->Initialize();
 	// 大きさと座標の定数
 	const Math::Vector3 scale = { 1.5f,1.5f,1.5f };
-	const Math::Vector3 position = { Common::ConvertTilePosition(element_stock.a) - 2.7f,1.0f, Common::ConvertTilePosition(element_stock.b) };
+	const Math::Vector3 position = {
+		Common::ConvertTilePosition(element_stock.a) - 2.7f,
+		1.0f,
+		Common::ConvertTilePosition(element_stock.b)
+	};
 
+	// ---------- Object3Dの初期設定 ----------
 	object3d = Object3D::Create(ModelLoader::GetInstance()->GetModel(MODEL_BOSS));
 	object3d->scale = scale;
 	object3d->position = position;
-
 	object3d2 = Object3D::Create(ModelLoader::GetInstance()->GetModel(MODEL_BOSS2));
 	object3d2->scale = scale;
 	object3d2->position = position;
-	
+	carobj = Object3D::Create(ModelLoader::GetInstance()->GetModel(MODEL_BOSSCAR));
+	carobj->scale = scale;
+	carobj->position = position;
+
 	// Audioの初期化
 	audio_ = UnitManager::GetInstance()->GetAudio();
-
 	//攻撃ゲージの秒数
-	SetAttackTimer(300,CountType::FRAME);
-
-	nextPoint = { 0,0 };
-	//isDrawTimer = true;
-	fallFlag = true;
-	InitAttackDisplay();
+	SetAttackTimer(300, CountType::FRAME);
+	// 座標設定
+	attackTimer->SetPosition(object3d->position + Math::Vector3(0.0f, 18.0f, 0.0f));
+	// Attackエリア表示各種変数初期化
+	BossAttack::GetInstance()->InitAttackDisplay();
 }
 
 void XIIlib::Boss::Update()
 {
+	// 現在のHPを取得
+	_hit_point = BossHP::GetInstance()->GetBossHP();
+	// デバッグにHP表示
 	std::cout << "HP" << _hit_point << std::endl;
 
 	if (switching == true)
@@ -90,12 +99,13 @@ void XIIlib::Boss::Update()
 		switching = false;
 		switchingCount = 0;
 	}
-	_hit_point = BossHP::GetInstance()->GetBossHP();
 
+	// BossのHPがデフォルトのHPの半分以下でなおかつBossが通常の状態で待機中なら
 	if (_hit_point <= BossHP::GetInstance()->GetDefaultBossHP() / 2 && bossType == BossType::normal && bossState == BossState::wait)
 	{
 		bossType = BossType::strong;
 		SetAttackTimer(180, CountType::FRAME);
+		attackTimer->SetPosition(Math::Vector3(0.0f, 19.0f, 0.0f));
 		std::shared_ptr<Stone> stone = std::move(Stone::Create(1, 7));
 		std::shared_ptr<Stone> stone2 = std::move(Stone::Create(6, 7));
 		std::shared_ptr<Stone> stone3 = std::move(Stone::Create(1, 6));
@@ -123,21 +133,20 @@ void XIIlib::Boss::Update()
 
 		pos = object3d->position;
 	}
-
 	if (determinateMoveAction) {
 		// 攻撃処理
 		Attack();
 	}
 
+	// objectのUpdate
 	object3d->Update();
 	object3d2->Update();
-	// 座標設定
-	attackTimer->SetPosition(object3d->position + Math::Vector3(0.0f, 18.0f, 0.0f));
+	carobj->Update();
 }
 
 void XIIlib::Boss::Draw()
 {
-	if (switchingCount >= 1)
+	/*if (switchingCount >= 1)
 	{
 		object3d2->Draw();
 		if (switchingCount <= 15)
@@ -151,28 +160,25 @@ void XIIlib::Boss::Draw()
 	}
 	else {
 		object3d->Draw();
-	}
+	}*/
+	object3d->Draw();
+	carobj->Draw();
 }
 
 void XIIlib::Boss::Action()
 {
-	isAttack = true;
-	preElement_stock = kingPos;
-
-	Move();
-	
-	if (attackTimer->SizeZeroFlag())
+	if (attackTimer->SizeZeroFlag()) // アタックタイマーが0(以下)になったら通る
 	{
-		bossState = BossState::wait;
 		switching = true;
 		// Attack表示の初期化
-		InitAttackDisplay();
+		BossAttack::GetInstance()->InitAttackDisplay();
 		// 攻撃を開始するのでtrue
 		determinateMoveAction = true;
 		audio_->PlaySE("swing.wav");
 	}
-	else if (attackTimer->SizeThirdFlag())
+	else if (attackTimer->SizeThirdFlag()) // アタックタイマーが3分の1になったら通る(1回)
 	{
+		// king(player)の座標を取得
 		int element = UnitManager::GetInstance()->GetUnitIDElements("King");
 		if (element != -1)
 		{
@@ -180,379 +186,100 @@ void XIIlib::Boss::Action()
 				std::dynamic_pointer_cast<King>(UnitManager::GetInstance()->GetUnit(element));
 			kingPos = p_king->GetElementStock();
 		}
-		Target();
+
+		// ランダムで攻撃タイプを選択
+		bossAttackSelect = bossAttackMin + (int)(rand() * (bossAttackMax - bossAttackMin + 1) / (1 + RAND_MAX));
+		// どのラインを攻撃するか
+		BossAttack::GetInstance()->Target();
+
+		// BossTypeが強い状態なら
 		if (bossType == BossType::strong)
 		{
 			if (bossAttackSelect != 0)
 			{
-				srand(time(NULL));
-				int count = 0;
-				int breakCnt = 0;
-				for (int i = 0; i < METEORS_MAX; i++)
-				{
-					numbersA[i] = -1;
-					numbersB[i] = -1;
-				}
-				//メテオの座標生成
-				while (1)
-				{
-					breakCnt++;
-					if (breakCnt >= 150)break;//バグが生まれたとき用の強制終了
-					//仮のランダムな座標を入れる
-					Math::Point2 numbers;
-					numbers.a = meteorAMin + (int)(rand() * (meteorAMax - meteorAMin + 1) / (1 + RAND_MAX));
-					numbers.b = meteorBMin + (int)(rand() * (meteorBMax - meteorBMin + 1) / (1 + RAND_MAX));
-
-					if (UnitManager::GetInstance()->AllOnUnit(numbers))continue;//仮の座標に誰かがいるか
-					if (CheckMeteorArea(numbers))continue;//他のメテオの座標と被っているか
-					//居なかったら座標を代入
-					numbersA[count] = numbers.a;
-					numbersB[count] = numbers.b;
-					count++;
-
-					if (count >= METEORS_MAX)break;
-				}
-			}	
-		}	
-		// Attack表示の初期化
-		InitAttackDisplay();
-	}
-	else if (attackTimer->SizeThirdBelowFlag())
-	{
-		//色を塗る
-		if (count % DISPLAY_FRAME == 0)
-		{
-			if (bossAttackSelect == 0) {
-				tileDeth[abs(tileNum - (MAX_TILE - 1))] = true;
+				BossAttack::GetInstance()->CreateMeteorPosition();
 			}
-			else
-			{
-				tileDeth[tileNum] = true;
-			}
-			tileNum++;
 		}
-		count++;
+		// Attack表示の初期化
+		BossAttack::GetInstance()->InitAttackDisplay();
+	}
+	else if (attackTimer->SizeThirdBelowFlag()) // アタックタイマーが3分の1以下になったら通る(n回)
+	{
+		BossAttack::GetInstance()->DispTileDeathControl(bossAttackSelect);
 		if (bossType == BossType::normal)
 		{
+			object3d->position.y += 0.2f;
+			object3d2->position.y += 0.2f;
+			if (object3d->position.y >= 20.0f)
+			{
+				object3d->position.y = 20.0f;
+				object3d2->position.y = 20.0f;
+			}
+			//carobj->position.y +=0.1f;
 			if (bossAttackSelect == 0)
 			{
 				// 縦
-				for (int i = MAX_TILE - 1; i >= 0; --i)
-				{
-					if (tileDeth[i])
-					{
-						UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(bossTileRand, i), (int)_PositionType::ENEMY);
-						UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(bossTileRand + 1, i), (int)_PositionType::ENEMY);
-						UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(bossTileRand - 1, i), (int)_PositionType::ENEMY);
-					}
-				}
+				BossAttack::GetInstance()->Vertical3LineDisplay();
 			}
 			else
 			{
-
 				// 横
-				for (int j = 0; j < MAX_TILE; ++j)
-				{
-					if (tileDeth[j])
-					{
-						UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(j, bossTileRand), (int)_PositionType::ENEMY);
-						UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(j, bossTileRand + 1), (int)_PositionType::ENEMY);
-						UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(j, bossTileRand - 1), (int)_PositionType::ENEMY);
-					}
-				}
+				BossAttack::GetInstance()->Horizontal3LineDisplay();
 			}
 		}
 		else if (bossType == BossType::strong)
 		{
 			if (bossAttackSelect == 0)
 			{
-				Math::Point2 anchorLUpos = { kingPos.a - 1, kingPos.b + 1 };//左上
-				for (int i = 0; i < 3; i++)//3*3の点攻撃
-				{
-					for (int j = 0; j < 3; j++)
-					{
-						if (Common::GetExceptionPoint(anchorLUpos.a + j) || Common::GetExceptionPoint(anchorLUpos.b - i))continue;
-						
-						UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(anchorLUpos.a + j, anchorLUpos.b - i), (int)_PositionType::ENEMY);
-					}
-				}
+				BossAttack::GetInstance()->OneMeteor3x3Display(kingPos);
 			}
-			//else
-			//{
-			//	for (int i = 0; i < METEORS_MAX; i++)//メテオ
-			//	{	
-			//		UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(numbersA[i], numbersB[i]), (int)_PositionType::ENEMY);					
-			//	}
-			//}
+			else
+			{
+				// BossAttack::GetInstance()->RandomMeteor1x1Display();
+			}
 		}
 		bossState = BossState::attack;
 	}
 
+	// 直接殴られた時の処理
 	if (UnitManager::GetInstance()->IsAttackValid(element_stock, (int)_PositionType::MINE))
 	{
 		BossHP::GetInstance()->Damage();
-		//タイル表示
-		UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(element_stock.a - 3, element_stock.b), (int)_PositionType::ENEMY);
-		UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(element_stock.a + 2, element_stock.b), (int)_PositionType::ENEMY);
-		UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(element_stock.a - 2, element_stock.b - 1), (int)_PositionType::ENEMY);
-		UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(element_stock.a - 1, element_stock.b - 1), (int)_PositionType::ENEMY);
-		UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(element_stock.a, element_stock.b - 1), (int)_PositionType::ENEMY);
-		UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(element_stock.a + 1, element_stock.b - 1), (int)_PositionType::ENEMY);
-		UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(element_stock.a - 3, element_stock.b - 1), (int)_PositionType::ENEMY);
-		UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(element_stock.a + 2, element_stock.b - 1), (int)_PositionType::ENEMY);
-		//密着したら弾く
-		UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(element_stock.a - 3, element_stock.b), (int)_PositionType::BOSS_KNOCKBACK);
-		UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(element_stock.a + 2, element_stock.b), (int)_PositionType::BOSS_KNOCKBACK);
-		UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(element_stock.a - 2, element_stock.b - 1), (int)_PositionType::BOSS_KNOCKBACK);
-		UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(element_stock.a - 1, element_stock.b - 1), (int)_PositionType::BOSS_KNOCKBACK);
-		UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(element_stock.a, element_stock.b - 1), (int)_PositionType::BOSS_KNOCKBACK);
-		UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(element_stock.a + 1, element_stock.b - 1), (int)_PositionType::BOSS_KNOCKBACK);
-		UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(element_stock.a - 3, element_stock.b - 1), (int)_PositionType::BOSS_KNOCKBACK);
-		UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(element_stock.a + 2, element_stock.b - 1), (int)_PositionType::BOSS_KNOCKBACK);
-	}	
-}
-
-void XIIlib::Boss::Target()
-{
-	int BossjMin = bossMin;
-	int BossjMax = bossMax;
-	bossTileRand = bossMin + (int)(rand() * (bossMax - bossMin + 1) / (1 + RAND_MAX));
-
-	int BossAttackMin = bossAttackMin;
-	int BossAttackMax = bossAttackMax;
-	bossAttackSelect = bossAttackMin + (int)(rand() * (bossAttackMax - bossAttackMin + 1) / (1 + RAND_MAX));
-
-	std::vector<int> v(6);
-	std::iota(v.begin(), v.end(), 0);
-	// シャッフル
-	std::random_device seed_gen;
-	std::mt19937 engine(seed_gen());
-	std::shuffle(v.begin(), v.end(), engine);
-
-	bossTileRand = v[bossTileRand] + 1;
+		BossAttack::GetInstance()->KnockBackAttack(element_stock);
+	}
 }
 
 void XIIlib::Boss::Attack()
 {
-	Math::Point2 temp = element_stock;
-	if (bossType == BossType::normal)
+	switch (bossType)
 	{
+	case BossType::normal:
 		if (bossAttackSelect == 0)
 		{
-			for (int i = 0; i < MAX_TILE; i++)
-			{
-				UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(bossTileRand, i), (int)_PositionType::BOSS);
-				UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(bossTileRand + 1, i), (int)_PositionType::BOSS);
-				UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(bossTileRand - 1, i), (int)_PositionType::BOSS);
-			}
+			// 縦攻撃
+			BossAttack::GetInstance()->Vertical3LineAttack();
 		}
 		else
 		{
-			for (int j = 0; j < MAX_TILE; j++)
-			{
-				UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(j, bossTileRand), (int)_PositionType::BOSS);
-				UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(j, bossTileRand + 1), (int)_PositionType::BOSS);
-				UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(j, bossTileRand - 1), (int)_PositionType::BOSS);
-			}
+			// 横攻撃
+			BossAttack::GetInstance()->Horizontal3LineAttack();
 		}
-		attackFrameCnt = 300;
-	}
-	else if (bossType == BossType::strong)
-	{
+		break;
+	case BossType::strong:
 		if (bossAttackSelect == 0)
 		{
-			Math::Point2 anchorLUpos = { kingPos.a - 1, kingPos.b + 1 };//左上
-			for (int i = 0; i < 3; i++)//3*3の点攻撃
-			{
-				for (int j = 0; j < 3; j++)
-				{
-					if (Common::GetExceptionPoint(anchorLUpos.a + j) || Common::GetExceptionPoint(anchorLUpos.b - i))continue;
-					UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(anchorLUpos.a + j, anchorLUpos.b - i), (int)_PositionType::BOSS);
-				}
-			}
-			attackFrameCnt = 300;
+			// 1点メテオ攻撃 3x3
+			BossAttack::GetInstance()->OneMeteor3x3Attack(kingPos);
 		}
 		else
 		{
-			meteorsCount++;
-			//メテオ1描画
-			if (meteorsCount >= -20 && meteorsCount <= 0)
-			{
-				UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(numbersA[0], numbersB[0]), (int)_PositionType::ENEMY);
-			}
-			//メテオ2
-			if (meteorsCount >= 0 && meteorsCount <= 20)
-			{
-				UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(numbersA[1], numbersB[1]), (int)_PositionType::ENEMY);
-			}
-			//メテオ3
-			if (meteorsCount >= 20 && meteorsCount <= 40)
-			{
-				UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(numbersA[2], numbersB[2]), (int)_PositionType::ENEMY);
-			}
-			//メテオ4
-			if (meteorsCount >= 40 && meteorsCount <= 60)
-			{
-				UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(numbersA[3], numbersB[3]), (int)_PositionType::ENEMY);
-			}
-			//メテオ5
-			if (meteorsCount >= 60 && meteorsCount <= 80)
-			{
-				UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(numbersA[4], numbersB[4]), (int)_PositionType::ENEMY);
-			}
-			//メテオ6
-			if (meteorsCount >= 80 && meteorsCount <= 100)
-			{
-				UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(numbersA[5], numbersB[5]), (int)_PositionType::ENEMY);
-			}
-			//メテオ7
-			if (meteorsCount >= 100 && meteorsCount <= 120)
-			{
-				UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(numbersA[6], numbersB[6]), (int)_PositionType::ENEMY);
-			}
-			//メテオ8
-			if (meteorsCount >= 120 && meteorsCount <= 140)
-			{
-				UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(numbersA[7], numbersB[7]), (int)_PositionType::ENEMY);
-			}
-			//メテオ9
-			if (meteorsCount >= 140 && meteorsCount <= 160)
-			{
-				UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(numbersA[8], numbersB[8]), (int)_PositionType::ENEMY);
-			}
-			//メテオ10
-			if (meteorsCount >= 160 && meteorsCount <= 180)
-			{
-				UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(numbersA[9], numbersB[9]), (int)_PositionType::ENEMY);
-			}
-			//メテオ11
-			if (meteorsCount >= 180 && meteorsCount <= 200)
-			{
-				UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(numbersA[10], numbersB[10]), (int)_PositionType::ENEMY);
-			}
-			//メテオ12
-			if (meteorsCount >= 200 && meteorsCount <= 220)
-			{
-				UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(numbersA[11], numbersB[11]), (int)_PositionType::ENEMY);
-			}
-			//メテオ13
-			if (meteorsCount >= 220 && meteorsCount <= 240)
-			{
-				UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(numbersA[12], numbersB[12]), (int)_PositionType::ENEMY);
-			}
-			//メテオ14
-			if (meteorsCount >= 240 && meteorsCount <= 260)
-			{
-				UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(numbersA[13], numbersB[13]), (int)_PositionType::ENEMY);
-			}
-			//メテオ15
-			if (meteorsCount >= 260 && meteorsCount <= 280)
-			{
-				UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(numbersA[14], numbersB[14]), (int)_PositionType::ENEMY);
-			}
-
-			//頑張ったけどむりでした
-			//meteorsSpaceCount++;
-			//if (meteorsSpaceCount >= 20)
-			//{
-			//	meteorsFCount++;
-			//	//メテオの攻撃判定
-			//	if (meteorsFCount >= 0 && meteorsFCount <= 40 && meteorsCount < METEORS_MAX)
-			//	{
-			//		if (meteorsFCount >= 0 && meteorsFCount <= 20)
-			//		{
-			//			UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(numbersA[meteorsIndex + meteorsCount], numbersB[meteorsIndex + meteorsCount]), (int)_PositionType::ENEMY);
-			//		}
-			//		if (meteorsFCount >= 20 && meteorsFCount <= 40)
-			//		{
-			//			UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(numbersA[meteorsIndex + meteorsCount], numbersB[meteorsIndex + meteorsCount]), (int)_PositionType::BOSS);
-			//		}
-			//		meteorsCount++;
-			//	}
-			//}
-			//
-			//if (meteorsFCount >= 40)
-			//{
-			//	meteorsFCount = 0;
-			//	meteorsSpaceCount = 0;
-			//}
-
-			//メテオ1の攻撃判定
-			if (meteorsCount >= 0 && meteorsCount <= 20)
-			{
-				UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(numbersA[0], numbersB[0]), (int)_PositionType::BOSS);
-			}
-			//メテオ2
-			if (meteorsCount >= 20 && meteorsCount <= 40)
-			{
-				UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(numbersA[1], numbersB[1]), (int)_PositionType::BOSS);
-			}
-			//メテオ3
-			if (meteorsCount >= 40 && meteorsCount <= 60)
-			{
-				UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(numbersA[2], numbersB[2]), (int)_PositionType::BOSS);
-			}
-			//メテオ4
-			if (meteorsCount >= 60 && meteorsCount <= 80)
-			{
-				UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(numbersA[3], numbersB[3]), (int)_PositionType::BOSS);
-			}
-			//メテオ5
-			if (meteorsCount >= 80 && meteorsCount <= 100)
-			{
-				UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(numbersA[4], numbersB[4]), (int)_PositionType::BOSS);
-			}
-			//メテオ6
-			if (meteorsCount >= 100 && meteorsCount <= 120)
-			{
-				UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(numbersA[5], numbersB[5]), (int)_PositionType::BOSS);
-			}
-			//メテオ7
-			if (meteorsCount >= 120 && meteorsCount <= 140)
-			{
-				UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(numbersA[6], numbersB[6]), (int)_PositionType::BOSS);
-			}
-			//メテオ8
-			if (meteorsCount >= 140 && meteorsCount <= 160)
-			{
-				UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(numbersA[7], numbersB[7]), (int)_PositionType::BOSS);
-			}
-			//メテオ9
-			if (meteorsCount >= 160 && meteorsCount <= 180)
-			{
-				UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(numbersA[8], numbersB[8]), (int)_PositionType::BOSS);
-			}
-			//メテオ10
-			if (meteorsCount >= 180 && meteorsCount <= 200)
-			{
-				UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(numbersA[9], numbersB[9]), (int)_PositionType::BOSS);
-			}
-			//メテオ11
-			if (meteorsCount >= 200 && meteorsCount <= 220)
-			{
-				UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(numbersA[10], numbersB[10]), (int)_PositionType::BOSS);
-			}
-			//メテオ12
-			if (meteorsCount >= 220 && meteorsCount <= 240)
-			{
-				UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(numbersA[11], numbersB[11]), (int)_PositionType::BOSS);
-			}
-			//メテオ13
-			if (meteorsCount >= 240 && meteorsCount <= 260)
-			{
-				UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(numbersA[12], numbersB[12]), (int)_PositionType::BOSS);
-			}
-			//メテオ14
-			if (meteorsCount >= 260 && meteorsCount <= 280)
-			{
-				UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(numbersA[13], numbersB[13]), (int)_PositionType::BOSS);
-			}
-			//メテオ15
-			if (meteorsCount >= 280 && meteorsCount <= 300)
-			{
-				UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(numbersA[14], numbersB[14]), (int)_PositionType::BOSS);
-			}
+			// (仮)ランダムメテオ攻撃 1x1
+			BossAttack::GetInstance()->RandomMeteor1x1Attack();
 		}
+		break;
+	default:
+		// 攻撃なし
+		break;
 	}
 
 	// 攻撃フレームの加算
@@ -564,78 +291,37 @@ void XIIlib::Boss::Attack()
 		determinateMoveAction = false;
 		// 攻撃フレームを0クリア
 		attackFrameCnt = 0;
-		//メテオの数-20に(描画の関係で-になってます)
-		meteorsCount = -20;
+		// bossの状態を待機状態に戻す
+		bossState = BossState::wait;
 	}
 }
 
 void XIIlib::Boss::Move()
-{
-	
-}
+{}
 
 bool XIIlib::Boss::AttackAreaExists()
 {
-	int element = UnitManager::GetInstance()->GetUnitIDElements("King");
-	if (element != -1)
-	{
-		std::shared_ptr<King> p_king =
-			std::dynamic_pointer_cast<King>(UnitManager::GetInstance()->GetUnit(element));
-		kingPos = p_king->GetElementStock();
-	}
-	// 範囲に入ってるかのチェック
-	Math::Point2 dif = kingPos - element_stock;
-	// xとzの絶対値が一緒だったら攻撃範囲にいる範囲
-	if (abs(dif.a) == abs(dif.b))return true;
 	return false;
 }
 
 void XIIlib::Boss::AttackAreaDraw()
-{
-	
-}
+{}
 
 void XIIlib::Boss::IniState()
-{
-	isAttack = false;
-}
+{}
 
 void XIIlib::Boss::CreateAttackArea()
-{
+{}
 
+void XIIlib::Boss::ObjectUpdate()
+{
+	object3d->Update();
+	object3d2->Update();
+	carobj->Update();
 }
 
 bool XIIlib::Boss::MoveAreaCheck(Math::Point2 crPos, Math::Point2 vec, int tileNum)
 {
-	Math::Point2 pos = crPos;
-	for (int i = 0; i < abs(tileNum) - 1; ++i)
-	{
-		pos += vec;
-		if (UnitManager::GetInstance()->AllOnUnit(pos))return true;
-	}
-	return false;
-}
-
-void XIIlib::Boss::InitAttackDisplay()
-{
-	if (count >= DISPLAY_FRAME * MAX_TILE)
-	{
-		count = 0;
-		tileNum = 0;
-		for (int i = 0; i < MAX_TILE; i++)
-		{
-			tileDeth[i] = false;
-		}
-	}
-}
-
-bool XIIlib::Boss::CheckMeteorArea(Math::Point2 meteorPos)
-{
-	for (int i = 0; i < METEORS_MAX; i++)
-	{
-		//meteorPosがMETEORS_MAXの回数中一回でも一緒になればtrueを返す
-		if (meteorPos.a == numbersA[i] && meteorPos.b == numbersB[i])return true;
-	}
 	return false;
 }
 
