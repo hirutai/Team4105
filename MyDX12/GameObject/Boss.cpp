@@ -208,8 +208,8 @@ void XIIlib::Boss::Action()
 		BossAttack::GetInstance()->DispTileDeathControl();
 		if (bossType == BossType::normal)
 		{
-			object3d->position.y += 0.4f;
-			object3d2->position.y += 0.4f;
+			object3d->position.y += 0.2f;
+			object3d2->position.y += 0.2f;
 			if (object3d->position.y >= 20.0f)
 			{
 				object3d->position.y = 20.0f;
