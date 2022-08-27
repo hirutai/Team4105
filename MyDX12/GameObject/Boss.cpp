@@ -71,7 +71,7 @@ void XIIlib::Boss::Initialize()
 	object3d2->position = position;
 	carobj = Object3D::Create(ModelLoader::GetInstance()->GetModel(MODEL_BOSSCAR));
 	carobj->scale = scale;
-	carobj->position = position;
+	carobj->position = {0,50.0f,0};
 
 	// Audioの初期化
 	audio_ = UnitManager::GetInstance()->GetAudio();
@@ -90,6 +90,7 @@ void XIIlib::Boss::Update()
 	// デバッグにHP表示
 	std::cout << "HP" << _hit_point << std::endl;
 
+	// スイッチ
 	if (switching == true)
 	{
 		switchingCount++;
@@ -125,13 +126,11 @@ void XIIlib::Boss::Update()
 	}
 	BossHP::GetInstance()->Update();
 	if (!determinateMoveAction) {
-		// 駒の行動
+		// Bossの行動
 		Action();
 
 		// タイマーの更新
 		attackTimer->Timer();
-
-		pos = object3d->position;
 	}
 	if (determinateMoveAction) {
 		// 攻撃処理
@@ -167,6 +166,7 @@ void XIIlib::Boss::Draw()
 
 void XIIlib::Boss::Action()
 {
+	// アタックタイマーによって行動をする
 	if (attackTimer->SizeZeroFlag()) // アタックタイマーが0(以下)になったら通る
 	{
 		switching = true;
@@ -197,7 +197,7 @@ void XIIlib::Boss::Action()
 		{
 			if (bossAttackSelect != 0)
 			{
-				BossAttack::GetInstance()->CreateMeteorPosition();
+				BossAttack::GetInstance()->CreateMeteorPosition(bossAttackSelect);
 			}
 		}
 		// Attack表示の初期化
@@ -209,33 +209,29 @@ void XIIlib::Boss::Action()
 		if (bossType == BossType::normal)
 		{
 			object3d->position.y += 0.2f;
-			object3d2->position.y += 0.2f;
+			//object3d2->position.y += 0.2f;
 			if (object3d->position.y >= 20.0f)
 			{
 				object3d->position.y = 20.0f;
-				object3d2->position.y = 20.0f;
+				//object3d2->position.y = 20.0f;
 			}
 			//carobj->position.y +=0.1f;
 			if (bossAttackSelect == 0)
 			{
-				// 縦
-				BossAttack::GetInstance()->Vertical3LineDisplay();
+				// 縦3列表示
+				BossAttack::GetInstance()->Vertical3Line("Display");
 			}
 			else
 			{
-				// 横
-				BossAttack::GetInstance()->Horizontal3LineDisplay();
+				// 横3列表示
+				BossAttack::GetInstance()->Horizontal3Line("Display");
 			}
 		}
 		else if (bossType == BossType::strong)
 		{
 			if (bossAttackSelect == 0)
 			{
-				BossAttack::GetInstance()->OneMeteor3x3Display(kingPos);
-			}
-			else
-			{
-				// BossAttack::GetInstance()->RandomMeteor1x1Display();
+				BossAttack::GetInstance()->OneMeteor3x3("Display",kingPos);
 			}
 		}
 		bossState = BossState::attack;
@@ -254,26 +250,28 @@ void XIIlib::Boss::Attack()
 	switch (bossType)
 	{
 	case BossType::normal:
+		BossAttack::GetInstance()->DispTileDeathControl(bossAttackSelect);
 		if (bossAttackSelect == 0)
 		{
 			// 縦攻撃
-			BossAttack::GetInstance()->Vertical3LineAttack();
+			carobj->rotation.x = 90;
+			BossAttack::GetInstance()->Vertical3Line("Attack");
 		}
 		else
 		{
 			// 横攻撃
-			BossAttack::GetInstance()->Horizontal3LineAttack();
+			BossAttack::GetInstance()->Horizontal3Line("Attack");
 		}
 		break;
 	case BossType::strong:
 		if (bossAttackSelect == 0)
 		{
 			// 1点メテオ攻撃 3x3
-			BossAttack::GetInstance()->OneMeteor3x3Attack(kingPos);
+			BossAttack::GetInstance()->OneMeteor3x3("Attack",kingPos);
 		}
 		else
 		{
-			// (仮)ランダムメテオ攻撃 1x1
+			// ランダムメテオ攻撃 1x1
 			BossAttack::GetInstance()->RandomMeteor1x1Attack();
 		}
 		break;

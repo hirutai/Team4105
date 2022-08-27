@@ -1,8 +1,7 @@
 #pragma once
 #include "Boss.h"
 #include "../Struct/Math.h"
-
-// 今後の予定、攻撃と表示の関数あわせるかも
+#include <string>
 
 namespace XIIlib {
 	// ボスアタッククラス
@@ -17,26 +16,22 @@ namespace XIIlib {
 		static const int DISPLAY_FRAME = 12; // 12フレーム間隔で表示
 		static const int MAX_TILE = 8; // タイルの最大数
 		static const int METEORS_MAX = 15; // メテオ攻撃のメテオ数
+		const Math::Point2 METEOR_MIN_MAX = {0,7};
+		const Math::Point2 BOSSTILE_MIN_MAX = { 0,5 };
 
 	private: // メンバ変数
-		int count = 0;
-		int numbersA[METEORS_MAX]; // ランダムメテオの座標格納配列A
-		int numbersB[METEORS_MAX]; // ランダムメテオの座標格納配列B
+		int positionType = 0; // PositionTypeをint型で管理
+		int frameCount = 0; // カウント
+		int numbersA[METEORS_MAX] = {}; // ランダムメテオの座標格納配列A
+		int numbersB[METEORS_MAX] = {}; // ランダムメテオの座標格納配列B
 		int tileNum = 0; // タイルナンバー
-		bool tileDeth[MAX_TILE] = {}; // タイル表示の生死
+		bool tilesDispFlag[MAX_TILE] = {}; // タイル表示の生死
+		bool tileSwitch = true; // タイルを表示するか非表示にするか
 		int attackFrameCnt = 0; // 攻撃フレームのカウント
 		int meteorsCount = -20; // メテオsのカウント
+		int bossTileRand = 0; // Line攻撃時のランダム座標格納
 
-		int bossMin = 0;
-		int bossMax = 5;
-		int bossTileRand = 0;
-
-		int meteorAMin = 0;
-		int meteorAMax = 7;
-		int meteorBMin = 0;
-		int meteorBMax = 7;
-
-	public:
+	public: // 静的関数
 		/// <summary>
 		/// 生成関数
 		/// </summary>
@@ -49,55 +44,43 @@ namespace XIIlib {
 		/// </summary>
 		void InitAttackDisplay();
 		/// <summary>
-		/// Line決めの核部分の座標をランダム生成
-		/// </summary>
-		void Target();
-		/// <summary>
 		/// タイルの表示遷移用
 		/// </summary>
 		void DispTileDeathControl(const int& bossAttackSelect);
 		/// <summary>
+		/// Line決めの核部分の座標をランダム生成
+		/// </summary>
+		void Target();
+		/// <summary>
 		/// ランダムなメテオを生成(重複なし)
 		/// </summary>
-		void CreateMeteorPosition();
+		void CreateMeteorPosition(int& bossAttackSelect);
 		/// <summary>
 		/// メテオが他のメテオと重なっていないかチェック
 		/// </summary>
 		bool CheckMeteorArea(const Math::Point2& meteorPos);
 
-	public: // ------------------ 表示系 ------------------
+		/// <summary>
+		/// PositionTypeを代入
+		/// </summary>
+		/// <param name="type"></param>
+		void AssignPositionType(const std::string& type);
+
+	public: // ------------------ 表示攻撃選択系 ------------------
+		/* Attackで攻撃 Displayで表示*/
 		/// <summary>
 		/// 縦方向3列表示
 		/// </summary>
-		void Vertical3LineDisplay();
+		void Vertical3Line(const std::string& type);
 		/// <summary>
 		/// 横方向3列表示
 		/// </summary>
-		void Horizontal3LineDisplay();
+		void Horizontal3Line(const std::string& type);
 		/// <summary>
 		/// 1点 3x3メテオ
 		/// </summary>
-		void OneMeteor3x3Display(const Math::Point2& kingPos);
-		/// <summary>
-		/// ランダムまばら 1x1メテオ
-		/// </summary>
-		// void RandomMeteor1x1Display();
-
-	public: // ------------------ 攻撃系 ------------------
-		/// <summary>
-		/// 縦方向3列攻撃
-		/// </summary>
-		void Vertical3LineAttack();
-		/// <summary>
-		/// 横方向3列攻撃
-		/// </summary>
-		void Horizontal3LineAttack();
-		/// <summary>
-		/// 1点 3x3メテオ
-		/// </summary>
-		void OneMeteor3x3Attack(const Math::Point2& kingPos);
-
-	public: // 表示攻撃同時
+		void OneMeteor3x3(const std::string& type, const Math::Point2& kingPos);
+	public: // 表示攻撃同時系
 		/// <summary>
 		/// ランダムまばら 1x1メテオ
 		/// </summary>
