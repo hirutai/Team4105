@@ -21,10 +21,9 @@ namespace XIIlib {
 	// ボスクラス
 	class Boss : public Unit {
 	protected: // メンバ定数
-		static const int DISPLAY_FRAME = 12; // 12フレーム間隔で表示
+		
 		static const int MAX_ATTACK_FRAME = 300; // 攻撃最中の最大フレーム
-		static const int MAX_TILE = 8; // タイルの最大数
-		static const int METEORS_MAX = 15; // メテオ攻撃のメテオ数
+
 
 	protected: // メンバ変数
 		Math::Point2 point_attack;
@@ -35,31 +34,14 @@ namespace XIIlib {
 		BossState bossState = BossState::wait;
 		BossType bossType = BossType::normal;
 		
-		int count = 0;
-		int numbersA[METEORS_MAX]; // ランダムメテオの座標格納配列A
-		int numbersB[METEORS_MAX]; // ランダムメテオの座標格納配列B
 		int switchingCount = 0; // 切り替えるため間隔をカウント
 		bool harfHpFlag = false; // 体力が半分以下かどうか
 		bool switching = false; // 画像切り替えよう
-		int tileNum = 0; // タイルナンバー
-		bool tileDeth[MAX_TILE] = {}; // タイル表示の生死
-		int attackFrameCnt = 0; // 攻撃フレームのカウント
-		int meteorsCount = -20; // メテオsのカウント
-
-		int bossMin = 0;
-		int bossMax = 5;
-		int bossTileRand = 0;
 
 		int bossAttackMin = 0;
 		int bossAttackMax = 1;
 		int bossAttackSelect = 0;
-
-		int meteorAMin = 0;
-		int meteorAMax = 7;
-		int meteorATileRand[10];
-		int meteorBMin = 0;
-		int meteorBMax = 7;
-		int meteorBTileRand[10];
+		int attackFrameCnt = 0;
 
 	public: // 継承クラス
 		void Initialize()override;

@@ -11,7 +11,7 @@ XIIlib::BossAttack* XIIlib::BossAttack::GetInstance()
 	return &bossAt;
 }
 
-void XIIlib::BossAttack::DispTileDeathControl()
+void XIIlib::BossAttack::DispTileDeathControl(const int& bossAttackSelect)
 {
 	//色を塗る
 	if (count % DISPLAY_FRAME == 0)
@@ -136,8 +136,6 @@ void XIIlib::BossAttack::OneMeteor3x3Display(const Math::Point2& kingPos)
 
 void XIIlib::BossAttack::Target()
 {
-	int BossjMin = bossMin;
-	int BossjMax = bossMax;
 	bossTileRand = bossMin + (int)(rand() * (bossMax - bossMin + 1) / (1 + RAND_MAX));
 
 	std::vector<int> v(6);

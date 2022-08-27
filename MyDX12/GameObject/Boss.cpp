@@ -105,6 +105,7 @@ void XIIlib::Boss::Update()
 	{
 		bossType = BossType::strong;
 		SetAttackTimer(180, CountType::FRAME);
+		attackTimer->SetPosition(Math::Vector3(0.0f, 19.0f, 0.0f));
 		std::shared_ptr<Stone> stone = std::move(Stone::Create(1, 7));
 		std::shared_ptr<Stone> stone2 = std::move(Stone::Create(6, 7));
 		std::shared_ptr<Stone> stone3 = std::move(Stone::Create(1, 6));
@@ -204,7 +205,7 @@ void XIIlib::Boss::Action()
 	}
 	else if (attackTimer->SizeThirdBelowFlag()) // アタックタイマーが3分の1以下になったら通る(n回)
 	{
-		BossAttack::GetInstance()->DispTileDeathControl();
+		BossAttack::GetInstance()->DispTileDeathControl(bossAttackSelect);
 		if (bossType == BossType::normal)
 		{
 			object3d->position.y += 0.2f;

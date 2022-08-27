@@ -6,13 +6,36 @@
 
 namespace XIIlib {
 	// ボスアタッククラス
-	class BossAttack : public Boss
+	class BossAttack
 	{
 	private: // シングルトン化
 		BossAttack() = default;
 		~BossAttack() = default;
 		BossAttack(const BossAttack&) = delete;
 		BossAttack& operator = (const BossAttack&) = delete;
+	private: // 定数
+		static const int DISPLAY_FRAME = 12; // 12フレーム間隔で表示
+		static const int MAX_TILE = 8; // タイルの最大数
+		static const int METEORS_MAX = 15; // メテオ攻撃のメテオ数
+
+	private: // メンバ変数
+		int count = 0;
+		int numbersA[METEORS_MAX]; // ランダムメテオの座標格納配列A
+		int numbersB[METEORS_MAX]; // ランダムメテオの座標格納配列B
+		int tileNum = 0; // タイルナンバー
+		bool tileDeth[MAX_TILE] = {}; // タイル表示の生死
+		int attackFrameCnt = 0; // 攻撃フレームのカウント
+		int meteorsCount = -20; // メテオsのカウント
+
+		int bossMin = 0;
+		int bossMax = 5;
+		int bossTileRand = 0;
+
+		int meteorAMin = 0;
+		int meteorAMax = 7;
+		int meteorBMin = 0;
+		int meteorBMax = 7;
+
 	public:
 		/// <summary>
 		/// 生成関数
@@ -32,7 +55,7 @@ namespace XIIlib {
 		/// <summary>
 		/// タイルの表示遷移用
 		/// </summary>
-		void DispTileDeathControl();
+		void DispTileDeathControl(const int& bossAttackSelect);
 		/// <summary>
 		/// ランダムなメテオを生成(重複なし)
 		/// </summary>
