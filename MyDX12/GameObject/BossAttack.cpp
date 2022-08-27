@@ -1,4 +1,4 @@
-#include "BossAttack.h"
+ï»¿#include "BossAttack.h"
 #include "UnitManager.h"
 #include "Common.h"
 #include <iostream>
@@ -13,7 +13,7 @@ XIIlib::BossAttack* XIIlib::BossAttack::GetInstance()
 
 void XIIlib::BossAttack::DispTileDeathControl()
 {
-	//F‚ğ“h‚é
+	//è‰²ã‚’å¡—ã‚‹
 	if (count % DISPLAY_FRAME == 0)
 	{
 		if (bossAttackSelect == 0) {
@@ -38,19 +38,19 @@ void XIIlib::BossAttack::CreateMeteorPosition()
 		numbersA[i] = -1;
 		numbersB[i] = -1;
 	}
-	//ƒƒeƒI‚ÌÀ•W¶¬
+	//ãƒ¡ãƒ†ã‚ªã®åº§æ¨™ç”Ÿæˆ
 	while (1)
 	{
 		breakCnt++;
-		if (breakCnt >= 150)break;//ƒoƒO‚ª¶‚Ü‚ê‚½‚Æ‚«—p‚Ì‹­§I—¹
-		//‰¼‚Ìƒ‰ƒ“ƒ_ƒ€‚ÈÀ•W‚ğ“ü‚ê‚é
+		if (breakCnt >= 150)break;//ãƒã‚°ãŒç”Ÿã¾ã‚ŒãŸã¨ãç”¨ã®å¼·åˆ¶çµ‚äº†
+		//ä»®ã®ãƒ©ãƒ³ãƒ€ãƒ ãªåº§æ¨™ã‚’å…¥ã‚Œã‚‹
 		Math::Point2 numbers;
 		numbers.a = meteorAMin + (int)(rand() * (meteorAMax - meteorAMin + 1) / (1 + RAND_MAX));
 		numbers.b = meteorBMin + (int)(rand() * (meteorBMax - meteorBMin + 1) / (1 + RAND_MAX));
 
-		if (UnitManager::GetInstance()->AllOnUnit(numbers))continue;//‰¼‚ÌÀ•W‚É’N‚©‚ª‚¢‚é‚©
-		if (CheckMeteorArea(numbers))continue;//‘¼‚ÌƒƒeƒI‚ÌÀ•W‚Æ”í‚Á‚Ä‚¢‚é‚©
-		//‹‚È‚©‚Á‚½‚çÀ•W‚ğ‘ã“ü
+		if (UnitManager::GetInstance()->AllOnUnit(numbers))continue;//ä»®ã®åº§æ¨™ã«èª°ã‹ãŒã„ã‚‹ã‹
+		if (CheckMeteorArea(numbers))continue;//ä»–ã®ãƒ¡ãƒ†ã‚ªã®åº§æ¨™ã¨è¢«ã£ã¦ã„ã‚‹ã‹
+		//å±…ãªã‹ã£ãŸã‚‰åº§æ¨™ã‚’ä»£å…¥
 		numbersA[meteorcount] = numbers.a;
 		numbersB[meteorcount] = numbers.b;
 		meteorcount++;
@@ -63,7 +63,7 @@ bool XIIlib::BossAttack::CheckMeteorArea(const Math::Point2& meteorPos)
 {
 	for (int i = 0; i < METEORS_MAX; i++)
 	{
-		//meteorPos‚ªMETEORS_MAX‚Ì‰ñ”’†ˆê‰ñ‚Å‚àˆê‚É‚È‚ê‚Îtrue‚ğ•Ô‚·
+		//meteorPosãŒMETEORS_MAXã®å›æ•°ä¸­ä¸€å›ã§ã‚‚ä¸€ç·’ã«ãªã‚Œã°trueã‚’è¿”ã™
 		if (meteorPos.a == numbersA[i] && meteorPos.b == numbersB[i])return true;
 	}
 	return false;
@@ -71,7 +71,7 @@ bool XIIlib::BossAttack::CheckMeteorArea(const Math::Point2& meteorPos)
 
 void XIIlib::BossAttack::InitAttackDisplay()
 {
-	// ‘S‚Ä‚Ìƒ^ƒCƒ‹‚ª•\¦‚³‚ê‚Ä‚¢‚é‚È‚ç‰Šú‰»
+	// å…¨ã¦ã®ã‚¿ã‚¤ãƒ«ãŒè¡¨ç¤ºã•ã‚Œã¦ã„ã‚‹ãªã‚‰åˆæœŸåŒ–
 	if (count >= DISPLAY_FRAME * MAX_TILE)
 	{
 		count = 0;
@@ -85,7 +85,7 @@ void XIIlib::BossAttack::InitAttackDisplay()
 
 void XIIlib::BossAttack::Vertical3LineDisplay()
 {
-	// c
+	// ç¸¦
 	for (int i = MAX_TILE - 1; i >= 0; --i)
 	{
 		if (tileDeth[i])
@@ -99,7 +99,7 @@ void XIIlib::BossAttack::Vertical3LineDisplay()
 
 void XIIlib::BossAttack::Horizontal3LineDisplay()
 {
-	// ‰¡
+	// æ¨ª
 	for (int i = 0; i < MAX_TILE; ++i)
 	{
 		if (tileDeth[i])
@@ -113,8 +113,8 @@ void XIIlib::BossAttack::Horizontal3LineDisplay()
 
 void XIIlib::BossAttack::OneMeteor3x3Display(const Math::Point2& kingPos)
 {
-	Math::Point2 anchorLUpos = { kingPos.a - 1, kingPos.b + 1 };//¶ã
-	for (int i = 0; i < 3; i++)//3*3‚Ì“_UŒ‚
+	Math::Point2 anchorLUpos = { kingPos.a - 1, kingPos.b + 1 };//å·¦ä¸Š
+	for (int i = 0; i < 3; i++)//3*3ã®ç‚¹æ”»æ’ƒ
 	{
 		for (int j = 0; j < 3; j++)
 		{
@@ -125,14 +125,14 @@ void XIIlib::BossAttack::OneMeteor3x3Display(const Math::Point2& kingPos)
 	}
 }
 
-void XIIlib::BossAttack::RandomMeteor1x1Display()
+/*void XIIlib::BossAttack::RandomMeteor1x1Display()
 {
-	//ƒƒeƒI
+	//ãƒ¡ãƒ†ã‚ª
 	for (int i = 0; i < METEORS_MAX; i++)
 	{
 		UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(numbersA[i], numbersB[i]), (int)_PositionType::ENEMY);
 	}
-}
+}*/
 
 void XIIlib::BossAttack::Target()
 {
@@ -142,7 +142,7 @@ void XIIlib::BossAttack::Target()
 
 	std::vector<int> v(6);
 	std::iota(v.begin(), v.end(), 0);
-	// ƒVƒƒƒbƒtƒ‹
+	// ã‚·ãƒ£ãƒƒãƒ•ãƒ«
 	std::random_device seed_gen;
 	std::mt19937 engine(seed_gen());
 	std::shuffle(v.begin(), v.end(), engine);
@@ -172,9 +172,9 @@ void XIIlib::BossAttack::Horizontal3LineAttack()
 
 void XIIlib::BossAttack::OneMeteor3x3Attack(const Math::Point2& kingPos)
 {
-	// 1“_ƒƒeƒIUŒ‚ 3x3
-	Math::Point2 anchorLUpos = { kingPos.a - 1, kingPos.b + 1 };//¶ã
-	for (int i = 0; i < 3; i++)//3*3‚Ì“_UŒ‚
+	// 1ç‚¹ãƒ¡ãƒ†ã‚ªæ”»æ’ƒ 3x3
+	Math::Point2 anchorLUpos = { kingPos.a - 1, kingPos.b + 1 };//å·¦ä¸Š
+	for (int i = 0; i < 3; i++)//3*3ã®ç‚¹æ”»æ’ƒ
 	{
 		for (int j = 0; j < 3; j++)
 		{
@@ -186,16 +186,178 @@ void XIIlib::BossAttack::OneMeteor3x3Attack(const Math::Point2& kingPos)
 
 void XIIlib::BossAttack::RandomMeteor1x1Attack()
 {
-	// (‰¼)ƒ‰ƒ“ƒ_ƒ€ƒƒeƒIUŒ‚ 1x1
-	for (int i = 0; i < METEORS_MAX; i++)//ƒƒeƒI
+	// ---------- è¡¨ç¤º ----------
+	meteorsCount++;
+	//ï¿½ï¿½ï¿½eï¿½I1ï¿½`ï¿½ï¿½
+	if (meteorsCount >= -20 && meteorsCount <= 0)
+	{
+		UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(numbersA[0], numbersB[0]), (int)_PositionType::ENEMY);
+	}
+	//ï¿½ï¿½ï¿½eï¿½I2
+	if (meteorsCount >= 0 && meteorsCount <= 20)
+	{
+		UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(numbersA[1], numbersB[1]), (int)_PositionType::ENEMY);
+	}
+	//ï¿½ï¿½ï¿½eï¿½I3
+	if (meteorsCount >= 20 && meteorsCount <= 40)
+	{
+		UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(numbersA[2], numbersB[2]), (int)_PositionType::ENEMY);
+	}
+	//ï¿½ï¿½ï¿½eï¿½I4
+	if (meteorsCount >= 40 && meteorsCount <= 60)
+	{
+		UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(numbersA[3], numbersB[3]), (int)_PositionType::ENEMY);
+	}
+	//ï¿½ï¿½ï¿½eï¿½I5
+	if (meteorsCount >= 60 && meteorsCount <= 80)
+	{
+		UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(numbersA[4], numbersB[4]), (int)_PositionType::ENEMY);
+	}
+	//ï¿½ï¿½ï¿½eï¿½I6
+	if (meteorsCount >= 80 && meteorsCount <= 100)
+	{
+		UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(numbersA[5], numbersB[5]), (int)_PositionType::ENEMY);
+	}
+	//ï¿½ï¿½ï¿½eï¿½I7
+	if (meteorsCount >= 100 && meteorsCount <= 120)
+	{
+		UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(numbersA[6], numbersB[6]), (int)_PositionType::ENEMY);
+	}
+	//ï¿½ï¿½ï¿½eï¿½I8
+	if (meteorsCount >= 120 && meteorsCount <= 140)
+	{
+		UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(numbersA[7], numbersB[7]), (int)_PositionType::ENEMY);
+	}
+	//ï¿½ï¿½ï¿½eï¿½I9
+	if (meteorsCount >= 140 && meteorsCount <= 160)
+	{
+		UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(numbersA[8], numbersB[8]), (int)_PositionType::ENEMY);
+	}
+	//ï¿½ï¿½ï¿½eï¿½I10
+	if (meteorsCount >= 160 && meteorsCount <= 180)
+	{
+		UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(numbersA[9], numbersB[9]), (int)_PositionType::ENEMY);
+	}
+	//ï¿½ï¿½ï¿½eï¿½I11
+	if (meteorsCount >= 180 && meteorsCount <= 200)
+	{
+		UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(numbersA[10], numbersB[10]), (int)_PositionType::ENEMY);
+	}
+	//ï¿½ï¿½ï¿½eï¿½I12
+	if (meteorsCount >= 200 && meteorsCount <= 220)
+	{
+		UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(numbersA[11], numbersB[11]), (int)_PositionType::ENEMY);
+	}
+	//ï¿½ï¿½ï¿½eï¿½I13
+	if (meteorsCount >= 220 && meteorsCount <= 240)
+	{
+		UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(numbersA[12], numbersB[12]), (int)_PositionType::ENEMY);
+	}
+	//ï¿½ï¿½ï¿½eï¿½I14
+	if (meteorsCount >= 240 && meteorsCount <= 260)
+	{
+		UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(numbersA[13], numbersB[13]), (int)_PositionType::ENEMY);
+	}
+	//ï¿½ï¿½ï¿½eï¿½I15
+	if (meteorsCount >= 260 && meteorsCount <= 280)
+	{
+		UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(numbersA[14], numbersB[14]), (int)_PositionType::ENEMY);
+	}
+
+	// ---------- æ”»æ’ƒ ----------
+				//ï¿½ï¿½ï¿½eï¿½I1ï¿½ÌUï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	if (meteorsCount >= 0 && meteorsCount <= 20)
+	{
+		UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(numbersA[0], numbersB[0]), (int)_PositionType::BOSS);
+	}
+	//ï¿½ï¿½ï¿½eï¿½I2
+	if (meteorsCount >= 20 && meteorsCount <= 40)
+	{
+		UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(numbersA[1], numbersB[1]), (int)_PositionType::BOSS);
+	}
+	//ï¿½ï¿½ï¿½eï¿½I3
+	if (meteorsCount >= 40 && meteorsCount <= 60)
+	{
+		UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(numbersA[2], numbersB[2]), (int)_PositionType::BOSS);
+	}
+	//ï¿½ï¿½ï¿½eï¿½I4
+	if (meteorsCount >= 60 && meteorsCount <= 80)
+	{
+		UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(numbersA[3], numbersB[3]), (int)_PositionType::BOSS);
+	}
+	//ï¿½ï¿½ï¿½eï¿½I5
+	if (meteorsCount >= 80 && meteorsCount <= 100)
+	{
+		UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(numbersA[4], numbersB[4]), (int)_PositionType::BOSS);
+	}
+	//ï¿½ï¿½ï¿½eï¿½I6
+	if (meteorsCount >= 100 && meteorsCount <= 120)
+	{
+		UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(numbersA[5], numbersB[5]), (int)_PositionType::BOSS);
+	}
+	//ï¿½ï¿½ï¿½eï¿½I7
+	if (meteorsCount >= 120 && meteorsCount <= 140)
+	{
+		UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(numbersA[6], numbersB[6]), (int)_PositionType::BOSS);
+	}
+	//ï¿½ï¿½ï¿½eï¿½I8
+	if (meteorsCount >= 140 && meteorsCount <= 160)
+	{
+		UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(numbersA[7], numbersB[7]), (int)_PositionType::BOSS);
+	}
+	//ï¿½ï¿½ï¿½eï¿½I9
+	if (meteorsCount >= 160 && meteorsCount <= 180)
+	{
+		UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(numbersA[8], numbersB[8]), (int)_PositionType::BOSS);
+	}
+	//ï¿½ï¿½ï¿½eï¿½I10
+	if (meteorsCount >= 180 && meteorsCount <= 200)
+	{
+		UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(numbersA[9], numbersB[9]), (int)_PositionType::BOSS);
+	}
+	//ï¿½ï¿½ï¿½eï¿½I11
+	if (meteorsCount >= 200 && meteorsCount <= 220)
+	{
+		UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(numbersA[10], numbersB[10]), (int)_PositionType::BOSS);
+	}
+	//ï¿½ï¿½ï¿½eï¿½I12
+	if (meteorsCount >= 220 && meteorsCount <= 240)
+	{
+		UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(numbersA[11], numbersB[11]), (int)_PositionType::BOSS);
+	}
+	//ï¿½ï¿½ï¿½eï¿½I13
+	if (meteorsCount >= 240 && meteorsCount <= 260)
+	{
+		UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(numbersA[12], numbersB[12]), (int)_PositionType::BOSS);
+	}
+	//ï¿½ï¿½ï¿½eï¿½I14
+	if (meteorsCount >= 260 && meteorsCount <= 280)
+	{
+		UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(numbersA[13], numbersB[13]), (int)_PositionType::BOSS);
+	}
+	//ï¿½ï¿½ï¿½eï¿½I15
+	if (meteorsCount >= 280 && meteorsCount <= 300)
+	{
+		UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(numbersA[14], numbersB[14]), (int)_PositionType::BOSS);
+	}
+
+	// ãƒ¡ãƒ†ã‚ªsã‚«ã‚¦ãƒ³ãƒˆãŒæœ€å¤§ã¾ã§è¡Œã£ãŸã‚‰
+	if (meteorsCount >= 300)
+	{
+		// ãƒ¡ãƒ†ã‚ªsã‚«ã‚¦ãƒ³ãƒˆã®åˆæœŸåŒ–
+		meteorsCount = -20;
+	}
+
+	// (ä»®)ãƒ©ãƒ³ãƒ€ãƒ ãƒ¡ãƒ†ã‚ªæ”»æ’ƒ 1x1
+	/*for (int i = 0; i < METEORS_MAX; i++)//ãƒ¡ãƒ†ã‚ª
 	{
 		UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(numbersA[i], numbersB[i]), (int)_PositionType::BOSS);
-	}
+	}*/
 }
 
 void XIIlib::BossAttack::KnockBackAttack(const Math::Point2& pos)
 {
-	//ƒ^ƒCƒ‹•\¦
+	//ã‚¿ã‚¤ãƒ«è¡¨ç¤º
 	UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(pos.a - 3, pos.b), (int)_PositionType::ENEMY);
 	UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(pos.a + 2, pos.b), (int)_PositionType::ENEMY);
 	UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(pos.a - 2, pos.b - 1), (int)_PositionType::ENEMY);
@@ -204,7 +366,7 @@ void XIIlib::BossAttack::KnockBackAttack(const Math::Point2& pos)
 	UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(pos.a + 1, pos.b - 1), (int)_PositionType::ENEMY);
 	UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(pos.a - 3, pos.b - 1), (int)_PositionType::ENEMY);
 	UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(pos.a + 2, pos.b - 1), (int)_PositionType::ENEMY);
-	//–§’…‚µ‚½‚ç’e‚­
+	//å¯†ç€ã—ãŸã‚‰å¼¾ã
 	UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(pos.a - 3, pos.b), (int)_PositionType::BOSS_KNOCKBACK);
 	UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(pos.a + 2, pos.b), (int)_PositionType::BOSS_KNOCKBACK);
 	UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(pos.a - 2, pos.b - 1), (int)_PositionType::BOSS_KNOCKBACK);

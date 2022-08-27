@@ -168,7 +168,6 @@ void XIIlib::Boss::Action()
 {
 	if (attackTimer->SizeZeroFlag()) // アタックタイマーが0(以下)になったら通る
 	{
-		bossState = BossState::wait;
 		switching = true;
 		// Attack表示の初期化
 		BossAttack::GetInstance()->InitAttackDisplay();
@@ -235,7 +234,7 @@ void XIIlib::Boss::Action()
 			}
 			else
 			{
-				BossAttack::GetInstance()->RandomMeteor1x1Display();
+				// BossAttack::GetInstance()->RandomMeteor1x1Display();
 			}
 		}
 		bossState = BossState::attack;
@@ -291,6 +290,8 @@ void XIIlib::Boss::Attack()
 		determinateMoveAction = false;
 		// 攻撃フレームを0クリア
 		attackFrameCnt = 0;
+		// bossの状態を待機状態に戻す
+		bossState = BossState::wait;
 	}
 }
 

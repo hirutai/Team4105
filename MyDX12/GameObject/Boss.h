@@ -44,6 +44,7 @@ namespace XIIlib {
 		int tileNum = 0; // タイルナンバー
 		bool tileDeth[MAX_TILE] = {}; // タイル表示の生死
 		int attackFrameCnt = 0; // 攻撃フレームのカウント
+		int meteorsCount = -20; // メテオsのカウント
 
 		int bossMin = 0;
 		int bossMax = 5;

@@ -58,7 +58,7 @@ namespace XIIlib {
 		/// <summary>
 		/// ランダムまばら 1x1メテオ
 		/// </summary>
-		void RandomMeteor1x1Display();
+		// void RandomMeteor1x1Display();
 
 	public: // ------------------ 攻撃系 ------------------
 		/// <summary>
@@ -73,13 +73,13 @@ namespace XIIlib {
 		/// 1点 3x3メテオ
 		/// </summary>
 		void OneMeteor3x3Attack(const Math::Point2& kingPos);
+
+	public: // 表示攻撃同時
 		/// <summary>
 		/// ランダムまばら 1x1メテオ
 		/// </summary>
 		void RandomMeteor1x1Attack();
-
-	public: // 表示攻撃同時
-		// 近距離にいるplayerを吹き飛ばす
+		// 近距離ノックバック攻撃(周囲1マス)
 		void KnockBackAttack(const Math::Point2& pos);
 	};
 }
