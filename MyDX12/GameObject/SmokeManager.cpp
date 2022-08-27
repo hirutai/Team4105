@@ -6,6 +6,7 @@ XIIlib::SmokeManager::SmokeManager() {}
 
 XIIlib::SmokeManager::~SmokeManager()
 {
+	delete iBill;
 }
 
 XIIlib::SmokeManager* XIIlib::SmokeManager::Create()
@@ -20,7 +21,7 @@ XIIlib::SmokeManager* XIIlib::SmokeManager::Create()
 
 void XIIlib::SmokeManager::Initialize()
 {
-	vcon.reserve(sizeof(DataAset) * 10);
+	//vcon.reserve(sizeof(DataAset) * 10);
 	iBill = InstBill::Create("");
 }
 
