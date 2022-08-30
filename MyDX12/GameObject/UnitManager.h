@@ -11,6 +11,7 @@ namespace XIIlib {
 	class BoardMap;
 	class Audio;
 
+	class SmokeManager;
 	class GrainManager;
 
 	class UnitManager {
@@ -29,7 +30,8 @@ namespace XIIlib {
 		GamePAD_XInput* gamePad_ = nullptr;
 
 		std::vector<Math::Point2> hitPos;
-		GrainManager* grainMs;
+		SmokeManager* smokeMs = nullptr;
+		GrainManager* grainMs = nullptr;
 
 	public:
 		UnitManager(const UnitManager& obj) = delete;
@@ -105,6 +107,8 @@ namespace XIIlib {
 		void GrainCreate();
 
 		bool GetStoneOnTile(const Math::Point2& nextP);
+
+		void AddSmoke(float c, float s, const Math::Vector3& v, const Math::Vector3& pos);
 	};
 
 }

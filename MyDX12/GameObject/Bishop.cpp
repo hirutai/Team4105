@@ -8,7 +8,6 @@
 #include "../GameObject/AttackTimer.h"
 #include "../Tool/Easing.h"
 #include "ModelLoader.h"
-#include "SmokeManager.h"
 
 XIIlib::Bishop::Bishop()
 {
@@ -21,7 +20,6 @@ XIIlib::Bishop::Bishop()
 
 XIIlib::Bishop::~Bishop()
 {
-	delete sManager;
 	delete attackTimer;
 	delete object3d;
 }
@@ -57,7 +55,6 @@ void XIIlib::Bishop::Initialize()
 	SetAttackTimer(countingNum);
 
 	intTimeCount = 3;
-	sManager = SmokeManager::Create();
 }
 
 void XIIlib::Bishop::Update()
@@ -78,7 +75,6 @@ void XIIlib::Bishop::Update()
 			pos = object3d->position;
 			// エフェクトの設定
 			intTimeCount = 3;
-			sManager->AllClear();
 		}
 		if (determinateMoveAction) {
 			// モーション処理
@@ -92,10 +88,9 @@ void XIIlib::Bishop::Update()
 				v.normalize();
 				float rnd_scale = static_cast<float>(rand() % 10 + 5) / 100.0f;
 				float rnd_mullValue = static_cast<float>(rand() % 5 + 5) / 50.0f;
-				sManager->Add(0.05f, rnd_scale, v * rnd_mullValue + Math::Vector3(0, 0.05f, 0), object3d->position + Math::Vector3(0, 2, 0));
+				UnitManager::GetInstance()->AddSmoke(0.05f, rnd_scale, v * rnd_mullValue + Math::Vector3(0, 0.05f, 0), object3d->position + Math::Vector3(0, 2, 0));
 				intTimeCount = 3;
 			}
-			sManager->Update();
 		}
 
 		object3d->Update();
@@ -105,9 +100,7 @@ void XIIlib::Bishop::Update()
 }
 
 void XIIlib::Bishop::OriginBillDraw()
-{
-	sManager->Draw();
-}
+{}
 
 void XIIlib::Bishop::Action()
 {
