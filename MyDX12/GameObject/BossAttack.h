@@ -13,7 +13,8 @@ namespace XIIlib {
 		BossAttack(const BossAttack&) = delete;
 		BossAttack& operator = (const BossAttack&) = delete;
 	private: // 定数
-		static const int DISPLAY_FRAME = 12; // 12フレーム間隔で表示
+		static const int SHOW_TILE_SPACE = 7; // 7フレーム間隔で表示
+		static const int HIDE_TILE_SPACE = 7; // 7フレーム間隔で非表示
 		static const int MAX_TILE = 8; // タイルの最大数
 		static const int METEORS_MAX = 15; // メテオ攻撃のメテオ数
 		const Math::Point2 METEOR_MIN_MAX = {0,7};
@@ -25,11 +26,11 @@ namespace XIIlib {
 		int numbersA[METEORS_MAX] = {}; // ランダムメテオの座標格納配列A
 		int numbersB[METEORS_MAX] = {}; // ランダムメテオの座標格納配列B
 		int tileNum = 0; // タイルナンバー
-		bool tilesDispFlag[MAX_TILE] = {}; // タイル表示の生死
+		bool tilesShowFlag[MAX_TILE] = {}; // タイル表示の生死
 		bool tileSwitch = true; // タイルを表示するか非表示にするか
 		int attackFrameCnt = 0; // 攻撃フレームのカウント
 		int meteorsCount = -20; // メテオsのカウント
-		int bossTileRand = 0; // Line攻撃時のランダム座標格納
+		int targetTileRand = 0; // Line攻撃時のランダム座標格納
 
 	public: // 静的関数
 		/// <summary>
@@ -65,6 +66,8 @@ namespace XIIlib {
 		/// </summary>
 		/// <param name="type"></param>
 		void AssignPositionType(const std::string& type);
+	public: // Getter Setter
+		int GetTargetTile() { return targetTileRand; }
 
 	public: // ------------------ 表示攻撃選択系 ------------------
 		/* Attackで攻撃 Displayで表示*/

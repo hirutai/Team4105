@@ -21,25 +21,22 @@ namespace XIIlib {
 	// ボスクラス
 	class Boss : public Unit {
 	protected: // メンバ定数
-
 		static const int MAX_ATTACK_FRAME = 300; // 攻撃最中の最大フレーム
+		const Math::Point2 ATTACK_RANDOM_MIN_MAX = { 0,1 }; // アタックを制御する最小と最大
+
 	protected: // メンバ変数
 		Math::Point2 point_attack;
 		AREA type_attack = AREA::NONE;
 		Object3D* object3d2 = nullptr; // 3DObject 盤長攻撃時
 		Object3D* carobj = nullptr; // 3DObject 車
-		BossAttack* bossAttack = nullptr;
-		BossState bossState = BossState::wait;
-		BossType bossType = BossType::normal;
+		BossState bossState = BossState::wait; // ボスの状態格納
+		BossType bossType = BossType::normal; // ボスのタイプ格納
 
 		int switchingCount = 0; // 切り替えるため間隔をカウント
 		bool harfHpFlag = false; // 体力が半分以下かどうか
 		bool switching = false; // 画像切り替えよう
-
-		int bossAttackMin = 0;
-		int bossAttackMax = 1;
-		int bossAttackSelect = 0;
-		int attackFrameCnt = 0;
+		int attackSelect = 0; // ボスの攻撃行動を制御する (n:0=縦3Line,1=横3Line S:0=1点メテオ,1=ランダムメテオ)
+		int attackFrameCnt = 0; // ボスの攻撃中のフレームカウント
 
 	public: // 継承クラス
 		void Initialize()override;
@@ -60,8 +57,6 @@ namespace XIIlib {
 		~Boss(); // デストラクタ
 		// 生成関数
 		static std::shared_ptr<Boss> Create(int point_x, int point_z);
-		// Attackエリアの描画
-		void AttackAreaDraw();
 	};
 }
 

@@ -19,27 +19,27 @@ void XIIlib::BossAttack::InitAttackDisplay()
 	tileSwitch = true;
 	for (int i = 0; i < MAX_TILE; i++)
 	{
-		tilesDispFlag[i] = false;
+		tilesShowFlag[i] = false;
 	}
 }
 
 void XIIlib::BossAttack::DispTileDeathControl(const int& bossAttackSelect)
 {
 	// タイルが全て表示されたら間隔を空けて非表示にする
-	if (frameCount >= DISPLAY_FRAME * MAX_TILE) { 
+	if (frameCount >= SHOW_TILE_SPACE * MAX_TILE) { 
 		frameCount = 0;
 		tileNum = 0;
 		tileSwitch = false;
 	}
 	// tileDispが8枚trueになるまで通る 
-	if (frameCount % DISPLAY_FRAME == 0 && tileNum <= (MAX_TILE - 1))
+	if (frameCount % SHOW_TILE_SPACE == 0 && tileNum <= (MAX_TILE - 1))
 	{
 		if (bossAttackSelect == 0) {
-			tilesDispFlag[abs(tileNum - (MAX_TILE - 1))] = tileSwitch;
+			tilesShowFlag[abs(tileNum - (MAX_TILE - 1))] = tileSwitch;
 		}
 		else
 		{
-			tilesDispFlag[tileNum] = tileSwitch;
+			tilesShowFlag[tileNum] = tileSwitch;
 		}
 		tileNum++;
 	}
@@ -49,14 +49,14 @@ void XIIlib::BossAttack::DispTileDeathControl(const int& bossAttackSelect)
 
 void XIIlib::BossAttack::Target()
 {
-	bossTileRand = BOSSTILE_MIN_MAX.a + (int)(rand() * (BOSSTILE_MIN_MAX.b - BOSSTILE_MIN_MAX.a + 1) / (1 + RAND_MAX));
+	targetTileRand = BOSSTILE_MIN_MAX.a + (int)(rand() * (BOSSTILE_MIN_MAX.b - BOSSTILE_MIN_MAX.a + 1) / (1 + RAND_MAX));
 	std::vector<int> v(6);
 	std::iota(v.begin(), v.end(), 0);
 	// シャッフル
 	std::random_device seed_gen;
 	std::mt19937 engine(seed_gen());
 	std::shuffle(v.begin(), v.end(), engine);
-	bossTileRand = v[bossTileRand] + 1;
+	targetTileRand = v[targetTileRand] + 1;
 }
 
 void XIIlib::BossAttack::CreateMeteorPosition(int& bossAttackSelect)
@@ -128,11 +128,11 @@ void XIIlib::BossAttack::Vertical3Line(const std::string& type)
 	// 縦
 	for (int i = MAX_TILE - 1; i >= 0; --i)
 	{
-		if (tilesDispFlag[i])
+		if (tilesShowFlag[i])
 		{
-			UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(bossTileRand, i), positionType);
-			UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(bossTileRand + 1, i), positionType);
-			UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(bossTileRand - 1, i), positionType);
+			UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(targetTileRand, i), positionType);
+			UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(targetTileRand + 1, i), positionType);
+			UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(targetTileRand - 1, i), positionType);
 		}
 	}
 }
@@ -144,11 +144,11 @@ void XIIlib::BossAttack::Horizontal3Line(const std::string& type)
 	// 横
 	for (int i = 0; i < MAX_TILE; ++i)
 	{
-		if (tilesDispFlag[i])
+		if (tilesShowFlag[i])
 		{
-			UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(i, bossTileRand), positionType);
-			UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(i, bossTileRand + 1), positionType);
-			UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(i, bossTileRand - 1), positionType);
+			UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(i, targetTileRand), positionType);
+			UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(i, targetTileRand + 1), positionType);
+			UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(i, targetTileRand - 1), positionType);
 		}
 	}
 }
