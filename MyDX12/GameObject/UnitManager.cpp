@@ -79,15 +79,17 @@ void XIIlib::UnitManager::Update()
 		}
 	}
 
+	// hpが0のやつを死なせる。
+	for (auto& unit : units) {
+		unit->ZeroHp();
+		if (unit->GetID() != "King")continue;
+		if (unit->IsDead() == true)hitPos.push_back(unit->GetElementStock());
+	}
+
 	// ここでパーティクルを発生させる
 	smokeMs->Update();
 	GrainCreate();
 	hitPos.clear();
-
-	// hpが0のやつを死なせる。
-	for (auto& unit : units) {
-		unit->ZeroHp();
-	}
 
 	if (add_units.size() != 0)
 	{

@@ -26,14 +26,7 @@ void XIIlib::BossAttack::InitAttackDisplay()
 
 void XIIlib::BossAttack::DispTileDeathControl(const int& bossAttackSelect,const int& startCnt)
 {
-	// タイルが全て表示されたら間隔を空けて非表示にする
-	/*if (frameCount >= SHOW_TILE_SPACE * MAX_TILE) { 
-		frameCount = 0;
-		showTileCount = 0;
-		tileSwitch = false;
-	}*/
-
-	// showTileCountが8枚trueになるまで通る 
+	// showTileCountが8個trueになるまで通る 
 	if (frameCount % SHOW_TILE_SPACE == 0 && showTileCount <= (MAX_TILE - 1) && frameCount >= startCnt)
 	{
 		if (bossAttackSelect == 0) {
@@ -46,6 +39,7 @@ void XIIlib::BossAttack::DispTileDeathControl(const int& bossAttackSelect,const 
 		showTileCount++;
 	}
 
+	// hideTileCountが8個falseになるまで通る
 	if ((frameCount - HIDE_TILE_SPACE) % SHOW_TILE_SPACE == 0 && hideTileCount <= (MAX_TILE - 1) && (frameCount - HIDE_TILE_SPACE) >= startCnt)
 	{
 		if (bossAttackSelect == 0) {
@@ -57,6 +51,7 @@ void XIIlib::BossAttack::DispTileDeathControl(const int& bossAttackSelect,const 
 		}
 		hideTileCount++;
 	}
+
 	// フレームカウント
 	frameCount++;
 }
