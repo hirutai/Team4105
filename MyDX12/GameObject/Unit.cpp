@@ -22,12 +22,7 @@ bool XIIlib::Unit::ThreeCheckArea(Math::Point2 element_stock)
 
 bool XIIlib::Unit::GetInvincibleFlag()
 {
-	// ƒoƒO‚Á‚Ä‰½‚à“ü‚Á‚Ä‚È‚¢‚Æ‚«
-	if (invincibleFlag == nullptr)
-	{
-		return false;
-	}
-	return invincibleFlag; 
+	return invincibleFlag;
 }
 
 void XIIlib::Unit::SetTypePositioning(_PositionType changeType)
@@ -236,8 +231,6 @@ void XIIlib::Unit::SetFallFlag()
 
 void XIIlib::Unit::ObjectUpdate()
 {
-	
-
 	if (object3d != nullptr) {
 		object3d->Update();
 	}

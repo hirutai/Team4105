@@ -23,6 +23,7 @@ namespace XIIlib {
 	protected: // メンバ定数
 		static const int MAX_ATTACK_FRAME = 300; // 攻撃最中の最大フレーム
 		const Math::Point2 ATTACK_RANDOM_MIN_MAX = { 0,1 }; // アタックを制御する最小と最大
+		const float COLISION_HEIGHT = 2.0f;
 
 	protected: // メンバ変数
 		Math::Point2 point_attack;
@@ -57,6 +58,7 @@ namespace XIIlib {
 		~Boss(); // デストラクタ
 		// 生成関数
 		static std::shared_ptr<Boss> Create(int point_x, int point_z);
+		
 	};
 }
 
