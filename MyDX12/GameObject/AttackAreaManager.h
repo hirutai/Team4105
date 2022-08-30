@@ -1,7 +1,6 @@
 #pragma once
 #include"../Struct/Point2.h"
 
-
 namespace XIIlib {
     class AttackAreaManager
     {

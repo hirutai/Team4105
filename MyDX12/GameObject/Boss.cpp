@@ -3,18 +3,10 @@
 #include "King.h"
 #include "Common.h"
 #include "UnitManager.h"
-#include "../Tool/Messenger.h"
 #include "../3D/Object3D.h"
 #include "../Audio/Audio.h"
 #include "../GameObject/AttackTimer.h"
-#include"../GameObject/Stone.h"
-#include "../Tool/DebugText.h"
-#include "../Tool/Easing.h"
-#include <algorithm>
-#include <iostream>
-#include <numeric>
-#include <iterator>
-#include <random>
+#include "../GameObject/Stone.h"
 #include "ModelLoader.h"
 #include "BossAttack.h"
 
@@ -166,7 +158,7 @@ void XIIlib::Boss::Draw()
 
 void XIIlib::Boss::Action()
 {
-	// アタックタイマーによって行動をする
+	// アタックタイマーによって行動を変化
 	if (attackTimer->SizeZeroFlag()) // アタックタイマーが0(以下)になったら通る
 	{
 		switching = true;
@@ -188,16 +180,40 @@ void XIIlib::Boss::Action()
 		}
 
 		// ランダムで攻撃タイプを選択
-		bossAttackSelect = bossAttackMin + (int)(rand() * (bossAttackMax - bossAttackMin + 1) / (1 + RAND_MAX));
-		// どのラインを攻撃するか
-		BossAttack::GetInstance()->Target();
-
-		// BossTypeが強い状態なら
-		if (bossType == BossType::strong)
+		attackSelect = ATTACK_RANDOM_MIN_MAX.a + (int)(rand() * (ATTACK_RANDOM_MIN_MAX.b - ATTACK_RANDOM_MIN_MAX.a + 1) / (1 + RAND_MAX));
+		
+		// ボスの状態で準備の内容を変える(設定系)
+		if (bossType == BossType::normal)// BossTypeが通常状態なら
 		{
-			if (bossAttackSelect != 0)
+			// どのラインを攻撃するか
+			BossAttack::GetInstance()->Target();
+			// carobjを設定
+			if (attackSelect == 0) // 縦ならば
 			{
-				BossAttack::GetInstance()->CreateMeteorPosition(bossAttackSelect);
+				// モデルをY軸に-90度(後ろ方向を向くように設定)
+				carobj->rotation.y = -90.0f;
+				// 座標の設定
+				// Tile座標からワールド座標に変換
+				float targetPos = Common::ConvertTilePosition(BossAttack::GetInstance()->GetTargetTile());
+				carobj->position = {targetPos,1.0f,50};
+			}
+			else if (attackSelect == 1) // 横ならば
+			{
+				// モデルをY軸に180度(右方向に向くように設定)
+				carobj->rotation.y = 180.0f;
+				// 座標の設定
+				// Tile座標からワールド座標に変換
+				float targetPos = Common::ConvertTilePosition(BossAttack::GetInstance()->GetTargetTile());
+				carobj->position = { -50,1.0f,targetPos };
+			}
+		}
+		else if (bossType == BossType::strong)// BossTypeが強い状態なら
+		{
+			// ランダムメテオ攻撃の準備
+			if (attackSelect != 0)
+			{
+				// メテオの座標決め
+				BossAttack::GetInstance()->CreateMeteorPosition(attackSelect);
 			}
 		}
 		// Attack表示の初期化
@@ -205,9 +221,10 @@ void XIIlib::Boss::Action()
 	}
 	else if (attackTimer->SizeThirdBelowFlag()) // アタックタイマーが3分の1以下になったら通る(n回)
 	{
-		BossAttack::GetInstance()->DispTileDeathControl(bossAttackSelect);
+		// ボスの状態で準備の内容を変える(動きながら準備)
 		if (bossType == BossType::normal)
 		{
+			BossAttack::GetInstance()->DispTileDeathControl(attackSelect);
 			object3d->position.y += 0.2f;
 			//object3d2->position.y += 0.2f;
 			if (object3d->position.y >= 20.0f)
@@ -216,7 +233,7 @@ void XIIlib::Boss::Action()
 				//object3d2->position.y = 20.0f;
 			}
 			//carobj->position.y +=0.1f;
-			if (bossAttackSelect == 0)
+			if (attackSelect == 0)
 			{
 				// 縦3列表示
 				BossAttack::GetInstance()->Vertical3Line("Display");
@@ -229,10 +246,13 @@ void XIIlib::Boss::Action()
 		}
 		else if (bossType == BossType::strong)
 		{
-			if (bossAttackSelect == 0)
+			// 1点メテオ
+			if (attackSelect == 0)
 			{
 				BossAttack::GetInstance()->OneMeteor3x3("Display",kingPos);
 			}
+
+			// ランダムメテオは表示と攻撃が同時なので、ここには書きません
 		}
 		bossState = BossState::attack;
 	}
@@ -247,24 +267,26 @@ void XIIlib::Boss::Action()
 
 void XIIlib::Boss::Attack()
 {
+	// ボスタイプごとに攻撃処理を変化
 	switch (bossType)
 	{
 	case BossType::normal:
-		BossAttack::GetInstance()->DispTileDeathControl(bossAttackSelect);
-		if (bossAttackSelect == 0)
+		BossAttack::GetInstance()->DispTileDeathControl(attackSelect);
+		if (attackSelect == 0)
 		{
-			// 縦攻撃
-			carobj->rotation.x = 90;
+			carobj->position.z -= 0.7f;
+			// 縦3攻撃
 			BossAttack::GetInstance()->Vertical3Line("Attack");
 		}
 		else
 		{
-			// 横攻撃
+			carobj->position.x += 0.7f;
+			// 横3攻撃
 			BossAttack::GetInstance()->Horizontal3Line("Attack");
 		}
 		break;
 	case BossType::strong:
-		if (bossAttackSelect == 0)
+		if (attackSelect == 0)
 		{
 			// 1点メテオ攻撃 3x3
 			BossAttack::GetInstance()->OneMeteor3x3("Attack",kingPos);
@@ -301,9 +323,6 @@ bool XIIlib::Boss::AttackAreaExists()
 {
 	return false;
 }
-
-void XIIlib::Boss::AttackAreaDraw()
-{}
 
 void XIIlib::Boss::IniState()
 {}

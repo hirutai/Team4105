@@ -1,5 +1,4 @@
 #pragma once
-
 #include "../Struct/Math.h"
 
 namespace XIIlib
