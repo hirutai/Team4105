@@ -61,6 +61,7 @@ void XIIlib::Unit::KnockBack()
 	// UŒ‚“–‚½‚Á‚Ä‚¢‚È‚¯‚ê‚Î‚»‚­•Ô‚·
 	if (!UnitManager::GetInstance()->IsAttackValid(element_stock, (int)_PositionType::MINE))return;
 
+
 	SetHitDamage(1.0f);
 	audio_->PlaySE("damage.wav",0.3f);
 	isAttack = false;

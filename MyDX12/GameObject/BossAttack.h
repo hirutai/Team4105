@@ -14,7 +14,7 @@ namespace XIIlib {
 		BossAttack& operator = (const BossAttack&) = delete;
 	private: // 定数
 		static const int SHOW_TILE_SPACE = 7; // 7フレーム間隔で表示
-		static const int HIDE_TILE_SPACE = 7; // 7フレーム間隔で非表示
+		static const int HIDE_TILE_SPACE = 28; // 7フレーム間隔で非表示
 		static const int MAX_TILE = 8; // タイルの最大数
 		static const int METEORS_MAX = 15; // メテオ攻撃のメテオ数
 		const Math::Point2 METEOR_MIN_MAX = {0,7};
@@ -25,7 +25,8 @@ namespace XIIlib {
 		int frameCount = 0; // カウント
 		int numbersA[METEORS_MAX] = {}; // ランダムメテオの座標格納配列A
 		int numbersB[METEORS_MAX] = {}; // ランダムメテオの座標格納配列B
-		int tileNum = 0; // タイルナンバー
+		int showTileCount = 0; // タイル表示をカウント
+		int hideTileCount = 0; // タイル非表示をカウント
 		bool tilesShowFlag[MAX_TILE] = {}; // タイル表示の生死
 		bool tileSwitch = true; // タイルを表示するか非表示にするか
 		int attackFrameCnt = 0; // 攻撃フレームのカウント
@@ -47,7 +48,7 @@ namespace XIIlib {
 		/// <summary>
 		/// タイルの表示遷移用
 		/// </summary>
-		void DispTileDeathControl(const int& bossAttackSelect);
+		void DispTileDeathControl(const int& bossAttackSelect,const int& startCnt);
 		/// <summary>
 		/// Line決めの核部分の座標をランダム生成
 		/// </summary>
@@ -60,12 +61,12 @@ namespace XIIlib {
 		/// メテオが他のメテオと重なっていないかチェック
 		/// </summary>
 		bool CheckMeteorArea(const Math::Point2& meteorPos);
-
 		/// <summary>
 		/// PositionTypeを代入
 		/// </summary>
 		/// <param name="type"></param>
 		void AssignPositionType(const std::string& type);
+
 	public: // Getter Setter
 		int GetTargetTile() { return targetTileRand; }
 

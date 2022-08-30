@@ -96,9 +96,13 @@ void XIIlib::Boss::Update()
 	// BossのHPがデフォルトのHPの半分以下でなおかつBossが通常の状態で待機中なら
 	if (_hit_point <= BossHP::GetInstance()->GetDefaultBossHP() / 2 && bossType == BossType::normal && bossState == BossState::wait)
 	{
+		// ボスタイプを強い状態に
 		bossType = BossType::strong;
+		// ボスの攻撃間隔を変更
 		SetAttackTimer(180, CountType::FRAME);
 		attackTimer->SetPosition(Math::Vector3(0.0f, 19.0f, 0.0f));
+
+		// ボスの周りに壁を生成
 		std::shared_ptr<Stone> stone = std::move(Stone::Create(1, 7));
 		std::shared_ptr<Stone> stone2 = std::move(Stone::Create(6, 7));
 		std::shared_ptr<Stone> stone3 = std::move(Stone::Create(1, 6));
@@ -216,6 +220,7 @@ void XIIlib::Boss::Action()
 				BossAttack::GetInstance()->CreateMeteorPosition(attackSelect);
 			}
 		}
+		// ボスを無敵にする
 		// Attack表示の初期化
 		BossAttack::GetInstance()->InitAttackDisplay();
 	}
@@ -224,7 +229,7 @@ void XIIlib::Boss::Action()
 		// ボスの状態で準備の内容を変える(動きながら準備)
 		if (bossType == BossType::normal)
 		{
-			BossAttack::GetInstance()->DispTileDeathControl(attackSelect);
+			BossAttack::GetInstance()->DispTileDeathControl(attackSelect,0);
 			object3d->position.y += 0.2f;
 			//object3d2->position.y += 0.2f;
 			if (object3d->position.y >= 20.0f)
@@ -260,6 +265,7 @@ void XIIlib::Boss::Action()
 	// 直接殴られた時の処理
 	if (UnitManager::GetInstance()->IsAttackValid(element_stock, (int)_PositionType::MINE))
 	{
+		if (invincibleFlag)return;
 		BossHP::GetInstance()->Damage();
 		BossAttack::GetInstance()->KnockBackAttack(element_stock);
 	}
@@ -267,11 +273,12 @@ void XIIlib::Boss::Action()
 
 void XIIlib::Boss::Attack()
 {
+	const int START_COUNT = 25;
 	// ボスタイプごとに攻撃処理を変化
 	switch (bossType)
 	{
 	case BossType::normal:
-		BossAttack::GetInstance()->DispTileDeathControl(attackSelect);
+		BossAttack::GetInstance()->DispTileDeathControl(attackSelect, START_COUNT);
 		if (attackSelect == 0)
 		{
 			carobj->position.z -= 0.7f;

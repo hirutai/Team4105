@@ -48,12 +48,11 @@ void XIIlib::BossCollision::Initialize()
 void XIIlib::BossCollision::Update()
 {
 	_hit_point = BossHP::GetInstance()->GetBossHP();
-	// 駒の行動
-	Action();
 	// 位置座標の更新
 	//object3d->position = { Common::ConvertTilePosition(element_stock.a),1.0f, Common::ConvertTilePosition(element_stock.b) };
 	if (UnitManager::GetInstance()->IsAttackValid(element_stock, (int)_PositionType::MINE))
 	{
+		if (invincibleFlag)return;
 		BossHP::GetInstance()->Damage();
 		//タイル表示
 		UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(1, 7), (int)_PositionType::ENEMY);
