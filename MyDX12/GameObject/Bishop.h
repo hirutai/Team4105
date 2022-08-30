@@ -3,13 +3,11 @@
 #include <memory>
 
 namespace XIIlib {
-	class SmokeManager;
 
 	class Bishop : public Unit {
 	private:
 		Math::Point2 point_attack;
 
-		SmokeManager* sManager = nullptr;
 		int intTimeCount = 0;
 
 		int countingNum = 6; // ƒJƒEƒ“ƒg‚µ‚½‚¢”
