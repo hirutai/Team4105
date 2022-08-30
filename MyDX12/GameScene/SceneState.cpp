@@ -117,6 +117,10 @@ void XIIlib::SceneState::CreateUnitsPosition(StageNumber stageNum, std::string f
 		std::shared_ptr<BossCollision> bossCollision1 = std::move(BossCollision::Create(2, 7));
 		std::shared_ptr<BossCollision> bossCollision2 = std::move(BossCollision::Create(3, 7));
 		std::shared_ptr<BossCollision> bossCollision3 = std::move(BossCollision::Create(5, 7));
+		
+		bossCollision1->SetInvincibleFlag(boss->GetInvincibleFlag());
+		bossCollision2->SetInvincibleFlag(boss->GetInvincibleFlag());
+		bossCollision3->SetInvincibleFlag(boss->GetInvincibleFlag());
 
 		UnitManager::GetInstance()->AddUnit(std::move(king));
 		UnitManager::GetInstance()->AddUnit(std::move(bishop));

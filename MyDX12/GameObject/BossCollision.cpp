@@ -52,7 +52,7 @@ void XIIlib::BossCollision::Update()
 	//object3d->position = { Common::ConvertTilePosition(element_stock.a),1.0f, Common::ConvertTilePosition(element_stock.b) };
 	if (UnitManager::GetInstance()->IsAttackValid(element_stock, (int)_PositionType::MINE))
 	{
-		if (m_invincibleFlag)return;
+		if (*m_invincibleFlag)return;
 		BossHP::GetInstance()->Damage();
 		//ƒ^ƒCƒ‹•\Ž¦
 		UnitManager::GetInstance()->ChangeAttackValidTile(Math::Point2(1, 7), (int)_PositionType::ENEMY);

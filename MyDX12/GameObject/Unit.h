@@ -97,7 +97,7 @@ namespace XIIlib {
 
 		// attacktimerの表示flag
 		bool dispATFlag = true;
-		bool* invincibleFlag = false; // 無敵状態か？trueであれば無敵
+		bool invincibleFlag = false; // 無敵状態か？trueであれば無敵
 	public:
 		Unit() = default;
 		virtual ~Unit(){}
@@ -132,17 +132,15 @@ namespace XIIlib {
 		std::string GetID()const { return ID; }
 		Math::Point2 GetElementStock()const { return element_stock; }
 		Math::Point2 GetAttackArea(int pattern, int element)const { return attack_area[pattern][element]; }
+		bool GetFallFlag()const { return fallFlag; }
 		bool GetInvincibleFlag();
 
 	public:// Set関数群
 		void SetTypePositioning(_PositionType changeType);
 		virtual void SetHitDamage(int attackPoint);				// ダメージを受ける関数
 		void OnDead() { is_dead = true; }
-
 		void SetAttackTimer(int countNum, XIIlib::CountType type = XIIlib::CountType::SECOND);
-
 		void SetFallFlag();
-		bool GetFallFlag()const { return fallFlag; }
 
 	public:// 共通関数
 		void BillObjectDraw();

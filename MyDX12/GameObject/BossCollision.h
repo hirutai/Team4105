@@ -6,7 +6,7 @@ namespace XIIlib {
 	class BossCollision : public Unit {
 	private:
 		Math::Point2 point_attack;
-		bool m_invincibleFlag;
+		bool* m_invincibleFlag;
 	public:
 		BossCollision();
 		~BossCollision();
@@ -28,7 +28,7 @@ namespace XIIlib {
 
 		Math::Point2 GetElementStock()const { return element_stock; }
 		// 無敵フラグを設定
-		void SetInvincibleFlag(const bool& invincibleFlag) { m_invincibleFlag = invincibleFlag; }
+		void SetInvincibleFlag(bool b_invincibleFlag) { m_invincibleFlag = &b_invincibleFlag; }
 	};
 }
 

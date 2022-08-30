@@ -133,11 +133,22 @@ void XIIlib::Boss::Update()
 		Attack();
 	}
 
+	// –³“G”»’è§Œä
+	if (object3d->position.y >= COLISION_HEIGHT && !invincibleFlag)
+	{
+		// –³“Gó‘Ô•t—^
+		invincibleFlag = true;
+	}
+	if (object3d->position.y < COLISION_HEIGHT && invincibleFlag)
+	{
+		// –³“Gó‘Ô‰ğœ
+		invincibleFlag = false;
+	}
 
 	// ’¼Ú‰£‚ç‚ê‚½‚Ìˆ—
 	if (UnitManager::GetInstance()->IsAttackValid(element_stock, (int)_PositionType::MINE))
 	{
-		if (*invincibleFlag)return;
+		if (invincibleFlag)return;
 		BossHP::GetInstance()->Damage();
 		BossAttack::GetInstance()->KnockBackAttack(element_stock);
 	}
@@ -246,7 +257,7 @@ void XIIlib::Boss::Action()
 			if (object3d->position.y >= 2.0f)
 			{
 				// –³“Gó‘Ô‚Ì•t—^
-				*invincibleFlag = true;
+				//*invincibleFlag = true;
 			}
 
 			// À•W‚ª“Vˆä(20.0f)‚É‚Â‚¢‚½‚çŒÅ’è‰»
@@ -332,7 +343,7 @@ void XIIlib::Boss::Attack()
 			// À•W‚ğİ’è
 			object3d->position.y = 1.0f;
 			// –³“Gó‘Ô‚Ì‰ğœ
-			*invincibleFlag = false;
+			//*invincibleFlag = false;
 		}
 	}
 	
