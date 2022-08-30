@@ -15,7 +15,8 @@ void XIIlib::BossAttack::InitAttackDisplay()
 {
 	// 全てのタイルと付随した変数を初期化
 	frameCount = 0;
-	tileNum = 0;
+	showTileCount = 0;
+	hideTileCount = 0;
 	tileSwitch = true;
 	for (int i = 0; i < MAX_TILE; i++)
 	{
@@ -23,26 +24,34 @@ void XIIlib::BossAttack::InitAttackDisplay()
 	}
 }
 
-void XIIlib::BossAttack::DispTileDeathControl(const int& bossAttackSelect)
+void XIIlib::BossAttack::DispTileDeathControl(const int& bossAttackSelect,const int& startCnt)
 {
-	// タイルが全て表示されたら間隔を空けて非表示にする
-	if (frameCount >= SHOW_TILE_SPACE * MAX_TILE) { 
-		frameCount = 0;
-		tileNum = 0;
-		tileSwitch = false;
-	}
-	// tileDispが8枚trueになるまで通る 
-	if (frameCount % SHOW_TILE_SPACE == 0 && tileNum <= (MAX_TILE - 1))
+	// showTileCountが8個trueになるまで通る 
+	if (frameCount % SHOW_TILE_SPACE == 0 && showTileCount <= (MAX_TILE - 1) && frameCount >= startCnt)
 	{
 		if (bossAttackSelect == 0) {
-			tilesShowFlag[abs(tileNum - (MAX_TILE - 1))] = tileSwitch;
+			tilesShowFlag[abs(showTileCount - (MAX_TILE - 1))] = true;
 		}
 		else
 		{
-			tilesShowFlag[tileNum] = tileSwitch;
+			tilesShowFlag[showTileCount] = true;
 		}
-		tileNum++;
+		showTileCount++;
 	}
+
+	// hideTileCountが8個falseになるまで通る
+	if ((frameCount - HIDE_TILE_SPACE) % SHOW_TILE_SPACE == 0 && hideTileCount <= (MAX_TILE - 1) && (frameCount - HIDE_TILE_SPACE) >= startCnt)
+	{
+		if (bossAttackSelect == 0) {
+			tilesShowFlag[abs(hideTileCount - (MAX_TILE - 1))] = false;
+		}
+		else
+		{
+			tilesShowFlag[hideTileCount] = false;
+		}
+		hideTileCount++;
+	}
+
 	// フレームカウント
 	frameCount++;
 }

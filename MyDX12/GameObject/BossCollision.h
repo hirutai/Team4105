@@ -6,6 +6,7 @@ namespace XIIlib {
 	class BossCollision : public Unit {
 	private:
 		Math::Point2 point_attack;
+		bool m_invincibleFlag;
 	public:
 		BossCollision();
 		~BossCollision();
@@ -15,20 +16,19 @@ namespace XIIlib {
 		void Initialize()override;
 		void Update()override;
 		void Draw()override;
-
 		void Action()override;
 		void Attack()override;
 		void Move()override;
 		bool AttackAreaExists()override;
 		void AttackAreaDraw();
 		void IniState()override;
-		
-
 		void CreateAttackArea()override;
 		void SetHitDamage(int attackPoint)override;	
+		bool MoveAreaCheck(Math::Point2 crPos, Math::Point2 vec, int tileNum)override;
 
 		Math::Point2 GetElementStock()const { return element_stock; }
-		bool MoveAreaCheck(Math::Point2 crPos, Math::Point2 vec, int tileNum)override;
+		// 無敵フラグを設定
+		void SetInvincibleFlag(const bool& invincibleFlag) { m_invincibleFlag = invincibleFlag; }
 	};
 }
 

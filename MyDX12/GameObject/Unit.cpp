@@ -20,6 +20,16 @@ bool XIIlib::Unit::ThreeCheckArea(Math::Point2 element_stock)
 
 }
 
+bool XIIlib::Unit::GetInvincibleFlag()
+{
+	// ƒoƒO‚Á‚Ä‰½‚à“ü‚Á‚Ä‚È‚¢‚Æ‚«
+	if (invincibleFlag == nullptr)
+	{
+		return false;
+	}
+	return invincibleFlag; 
+}
+
 void XIIlib::Unit::SetTypePositioning(_PositionType changeType)
 {
 	type = changeType;
@@ -60,6 +70,7 @@ void XIIlib::Unit::KnockBack()
 {
 	// UŒ‚“–‚½‚Á‚Ä‚¢‚È‚¯‚ê‚Î‚»‚­•Ô‚·
 	if (!UnitManager::GetInstance()->IsAttackValid(element_stock, (int)_PositionType::MINE))return;
+
 
 	SetHitDamage(1.0f);
 	audio_->PlaySE("damage.wav",0.3f);

@@ -96,9 +96,13 @@ void XIIlib::Boss::Update()
 	// BossのHPがデフォルトのHPの半分以下でなおかつBossが通常の状態で待機中なら
 	if (_hit_point <= BossHP::GetInstance()->GetDefaultBossHP() / 2 && bossType == BossType::normal && bossState == BossState::wait)
 	{
+		// ボスタイプを強い状態に
 		bossType = BossType::strong;
+		// ボスの攻撃間隔を変更
 		SetAttackTimer(180, CountType::FRAME);
 		attackTimer->SetPosition(Math::Vector3(0.0f, 19.0f, 0.0f));
+
+		// ボスの周りに壁を生成
 		std::shared_ptr<Stone> stone = std::move(Stone::Create(1, 7));
 		std::shared_ptr<Stone> stone2 = std::move(Stone::Create(6, 7));
 		std::shared_ptr<Stone> stone3 = std::move(Stone::Create(1, 6));
@@ -127,6 +131,15 @@ void XIIlib::Boss::Update()
 	if (determinateMoveAction) {
 		// 攻撃処理
 		Attack();
+	}
+
+
+	// 直接殴られた時の処理
+	if (UnitManager::GetInstance()->IsAttackValid(element_stock, (int)_PositionType::MINE))
+	{
+		if (*invincibleFlag)return;
+		BossHP::GetInstance()->Damage();
+		BossAttack::GetInstance()->KnockBackAttack(element_stock);
 	}
 
 	// objectのUpdate
@@ -195,7 +208,7 @@ void XIIlib::Boss::Action()
 				// 座標の設定
 				// Tile座標からワールド座標に変換
 				float targetPos = Common::ConvertTilePosition(BossAttack::GetInstance()->GetTargetTile());
-				carobj->position = {targetPos,1.0f,50};
+				carobj->position = {targetPos,1.0f,50.0f};
 			}
 			else if (attackSelect == 1) // 横ならば
 			{
@@ -204,7 +217,7 @@ void XIIlib::Boss::Action()
 				// 座標の設定
 				// Tile座標からワールド座標に変換
 				float targetPos = Common::ConvertTilePosition(BossAttack::GetInstance()->GetTargetTile());
-				carobj->position = { -50,1.0f,targetPos };
+				carobj->position = { -50.0f,1.0f,targetPos };
 			}
 		}
 		else if (bossType == BossType::strong)// BossTypeが強い状態なら
@@ -216,6 +229,7 @@ void XIIlib::Boss::Action()
 				BossAttack::GetInstance()->CreateMeteorPosition(attackSelect);
 			}
 		}
+		// ボスを無敵にする
 		// Attack表示の初期化
 		BossAttack::GetInstance()->InitAttackDisplay();
 	}
@@ -224,15 +238,24 @@ void XIIlib::Boss::Action()
 		// ボスの状態で準備の内容を変える(動きながら準備)
 		if (bossType == BossType::normal)
 		{
-			BossAttack::GetInstance()->DispTileDeathControl(attackSelect);
+			// タイルの表示非表示を制御
+			BossAttack::GetInstance()->DispTileDeathControl(attackSelect,0);
+
+			// ボスが浮きます
 			object3d->position.y += 0.2f;
-			//object3d2->position.y += 0.2f;
+			if (object3d->position.y >= 2.0f)
+			{
+				// 無敵状態の付与
+				*invincibleFlag = true;
+			}
+
+			// 座標が天井(20.0f)についたら固定化
 			if (object3d->position.y >= 20.0f)
 			{
 				object3d->position.y = 20.0f;
-				//object3d2->position.y = 20.0f;
 			}
-			//carobj->position.y +=0.1f;
+
+			// アタックセレクトによって攻撃する予定うぃ表示
 			if (attackSelect == 0)
 			{
 				// 縦3列表示
@@ -256,31 +279,28 @@ void XIIlib::Boss::Action()
 		}
 		bossState = BossState::attack;
 	}
-
-	// 直接殴られた時の処理
-	if (UnitManager::GetInstance()->IsAttackValid(element_stock, (int)_PositionType::MINE))
-	{
-		BossHP::GetInstance()->Damage();
-		BossAttack::GetInstance()->KnockBackAttack(element_stock);
-	}
 }
 
 void XIIlib::Boss::Attack()
 {
+	const int START_COUNT = 25; // スタートフレーム
+	const float ACC = 0.7f; // 加速値
 	// ボスタイプごとに攻撃処理を変化
 	switch (bossType)
 	{
 	case BossType::normal:
-		BossAttack::GetInstance()->DispTileDeathControl(attackSelect);
+		BossAttack::GetInstance()->DispTileDeathControl(attackSelect, START_COUNT);
 		if (attackSelect == 0)
 		{
-			carobj->position.z -= 0.7f;
+			// 座標に加速値を入れる
+			carobj->position.z -= ACC;
 			// 縦3攻撃
 			BossAttack::GetInstance()->Vertical3Line("Attack");
 		}
 		else
 		{
-			carobj->position.x += 0.7f;
+			// 座標に加速値を入れる
+			carobj->position.x += ACC;
 			// 横3攻撃
 			BossAttack::GetInstance()->Horizontal3Line("Attack");
 		}
@@ -302,6 +322,20 @@ void XIIlib::Boss::Attack()
 		break;
 	}
 
+	// ボスのポジションを戻す
+	if (carobj->position.x >= 50.0f || carobj->position.z <= -50.0f)// 縦横車が背景からフェードアウトしきったら
+	{
+		object3d->position.y -= 0.2f;
+		// 元の座標に戻ったら
+		if (object3d->position.y <= 1.0f)
+		{
+			// 座標を設定
+			object3d->position.y = 1.0f;
+			// 無敵状態の解除
+			*invincibleFlag = false;
+		}
+	}
+	
 	// 攻撃フレームの加算
 	attackFrameCnt++;
 	// 最大攻撃フレームより攻撃フレームが多ければ攻撃は終了

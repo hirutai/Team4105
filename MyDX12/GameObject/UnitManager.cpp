@@ -48,19 +48,24 @@ void XIIlib::UnitManager::Update()
 	// ここに「重なったらダメージを入れる」を書く
 	for (auto& unit1 : units) {
 		for (auto& unit2 : units) {
-			if (unit1->GetFallFlag() != unit2->GetFallFlag() || unit1.get() == unit2.get() || unit1->IsDead() || unit2->IsDead())continue;
+			// 省く条件
+			if (unit1->GetFallFlag() != unit2->GetFallFlag() || // どっちかが落ちている状態なら
+				unit1.get() == unit2.get() || // 同一個体なら
+				unit1->IsDead() || unit2->IsDead() || // 片方が死んでいる判定なら
+				unit1->GetInvincibleFlag() || unit2->GetInvincibleFlag() // 片方が無敵なら
+				)continue;
 
 			// 重なったら死ぬ
 			if (Math::MatchPoint2(unit1->GetElementStock(),unit2->GetElementStock())) {
-				GetAudio()->PlaySE("hitAB.wav",0.3f);
+				GetAudio()->PlaySE("hitAB.wav", 0.3f);
 				unit1->SetHitDamage(3);
 				unit2->SetHitDamage(3);
-
 				/*Math::Vector3 addPoint = {
 					Common::ConvertTilePosition(unit1->GetElementStock().a),
 					2.0f,
 					Common::ConvertTilePosition(unit1->GetElementStock().b)
 				};*/
+
 				// 何もない状態で取得する場合はそのまま追加
 				if(hitPos.size() == 0)hitPos.push_back(unit1->GetElementStock());
 				else {// そうでない場合は同じ物がないか確認して衝突しなければ追加
@@ -74,15 +79,17 @@ void XIIlib::UnitManager::Update()
 		}
 	}
 
+	// hpが0のやつを死なせる。
+	for (auto& unit : units) {
+		unit->ZeroHp();
+		if (unit->GetID() != "King")continue;
+		if (unit->IsDead() == true)hitPos.push_back(unit->GetElementStock());
+	}
+
 	// ここでパーティクルを発生させる
 	smokeMs->Update();
 	GrainCreate();
 	hitPos.clear();
-
-	// hpが0のやつを死なせる。
-	for (auto& unit : units) {
-		unit->ZeroHp();
-	}
 
 	if (add_units.size() != 0)
 	{
