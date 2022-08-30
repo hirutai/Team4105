@@ -7,6 +7,7 @@
 #include "../3D/BillObj.h"
 #include "../Audio/Audio.h"
 #include "Common.h"
+#include "SmokeManager.h"
 #include "GrainManager.h"
 
 XIIlib::UnitManager::UnitManager() {}
@@ -14,6 +15,7 @@ XIIlib::UnitManager::UnitManager() {}
 XIIlib::UnitManager::~UnitManager()
 {
 	delete grainMs;
+	delete smokeMs;
 	delete map_board;
 }
 
@@ -30,6 +32,7 @@ void XIIlib::UnitManager::Initialize()
 	map_board = BoardMap::Create();
 
 	hitPos.reserve(100);
+	smokeMs = SmokeManager::Create();
 	grainMs = GrainManager::Create();
 }
 
@@ -72,6 +75,7 @@ void XIIlib::UnitManager::Update()
 	}
 
 	// ここでパーティクルを発生させる
+	smokeMs->Update();
 	GrainCreate();
 	hitPos.clear();
 
@@ -122,11 +126,8 @@ void XIIlib::UnitManager::BillDraw()
 
 	BillObj::PostDraw();
 
-	for (auto& obj : units) {
-		if (obj->GetID() != "Rook" && obj->GetID() != "Bishop")continue;
-		obj->OriginBillDraw();
-	}
-
+	// パーティクル描画
+	smokeMs->Draw();
 	grainMs->Draw();
 }
 
@@ -332,4 +333,9 @@ bool XIIlib::UnitManager::GetStoneOnTile(const Math::Point2& nextP)
 		}
 	}
 	return false;
+}
+
+void XIIlib::UnitManager::AddSmoke(float c, float s, const Math::Vector3& v, const Math::Vector3& pos)
+{
+	smokeMs->Add(c, s, v, pos);
 }
